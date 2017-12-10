@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --><title>Bootstrap 101 Template</title>
+        <!-- Bootstrap -->
+        <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --><!-- WARNING: Respond.js doesn't work if you view the page via file:// --><!--[if lt IE 9]>
+        <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="progress">
+            <div id="progressBar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="">
+            
+			</div>
+			<div class="progress-bar progress-bar-success" style="width: 100%">
+				<span class="sr-only">100% Complete (danger)</span>
+			</div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="jquery-3.2.1/jquery-3.2.1.min.js">
+        </script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js">
+        </script>
+		<script src="test.js"></script>
+        <script>
+            
+			/*
+            var test = new Object;
+			var totalTime = 100000;//总共执行时间（10S）
+			var date = new Date;
+			var strTime = date.getTime();//开始时间
+			var endTime = strTime+totalTime;//结束时间
+            test.fn = function(){
+                var nowDate = new Date;
+				var nowTime = nowDate.getTime();//当前时间
+				var usedTime = nowTime-strTime;//已经经过的时间
+				var cd = usedTime / totalTime * 100;//经过时间与总时间的百分比
+                $("#progressBar").attr({
+                    style: "width: " + cd + "%;",
+                    value: "" + cd + "%"
+                }).text(cd + "%");
+                if (nowTime >= endTime) {
+                    clearInterval(inner);
+                }
+            };
+			
+          	var inner = setInterval(test.fn, 100);
+			*/
+        </script>
+    </body>
+</html>
