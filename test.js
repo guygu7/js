@@ -4,14 +4,14 @@
 var LC = {} ;
 
 /**
- * 定义组件明明空间
+ * 定义组件命名空间
  */
 LC.Components = {};
 
 /**
- * 组件空间中装入进度条类
+ * 组件空间中装入进度条类（传入进度条id:progressBarName,运行时间:tTime）
  */
-LC.Components.ProgressBar = function(tTime){
+LC.Components.ProgressBar = function(progressBarName,tTime){
 	var totalTime = tTime;
 	var date = new Date;
 	var strTime = date.getTime();
@@ -29,19 +29,20 @@ LC.Components.ProgressBar = function(tTime){
 		return endTime;
 	};
 	/**
-	 * 设置进度条前进动画
+	 * 设置进度条前进动画（传入进度条id:progressBarName,变量标记:setInterval）
 	 */
-	this.load = function (sign){
+	this.load = function (progressBarName){
 		var nowDate = new Date;
 		var nowTime = nowDate.getTime();//当前时间
 		var usedTime = nowTime-strTime;//已经经过的时间
 		var cd = usedTime / totalTime * 100;//经过时间与总时间的百分比
-        $("#progressBar").attr({
+		if (cd>100)cd=100;
+        $("#"+progressBarName).attr({
             style: "width: " + cd + "%;",
             value: "" + cd + "%"
         }).text(cd + "%");
         if (nowTime >= endTime) {
-            clearInterval(sign);
+            clearInterval(this.interval);
         }
 	};
 };
@@ -53,12 +54,29 @@ LC.Components.ProgressBarFactory = {
 	/**
 	 * 创建进度条方法
 	 */
-	createProgressBar : function(time){
-		var progressBar = new LC.Components.ProgressBar(time);
+	createProgressBar : function(progressBarName,time){
+		var progressBar = new LC.Components.ProgressBar(progressBarName,time);
+		var interval = setInterval(progressBar.load,0.1,progressBarName);//设置定时器，0.05S运行一次
+		progressBar.interval = interval;
 		return progressBar;//返回一个进度条
 	}
 };
 
-/**
- * 调用setInterval定时执行，使对象进度条进度前进
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
