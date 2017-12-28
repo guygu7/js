@@ -13,7 +13,7 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div id="test" style="width: 300px"></div>
+		<div id="test"></div>
 		<!--<div id="progress" class="progress">
 		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 		</div>-->
@@ -21,15 +21,15 @@
 		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script>/**
+		<script>
+		/*
+		 * 
+		 * 
+		 */
+		/**
  * @author LC 命名空间  namespace
  */
 var LC = {};
-
-/**
- * 定义组件命名空间
- */
-LC.Components = {};
 
 /**
  * 公共属性字典
@@ -37,29 +37,15 @@ LC.Components = {};
 LC.CommonProperty = {
 	sign : "lcsign" //通用标记属性，替代id
 };
+/**
+ * 定义组件命名空间
+ */
+LC.Components = {};
 
 /**
  * 组件所用到的公共方法集合
  */
 LC.Components.ComponentFunction = {
-	/**
-	 * 创建返回整体的进度条DOM，使用.append加入页面
-	 * @param {Object} id 进度条id
-	 */
-	creatProgressDOM : function(id){
-		var sign = LC.CommonProperty.sign;
-		var progress = $("<div></div>").attr({
-			sign : id,
-			"class" : "progress"
-		}).append($("<div></div>").attr({
-			"class" : "progress-bar progress-bar-striped active",
-			"role" : "progressbar",
-			"aria-valuenow" : "0",
-			"aria-valuemin" : "0",
-			"aria-valuemax" : "100"
-		}));
-		return progress;
-	}
 };
 
 /**
@@ -68,38 +54,72 @@ LC.Components.ComponentFunction = {
  */
 LC.Components.ProgressBar = function(progressID) {
 	var signID = progressID;
-	//进度条的DOM对像，通过.append()加入页面中显示
-	var progressDOM = LC.Components.ComponentFunction.creatProgressDOM(progressID);
-	/**
-	 * 获取进度条的DOM对像，通过.append()加入页面中显示
-	 */
-	this.getProgressDOM = function(){
-		return progressDOM;
+	if(typeof this.getSignID != 'function'){
+		LC.Components.ProgressBar.prototype.getSignID = function(){
+			return signID;
+		};
 	};
+	if(typeof this.setSignID != 'function'){
+		LC.Components.ProgressBar.prototype.setSignID = function(ID){
+			signID = ID;
+			return this;//链式
+		};
+	};
+	/**
+	 * 获取进度条的DOM对像，通过.append()加入页面
+	 * @param {Object} id 进度条id
+	 */
+	if(typeof this.progressDOM != 'object'){
+		//如果不存在则执行一次创建，赋值常量getProgressDOM，存在可以直接获取对象
+		LC.Components.ProgressBar.prototype.progressDOM = (function(){
+			var sign = LC.CommonProperty.sign;
+			var progress = $("<div></div>").attr({
+				sign : signID,
+				"class" : "progress"
+			}).append($("<div></div>").attr({
+				"class" : "progress-bar progress-bar-striped active",
+				"role" : "progressbar",
+				"aria-valuenow" : "0",
+				"aria-valuemin" : "0",
+				"aria-valuemax" : "100"
+			}));
+			return progress;
+		})();
+	}
 	/**
 	 * 设置运行时间，单位s
 	 * @param {Object} time 运行时间
 	 */
-	this.setRunningTime = function(time){
-		//获得组件内部div progressBar
-		var progressChilds = progress.children("div.progress-bar");
-		//进度条div设置从0%到100%的运行时间
-		progressChilds.first().css({
-			"transition" : "width "+time+"s",
-			"-moz-transition" : "width "+time+"s",
-			"-webkit-transition" : "width "+time+"s",
-			"-o-transition" : "width "+time+"s"
-		});
-		//影子div
-		//progressChild.first().next();
-		return this;//链式
+	if(typeof this.setRunningTime != 'function'){
+		LC.Components.ProgressBar.prototype.setRunningTime = function(time){
+			//var progress = $("["+sign+"='" + progressName + "']");
+			//获得组件内部div progressBar
+			var progressChilds = this.progressDOM.children("div.progress-bar");
+			//进度条div设置从0%到100%的运行时间
+			progressChilds.first().css({
+				"-webkit-transition" : " width "+time+"s linear ",
+				"-moz-transition" : " width "+time+"s linear ",
+				"-o-transition" : " width "+time+"s linear ",
+				"transition" : " width "+time+"s linear "
+			});
+			//影子div
+			//progressChild.first().next();
+			return this;//链式
+		};
 	};
 	/**
 	 * 运行，开始读条
 	 */
-	this.start = function(){
-		
-	};
+	if(typeof this.start != 'function'){
+		LC.Components.ProgressBar.prototype.start = function(){
+			//获得组件内部div progressBar
+			var progressChilds = this.progressDOM.children("div.progress-bar");
+			progressChilds.first().attr({"style":"width:100%"});
+			//影子div
+			//progressChild.first().next();
+			return this;//链式
+		};
+	}
 };
 
 /**
@@ -121,7 +141,10 @@ LC.Components.ProgressBarFactory = {
 
 		<script>
 		var progress1 = new LC.Components.ProgressBarFactory.createProgressBar("testID");
-		$("#test").append(progress1.getProgressDOM());
+		var progress2 = new LC.Components.ProgressBarFactory.createProgressBar("testID2");
+		$("#test").append(progress1.progressDOM);
+		progress1.setRunningTime("10");
+		progress1.start();
 		/*
 			var progress1 = LC.Components.ProgressBarFactory.createProgressBar("testName");
 			$("#test").append();
