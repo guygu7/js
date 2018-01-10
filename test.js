@@ -3,6 +3,29 @@
  */
 var LC = {};
 /**
+ * 定义工具空间
+ */
+LC.Utils={};
+/**
+ * EXTEND method继承方法(子,父)
+ * @param {Object} sub 子
+ * @param {Object} sup 父
+ */			
+LC.Utils.extend=function(sub ,sup){
+	 // 目的： 实现只继承父类的原型对象
+	 var F = new Function();	// 1 创建一个空函数    目的：空函数进行中转
+	 new sup();//父类初始化
+	 F.prototype = sup.prototype; // 2 实现空函数的原型对象和超类的原型对象转换
+	 sub.prototype = new F(); 	// 3 原型继承 
+	 sub.prototype.constructor = sub ; // 4还原子类的构造器
+	 //保存一下父类的原型对象: 一方面方便解耦  另一方面方便获得父类的原型对象
+	 sub.superClass = sup.prototype; //自定义一个子类的静态属性 接受父类的原型对象
+	 //判断父类的原型对象的构造器 (加保险)
+	 if(sup.prototype.constructor == Object.prototype.constructor){
+	 	sup.prototype.constructor = sup ; //手动欢迎父类原型对象的构造器
+	 }
+};
+/**
  * 公共属性字典
  */
 LC.CommonProperty = {
@@ -53,6 +76,12 @@ LC.Components.ProgressBar = function(progressID) {
 		};
 	};
 	/**
+	 * 进度条样式修改(子类使用)
+	 */
+	if ( typeof this.styleAlter != 'function') {
+		LC.Components.ProgressBar.prototype.styleAlter = function(progress){return progress;};
+	};
+	/**
 	 * 获取进度条的DOM对像，通过.append()加入页面
 	 * @param {Object} id 进度条id
 	 */
@@ -70,7 +99,7 @@ LC.Components.ProgressBar = function(progressID) {
 				"aria-valuemin" : "0",
 				"aria-valuemax" : "100"
 			}));
-			return progress;
+			return LC.Components.ProgressBar.prototype.styleAlter(progress);
 		})();
 	};
 	/**
@@ -106,7 +135,16 @@ LC.Components.ProgressBar = function(progressID) {
 		};
 	}
 };
-
+/**
+ * 进度条style1样式
+ */
+LC.Components.ProgressBarStyle1 = function(){};
+LC.Utils.extend(LC.Components.ProgressBarStyle1,LC.Components.ProgressBar);
+LC.Components.ProgressBarStyle1.prototype.styleAlter=function(progress){
+	//获得组件内部div progressBar
+	var progressChilds = this.progressDOM.children("div.progress-bar");
+	progressChilds.first().attr({"class":"progress-bar progress-bar-striped active"});
+};
 /**
  * 组件空间中加入进度条工厂
  */
@@ -117,6 +155,10 @@ LC.Components.ProgressBarFactory = {
 	 */
 	createProgressBar : function(progressID) {
 		var returnProgress = new LC.Components.ProgressBar(progressID);
+		return returnProgress;
+	},
+	createProgressBarStyle1 : function(progressID) {
+		var returnProgress = new LC.Components.ProgressBarStyle1(progressID);
 		return returnProgress;
 	}
 };
