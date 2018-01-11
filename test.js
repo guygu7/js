@@ -82,26 +82,29 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.styleAlter = function(progress){return progress;};
 	};
 	/**
-	 * 获取进度条的DOM对像，通过.append()加入页面
-	 * @param {Object} id 进度条id
+	 * 创建进度条的DOM对像
 	 */
-	if ( typeof this.progressDOM != 'object') {
-		//如果不存在则执行一次创建，赋值常量getProgressDOM，存在可以直接获取对象
-		LC.Components.ProgressBar.prototype.progressDOM = (function() {
+	if ( typeof this.creatProgressDOM != 'function') {
+		LC.Components.ProgressBar.prototype.creatProgressDOM = function() {
 			var sign = LC.CommonProperty.sign;
 			var progress = $("<div></div>").attr({
 				sign : signID,
 				"class" : "progress"
 			}).append($("<div></div>").attr({
-				"class" : "progress-bar progress-bar-striped active",
+				"class" : "progress-bar",
 				"role" : "progressbar",
 				"aria-valuenow" : "0",
 				"aria-valuemin" : "0",
 				"aria-valuemax" : "100"
 			}));
-			return LC.Components.ProgressBar.prototype.styleAlter(progress);
-		})();
+			LC.Components.ProgressBar.prototype.progressDOM = this.styleAlter(progress);
+			return LC.Components.ProgressBar.prototype.progressDOM;
+		};
 	};
+	/**
+	 * 获取进度条的DOM对像，通过.append()加入页面
+	 */
+	LC.Components.ProgressBar.prototype.progressDOM;
 	/**
 	 * 设置监听，在读条完成后调用函数
 	 */
@@ -142,8 +145,27 @@ LC.Components.ProgressBarStyle1 = function(){};
 LC.Utils.extend(LC.Components.ProgressBarStyle1,LC.Components.ProgressBar);
 LC.Components.ProgressBarStyle1.prototype.styleAlter=function(progress){
 	//获得组件内部div progressBar
-	var progressChilds = this.progressDOM.children("div.progress-bar");
-	progressChilds.first().attr({"class":"progress-bar progress-bar-striped active"});
+	progress.children("div.progress-bar").first().attr({"class":"progress-bar progress-bar-striped active"});
+	return progress;
+};
+/**
+ * 进度条style2样式
+ */
+LC.Components.ProgressBarStyle2 = function(){};
+LC.Utils.extend(LC.Components.ProgressBarStyle2,LC.Components.ProgressBar);
+LC.Components.ProgressBarStyle2.prototype.styleAlter=function(progress){
+	progress.append($("<div></div>").attr({
+				"class" : "progress-bar progress-bar-success",
+				"role" : "progressbar",
+				"aria-valuenow" : "0",
+				"aria-valuemin" : "0",
+				"aria-valuemax" : "100"
+			}).css({
+				"width" : "1px"
+			}));
+	//获得组件内部div progressBar
+	progress.children("div.progress-bar").first().attr({"class":"progress-bar progress-bar-striped active"});
+	return progress;
 };
 /**
  * 组件空间中加入进度条工厂
@@ -155,10 +177,17 @@ LC.Components.ProgressBarFactory = {
 	 */
 	createProgressBar : function(progressID) {
 		var returnProgress = new LC.Components.ProgressBar(progressID);
+		returnProgress.creatProgressDOM();
 		return returnProgress;
 	},
 	createProgressBarStyle1 : function(progressID) {
 		var returnProgress = new LC.Components.ProgressBarStyle1(progressID);
+		returnProgress.creatProgressDOM();
+		return returnProgress;
+	},
+	createProgressBarStyle2 : function(progressID) {
+		var returnProgress = new LC.Components.ProgressBarStyle2(progressID);
+		returnProgress.creatProgressDOM();
 		return returnProgress;
 	}
 };
