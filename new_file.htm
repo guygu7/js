@@ -24,12 +24,12 @@
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="test.js"></script>
 		<script>
-		var progress1 = LC.Components.ProgressBarFactory.createProgressBarStyle2("testID");
-		console.log();
+		var progress1 = LC.Components.ProgressBarFactory.createProgressBar("testID");
 		progress1.setRunningTime("10");
-		progress1.listener(function(){alert(1);});
+		//progress1.listener(function(){alert(1);});
+		progress1.addStriped();
 		$("#test").append(progress1.progressDOM);
-		$("#but").on("click",function(){progress1.start();});
+		$("#but").on("click",function(){progress1.start("10");});
 		</script>
 	</body>
 </html>
