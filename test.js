@@ -111,30 +111,25 @@ LC.Components.ProgressBar = function(progressID) {
 		 * 传入需要添加条纹的顺位
 		 */
 		LC.Components.ProgressBar.prototype.addStriped = function(args){
-			console.log(arguments);
-			console.log(arguments.length);
+			var pram;
 			//传参处理
 			if (arguments.length == 0) {//未传参，则修改第一个
-				args = ["1"];
+				pram = ["1"];
 			} else if (arguments.length == 1) {//传一个参数
 				if (args instanceof Array){ //是数组不做处理
 				} else if ( "1"!=args && "0"!=args ){ //不是数组,且不为1或0
-					args = [args];
+					pram = [args];
 				}
 			} else {//传多个参数
-				
+				pram = arguments;
 			}
 			//获得组件内部div progressBar
 			var progressChilds = this.progressDOM.children("div.progress-bar");
-			console.log(progressChilds.first().length);
-			var className = progressChilds.first().attr("class");
-			if (-1==className.search(/progress-bar-striped/)){//校验是否存在条纹效果，没有则添加条纹效果
-				progressChilds.first().attr({"class" : className+" progress-bar-striped "});
-			};
 			//应对多分段的设置
-			if (1<progressChilds.first().length){
-				for (var i=1; i < Things.length; i++) {
-				//  Things[i]
+			for (var i=0; i < pram.length; i++) {
+				var className = progressChilds.eq(pram[i]).attr("class");
+				if (-1==className.search(/progress-bar-striped/)){//校验是否存在条纹效果，没有则添加条纹效果
+					progressChilds.eq(pram[i]).attr({"class" : className+" progress-bar-striped "});
 				};
 			};
 			return this;
