@@ -14,7 +14,9 @@
 	</head>
 	<body>
 		<div id="test"></div>
-		<button id="but">but</button>
+		<button id="but">
+			but
+		</button>
 		<!--<div id="progress" class="progress">
 		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 		</div>-->
@@ -24,12 +26,47 @@
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="test.js"></script>
 		<script>
-		var progress1 = LC.Components.ProgressBarFactory.createProgressBar("testID");
-		progress1.setRunningTime("10");
-		//progress1.listener(function(){alert(1);});
-		progress1.addStriped();
-		$("#test").append(progress1.progressDOM);
-		$("#but").on("click",function(){progress1.start("10");});
+			/**
+			 * 组件空间中装入进度条类,支持方法：
+			 * getSignID() 获取进度条自定义ID
+			 * setSignID(ID) 设置进度条自定义ID
+			 * getRunningTime() 获取进度条过渡效果运行时间Map
+			 * setRunningTime(time, num) 设置进度条过渡效果运行时间，单位s（只能设置一个子进度条）
+			 * getWidth() 获取进度条要运行到的百分比Map
+			 * setWidth(width, num) 设置进度条要运行到的百分比（只能设置一个子进度条）
+			 * addStriped(args) 按传入顺位号添加条纹
+			 * removeStriped(args) 按传入顺位号移除条纹
+			 * addActive(args) 按传入顺位号添加条纹动画
+			 * removeActive(args) 按传入顺位号移除条纹动画
+			 * styleAlter(progress) 进度条样式修改(子类继承重写使用)
+			 * creatProgressDOM(num) 创建进度条的DOM对像,传入需要创建的子进度条的个数
+			 * addListener(fn, num) 设置监听，在读条完成后调用函数（只能设置一个子进度条）
+			 * removeListener(fn, num) 移除监听，移除在读条完成后调用函数（只能设置一个子进度条）
+			 * start()  运行，开始读条到设定百分比
+			 *
+			 * progressDOM 进度条的DOM对像，通过.append()加入页面
+			 *
+			 * @param {Object} progressID 进度条id
+			 */
+			var progress1 = LC.Components.ProgressBarFactory.createProgressBar("testID");
+			progress1.setRunningTime(3);
+			progress1.setRunningTime(6, 2);
+			progress1.addListener(function() {
+				alert(1);
+			}, 2);
+			progress1.addStriped();
+			progress1.addStriped(2);
+			progress1.setWidth(30);
+			progress1.setWidth(60, 2);
+			progress1.setTransition(" ease 2s , background-color 3s", 1);
+			$("#test").append(progress1.progressDOM);
+			$("#but").on("click", function() {
+				progress1.start();
+				setTimeout(function() {
+					progress1.setColor("#00FF7F", 1);
+				}, 10000);
+			});
+
 		</script>
 	</body>
 </html>
