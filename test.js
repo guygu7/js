@@ -830,7 +830,7 @@ LC.Components.ProgressBar = function(progressID) {
 			} else {
 				var param = LC.Components.ComponentFunction.checkInt(arguments, "还原进度条过渡效果方法setTransition");
 				for (var i = 0; i < param.length; i++) {
-					_transitionMap.remove(Number(param[i]).toString);
+					_transitionMap.removeByKey(Number(param[i]).toString);
 				};
 				//num = LC.Components.ComponentFunction.checkNumInt(num, "还原进度条过渡效果方法setTransition,num");
 				//_transitionMap.remove(num.toString);
@@ -931,6 +931,13 @@ LC.Components.ProgressBarFactory = {
 		returnProgress.setWidth(width).start();
 		returnProgress.setColor("repeating-linear-gradient(rgb(90,35,15)1%, rgb(250,170,135)26%,rgb(230,129,90)40%,rgb(158,70,53)97%,rgb(91,49,35)100%)", 1);
 		returnProgress.setRunningTime(0.25, 1).setRunningTime(0.25, 2);
+		returnProgress.addListener(function () {
+		  returnProgress.setTransition(" ease 1s",2).setRunningTime(2,2).setWidth("0",2);
+		  returnProgress.addListener(function () {
+		  		returnProgress.removeTransition(2).setRunningTime(0.25, 2);
+		 	 });
+		  returnProgress.start();
+		},1);
 		//returnProgress.setTransition(" linear 1s",2).setRunningTime(2,2);
 		return returnProgress;
 	}
