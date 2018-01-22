@@ -3,15 +3,33 @@
  */
 var LC = {};
 /**
- * 定义工具空间
+ * 公共属性字典
  */
-LC.Utils = {};
+LC.CommonProperty = {
+	//通用标记属性，替代id
+	SIGN : "lcsign", 
+	//进度条过渡色：红色
+	COLOR_PROGRESS_RED : "repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%)",
+	//进度条过渡色：橙色
+	COLOR_PROGRESS_ORIGIN : "repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#D67B1B 97%,#532710 100%)",
+	COLOR_PROGRESS_ORIGIN2 : "repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#B05718 97%,#532710 100%)",
+	//进度条过渡色：蓝色
+	COLOR_PROGRESS_BLUE : "repeating-linear-gradient(#5A230F 1%,#67DAEC 20%,#0584BB 40%,#048ABD 97%,#5B3123 100%)",
+	//进度条过渡色：石板灰
+	COLOR_PROGRESS_GREY : "repeating-linear-gradient(#5A230F 1%,#778899 20%,#708090 40%,#2F4F4F 97%,#5B3123 100%)",
+	//进度条过渡色：绿
+	COLOR_PROGRESS_GREEN : "repeating-linear-gradient(#5A230F 1%,#3DFF1E 15%,#5DD810 50%,#157600 97%,#5B3123 100%)"
+};
 /**
  * 打印错误信息
  */
 LC.warning = function(msg) {
 	console.info("warning : " + msg);
 };
+/**
+ * 定义工具空间
+ */
+LC.Utils = {};
 /**
  * EXTEND method继承方法(子,父)
  * @param {Object} sub 子
@@ -44,17 +62,22 @@ LC.Utils.extend = function(sub, sup) {
  * isEmpty()    判断MAP是否为空
  * clear()     删除MAP所有元素
  * put(key, value)   向MAP中增加元素（key, value)
- * remove(key)    删除指定KEY的元素，成功返回True，失败返回False
+ * removeByKey(key)    删除指定KEY的元素，成功返回True，失败返回False
+ * removeByValue(_value)    删除指定_value的元素，成功返回True，失败返回False
+ * removeByValueAndKey(_key,_value)    删除指定KEY&_value的元素，成功返回True，失败返回False
  * get(key)    获取指定KEY的元素值VALUE，失败返回NULL
  * element(index)   获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
  * containsKey(key)  判断MAP中是否含有指定KEY的元素
  * containsValue(value) 判断MAP中是否含有指定VALUE的元素
+ * containsObj(key,value) 判断MAP中是否含有指定KEY&VALUE的元素
  * values()    获取MAP中所有VALUE的数组（ARRAY）
+ * valuesByKey
  * keys()     获取MAP中所有KEY的数组（ARRAY）
+ * keysByValue
+ * keysRemoveDuplicate
  */
 LC.Utils.Map = function() {
 	this.elements = new Array();
-
 	//获取MAP元素个数
 	if ( typeof this.size != "function") {
 		LC.Utils.Map.prototype.size = function() {
@@ -272,12 +295,7 @@ LC.Utils.Map = function() {
 		};
 	};
 };
-/**
- * 公共属性字典
- */
-LC.CommonProperty = {
-	SIGN : "lcsign" //通用标记属性，替代id
-};
+
 /**
  * 定义组件命名空间
  */
@@ -433,10 +451,10 @@ LC.Components.ComponentFunction = {
  * 组件空间中装入进度条类,支持方法：
  * getSignID() 获取进度条自定义ID
  * setSignID(ID) 设置进度条自定义ID
- * getRunningTime() 获取进度条过渡效果运行时间Map
- * setRunningTime(time, num) 设置进度条过渡效果运行时间，单位s（只能设置一个子进度条）
+ * getRunningTime() 获取进度条长度过渡效果运行时间Map
+ * setRunningTime(time, num) 设置进度条长度过渡效果运行时间，单位s（一次只能设置一个子进度条）
  * getWidth() 获取进度条要运行到的百分比Map
- * setWidth(width, num) 设置进度条要运行到的百分比（只能设置一个子进度条）
+ * setWidth(width, num) 设置进度条要运行到的百分比（一次只能设置一个子进度条）
  * addStriped(args) 按传入顺位号添加条纹
  * removeStriped(args) 按传入顺位号移除条纹
  * addActive(args) 按传入顺位号添加条纹动画
@@ -516,15 +534,24 @@ LC.Components.ProgressBar = function(progressID) {
 	};
 	var _widthMap = new LC.Utils.Map();
 	//进度条长度（百分比）
+	if ( typeof this.getWidth != "function") {
+		/**
+		 * 获取进度条要运行到的百分比Map
+		 * @return _widthMap
+		 */
+		LC.Components.ProgressBar.prototype.getWidth = function() {
+			return _widthMap;
+		};
+	};
 	if ( typeof this.setWidth != "function") {
 		/**
 		 * 设置进度条要运行到的百分比
 		 * @param {Object} width 百分比
 		 * @param {Object} num 子进度条顺位
-		 * @param {Object} linkage 其他进度条联动模式
+		 * @param {Object} fn(width,num) 传入函数，参数为setWidth中的(width,num)，可以用于操作其他子进度条长度，或者校验总长度是否大于100%
 		 * @return this
 		 */
-		LC.Components.ProgressBar.prototype.setWidth = function(width, num, linkage) {
+		LC.Components.ProgressBar.prototype.setWidth = function(width, num, fn) {
 			if (null != width) {
 				if ( typeof width == "string" || typeof width == "number") {//类型校验通过则进行正浮点数数校验
 					if (!new RegExp(/^[0-9]+(\.\d)?[0-9]*\%?$/).test(width)) {
@@ -548,61 +575,62 @@ LC.Components.ProgressBar = function(progressID) {
 				oldWidth = _widthMap.get(num);
 			};
 			_widthMap.put(num.toString(), width.toString());
+			/*
 			if (Number(width) > Number(oldWidth)) {//判断是增大
 				if (null != linkage) {//是否联动
 					if ("next" == linkage) {//联动修改下一个，下一个缩小
-						var widthA = Number(_widthMap.get(num+1))-Number(width)+Number(oldWidth);
-						widthA = (widthA>=0)?widthA:0;//计算后小于0则取0
-						_widthMap.put((num+1).toString(),widthA.toString());
+						var widthA = Number(_widthMap.get(num + 1)) - Number(width) + Number(oldWidth);
+						widthA = (widthA >= 0) ? widthA : 0;
+						//计算后小于0则取0
+						_widthMap.put((num + 1).toString(), widthA.toString());
 					} else if ("last" == linkage) {//联动修改上一个
-						if ((num-1)>=1){
-							var widthA = Number(_widthMap.get(num-1))-Number(width)+Number(oldWidth);
-							widthA = (widthA>=0)?widthA:0;//计算后小于0则取0
-							_widthMap.put((num-1).toString(),widthA.toString());
+						if ((num - 1) >= 1) {
+							var widthA = Number(_widthMap.get(num - 1)) - Number(width) + Number(oldWidth);
+							widthA = (widthA >= 0) ? widthA : 0;
+							//计算后小于0则取0
+							_widthMap.put((num - 1).toString(), widthA.toString());
 						} else {
 							LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
 						}
 					}
 				}
-				//校验_width总和，不能大于100，大于100则从后往前依次缩小
-				var mapKeys = _widthMap.keys();
-				mapKeys.sort(function(a, b) {
-					return a - b;
-				});
-				var sumWidth = 0;
-				for (var i = 0; i < mapKeys.length; i++) {
-					if (sumWidth + Number(_widthMap.get(mapKeys[i])) < 100) {//相加后小于100
-						sumWidth = sumWidth + Number(_widthMap.get(mapKeys[i]));
-						//累加
-					} else if (sumWidth < 100) {//小于100，但相加后大于100
-						_widthMap.put(mapKeys[i], (100 - sumWidth).toString());
-					} else {//大于等于100，设为0
-						_widthMap.put(mapKeys[i], "0");
-					}
-				};
+				*/
+				/*
+				 //校验_width总和，不能大于100，大于100则从后往前依次缩小
+				 var mapKeys = _widthMap.keys();
+				 mapKeys.sort(function(a, b) {
+				 return a - b;
+				 });
+				 var sumWidth = 0;
+				 for (var i = 0; i < mapKeys.length; i++) {
+				 if (sumWidth + Number(_widthMap.get(mapKeys[i])) < 100) {//相加后小于100
+				 sumWidth = sumWidth + Number(_widthMap.get(mapKeys[i]));
+				 //累加
+				 } else if (sumWidth < 100) {//小于100，但相加后大于100
+				 _widthMap.put(mapKeys[i], (100 - sumWidth).toString());
+				 } else {//大于等于100，设为0
+				 _widthMap.put(mapKeys[i], "0");
+				 }
+				 };*/
+				/*
 			} else if (Number(width) < Number(oldWidth)) {//判断是缩小
 				if (null != linkage) {//是否联动
 					if ("next" == linkage) {//联动修改下一个，下一个增加
-						_widthMap.put((num+1).toString(),(Number(oldWidth)-Number(width)+Number(_widthMap.get(num+1))).toString());
+						_widthMap.put((num + 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num + 1))).toString());
 					} else if ("last" == linkage) {//联动修改上一个
-						if ((num-1)>=1){
-							_widthMap.put((num-1).toString(),(Number(oldWidth)-Number(width)+Number(_widthMap.get(num-1))).toString());
+						if ((num - 1) >= 1) {
+							_widthMap.put((num - 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num - 1))).toString());
 						} else {
 							LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
 						}
 					}
 				}
 			}
+			*/
+			if(typeof fn== "function"){
+				fn(width, num);
+			}
 			return this;
-		};
-	};
-	if ( typeof this.getWidth != "function") {
-		/**
-		 * 获取进度条要运行到的百分比Map
-		 * @return _widthMap
-		 */
-		LC.Components.ProgressBar.prototype.getWidth = function() {
-			return _widthMap;
 		};
 	};
 	//添加条纹效果
@@ -711,9 +739,14 @@ LC.Components.ProgressBar = function(progressID) {
 	};
 	if ( typeof this.styleAlter != "function") {
 		/**
-		 * 进度条样式修改(子类继承扩展使用)
+		 * 进度条样式修改(子类继承扩展)
+		 * @param {Object} progress 进度条对象
+		 * @param {Function} fn 修改函数
 		 */
-		LC.Components.ProgressBar.prototype.styleAlter = function(progress) {
+		LC.Components.ProgressBar.prototype.styleAlter = function(progress,fn) {
+			if (typeof fn=="function"){
+				fn(progress);
+			}
 			return progress;
 		};
 	};
@@ -727,19 +760,24 @@ LC.Components.ProgressBar = function(progressID) {
 			if (null == num) {
 				num = 1;
 			};
-			var param = LC.Components.ComponentFunction.checkInt([num], "创建进度条方法creatProgressDOM");
+			var param = Number(LC.Components.ComponentFunction.checkNumInt(num, "创建进度条方法creatProgressDOM"));
 			var sign = LC.CommonProperty.SIGN;
 			var progress = $("<div></div>").attr({
 				sign : _signID,
 				"class" : "progress"
+			}).css({
+				"position" : "relative"
 			});
-			for (var i = 0; i < param[0]; i++) {
+			for (var i = 0; i < param; i++) {
 				progress.append($("<div></div>").attr({
 					"class" : "progress-bar",
 					"role" : "progressbar",
 					"aria-valuenow" : "0",
 					"aria-valuemin" : "0",
-					"aria-valuemax" : "100"
+					"aria-valuemax" : "100",
+				}).css({
+					"position" : "absolute",
+					"z-index" : param - i
 				}));
 			};
 			LC.Components.ProgressBar.prototype.progressDOM = this.styleAlter(progress);
@@ -888,7 +926,7 @@ LC.Components.ProgressBar = function(progressID) {
 			};
 			return this;
 		};
-	}
+	};
 };
 /**
  * 进度条style1样式(子类继承)
@@ -896,14 +934,12 @@ LC.Components.ProgressBar = function(progressID) {
 LC.Components.ProgressBarStyle1 = function() {
 };
 LC.Utils.extend(LC.Components.ProgressBarStyle1, LC.Components.ProgressBar);
-LC.Components.ProgressBarStyle1.prototype.styleAlter = function(progress) {
-	//获得组件内部div progressBar
-	progress.children("div.progress-bar").first().attr({
-		"class" : "progress-bar progress-bar-striped active"
-	});
-	return progress;
+/*
+LC.Components.ProgressBarStyle1.prototype.setWidth = function(width,num) {
+LC.Components.ProgressBarStyle1.superClass.setWidth(width,num);
+LC.Components.ProgressBarStyle1.superClass.setWidth(width,num+1);
 };
-
+*/
 /**
  * 组件空间中加入进度条工厂
  */
@@ -919,26 +955,30 @@ LC.Components.ProgressBarFactory = {
 	},
 	/**
 	 * 模拟HP条
-	 * @param {Object} progressID
+	 * @param {String} progressID
+	 * @param {String} width
 	 */
 	createProgressBar1 : function(progressID, width) {
 		var returnProgress = new LC.Components.ProgressBar();
-		returnProgress.setSignID(progressID).creatProgressDOM(2);
+		returnProgress.setSignID(progressID).creatProgressDOM(2).css({
+			//创建同时设置边框
+			"border" : "3px ridge #767676",
+			"border-radius":"25px"
+		}).children("div.progress-bar").eq(1).css({
+			//设置影子透明度
+			"opacity":"0.8"
+		});
 		if (null == width) {
-			width = 100;
 			//默认初始为满值
+			width = 100;
 		};
-		returnProgress.setWidth(width).start();
-		returnProgress.setColor("repeating-linear-gradient(rgb(90,35,15)1%, rgb(250,170,135)26%,rgb(230,129,90)40%,rgb(158,70,53)97%,rgb(91,49,35)100%)", 1);
-		returnProgress.setRunningTime(0.25, 1).setRunningTime(0.25, 2);
-		returnProgress.addListener(function () {
-		  returnProgress.setTransition(" ease 1s",2).setRunningTime(2,2).setWidth("0",2);
-		  returnProgress.addListener(function () {
-		  		returnProgress.removeTransition(2).setRunningTime(0.25, 2);
-		 	 });
-		  returnProgress.start();
-		},1);
-		//returnProgress.setTransition(" linear 1s",2).setRunningTime(2,2);
+		returnProgress.setWidth(width, 1).setWidth(width, 2).start();
+		//设置HP条主要颜色
+		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY  , 1);
+		//设置HP条影子颜色
+		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY , 2);
+		//设置长度变化效果（影子延迟）
+		returnProgress.setRunningTime(0.2, 1).setTransition(" ease 0.2s", 2).setRunningTime(0.5, 2);
 		return returnProgress;
 	}
 };

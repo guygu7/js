@@ -1,0 +1,52 @@
+/**
+ * 	面板框边框（外层，大号）
+ */
+.frame-border-main {
+	border: 3px ridge #474B64;
+	margin: 5px;
+	border-radius:4px;
+	position: relative;
+}
+/**
+ * 	面板框背景色（外层）
+ */
+.frame-background-main {
+	background-color: #2B313C;
+}
+/**
+ * 	面板框标题栏背景色
+ */
+.frame-background-title {
+	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
+	color: #E4E6E5;
+	border-radius:2px;
+	padding-left: 3px;
+}
+/**
+ * 	面板框边框（内层，小号）
+ */
+.frame-border-inside {
+	border: 2px ridge #474B64;
+	border-radius:3px;
+	margin: 5px
+}
+/**
+ * 	面板框背景色（内层）
+ */
+.frame-background-inside {
+	background-color: #BEBEBE;
+	border-radius:3px;
+}
+/**
+ * 右上角的关闭按钮
+ */
+.border-background-colse {
+	border: 2px ridge #474B64;
+	border-radius:10px;
+	padding:1px;
+	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
+	position: absolute;
+	top: -8px;
+	right: -6px;
+	z-index: 99;
+}
