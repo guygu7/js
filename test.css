@@ -19,6 +19,7 @@ body {
 	border-radius: 5px;
 	width: 950px;
 	height: 550px;
+	position: relative;
 }
 /**
  * 	面板框边框（外层，大号）
@@ -93,5 +94,9 @@ body {
  * 	开始菜单
  */
 .menu-start{
-	position:fixed;
+	width:200px;
+	height:300px;
+	position: absolute;
+	bottom: 50px;
+	left:50px;
 }

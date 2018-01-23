@@ -1056,7 +1056,7 @@ LC.Components.SceneFactory = {
 /**
  * 组件空间中加入开始菜单类
  */
-LC.Components.Menu = function(){
+LC.Components.Menu = function(menuID){
 	var _signID = menuID;
 	//自定义ID
 	if ( typeof this.getSignID != "function") {
@@ -1098,7 +1098,7 @@ LC.Components.Menu = function(){
 			var sign = LC.CommonProperty.SIGN;
 			var menu = $("<div></div>").attr({
 				sign : _signID,
-				"class" : ""
+				"class" : "menu-start"
 			});
 			LC.Components.Menu.prototype.menuDOM = this.styleAlter(menu);
 			return LC.Components.Menu.prototype.menuDOM;
@@ -1108,4 +1108,18 @@ LC.Components.Menu = function(){
 	 * 获取的DOM对像，通过.append()加入页面
 	 */
 	LC.Components.Menu.prototype.menuDOM
+};
+/**
+ * 组件空间中加入菜单工厂
+ */
+LC.Components.MenuFactory = {
+	/**
+	 * 菜单基本样式，创建并返回一个菜单html对象scene，调用.append()加入页面中显示
+	 * @param {Object} sceneID 菜单id
+	 */
+	createMenu : function(menuID) {
+		var returnMenu = new LC.Components.Menu();
+		returnMenu.setSignID(menuID).creatMenuDOM();
+		return returnMenu;
+	}
 };
