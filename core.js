@@ -7,7 +7,7 @@ var LC = {};
  */
 LC.CommonProperty = {
 	//通用标记属性，替代id
-	SIGN : "lcsign", 
+	SIGN : "lcsign",
 	//进度条过渡色：红色
 	COLOR_PROGRESS_RED : "repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%)",
 	//进度条过渡色：橙色
@@ -576,58 +576,58 @@ LC.Components.ProgressBar = function(progressID) {
 			};
 			_widthMap.put(num.toString(), width.toString());
 			/*
-			if (Number(width) > Number(oldWidth)) {//判断是增大
-				if (null != linkage) {//是否联动
-					if ("next" == linkage) {//联动修改下一个，下一个缩小
-						var widthA = Number(_widthMap.get(num + 1)) - Number(width) + Number(oldWidth);
-						widthA = (widthA >= 0) ? widthA : 0;
-						//计算后小于0则取0
-						_widthMap.put((num + 1).toString(), widthA.toString());
-					} else if ("last" == linkage) {//联动修改上一个
-						if ((num - 1) >= 1) {
-							var widthA = Number(_widthMap.get(num - 1)) - Number(width) + Number(oldWidth);
-							widthA = (widthA >= 0) ? widthA : 0;
-							//计算后小于0则取0
-							_widthMap.put((num - 1).toString(), widthA.toString());
-						} else {
-							LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
-						}
-					}
-				}
-				*/
-				/*
-				 //校验_width总和，不能大于100，大于100则从后往前依次缩小
-				 var mapKeys = _widthMap.keys();
-				 mapKeys.sort(function(a, b) {
-				 return a - b;
-				 });
-				 var sumWidth = 0;
-				 for (var i = 0; i < mapKeys.length; i++) {
-				 if (sumWidth + Number(_widthMap.get(mapKeys[i])) < 100) {//相加后小于100
-				 sumWidth = sumWidth + Number(_widthMap.get(mapKeys[i]));
-				 //累加
-				 } else if (sumWidth < 100) {//小于100，但相加后大于100
-				 _widthMap.put(mapKeys[i], (100 - sumWidth).toString());
-				 } else {//大于等于100，设为0
-				 _widthMap.put(mapKeys[i], "0");
-				 }
-				 };*/
-				/*
-			} else if (Number(width) < Number(oldWidth)) {//判断是缩小
-				if (null != linkage) {//是否联动
-					if ("next" == linkage) {//联动修改下一个，下一个增加
-						_widthMap.put((num + 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num + 1))).toString());
-					} else if ("last" == linkage) {//联动修改上一个
-						if ((num - 1) >= 1) {
-							_widthMap.put((num - 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num - 1))).toString());
-						} else {
-							LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
-						}
-					}
-				}
-			}
-			*/
-			if(typeof fn== "function"){
+			 if (Number(width) > Number(oldWidth)) {//判断是增大
+			 if (null != linkage) {//是否联动
+			 if ("next" == linkage) {//联动修改下一个，下一个缩小
+			 var widthA = Number(_widthMap.get(num + 1)) - Number(width) + Number(oldWidth);
+			 widthA = (widthA >= 0) ? widthA : 0;
+			 //计算后小于0则取0
+			 _widthMap.put((num + 1).toString(), widthA.toString());
+			 } else if ("last" == linkage) {//联动修改上一个
+			 if ((num - 1) >= 1) {
+			 var widthA = Number(_widthMap.get(num - 1)) - Number(width) + Number(oldWidth);
+			 widthA = (widthA >= 0) ? widthA : 0;
+			 //计算后小于0则取0
+			 _widthMap.put((num - 1).toString(), widthA.toString());
+			 } else {
+			 LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
+			 }
+			 }
+			 }
+			 */
+			/*
+			 //校验_width总和，不能大于100，大于100则从后往前依次缩小
+			 var mapKeys = _widthMap.keys();
+			 mapKeys.sort(function(a, b) {
+			 return a - b;
+			 });
+			 var sumWidth = 0;
+			 for (var i = 0; i < mapKeys.length; i++) {
+			 if (sumWidth + Number(_widthMap.get(mapKeys[i])) < 100) {//相加后小于100
+			 sumWidth = sumWidth + Number(_widthMap.get(mapKeys[i]));
+			 //累加
+			 } else if (sumWidth < 100) {//小于100，但相加后大于100
+			 _widthMap.put(mapKeys[i], (100 - sumWidth).toString());
+			 } else {//大于等于100，设为0
+			 _widthMap.put(mapKeys[i], "0");
+			 }
+			 };*/
+			/*
+			 } else if (Number(width) < Number(oldWidth)) {//判断是缩小
+			 if (null != linkage) {//是否联动
+			 if ("next" == linkage) {//联动修改下一个，下一个增加
+			 _widthMap.put((num + 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num + 1))).toString());
+			 } else if ("last" == linkage) {//联动修改上一个
+			 if ((num - 1) >= 1) {
+			 _widthMap.put((num - 1).toString(), (Number(oldWidth) - Number(width) + Number(_widthMap.get(num - 1))).toString());
+			 } else {
+			 LC.warning("进度条setWidth方法联动设置失败，已经是第一个元素。");
+			 }
+			 }
+			 }
+			 }
+			 */
+			if ( typeof fn == "function") {
 				fn(width, num);
 			}
 			return this;
@@ -743,8 +743,8 @@ LC.Components.ProgressBar = function(progressID) {
 		 * @param {Object} progress 进度条对象
 		 * @param {Function} fn 修改函数
 		 */
-		LC.Components.ProgressBar.prototype.styleAlter = function(progress,fn) {
-			if (typeof fn=="function"){
+		LC.Components.ProgressBar.prototype.styleAlter = function(progress, fn) {
+			if ( typeof fn == "function") {
 				fn(progress);
 			}
 			return progress;
@@ -963,10 +963,10 @@ LC.Components.ProgressBarFactory = {
 		returnProgress.setSignID(progressID).creatProgressDOM(2).css({
 			//创建同时设置边框
 			"border" : "3px ridge #767676",
-			"border-radius":"25px"
+			"border-radius" : "25px"
 		}).children("div.progress-bar").eq(1).css({
 			//设置影子透明度
-			"opacity":"0.8"
+			"opacity" : "0.8"
 		});
 		if (null == width) {
 			//默认初始为满值
@@ -974,11 +974,138 @@ LC.Components.ProgressBarFactory = {
 		};
 		returnProgress.setWidth(width, 1).setWidth(width, 2).start();
 		//设置HP条主要颜色
-		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY  , 1);
+		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY, 1);
 		//设置HP条影子颜色
-		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY , 2);
+		returnProgress.setColor(LC.CommonProperty.COLOR_PROGRESS_GREY, 2);
 		//设置长度变化效果（影子延迟）
 		returnProgress.setRunningTime(0.2, 1).setTransition(" ease 0.2s", 2).setRunningTime(0.5, 2);
 		return returnProgress;
 	}
+};
+/**
+ * 组件空间中装入场景类
+ * @param {Object} 场景id
+ */
+LC.Components.Scene = function(sceneID) {
+	var _signID = sceneID;
+	//自定义ID
+	if ( typeof this.getSignID != "function") {
+		/**
+		 * 获取自定义ID
+		 */
+		LC.Components.Scene.prototype.getSignID = function() {
+			return _signID;
+		};
+	};
+	if ( typeof this.setSignID != "function") {
+		/**
+		 * 设置自定义ID
+		 */
+		LC.Components.Scene.prototype.setSignID = function(ID) {
+			_signID = ID;
+			return this;
+		};
+	};
+	if ( typeof this.styleAlter != "function") {
+		/**
+		 * 样式修改(子类继承扩展)
+		 * @param {Object} scene 场景对象
+		 * @param {Function} fn 修改函数
+		 */
+		LC.Components.Scene.prototype.styleAlter = function(scene, fn) {
+			if ( typeof fn == "function") {
+				fn(scene);
+			}
+			return scene;
+		};
+	};
+	if ( typeof this.creatSceneDOM != "function") {
+		/**
+		 * 创建DOM对像
+		 * @return sceneDOM
+		 */
+		LC.Components.Scene.prototype.creatSceneDOM = function() {
+			var sign = LC.CommonProperty.SIGN;
+			var scene = $("<div></div>").attr({
+				sign : _signID,
+				"class" : "scene-desktop"
+			});
+			LC.Components.Scene.prototype.sceneDOM = this.styleAlter(scene);
+			return LC.Components.Scene.prototype.sceneDOM;
+		};
+	};
+	/**
+	 * 获取的DOM对像，通过.append()加入页面
+	 */
+	LC.Components.Scene.prototype.sceneDOM
+};
+/**
+ * 组件空间中加入场景工厂
+ */
+LC.Components.SceneFactory = {
+	/**
+	 * 场景基本样式，创建并返回一个场景html对象scene，调用.append()加入页面中显示
+	 * @param {Object} sceneID 场景id
+	 */
+	createScene : function(sceneID) {
+		var returnScene = new LC.Components.Scene();
+		returnScene.setSignID(sceneID).creatSceneDOM();
+		return returnScene;
+	}
+};
+/**
+ * 组件空间中加入开始菜单类
+ */
+LC.Components.Menu = function(){
+	var _signID = menuID;
+	//自定义ID
+	if ( typeof this.getSignID != "function") {
+		/**
+		 * 获取自定义ID
+		 */
+		LC.Components.Menu.prototype.getSignID = function() {
+			return _signID;
+		};
+	};
+	if ( typeof this.setSignID != "function") {
+		/**
+		 * 设置自定义ID
+		 */
+		LC.Components.Menu.prototype.setSignID = function(ID) {
+			_signID = ID;
+			return this;
+		};
+	};
+	if ( typeof this.styleAlter != "function") {
+		/**
+		 * 样式修改(子类继承扩展)
+		 * @param {Object} menu 菜单对象
+		 * @param {Function} fn 修改函数
+		 */
+		LC.Components.Menu.prototype.styleAlter = function(menu, fn) {
+			if ( typeof fn == "function") {
+				fn(menu);
+			}
+			return menu;
+		};
+	};
+	if ( typeof this.creatMenuDOM != "function") {
+		/**
+		 * 创建的DOM对像
+		 * @return menuDOM
+		 */
+		LC.Components.Menu.prototype.creatMenuDOM = function() {
+			var sign = LC.CommonProperty.SIGN;
+			var menu = $("<div></div>").attr({
+				sign : _signID,
+				"class" : ""
+			});
+			LC.Components.Menu.prototype.menuDOM = this.styleAlter(menu);
+			return LC.Components.Menu.prototype.menuDOM;
+		};
+	};
+	/**
+	 * 获取的DOM对像，通过.append()加入页面
+	 */
+	LC.Components.Menu.prototype.menuDOM
 };

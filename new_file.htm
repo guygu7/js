@@ -4,69 +4,22 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --><title>Bootstrap 101 Template</title>
-		<!-- Bootstrap -->
+		<title>Bootstrap 101 Template</title>
 		<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
 		<link href="test.css" rel="stylesheet">
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --><!-- WARNING: Respond.js doesn't work if you view the page via file:// --><!--[if lt IE 9]>
-		<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
 	</head>
 	<body>
-		<div id="test"></div>
-		<button id="but">
-			but
-		</button>
-		<button id="but2">
-			but2
-		</button>
-		<div class="frame-border-main frame-background-main">
-			<span class="glyphicon glyphicon-remove border-background-colse" aria-hidden="true"></span>
-			<div class="frame-background-title">titel</div>
-			<div class="frame-border-inside frame-background-inside">Panel</div>
+		<div id="mainDesktop" class="main-desktop">
 		</div>
-		
-		
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="test.js"></script>
+		<script src="core.js"></script>
 		<script>
-			/**
-			 * 组件空间中装入进度条类,支持方法：
-			 * getSignID() 获取进度条自定义ID
-			 * setSignID(ID) 设置进度条自定义ID
-			 * getRunningTime() 获取进度条过渡效果运行时间Map
-			 * setRunningTime(time, num) 设置进度条过渡效果运行时间，单位s（只能设置一个子进度条）
-			 * getWidth() 获取进度条要运行到的百分比Map
-			 * setWidth(width, num) 设置进度条要运行到的百分比（只能设置一个子进度条）
-			 * addStriped(args) 按传入顺位号添加条纹
-			 * removeStriped(args) 按传入顺位号移除条纹
-			 * addActive(args) 按传入顺位号添加条纹动画
-			 * removeActive(args) 按传入顺位号移除条纹动画
-			 * styleAlter(progress) 进度条样式修改(子类继承重写使用)
-			 * creatProgressDOM(num) 创建进度条的DOM对像,传入需要创建的子进度条的个数
-			 * addListener(fn, num) 设置监听，在读条完成后调用函数（只能设置一个子进度条）
-			 * removeListener(fn, num) 移除监听，移除在读条完成后调用函数（只能设置一个子进度条）
-			 * start()  运行，开始读条到设定百分比
-			 *
-			 * progressDOM 进度条的DOM对像，通过.append()加入页面
-			 *
-			 * @param {Object} progressID 进度条id
-			 */
-			var progress1 = LC.Components.ProgressBarFactory.createProgressBar1("testID");
-			$("#test").append(progress1.progressDOM);
-			$("#but").on("click", function() {
-				progress1.setWidth(70,1).setWidth(70,2);
-				progress1.start();
-			});
-			$("#but2").on("click", function() {
-				progress1.setWidth(80,1).setWidth(80,2);
-				progress1.start();
-			});
+			//构建主界面
+			var scene = LC.Components.SceneFactory.createScene("startScene");
+			$("#mainDesktop").append(scene.sceneDOM);
+			//var progress1 = LC.Components.ProgressBarFactory.createProgressBar1("testID");
+			//scene.sceneDOM.append(progress1.progressDOM);
 		</script>
-		<script></script>
 	</body>
 </html>

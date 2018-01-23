@@ -1,52 +1,97 @@
+body {
+	background: #E4E6E5;
+	margin: 0;
+	padding: 0;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+.main-desktop {
+	background: #717171;
+	border-radius: 5px;
+	width: 1100px;
+	height: 600px;
+	margin: 5px auto;
+	padding: 20px 75px 0px 75px;
+}
+.scene-desktop {
+	background: #DBDBDB;
+	border-radius: 5px;
+	width: 950px;
+	height: 550px;
+}
 /**
  * 	面板框边框（外层，大号）
  */
-.frame-border-main {
+.panel-border-main {
 	border: 3px ridge #474B64;
 	margin: 5px;
-	border-radius:4px;
+	border-radius: 4px;
 	position: relative;
 }
 /**
  * 	面板框背景色（外层）
  */
-.frame-background-main {
+.panel-background-main {
 	background-color: #2B313C;
 }
 /**
  * 	面板框标题栏背景色
  */
-.frame-background-title {
+.panel-background-title {
 	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
 	color: #E4E6E5;
-	border-radius:2px;
+	border-radius: 2px;
 	padding-left: 3px;
+	margin-bottom: 10px;
 }
 /**
- * 	面板框边框（内层，小号）
+ * 	面板框（物品）边框（内层，小号）
  */
-.frame-border-inside {
+.panel-border-inside {
 	border: 2px ridge #474B64;
-	border-radius:3px;
-	margin: 5px
+	border-radius: 3px;
+	display: inline-block;
+	margin: 2px 0px 2px 0px;
+	background-color: #BEBEBE;
+	border-radius: 3px;
+	transition: 0.1s;
+}
+/**
+ * 	面板框（物品）边框（内层，小号）
+ */
+.panel-border-inside:hover {
+	border: 2px ridge #474B64;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 2px 0px 2px 0px;
+	transform: scaleX(1.2) scaleY(1.2);
+	z-index: 1001;
+	cursor: pointer;
 }
 /**
  * 	面板框背景色（内层）
  */
 .frame-background-inside {
 	background-color: #BEBEBE;
-	border-radius:3px;
+	border-radius: 3px;
 }
 /**
  * 右上角的关闭按钮
  */
 .border-background-colse {
 	border: 2px ridge #474B64;
-	border-radius:10px;
-	padding:1px;
+	border-radius: 10px;
+	padding: 1px;
 	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
 	position: absolute;
 	top: -8px;
 	right: -6px;
 	z-index: 99;
+}
+/**
+ * 	开始菜单
+ */
+.menu-start{
+	position:fixed;
 }
