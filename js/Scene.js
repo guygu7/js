@@ -24,15 +24,22 @@ LC.Components.Scene = function(sceneID) {
 	};
 	if ( typeof this.hide != "function") {
 		/**
-		 * 去除
+		 * 隐藏
 		 */
-		LC.Components.Scene.prototype.hide = function(fn) {
+		LC.Components.Scene.prototype.hide = function() {
 			var domTemp = this.dom;
-			fn = function(){
-				alert(1);
-				//domTemp.remove();
-			};
-			this.dom.css({"opacity": "0"})[0].addEventListener("transitionend", fn, false);
+			this.dom.css({"opacity": "0","z-index":"0"});
+			//this.dom.remove();
+			return this;
+		};
+	};
+	if ( typeof this.show != "function") {
+		/**
+		 * 显示
+		 */
+		LC.Components.Scene.prototype.show = function(fn) {
+			var domTemp = this.dom;
+			this.dom.css({"opacity": "1","z-index":"1"});
 			//this.dom.remove();
 			return this;
 		};

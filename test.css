@@ -25,7 +25,7 @@ body {
 	border-radius: 5px;
 	width: 950px;
 	height: 550px;
-	position: relative;
+	position: absolute;
 	transition: 1s;
 	overflow:hidden;
 }

@@ -21,7 +21,9 @@
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene("startScene");
 			var sceneNext = LC.Components.SceneFactory.createScene("nextScene");
-			$("#mainDesktop").append(scene.dom);
+			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
+			sceneNext.hide();
+			scene.show();
 			//var progress1 = LC.Components.ProgressBarFactory.createProgressBar1("testID");
 			//scene.sceneDOM.append(progress1.progressDOM);
 			var menu1 = LC.Components.MenuFactory.createStartMenu("menuID");
@@ -30,6 +32,7 @@
 			var button2 = LC.Components.ButtonFactory.createButton("button2ID");
 			scene.dom.append(menu1.dom.append(button1.dom.append("start").click(function() {
 				scene.hide();
+				setTimeout("sceneNext.show()",0);
 			})));
 			//scene.dom.append(menu1.dom.append(button1.dom.append("start")).append(button2.dom.append("start")));
 		</script>
