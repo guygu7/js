@@ -9,19 +9,29 @@
 		<link href="test.css" rel="stylesheet">
 	</head>
 	<body>
-		<div id="mainDesktop" class="main-desktop">
-		</div>
+		<div id="mainDesktop" class="main-desktop"></div>
 		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="core.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/Menu.js"></script>
+		<script src="js/Scene.js"></script>
+		<script src="js/panel.js"></script>
+		<script src="js/button.js"></script>
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene("startScene");
-			$("#mainDesktop").append(scene.sceneDOM);
+			var sceneNext = LC.Components.SceneFactory.createScene("nextScene");
+			$("#mainDesktop").append(scene.dom);
 			//var progress1 = LC.Components.ProgressBarFactory.createProgressBar1("testID");
 			//scene.sceneDOM.append(progress1.progressDOM);
-			var menu1 = LC.Components.MenuFactory.createMenu("testID");
-			scene.sceneDOM.append(menu1.menuDOM);
+			var menu1 = LC.Components.MenuFactory.createStartMenu("menuID");
+			var panel1 = LC.Components.PanelFactory.createPanel("panelID");
+			var button1 = LC.Components.ButtonFactory.createButton("buttonID");
+			var button2 = LC.Components.ButtonFactory.createButton("button2ID");
+			scene.dom.append(menu1.dom.append(button1.dom.append("start").click(function() {
+				scene.hide();
+			})));
+			//scene.dom.append(menu1.dom.append(button1.dom.append("start")).append(button2.dom.append("start")));
 		</script>
 	</body>
 </html>

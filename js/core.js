@@ -643,7 +643,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.addStriped = function(args) {
 			var param = LC.Components.ComponentFunction.checkInt(arguments, "添加条纹方法addStriped");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < param.length; i++) {
 				if (progressChilds.eq(Number(param[i]) - 1).length > 0) {
 					var className = progressChilds.eq(Number(param[i]) - 1).attr("class");
@@ -695,7 +695,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.addActive = function(args) {
 			var param = LC.Components.ComponentFunction.checkInt(arguments, "添加条纹方法addStriped");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < param.length; i++) {
 				if (progressChilds.eq(Number(param[i]) - 1).length > 0) {
 					var className = progressChilds.eq(Number(param[i]) - 1).attr("class");
@@ -721,7 +721,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.removeActive = function(args) {
 			var param = LC.Components.ComponentFunction.checkInt(arguments, "去除条纹方法removeStriped");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < param.length; i++) {
 				if (progressChilds.eq(Number(param[i]) - 1).length > 0) {
 					var className = progressChilds.eq(Number(param[i]) - 1).attr("class");
@@ -754,7 +754,7 @@ LC.Components.ProgressBar = function(progressID) {
 		/**
 		 * 创建进度条的DOM对像,传入需要创建的子进度条的个数
 		 * @param num 需要创建的子进度条的个数
-		 * @return progressDOM
+		 * @return dom
 		 */
 		LC.Components.ProgressBar.prototype.creatProgressDOM = function(num) {
 			if (null == num) {
@@ -780,14 +780,14 @@ LC.Components.ProgressBar = function(progressID) {
 					"z-index" : param - i
 				}));
 			};
-			LC.Components.ProgressBar.prototype.progressDOM = this.styleAlter(progress);
-			return LC.Components.ProgressBar.prototype.progressDOM;
+			this.dom = this.styleAlter(progress);
+			return this.dom;
 		};
 	};
 	/**
 	 * 获取进度条的DOM对像，通过.append()加入页面
 	 */
-	LC.Components.ProgressBar.prototype.progressDOM
+	dom = null;
 	if ( typeof this.addListener != "function") {
 		/**
 		 * 设置监听，在读条完成后调用函数(一次只能设置一个)
@@ -797,7 +797,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.addListener = function(fn, num) {
 			num = LC.Components.ComponentFunction.checkNumInt(num, "设置进度条监听回调函数方法setlistener,num");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < num; i++) {
 				if (progressChilds.eq(num - 1).length > 0) {
 					progressChilds.eq(num - 1)[0].addEventListener("transitionend", fn, false);
@@ -817,7 +817,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.removeListener = function(fn, num) {
 			num = LC.Components.ComponentFunction.checkNumInt(num, "设置进度条监听回调函数方法setlistener,num");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < num; i++) {
 				if (progressChilds.eq(num - 1).length > 0) {
 					progressChilds.eq(num - 1)[0].removeEventListener("transitionend", fn, false);
@@ -882,7 +882,7 @@ LC.Components.ProgressBar = function(progressID) {
 			num = LC.Components.ComponentFunction.checkNumInt(num, "修改进度条过渡效果方法setTransition,num");
 			if ( typeof color == "string") {//如果color不为string,则设置无效
 				//获得组件内部div progressBar
-				var progressChild = this.progressDOM.children("div.progress-bar").eq(Number(num) - 1);
+				var progressChild = this.dom.children("div.progress-bar").eq(Number(num) - 1);
 				if (progressChild.length > 0) {
 					progressChild.css({
 						"background" : color
@@ -902,7 +902,7 @@ LC.Components.ProgressBar = function(progressID) {
 		 */
 		LC.Components.ProgressBar.prototype.start = function() {
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			var jQueryObject;
 			//子进度条DOM对象
 			//重新设置运行时间样式（安全设置，防止页面修改）
@@ -980,146 +980,5 @@ LC.Components.ProgressBarFactory = {
 		//设置长度变化效果（影子延迟）
 		returnProgress.setRunningTime(0.2, 1).setTransition(" ease 0.2s", 2).setRunningTime(0.5, 2);
 		return returnProgress;
-	}
-};
-/**
- * 组件空间中装入场景类
- * @param {Object} 场景id
- */
-LC.Components.Scene = function(sceneID) {
-	var _signID = sceneID;
-	//自定义ID
-	if ( typeof this.getSignID != "function") {
-		/**
-		 * 获取自定义ID
-		 */
-		LC.Components.Scene.prototype.getSignID = function() {
-			return _signID;
-		};
-	};
-	if ( typeof this.setSignID != "function") {
-		/**
-		 * 设置自定义ID
-		 */
-		LC.Components.Scene.prototype.setSignID = function(ID) {
-			_signID = ID;
-			return this;
-		};
-	};
-	if ( typeof this.styleAlter != "function") {
-		/**
-		 * 样式修改(子类继承扩展)
-		 * @param {Object} scene 场景对象
-		 * @param {Function} fn 修改函数
-		 */
-		LC.Components.Scene.prototype.styleAlter = function(scene, fn) {
-			if ( typeof fn == "function") {
-				fn(scene);
-			}
-			return scene;
-		};
-	};
-	if ( typeof this.creatSceneDOM != "function") {
-		/**
-		 * 创建DOM对像
-		 * @return sceneDOM
-		 */
-		LC.Components.Scene.prototype.creatSceneDOM = function() {
-			var sign = LC.CommonProperty.SIGN;
-			var scene = $("<div></div>").attr({
-				sign : _signID,
-				"class" : "scene-desktop"
-			});
-			LC.Components.Scene.prototype.sceneDOM = this.styleAlter(scene);
-			return LC.Components.Scene.prototype.sceneDOM;
-		};
-	};
-	/**
-	 * 获取的DOM对像，通过.append()加入页面
-	 */
-	LC.Components.Scene.prototype.sceneDOM
-};
-/**
- * 组件空间中加入场景工厂
- */
-LC.Components.SceneFactory = {
-	/**
-	 * 场景基本样式，创建并返回一个场景html对象scene，调用.append()加入页面中显示
-	 * @param {Object} sceneID 场景id
-	 */
-	createScene : function(sceneID) {
-		var returnScene = new LC.Components.Scene();
-		returnScene.setSignID(sceneID).creatSceneDOM();
-		return returnScene;
-	}
-};
-/**
- * 组件空间中加入开始菜单类
- */
-LC.Components.Menu = function(menuID){
-	var _signID = menuID;
-	//自定义ID
-	if ( typeof this.getSignID != "function") {
-		/**
-		 * 获取自定义ID
-		 */
-		LC.Components.Menu.prototype.getSignID = function() {
-			return _signID;
-		};
-	};
-	if ( typeof this.setSignID != "function") {
-		/**
-		 * 设置自定义ID
-		 */
-		LC.Components.Menu.prototype.setSignID = function(ID) {
-			_signID = ID;
-			return this;
-		};
-	};
-	if ( typeof this.styleAlter != "function") {
-		/**
-		 * 样式修改(子类继承扩展)
-		 * @param {Object} menu 菜单对象
-		 * @param {Function} fn 修改函数
-		 */
-		LC.Components.Menu.prototype.styleAlter = function(menu, fn) {
-			if ( typeof fn == "function") {
-				fn(menu);
-			}
-			return menu;
-		};
-	};
-	if ( typeof this.creatMenuDOM != "function") {
-		/**
-		 * 创建的DOM对像
-		 * @return menuDOM
-		 */
-		LC.Components.Menu.prototype.creatMenuDOM = function() {
-			var sign = LC.CommonProperty.SIGN;
-			var menu = $("<div></div>").attr({
-				sign : _signID,
-				"class" : "menu-start"
-			});
-			LC.Components.Menu.prototype.menuDOM = this.styleAlter(menu);
-			return LC.Components.Menu.prototype.menuDOM;
-		};
-	};
-	/**
-	 * 获取的DOM对像，通过.append()加入页面
-	 */
-	LC.Components.Menu.prototype.menuDOM
-};
-/**
- * 组件空间中加入菜单工厂
- */
-LC.Components.MenuFactory = {
-	/**
-	 * 菜单基本样式，创建并返回一个菜单html对象scene，调用.append()加入页面中显示
-	 * @param {Object} sceneID 菜单id
-	 */
-	createMenu : function(menuID) {
-		var returnMenu = new LC.Components.Menu();
-		returnMenu.setSignID(menuID).creatMenuDOM();
-		return returnMenu;
 	}
 };
