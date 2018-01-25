@@ -1,6 +1,6 @@
 
 /**
- * 组件空间中加入面板类
+ * 组件空间中加入按钮类
  */
 LC.Components.Button = function(buttonID){
 	var _signID = buttonID;
@@ -25,7 +25,7 @@ LC.Components.Button = function(buttonID){
 	/*
 	if ( typeof this.setText != "function") {
 		LC.Components.Button.prototype.setText = function(text){
-			this.buttonDOM.append($("<div></div>").css({
+			this.dom.append($("<div></div>").css({
 				"margin" : "auto"
 			}).append(text));
 			return this;
@@ -49,16 +49,15 @@ LC.Components.Button = function(buttonID){
 	 * 获取的DOM对像，通过.append()加入页面
 	 */
 	dom = null;
-	if ( typeof this.creatButtonDOM != "function") {
+	if ( typeof this.creatDOM != "function") {
 		/**
 		 * 创建的DOM对像
-		 * @return buttonDOM
+		 * @return DOM
 		 */
-		LC.Components.Button.prototype.creatButtonDOM = function() {
+		LC.Components.Button.prototype.creatDOM = function() {
 			var sign = LC.CommonProperty.SIGN;
 			var button = $("<button></button>").attr({
 				sign : _signID,
-				"class" : "botton-start"
 			});
 			this.dom = this.styleAlter(button);
 			return this.dom;
@@ -66,21 +65,36 @@ LC.Components.Button = function(buttonID){
 	};
 };
 /**
- * 组件空间中加入面板工厂
+ * 组件空间中加入按钮工厂
  */
 LC.Components.ButtonFactory = {
 	/**
-	 * 面板，创建并返回一个面板html对象scene，调用.append()加入页面中显示
-	 * @param {Object} sceneID 菜单id
+	 * 按钮，创建并返回一个按钮html对象button，调用.append()加入页面中显示
+	 * @param {Object} buttonID 菜单id
 	 */
-	createButton : function(buttonID) {
+	createButtonStart : function(buttonID) {
 		var returnButton = new LC.Components.Button();
-		returnButton.setSignID(buttonID).creatButtonDOM().attr({
+		returnButton.setSignID(buttonID).creatDOM().attr({
 			"class" :"botton-start"
-		}).css({
+		}).css({//测试用
 			"width":"150px",
 			"height":"35px"
 		});
 		return returnButton;
+	},
+	/**
+	 * 右上角关闭按钮，创建并返回一个关闭按钮html对象button，调用.append()加入页面中显示
+	 * @param {Object} buttonID 菜单id
+	 */
+	createButtonClose : function(buttonID,parten) {
+		if (null==parten)parten=1;
+		var returnButton = new LC.Components.Button();
+		returnButton.setSignID(buttonID).creatDOM().attr({
+			"class" :"botton-colse"
+		})[0].addEventListener("click",function(){
+			parten.hide();
+		},false);
+		return returnButton;
 	}
+	
 };

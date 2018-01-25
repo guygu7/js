@@ -23,10 +23,39 @@ LC.Components.Panel = function(panelID){
 		};
 	};
 	if ( typeof this.setText != "function") {
+		/**
+		 * 设置文本 
+		 */
 		LC.Components.Panel.prototype.setText = function(text){
-			this.panelDOM.append($("<div></div>").css({
+			this.dom.append($("<div></div>").css({
 				"margin" : "auto"
 			}).append(text));
+			return this;
+		};
+	};
+	if ( typeof this.hide != "function") {
+		/**
+		 * 隐藏
+		 */
+		LC.Components.Panel.prototype.hide = function() {
+			var className = this.dom.attr("class");
+			if (-1 == className.search(/panel-outerlayer-hide/)) {
+				this.dom.attr({
+					"class" : className + " panel-outerlayer-hide "
+				});
+			};
+			return this;
+		};
+	};
+	if ( typeof this.show != "function") {
+		/**
+		 * 显示
+		 */
+		LC.Components.Panel.prototype.show = function(fn) {
+			var className = this.dom.attr("class");
+			this.dom.attr({
+				"class" : className.replace(/panel-outerlayer-hide/, "")
+			});
 			return this;
 		};
 	};
@@ -47,16 +76,15 @@ LC.Components.Panel = function(panelID){
 	 * 获取的DOM对像，通过.append()加入页面
 	 */
 	dom = null;
-	if ( typeof this.creatPanelDOM != "function") {
+	if ( typeof this.creatDOM != "function") {
 		/**
 		 * 创建的DOM对像
 		 * @return panelDOM
 		 */
-		LC.Components.Panel.prototype.creatPanelDOM = function() {
+		LC.Components.Panel.prototype.creatDOM = function() {
 			var sign = LC.CommonProperty.SIGN;
 			var panel = $("<div></div>").attr({
 				sign : _signID,
-				"class" : "panel-outerlayer"
 			});
 			this.dom = this.styleAlter(panel);
 			return this.dom;
@@ -68,14 +96,27 @@ LC.Components.Panel = function(panelID){
  */
 LC.Components.PanelFactory = {
 	/**
-	 * 面板，创建并返回一个面板html对象scene，调用.append()加入页面中显示
+	 * 面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {Object} sceneID 菜单id
 	 */
 	createPanel : function(panelID) {
 		var returnPanel = new LC.Components.Panel();
-		returnPanel.setSignID(panelID).creatPanelDOM().css({
+		returnPanel.setSignID(panelID).creatDOM().attr({
+			"class" : "panel-outerlayer"
+		}).css({
 			"width":"200px",
 			"height":"400px"
+		});
+		return returnPanel;
+	},
+	/**
+	 * 顶部标题栏，创建并返回一个面板html对象panel，调用.append()加入页面中显示
+	 * @param {Object} sceneID 菜单id
+	 */
+	createPanel2 : function(panelID) {
+		var returnPanel = new LC.Components.Panel();
+		returnPanel.setSignID(panelID).creatDOM().attr({
+			"class" : "panel-title"
 		});
 		return returnPanel;
 	}

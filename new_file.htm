@@ -28,12 +28,20 @@
 			//scene.sceneDOM.append(progress1.progressDOM);
 			var menu1 = LC.Components.MenuFactory.createStartMenu("menuID");
 			var panel1 = LC.Components.PanelFactory.createPanel("panelID");
-			var button1 = LC.Components.ButtonFactory.createButton("buttonID");
-			var button2 = LC.Components.ButtonFactory.createButton("button2ID");
-			scene.dom.append(menu1.dom.append(button1.dom.append("start").click(function() {
+			var buttonstart = LC.Components.ButtonFactory.createButtonStart("buttonID");
+			var buttonback = LC.Components.ButtonFactory.createButtonStart("button2ID");
+			var buttonclose = LC.Components.ButtonFactory.createButtonClose("button3ID",panel1);
+			var panelTitel = LC.Components.PanelFactory.createPanel2("panel2ID");
+			panelTitel.setText("包裹物品文字，eyinwoa,");
+			sceneNext.dom.append(panel1.dom.append(buttonclose.dom).append(panelTitel.dom));
+			scene.dom.append(menu1.dom.append(buttonstart.dom.append("start").click(function() {
 				scene.hide();
-				setTimeout("sceneNext.show()",0);
+				setTimeout("sceneNext.show()",100);
 			})));
+			sceneNext.dom.append(buttonback.dom.append("back").click(function() {
+				sceneNext.hide();
+				setTimeout("scene.show()",100);
+			}));
 			//scene.dom.append(menu1.dom.append(button1.dom.append("start")).append(button2.dom.append("start")));
 		</script>
 	</body>

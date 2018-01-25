@@ -5,6 +5,7 @@ body {
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
+	font-family: LiSu ;
 }
 /**
  * 	背景桌布
@@ -26,8 +27,14 @@ body {
 	width: 950px;
 	height: 550px;
 	position: absolute;
-	transition: 1s;
+	transition: 0.5s;
 	overflow:hidden;
+	z-index: 1;
+}
+.scene-desktop-hide {
+	opacity: 0;
+	z-index: 0;
+	transform: scaleX(1.1) scaleY(1.1);
 }
 /**
  * 	开始菜单
@@ -53,17 +60,26 @@ body {
 	border: 3px ridge #474B64;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
+	z-index: 1;
 	position: relative;
+}
+.panel-outerlayer-hide {
+	opacity: 1;
+	z-index: 0;
+	transform: scaleX(0) scaleY(0);
 }
 /**
  * 	面板框标题栏
  */
 .panel-title {
 	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
-	color: #E4E6E5;
+	color: #3C3C3C;/*#E4E6E5;*/
 	border-radius: 2px;
 	padding-left: 3px;
 	margin-bottom: 10px;
+	height:23px;
+	text-align: center;
+	text-shadow: 0px 0px 5px #E6E6E6;
 }
 /**
  * 	面板（内层，不透明）
@@ -88,15 +104,31 @@ body {
 /**
  * 右上角的关闭按钮
  */
-.border-background-colse {
+.botton-colse {
 	border: 2px ridge #474B64;
-	border-radius: 10px;
+	border-radius: 15px;
 	padding: 1px;
 	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
+	color: #474B64;
 	position: absolute;
 	top: -8px;
-	right: -6px;
+	right: -8px;
 	z-index: 99;
+	line-height: 14px;
+    text-align: center;
+    height: 23px;
+    width: 23px;
+    font-size: 15px;
+    text-shadow: 1px 1px 1px #E6E6E6;
+}
+.botton-colse:before {
+    content: "\2716";
+}
+.botton-colse:hover{
+	cursor: pointer;
+}
+.botton-colse:active {
+	background: repeating-linear-gradient(#717171 1%,#BEBEBE 100%);
 }
 .botton-start{
 	border: 2px outset #717171;

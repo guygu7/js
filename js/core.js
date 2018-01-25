@@ -460,7 +460,7 @@ LC.Components.ComponentFunction = {
  * addActive(args) 按传入顺位号添加条纹动画
  * removeActive(args) 按传入顺位号移除条纹动画
  * styleAlter(progress) 进度条样式修改(子类继承扩展重写使用)
- * creatProgressDOM(num) 创建进度条的DOM对像,传入需要创建的子进度条的个数
+ * creatDOM(num) 创建进度条的DOM对像,传入需要创建的子进度条的个数
  * addListener(fn, num) 设置监听，在读条完成后调用函数（只能设置一个子进度条）
  * removeListener(fn, num) 移除监听，移除在读条完成后调用函数（只能设置一个子进度条）
  * setTransition(str, num) 修改过渡效果(一次只能设置一个，除长度外，可以在尾部添加其他过渡效果)
@@ -468,7 +468,7 @@ LC.Components.ComponentFunction = {
  * removeTransition(str, num) 还原过渡效果(一次只能设置一个)
  * start()  运行，开始读条到设定百分比
  *
- * progressDOM 进度条的DOM对像，通过.append()加入页面
+ * dom 进度条的DOM对像，通过.append()加入页面
  *
  * @param {Object} progressID 进度条id
  */
@@ -669,7 +669,7 @@ LC.Components.ProgressBar = function(progressID) {
 		LC.Components.ProgressBar.prototype.removeStriped = function(args) {
 			var param = LC.Components.ComponentFunction.checkInt(arguments, "去除条纹方法removeStriped");
 			//获得组件内部div progressBar
-			var progressChilds = this.progressDOM.children("div.progress-bar");
+			var progressChilds = this.dom.children("div.progress-bar");
 			for (var i = 0; i < param.length; i++) {
 				if (progressChilds.eq(Number(param[i]) - 1).length > 0) {
 					var className = progressChilds.eq(Number(param[i]) - 1).attr("class");
@@ -750,17 +750,17 @@ LC.Components.ProgressBar = function(progressID) {
 			return progress;
 		};
 	};
-	if ( typeof this.creatProgressDOM != "function") {
+	if ( typeof this.creatDOM != "function") {
 		/**
 		 * 创建进度条的DOM对像,传入需要创建的子进度条的个数
 		 * @param num 需要创建的子进度条的个数
 		 * @return dom
 		 */
-		LC.Components.ProgressBar.prototype.creatProgressDOM = function(num) {
+		LC.Components.ProgressBar.prototype.creatDOM = function(num) {
 			if (null == num) {
 				num = 1;
 			};
-			var param = Number(LC.Components.ComponentFunction.checkNumInt(num, "创建进度条方法creatProgressDOM"));
+			var param = Number(LC.Components.ComponentFunction.checkNumInt(num, "创建进度条方法creatDOM"));
 			var sign = LC.CommonProperty.SIGN;
 			var progress = $("<div></div>").attr({
 				sign : _signID,
@@ -950,7 +950,7 @@ LC.Components.ProgressBarFactory = {
 	 */
 	createProgressBar : function(progressID) {
 		var returnProgress = new LC.Components.ProgressBar();
-		returnProgress.setSignID(progressID).creatProgressDOM(1);
+		returnProgress.setSignID(progressID).creatDOM(1);
 		return returnProgress;
 	},
 	/**
@@ -960,7 +960,7 @@ LC.Components.ProgressBarFactory = {
 	 */
 	createProgressBar1 : function(progressID, width) {
 		var returnProgress = new LC.Components.ProgressBar();
-		returnProgress.setSignID(progressID).creatProgressDOM(2).css({
+		returnProgress.setSignID(progressID).creatDOM(2).css({
 			//创建同时设置边框
 			"border" : "3px ridge #767676",
 			"border-radius" : "25px"

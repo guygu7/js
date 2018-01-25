@@ -39,12 +39,12 @@ LC.Components.Menu = function(menuID){
 	 * 获取的DOM对像，通过.append()加入页面
 	 */
 	dom=null;
-	if ( typeof this.creatMenuDOM != "function") {
+	if ( typeof this.creatDOM != "function") {
 		/**
 		 * 创建的DOM对像
 		 * @return menuDOM
 		 */
-		LC.Components.Menu.prototype.creatMenuDOM = function() {
+		LC.Components.Menu.prototype.creatDOM = function() {
 			var sign = LC.CommonProperty.SIGN;
 			var menu = $("<div></div>").attr({
 				sign : _signID,
@@ -65,7 +65,7 @@ LC.Components.MenuFactory = {
 	 */
 	createStartMenu : function(menuID) {
 		var returnStartMenu = new LC.Components.Menu();
-		returnStartMenu.setSignID(menuID).creatMenuDOM();
+		returnStartMenu.setSignID(menuID).creatDOM();
 		return returnStartMenu;
 	}
 };

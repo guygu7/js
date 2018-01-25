@@ -27,9 +27,12 @@ LC.Components.Scene = function(sceneID) {
 		 * 隐藏
 		 */
 		LC.Components.Scene.prototype.hide = function() {
-			var domTemp = this.dom;
-			this.dom.css({"opacity": "0","z-index":"0"});
-			//this.dom.remove();
+			var className = this.dom.attr("class");
+			if (-1 == className.search(/scene-desktop-hide/)) {
+				this.dom.attr({
+					"class" : className + " scene-desktop-hide "
+				});
+			};
 			return this;
 		};
 	};
@@ -38,9 +41,10 @@ LC.Components.Scene = function(sceneID) {
 		 * 显示
 		 */
 		LC.Components.Scene.prototype.show = function(fn) {
-			var domTemp = this.dom;
-			this.dom.css({"opacity": "1","z-index":"1"});
-			//this.dom.remove();
+			var className = this.dom.attr("class");
+			this.dom.attr({
+				"class" : className.replace(/scene-desktop-hide/, "")
+			});
 			return this;
 		};
 	};
@@ -61,12 +65,12 @@ LC.Components.Scene = function(sceneID) {
 	 * 获取的DOM对像，通过.append()加入页面
 	 */
 	dom=null;
-	if ( typeof this.creatSceneDOM != "function") {
+	if ( typeof this.creatDOM != "function") {
 		/**
 		 * 创建DOM对像
 		 * @return sceneDOM
 		 */
-		LC.Components.Scene.prototype.creatSceneDOM = function() {
+		LC.Components.Scene.prototype.creatDOM = function() {
 			var sign = LC.CommonProperty.SIGN;
 			var scene = $("<div></div>").attr({
 				sign : _signID,
@@ -87,7 +91,7 @@ LC.Components.SceneFactory = {
 	 */
 	createScene : function(sceneID) {
 		var returnScene = new LC.Components.Scene();
-		returnScene.setSignID(sceneID).creatSceneDOM();
+		returnScene.setSignID(sceneID).creatDOM();
 		return returnScene;
 	}
 };
