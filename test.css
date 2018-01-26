@@ -30,6 +30,7 @@ body {
 	transition: 0.5s;
 	overflow:hidden;
 	z-index: 1;
+	display: inline-block;
 }
 .scene-desktop-hide {
 	opacity: 0;
@@ -61,12 +62,14 @@ body {
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
 	z-index: 1;
-	position: relative;
+	position: absolute;
+	transition:0.2s;
+	display: inline-block;
 }
 .panel-outerlayer-hide {
-	opacity: 1;
+	opacity: 0;
 	z-index: 0;
-	transform: scaleX(0) scaleY(0);
+	transform: scale(0);
 }
 /**
  * 	面板框标题栏
@@ -77,9 +80,12 @@ body {
 	border-radius: 2px;
 	padding-left: 3px;
 	margin-bottom: 10px;
+	width:100%;
 	height:23px;
 	text-align: center;
 	text-shadow: 0px 0px 5px #E6E6E6;
+	display: inline-block;
+	position: absolute;
 }
 /**
  * 	面板（内层，不透明）
@@ -87,12 +93,13 @@ body {
 .panel-innerlayer {
 	border: 2px ridge #474B64;
 	border-radius: 3px;
-	display: inline-block;
 	margin: 2px 0px 2px 0px;
 	background-color: #BEBEBE;
 	border-radius: 3px;
 	transition: 0.1s;
+	position: absolute;
 	text-align: center;
+	display: inline-block;
 }
 /**
  * 	面板框（物品）边框（内层，小号）
@@ -108,6 +115,7 @@ body {
 	border: 2px ridge #474B64;
 	border-radius: 15px;
 	padding: 1px;
+	padding-left: 2px;
 	background: repeating-linear-gradient(#BEBEBE 1%,#717171 100%);
 	color: #474B64;
 	position: absolute;
@@ -128,6 +136,7 @@ body {
 	cursor: pointer;
 }
 .botton-colse:active {
+	padding-top: 3px;
 	background: repeating-linear-gradient(#717171 1%,#BEBEBE 100%);
 }
 .botton-start{

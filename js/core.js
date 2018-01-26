@@ -445,6 +445,80 @@ LC.Components.ComponentFunction = {
 			num = 1;
 		}
 		return num;
+	},
+	/**
+	 * 拖拽事件
+	 * obj 拖拽触发对象
+	 * moveobj 拖拽移动对象
+	 * parentObj 拖拽限制移动范围元素对象
+	 */
+	drag : function(obj, moveobj, parentObj) {
+		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
+			obj = obj.dom;
+		}
+		if (null == moveobj) {//适配，如果未传入moveobj，则默认是obj自身
+			moveobj = obj;
+		} else if (moveobj.dom) {//适配，如果传入的不是dom，则转为dom
+			moveobj = moveobj.dom;
+		}
+		if (null == parentObj) {//适配，如果未传入parentObj，则默认是moveobj的父元素
+			parentObj = moveobj.parent();
+		} else if (parentObj.dom) {//适配，如果传入的不是dom，则转为dom
+			parentObj = parentObj.dom;
+		}
+		obj.bind("mousedown", start);
+		function start(event) {
+			if (0 == event.button) {//左键点击
+				//鼠标位置-左边位距(相对)+margin=相对父元素X值
+				gapX = event.clientX - moveobj[0].offsetLeft + Number(moveobj.css("margin-left").replace("px", ""));
+				gapY = event.clientY - moveobj[0].offsetTop + Number(moveobj.css("margin-top").replace("px", ""));
+				parentObjX = Number(parentObj.css("width").replace("px", "")) - Number(moveobj.css("width").replace("px", "")) - Number(moveobj.css("margin-left").replace("px", ""));
+				parentObjY = Number(parentObj.css("height").replace("px", "")) - Number(moveobj.css("height").replace("px", "")) - Number(moveobj.css("margin-top").replace("px", ""));
+				console.log(event.clientX);
+				console.log(moveobj[0].offsetLeft);
+				console.log(moveobj.css("margin-left").replace("px", ""));
+				console.log(gapX);
+				moveobj.css({
+					"transition" : "0s"
+				});
+				//移除其他过度效果
+				$(document).bind("mousemove", move);
+				$(document).bind("mouseup", stop);
+			}
+		};
+		function move(event) {
+			//左位置+元素宽度>场景边距，则=场景边距-50
+			//最终left值=鼠标位置-相对父元素X值
+			leftX = event.clientX - gapX;
+			if (leftX > parentObjX) {//限制不会移出右边
+				leftX = parentObjX;
+			} else if (leftX < 0) {//限制不会移出左边
+				leftX = 0;
+			} else {
+				leftX = event.clientX - gapX;
+			}
+			console.log(leftX);
+			topY = event.clientY - gapY;
+			if (topY > parentObjY) {//限制不会移出右边
+				topY = parentObjY;
+			} else if (topY < 0) {//限制不会移出左边
+				topY = 0;
+			} else {
+				topY = event.clientY - gapY;
+			}
+			moveobj.css({
+				"left" : (leftX) + "px",
+				"top" : (topY) + "px"
+			});
+		};
+		function stop() {
+			moveobj.css({
+				"transition" : ""
+			});
+			//还原过度效果
+			$(document).unbind("mousemove", move);
+			$(document).unbind("mouseup", stop);
+		};
 	}
 };
 /**

@@ -83,7 +83,7 @@ LC.Components.Panel = function(panelID){
 		 */
 		LC.Components.Panel.prototype.creatDOM = function() {
 			var sign = LC.CommonProperty.SIGN;
-			var panel = $("<div></div>").attr({
+			var panel = $("<span></span>").attr({
 				sign : _signID,
 			});
 			this.dom = this.styleAlter(panel);
@@ -97,7 +97,7 @@ LC.Components.Panel = function(panelID){
 LC.Components.PanelFactory = {
 	/**
 	 * 面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
-	 * @param {Object} sceneID 菜单id
+	 * @param {Object} panelID 面板id
 	 */
 	createPanel : function(panelID) {
 		var returnPanel = new LC.Components.Panel();
@@ -111,12 +111,26 @@ LC.Components.PanelFactory = {
 	},
 	/**
 	 * 顶部标题栏，创建并返回一个面板html对象panel，调用.append()加入页面中显示
-	 * @param {Object} sceneID 菜单id
+	 * @param {Object} panelID 面板id
+	 */
+	createPanelTitle : function(panelID) {
+		var returnPanel = new LC.Components.Panel();
+		returnPanel.setSignID(panelID).creatDOM().attr({
+			"class" : "panel-title"
+		});
+		return returnPanel;
+	},
+	/**
+	 * ，创建并返回一个面板html对象panel，调用.append()加入页面中显示
+	 * @param {Object} panelID 面板id
 	 */
 	createPanel2 : function(panelID) {
 		var returnPanel = new LC.Components.Panel();
 		returnPanel.setSignID(panelID).creatDOM().attr({
-			"class" : "panel-title"
+			"class" : "panel-innerlayer"
+		}).css({
+			"width":"50px",
+			"height":"50px"
 		});
 		return returnPanel;
 	}
