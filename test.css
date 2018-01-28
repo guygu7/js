@@ -1,5 +1,5 @@
 body {
-	background: #E4E6E5;
+	background: #bdc3c7;
 	margin: 0;
 	padding: 0;
 	-moz-user-select: none;
@@ -11,18 +11,24 @@ body {
  * 	背景桌布
  */
 .main-desktop {
-	background: #717171;
+	background: #2c3e50;
 	border-radius: 5px;
 	width: 1100px;
 	height: 600px;
 	margin: 5px auto;
 	padding: 20px 75px 0px 75px;
 }
+.public{
+	transition: 0.5s;
+	display: inline-block;
+	position: absolute;
+	z-index: 1;
+}
 /**
  *  场景桌面
  */
 .scene-desktop {
-	background: rgb(230,230,230);
+	background: #bdc3c7;
 	border-radius: 5px;
 	width: 950px;
 	height: 550px;
@@ -32,10 +38,21 @@ body {
 	z-index: 1;
 	display: inline-block;
 }
-.scene-desktop-hide {
+/**
+ * 	隐藏特效（扩张消失）
+ */
+.hide-expand {
 	opacity: 0;
 	z-index: 0;
-	transform: scaleX(1.1) scaleY(1.1);
+	transform: scale(1.1);
+}
+/**
+ * 	隐藏特效（缩小消失）
+ */
+.hide-shrink {
+	opacity: 0;
+	z-index: 0;
+	transform: scale(0);
 }
 /**
  * 	开始菜单
@@ -58,7 +75,7 @@ body {
  */
 .panel-outerlayer {
 	margin: 5px;
-	border: 3px ridge #474B64;
+	border: 3px ridge #BEBEBE /*#474B64*/;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
 	z-index: 1;
@@ -66,11 +83,7 @@ body {
 	transition:0.2s;
 	display: inline-block;
 }
-.panel-outerlayer-hide {
-	opacity: 0;
-	z-index: 0;
-	transform: scale(0);
-}
+
 /**
  * 	面板框标题栏
  */
@@ -80,8 +93,6 @@ body {
 	border-radius: 2px;
 	padding-left: 3px;
 	margin-bottom: 10px;
-	width:100%;
-	height:23px;
 	text-align: center;
 	text-shadow: 0px 0px 5px #E6E6E6;
 	display: inline-block;
@@ -100,13 +111,6 @@ body {
 	position: absolute;
 	text-align: center;
 	display: inline-block;
-}
-/**
- * 	面板框（物品）边框（内层，小号）
- */
-.panel-innerlayer:hover {
-	transform: scaleX(1.1) scaleY(1.1);
-	/*z-index: 101;*/
 }
 /**
  * 右上角的关闭按钮

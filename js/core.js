@@ -18,7 +18,18 @@ LC.CommonProperty = {
 	//进度条过渡色：石板灰
 	COLOR_PROGRESS_GREY : "repeating-linear-gradient(#5A230F 1%,#778899 20%,#708090 40%,#2F4F4F 97%,#5B3123 100%)",
 	//进度条过渡色：绿
-	COLOR_PROGRESS_GREEN : "repeating-linear-gradient(#5A230F 1%,#3DFF1E 15%,#5DD810 50%,#157600 97%,#5B3123 100%)"
+	COLOR_PROGRESS_GREEN : "repeating-linear-gradient(#5A230F 1%,#3DFF1E 15%,#5DD810 50%,#157600 97%,#5B3123 100%)",
+	/*---CSS class---*/
+	/**
+	 * CSS class:hide-expand 隐藏特效（扩张消失）
+	 */
+	CSS_HIDE_EXPAND : " hide-expand ",
+	/**
+	 * CSS class:hide-shrink 隐藏特效（缩小消失）
+	 */
+	CSS_HIDE_SHRINK : " hide-shrink "
+	
+	
 };
 /**
  * 打印错误信息
@@ -31,9 +42,12 @@ LC.warning = function(msg) {
  */
 LC.Utils = {};
 /**
- * EXTEND method继承方法(子,父)
- * @param {Object} sub 子
- * @param {Object} sup 父
+ * <br>继承方法</br>
+ * 参数：</br>
+ * Object sub (必须)用于继承的子类</br>
+ * Object sup (必须)被继承的父类
+ * @param {Object} sub
+ * @param {Object} sup
  */
 LC.Utils.extend = function(sub, sup) {
 	// 目的： 实现只继承父类的原型对象
