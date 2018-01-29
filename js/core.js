@@ -461,7 +461,7 @@ LC.Components.ComponentFunction = {
 		return num;
 	},
 	/**
-	 * 拖拽事件
+	 * 添加拖拽事件
 	 * obj 拖拽触发对象
 	 * moveobj 拖拽移动对象
 	 * parentObj 拖拽限制移动范围元素对象
@@ -483,31 +483,80 @@ LC.Components.ComponentFunction = {
 		obj.bind("mousedown", start);
 		function start(event) {
 			if (0 == event.button) {//左键点击
-				//鼠标位置-左边位距(相对)+margin=相对父元素X值
-				gapX = event.clientX - moveobj[0].offsetLeft + Number(moveobj.css("margin-left").replace("px", ""));
-				gapY = event.clientY - moveobj[0].offsetTop + Number(moveobj.css("margin-top").replace("px", ""));
-				parentObjX = Number(parentObj.css("width").replace("px", "")) - Number(moveobj.css("width").replace("px", "")) - Number(moveobj.css("margin-left").replace("px", ""));
-				parentObjY = Number(parentObj.css("height").replace("px", "")) - Number(moveobj.css("height").replace("px", "")) - Number(moveobj.css("margin-top").replace("px", ""));
-				console.log(event.clientX);
-				console.log(moveobj[0].offsetLeft);
-				console.log(moveobj.css("margin-left").replace("px", ""));
-				console.log(gapX);
-				moveobj.css({
-					"transition" : "0s"
-				});
+				maxY = 0;
+				minY = 0;
+				/*
+				if ("absolute"==moveobj.css("position")) {//判断移动的元素moveobj是绝对定位absolute
+					//鼠标位置-左边位距(相对)+margin=相对父元素X值
+					gapX = event.clientX - moveobj[0].offsetLeft + Number(moveobj.css("margin-left").replace("px", ""));
+					gapY = event.clientY - moveobj[0].offsetTop + Number(moveobj.css("margin-top").replace("px", ""));
+					parentObjX = Number(parentObj.width()) - Number(moveobj.width()) - Number(moveobj.css("margin-left").replace("px", ""));
+					parentObjY = Number(parentObj.height()) - Number(moveobj.height()) - Number(moveobj.css("margin-top").replace("px", ""));
+					console.log(event.clientX);
+					console.log(moveobj[0].offsetLeft);
+					console.log(moveobj.css("margin-left").replace("px", ""));
+					console.log(gapX);
+					moveobj.css({
+						"transition" : "0s"
+					});
+				} else 
+				*/
+				/*
+				 * 原鼠标位置
+				 * 原元素相对位置
+				 * 新鼠标位置
+				 * 新元素位置=新鼠标位置-原鼠标位置+原元素相对位置
+				 * 元素位置上限（即右边线）=父元素宽度-原元素相对位置-原元素宽度
+				 * 元素位置下限（即左边线）=原元素绝对位置-父元素宽度
+				 */
+				if("relative"==moveobj.css("position")){//判断移动的元素moveobj是相对定位relative
+					//console.log(moveobj.position().left);//相对
+					gapX = Number(moveobj.css("left").replace("px", ""))-event.clientX;
+					gapY = event.clientY;
+					maxX = parentObj.width()-moveobj.width()-moveobj.position().left+Number(moveobj.css("left").replace("px", ""));
+					maxX = maxX-moveobj.css("margin-left").replace("px", "");
+					minX = moveobj.css("left").replace("px", "")-moveobj.position().left;
+					parentObjY = Number(parentObj.height()-moveobj.height())-Number(moveobj.css("margin-top").replace("px", ""));
+					moveobj.css({
+						"transition" : "0s",
+					});
+				};
 				//移除其他过度效果
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", stop);
 			}
 		};
 		function move(event) {
+			leftX = event.clientX+gapX;
+			if (leftX > maxX) {//限制不会移出右边
+				leftX = maxX;
+			} else if (leftX < minX) {//限制不会移出左边
+				leftX = minX;
+			}
+			/*
+			topY = event.clientY - gapY;
+			if (topY > parentObjY) {//限制不会移出右边
+				topY = parentObjY;
+			} else if (topY < 0) {//限制不会移出左边
+				topY = 0;
+			} else {
+				topY = event.clientY - gapY;
+			}
+			*/
+			moveobj.css({
+				"left" : leftX + "px",
+				//"top" : (topY) + "px"
+			});
+		};
+		/*
+		function move(event) {
 			//左位置+元素宽度>场景边距，则=场景边距-50
 			//最终left值=鼠标位置-相对父元素X值
-			leftX = event.clientX - gapX;
-			if (leftX > parentObjX) {//限制不会移出右边
-				leftX = parentObjX;
-			} else if (leftX < 0) {//限制不会移出左边
-				leftX = 0;
+			leftX = event.clientX - gapX;//鼠标移动差值，正为向右，负为向左
+			if (leftX > maxX) {//限制不会移出右边
+				leftX = maxX;
+			} else if (leftX < minX) {//限制不会移出左边
+				leftX = minX;
 			} else {
 				leftX = event.clientX - gapX;
 			}
@@ -525,9 +574,10 @@ LC.Components.ComponentFunction = {
 				"top" : (topY) + "px"
 			});
 		};
+		*/
 		function stop() {
 			moveobj.css({
-				"transition" : ""
+				"transition" : "",
 			});
 			//还原过度效果
 			$(document).unbind("mousemove", move);

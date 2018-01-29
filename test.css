@@ -79,7 +79,7 @@ body {
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
 	z-index: 1;
-	position: absolute;
+	position: relative;
 	transition:0.2s;
 	display: inline-block;
 }

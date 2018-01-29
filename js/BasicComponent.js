@@ -57,6 +57,20 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return this;
 		};
 	};
+	//自动重写宽高
+	LC.Components.BasicComponent.prototype.autoSize=function(){
+		var childs = this.dom.children();
+		var width=0;
+		var height=0;
+		for (var i=0; i < childs.length; i++) {
+		  width = width + Number(childs[i].css("width").replace("px",""));
+		  childs[i].css("margin-top");
+		  childs[i].css("margin-bottom");
+		  childs[i].css("height");
+		  childs[i].css("margin-left");
+		  childs[i].css("margin-right");
+		};
+	};
 	if ( typeof this.styleAlter != "function") {
 		/**
 		 * 样式修改(子类继承扩展)

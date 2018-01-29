@@ -21,8 +21,6 @@
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene("startScene");
-			//var startMenu = LC.Components.
-			
 			var menu1 = LC.Components.MenuFactory.createStartMenu("menuID");
 			var buttonstart = LC.Components.ButtonFactory.createButtonStart("buttonID");
 			scene.dom.append(menu1.dom.append(buttonstart.dom.append("start").click(function() {
@@ -45,13 +43,13 @@
 			
 			//-----
 			//面板主体
-			var panelbag9 = LC.Components.PanelFactory.createPanel("panel9ID");
+			var panelbag9 = LC.Components.PanelFactory.createPanel("panelID");
 			//关闭按钮
-			var buttonclose9 = LC.Components.ButtonFactory.createButtonClose("button39ID",panelbag);
+			var buttonclose9 = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag);
 			//面板标题
-			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle("panel29ID").setText("面板物品文字，eyoa,");
+			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle("panel2ID").setText("面板物品文字，eyoa,");
 			//内部
-			var panel29 = LC.Components.PanelFactory.createPanel2("paneln9ID");
+			var panel29 = LC.Components.PanelFactory.createPanel2("panelnID");
 			var panel39 = LC.Components.PanelFactory.createPanel2("paneln22ID");
 			panelbag9.dom.append(buttonclose9.dom).append(panelTitel9.dom).append(panel29.dom).append(panel39.dom);
 			sceneNext.dom.append(panelbag9.dom);
