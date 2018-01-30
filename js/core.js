@@ -32,6 +32,12 @@ LC.CommonProperty = {
 	
 };
 /**
+ * 全局变量 
+ */
+LC.GlobalVar={
+	zIndex : []
+};
+/**
  * 打印错误信息
  */
 LC.warning = function(msg) {
@@ -461,10 +467,10 @@ LC.Components.ComponentFunction = {
 		return num;
 	},
 	/**
-	 * 添加拖拽事件
-	 * obj 拖拽触发对象
-	 * moveobj 拖拽移动对象
-	 * parentObj 拖拽限制移动范围元素对象
+	 * 添加拖拽事件(只能传入jQuery对象)
+	 * obj 拖拽触发dom对象
+	 * moveobj 拖拽移动dom对象
+	 * parentObj 拖拽限制移动范围元素dom对象
 	 */
 	drag : function(obj, moveobj, parentObj) {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
@@ -483,6 +489,8 @@ LC.Components.ComponentFunction = {
 		obj.bind("mousedown", start);
 		function start(event) {
 			if (0 == event.button) {//左键点击
+				console.log("moveobj.sign="+moveobj.attr("sign"));
+				LC.Components.ComponentFunction.zIndexToTop(moveobj);//置顶
 				gapX = parseInt(moveobj.css("left"))-event.clientX;
 				gapY = parseInt(moveobj.css("top"))-event.clientY;
 				maxX = parentObj.width()-moveobj.width()-moveobj.position().left+parseInt(moveobj.css("left"))-parseInt(moveobj.css("margin-right"))-parseInt(parentObj.css("padding-right"))-parseInt(moveobj.css("margin-left"))-parseInt(parentObj.css("padding-left"));
@@ -491,7 +499,7 @@ LC.Components.ComponentFunction = {
 				minY = parseInt(moveobj.css("top"))-moveobj.position().top-parseInt(moveobj.css("margin-bottom"))-parseInt(parentObj.css("padding-bottom"));
 				moveobj.css({
 					"transition" : "0s",
-					"z-index": "99"
+					//"z-index": "99"
 				});
 				//移除其他过度效果
 				$(document).bind("mousemove", move);
@@ -517,15 +525,93 @@ LC.Components.ComponentFunction = {
 			});
 		};
 		function stop() {
-			var z = moveobj.css("z-index")-1;
+			//var z = moveobj.css("z-index")-1;
 			moveobj.css({
 				"transition" : "",
-				"z-index": z
+				//"z-index": z
 			});
 			//还原过度效果
 			$(document).unbind("mousemove", move);
 			$(document).unbind("mouseup", stop);
 		};
+	},
+	/**
+	 * (只能传入jQuery对象) 
+	 */
+	zIndexToTop : function(obj){
+		console.log("===========开始==============");
+		//堆栈最大长度，最多保存N个对象
+		var zIndexMaxSize=10;
+		//堆栈中z-index初始值（最小值）
+		var zIndexMinValue=100;
+		//堆栈中z-index最大值，避免无限增大，重置运行次数为初始值（最小值）+N
+		var zIndexMaxValue=zIndexMinValue+zIndexMaxSize+10;
+		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
+			obj = obj.dom;
+		}
+		//获取全局变量中z-index[]数组长度
+		var zSize = LC.GlobalVar.zIndex.length;
+		//判断z-index是否有对象
+		if (LC.GlobalVar.zIndex.length>0){
+			//有，判断是否有相同对象
+			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
+				console.log(LC.GlobalVar.zIndex[i].attr("sign")+":"+obj.attr("sign"));
+			  if(LC.GlobalVar.zIndex[i]===obj){
+			  	console.log("移除重复元素"+LC.GlobalVar.zIndex[i].attr("sign"));
+			  	LC.GlobalVar.zIndex.shift().css({"z-index":""});
+			  } else if(LC.GlobalVar.zIndex[i].attr("sign").toString==obj.attr("sign").toString){
+			  	console.log("移除重复元素"+LC.GlobalVar.zIndex[i].attr("sign"));
+			  	LC.GlobalVar.zIndex.shift().css({"z-index":""});
+			  }
+			  console.log("剩余："+LC.GlobalVar.zIndex.length);
+			};
+			if (LC.GlobalVar.zIndex.length==0){//经过移除重复元素后数组为空
+				obj.css({"z-index":zIndexMinValue});
+				LC.GlobalVar.zIndex.push(obj);
+				console.log("移除后剩余0个，返回");
+				return;
+			};
+			console.log("NNN");
+			//有相同对象则移除相同对象
+			//判断是否达到数组长度上限
+			if(LC.GlobalVar.zIndex.length>=zIndexMaxSize){
+				//--达到上限则去除最开始的一个
+				LC.GlobalVar.zIndex.shift().css({"z-index":""});
+				console.log("移除元素");
+			}
+			//--然后取数组中z-index最大值
+			var maxIndex=1;
+			var index=1;
+			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
+				index = parseInt(LC.GlobalVar.zIndex[i].css("z-index"));
+				if (index>maxIndex) {
+					maxIndex=index;
+				};
+				console.log("取到数组中z-index最大值，第"+i+"个,sign="+LC.GlobalVar.zIndex[i].attr("sign")+"，zIndex:"+maxIndex);
+			};
+			//--判断最大值是否达到z-index上限值
+			if (maxIndex>=zIndexMaxValue){
+				//----达到上限则遍历数组，将数组对象中z-index值降低
+				for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
+					index = LC.GlobalVar.zIndex[i].css("z-index");
+					LC.GlobalVar.zIndex[i].css({"z-index":index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)});
+					console.log("遍历重置数组:"+index+"-("+zIndexMaxValue+"-"+zIndexMinValue+"-"+zIndexMaxSize+")="+(index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)));
+				};
+				//重设当前最大值=zIndex初始值+保存对象个数N
+				maxIndex=zIndexMinValue+zIndexMaxSize;
+			};
+			//新对象z-index+1装入数组
+			console.log("sign:"+obj.attr("sign")+"zIndex:"+maxIndex+"+1");
+			obj.css({"z-index":maxIndex+1});
+			LC.GlobalVar.zIndex.push(obj);
+		} else {//没有，装入，并设置初始值
+			obj.css({"z-index":zIndexMinValue});
+			LC.GlobalVar.zIndex.push(obj);
+		}
+		for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
+		  console.log(LC.GlobalVar.zIndex[i].attr("sign"));
+		};
+		console.log("===========结束==============");
 	}
 };
 /**
