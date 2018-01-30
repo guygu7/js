@@ -555,15 +555,13 @@ LC.Components.ComponentFunction = {
 		if (LC.GlobalVar.zIndex.length>0){
 			//有，判断是否有相同对象
 			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
-				console.log(LC.GlobalVar.zIndex[i].attr("sign")+":"+obj.attr("sign"));
+				//console.log("i="+i);
+				//console.log(LC.GlobalVar.zIndex[i].attr("sign")+":"+obj.attr("sign"));
 			  if(LC.GlobalVar.zIndex[i]===obj){
-			  	console.log("移除重复元素"+LC.GlobalVar.zIndex[i].attr("sign"));
-			  	LC.GlobalVar.zIndex.shift().css({"z-index":""});
-			  } else if(LC.GlobalVar.zIndex[i].attr("sign").toString==obj.attr("sign").toString){
-			  	console.log("移除重复元素"+LC.GlobalVar.zIndex[i].attr("sign"));
-			  	LC.GlobalVar.zIndex.shift().css({"z-index":""});
-			  }
-			  console.log("剩余："+LC.GlobalVar.zIndex.length);
+			  	LC.GlobalVar.zIndex.splice(i,1)[0].css({"z-index":""});
+			  	i--;
+			  } 
+			  console.log("剩余length："+LC.GlobalVar.zIndex.length);
 			};
 			if (LC.GlobalVar.zIndex.length==0){//经过移除重复元素后数组为空
 				obj.css({"z-index":zIndexMinValue});
@@ -571,23 +569,23 @@ LC.Components.ComponentFunction = {
 				console.log("移除后剩余0个，返回");
 				return;
 			};
-			console.log("NNN");
+			//console.log("NNN");
 			//有相同对象则移除相同对象
 			//判断是否达到数组长度上限
 			if(LC.GlobalVar.zIndex.length>=zIndexMaxSize){
 				//--达到上限则去除最开始的一个
 				LC.GlobalVar.zIndex.shift().css({"z-index":""});
-				console.log("移除元素");
+				//console.log("移除元素");
 			}
 			//--然后取数组中z-index最大值
-			var maxIndex=1;
+			var maxIndex=0;
 			var index=1;
 			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
 				index = parseInt(LC.GlobalVar.zIndex[i].css("z-index"));
-				if (index>maxIndex) {
+				if (maxIndex<index) {
 					maxIndex=index;
 				};
-				console.log("取到数组中z-index最大值，第"+i+"个,sign="+LC.GlobalVar.zIndex[i].attr("sign")+"，zIndex:"+maxIndex);
+				//console.log("取到数组中z-index最大值，第"+i+"个,sign="+LC.GlobalVar.zIndex[i].attr("sign")+"，zIndex:"+maxIndex);
 			};
 			//--判断最大值是否达到z-index上限值
 			if (maxIndex>=zIndexMaxValue){
@@ -595,22 +593,20 @@ LC.Components.ComponentFunction = {
 				for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
 					index = LC.GlobalVar.zIndex[i].css("z-index");
 					LC.GlobalVar.zIndex[i].css({"z-index":index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)});
-					console.log("遍历重置数组:"+index+"-("+zIndexMaxValue+"-"+zIndexMinValue+"-"+zIndexMaxSize+")="+(index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)));
+					//console.log("遍历重置数组:"+index+"-("+zIndexMaxValue+"-"+zIndexMinValue+"-"+zIndexMaxSize+")="+(index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)));
 				};
 				//重设当前最大值=zIndex初始值+保存对象个数N
 				maxIndex=zIndexMinValue+zIndexMaxSize;
 			};
 			//新对象z-index+1装入数组
-			console.log("sign:"+obj.attr("sign")+"zIndex:"+maxIndex+"+1");
-			obj.css({"z-index":maxIndex+1});
+			obj.css({"z-index":(maxIndex+1)});
+			console.log("放入数组——sign:"+obj.attr("sign")+"zIndex:"+obj.css("z-index"));
 			LC.GlobalVar.zIndex.push(obj);
 		} else {//没有，装入，并设置初始值
 			obj.css({"z-index":zIndexMinValue});
 			LC.GlobalVar.zIndex.push(obj);
+			console.log("放入数组——sign:"+obj.attr("sign")+"zIndex:"+obj.css("z-index"));
 		}
-		for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
-		  console.log(LC.GlobalVar.zIndex[i].attr("sign"));
-		};
 		console.log("===========结束==============");
 	}
 };
