@@ -35,7 +35,6 @@ LC.CommonProperty = {
  * 全局变量 
  */
 LC.GlobalVar={
-	zIndex : []
 };
 /**
  * 打印错误信息
@@ -535,6 +534,7 @@ LC.Components.ComponentFunction = {
 			$(document).unbind("mouseup", stop);
 		};
 	},
+	zIndex:[],
 	/**
 	 * (只能传入jQuery对象) 
 	 */
@@ -549,33 +549,33 @@ LC.Components.ComponentFunction = {
 			obj = obj.dom;
 		}
 		//获取全局变量中z-index[]数组长度
-		var zSize = LC.GlobalVar.zIndex.length;
+		var zSize = LC.Components.ComponentFunction.zIndex.length;
 		//判断z-index是否有对象
-		if (LC.GlobalVar.zIndex.length>0){
+		if (LC.Components.ComponentFunction.zIndex.length>0){
 			//有，判断是否有相同对象
-			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
+			for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
 			//有相同对象则移除相同对象
-			  if(LC.GlobalVar.zIndex[i]===obj){
-			  	LC.GlobalVar.zIndex.splice(i,1)[0].css({"z-index":""});
+			  if(LC.Components.ComponentFunction.zIndex[i]===obj){
+			  	LC.Components.ComponentFunction.zIndex.splice(i,1)[0].css({"z-index":""});
 			  	i--;
 			  } 
 			};
-			if (LC.GlobalVar.zIndex.length==0){//经过移除重复元素后数组为空
+			if (LC.Components.ComponentFunction.zIndex.length==0){//经过移除重复元素后数组为空
 				obj.css({"z-index":zIndexMinValue});
-				LC.GlobalVar.zIndex.push(obj);
+				LC.Components.ComponentFunction.zIndex.push(obj);
 				console.log("移除后剩余0个，返回");
 				return;
 			};
 			//判断是否达到数组长度上限
-			if(LC.GlobalVar.zIndex.length>=zIndexMaxSize){
+			if(LC.Components.ComponentFunction.zIndex.length>=zIndexMaxSize){
 				//--达到上限则去除最开始的一个
-				LC.GlobalVar.zIndex.shift().css({"z-index":""});
+				LC.Components.ComponentFunction.zIndex.shift().css({"z-index":""});
 			}
 			//--然后取数组中z-index最大值
 			var maxIndex=0;
 			var index=1;
-			for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
-				index = parseInt(LC.GlobalVar.zIndex[i].css("z-index"));
+			for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
+				index = parseInt(LC.Components.ComponentFunction.zIndex[i].css("z-index"));
 				if (maxIndex<index) {
 					maxIndex=index;
 				};
@@ -583,19 +583,19 @@ LC.Components.ComponentFunction = {
 			//--判断最大值是否达到z-index上限值
 			if (maxIndex>=zIndexMaxValue){
 				//----达到上限则遍历数组，将数组对象中z-index值降低
-				for (var i=0; i < LC.GlobalVar.zIndex.length; i++) {
-					index = LC.GlobalVar.zIndex[i].css("z-index");
-					LC.GlobalVar.zIndex[i].css({"z-index":index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)});
+				for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
+					index = LC.Components.ComponentFunction.zIndex[i].css("z-index");
+					LC.Components.ComponentFunction.zIndex[i].css({"z-index":index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)});
 				};
 				//重设当前最大值=zIndex初始值+保存对象个数N
 				maxIndex=zIndexMinValue+zIndexMaxSize;
 			};
 			//新对象z-index+1装入数组
 			obj.css({"z-index":(maxIndex+1)});
-			LC.GlobalVar.zIndex.push(obj);
+			LC.Components.ComponentFunction.zIndex.push(obj);
 		} else {//没有，装入，并设置初始值
 			obj.css({"z-index":zIndexMinValue});
-			LC.GlobalVar.zIndex.push(obj);
+			LC.Components.ComponentFunction.zIndex.push(obj);
 		}
 	}
 };
