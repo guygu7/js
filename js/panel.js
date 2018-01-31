@@ -19,21 +19,18 @@ LC.Components.PanelFactory = {
 	 * 半透明面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {String} panelID 面板id
 	 */
-	createPanel : function(panelID) {
+	createPanel : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(panelID).creatDOM("div", "panel-outerlayer").css({
-			"width" : "200px",
-			"height" : "400px"
-		});
+		panel.setSignID(_id).creatDOM("div", "panel-outerlayer");
 		return panel;
 	},
 	/**
 	 * 顶部标题栏，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {String} panelID 面板id
 	 */
-	createPanelTitle : function(panelID) {
+	createPanelTitle : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(panelID).creatDOM("div", "panel-title").css({
+		panel.setSignID(_id).creatDOM("div", "panel-title").css({
 			"width" : "100%",
 			"height" : "23px"
 		});
@@ -43,9 +40,9 @@ LC.Components.PanelFactory = {
 	 * 不透明面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {String} panelID 面板id
 	 */
-	createPanel2 : function(panelID) {
+	createPanel2 : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(panelID).creatDOM("div", "panel-innerlayer").css({
+		panel.setSignID(_id).creatDOM("div", "panel-innerlayer").css({
 			"width" : "50px",
 			"height" : "50px"
 		});

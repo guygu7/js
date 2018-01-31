@@ -14,10 +14,12 @@
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="js/core.js"></script>
 		<script src="js/BasicComponent.js"></script>
+		<script src="js/Components.js"></script>
 		<script src="js/Menu.js"></script>
 		<script src="js/Scene.js"></script>
 		<script src="js/panel.js"></script>
 		<script src="js/button.js"></script>
+		<script src="js/table.js"></script>
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene("startScene");
@@ -37,19 +39,20 @@
 			//面板标题
 			var panelTitel = LC.Components.PanelFactory.createPanelTitle("panel2ID").setText("面板物品文字，eyoa,");
 			//内部
-			var panel2 = LC.Components.PanelFactory.createPanel2("panelnID");
-			var panel3 = LC.Components.PanelFactory.createPanel2("paneln22ID");
-			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(panel2.dom).append(panel3.dom);
-			
+			var table = LC.Components.TableFactory.createTable(4,2,"测试");
+			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(table.dom);
+			var cell = LC.Components.PanelFactory.createPanel("??");
+			cell.dom.css({"width":"50px","height":"50px"});
+			table.setCell(3,1,cell);
 			//-----
 			//面板主体
-			var panelbag9 = LC.Components.PanelFactory.createPanel("panelID");
+			var panelbag9 = LC.Components.PanelFactory.createPanel("panel9ID");
 			//关闭按钮
-			var buttonclose9 = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag);
+			var buttonclose9 = LC.Components.ButtonFactory.createButtonClose("button39ID",panelbag9);
 			//面板标题
-			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle("panel2ID").setText("面板物品文字，eyoa,");
+			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle("panel29ID").setText("面板物品文字，eyoa,");
 			//内部
-			var panel29 = LC.Components.PanelFactory.createPanel2("panelnID");
+			var panel29 = LC.Components.PanelFactory.createPanel2("paneln9ID");
 			var panel39 = LC.Components.PanelFactory.createPanel2("paneln22ID");
 			panelbag9.dom.append(buttonclose9.dom).append(panelTitel9.dom).append(panel29.dom).append(panel39.dom);
 			sceneNext.dom.append(panelbag9.dom);
@@ -67,11 +70,12 @@
 			sceneNext.dom.append(panelbag.dom).append(buttonShowbag.dom).append(buttonback.dom);
 			//设置面板可拖动
 			LC.Components.ComponentFunction.drag(panelTitel,panelbag);
-			LC.Components.ComponentFunction.drag(panel3);
+			LC.Components.ComponentFunction.drag(panelTitel9,panelbag9);
 			//加载全部场景
 			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
 			sceneNext.hide();
 			scene.show();
+			
 			
 		</script>
 	</body>

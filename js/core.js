@@ -488,7 +488,6 @@ LC.Components.ComponentFunction = {
 		obj.bind("mousedown", start);
 		function start(event) {
 			if (0 == event.button) {//左键点击
-				console.log("moveobj.sign="+moveobj.attr("sign"));
 				LC.Components.ComponentFunction.zIndexToTop(moveobj);//置顶
 				gapX = parseInt(moveobj.css("left"))-event.clientX;
 				gapY = parseInt(moveobj.css("top"))-event.clientY;
@@ -498,8 +497,11 @@ LC.Components.ComponentFunction = {
 				minY = parseInt(moveobj.css("top"))-moveobj.position().top-parseInt(moveobj.css("margin-bottom"))-parseInt(parentObj.css("padding-bottom"));
 				moveobj.css({
 					"transition" : "0s",
-					//"z-index": "99"
 				});
+				//适应项目场景修正，其他情况可以去除
+				minX = minX+8;
+				minY = minY+5;
+				//==============
 				//移除其他过度效果
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", stop);
@@ -518,16 +520,18 @@ LC.Components.ComponentFunction = {
 			} else if (topY < minY) {//限制不会移出上边
 				topY = minY;
 			}
+			//适应项目场景修正，其他情况可以去除
+			leftX = leftX-8;
+			topY = topY-3;
+			//=====================
 			moveobj.css({
 				"left" : leftX + "px",
 				"top" : topY + "px"
 			});
 		};
 		function stop() {
-			//var z = moveobj.css("z-index")-1;
 			moveobj.css({
 				"transition" : "",
-				//"z-index": z
 			});
 			//还原过度效果
 			$(document).unbind("mousemove", move);
@@ -536,15 +540,15 @@ LC.Components.ComponentFunction = {
 	},
 	zIndex:[],
 	/**
-	 * (只能传入jQuery对象) 
+	 * 置顶显示方法(只能传入jQuery对象) 
 	 */
 	zIndexToTop : function(obj){
 		//堆栈最大长度，最多保存N个对象
-		var zIndexMaxSize=10;
+		var zIndexMaxSize=50;
 		//堆栈中z-index初始值（最小值）
-		var zIndexMinValue=100;
+		var zIndexMinValue=101;
 		//堆栈中z-index最大值，避免无限增大，重置运行次数为初始值（最小值）+N
-		var zIndexMaxValue=zIndexMinValue+zIndexMaxSize+10;
+		var zIndexMaxValue=zIndexMinValue+zIndexMaxSize+100;
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
@@ -561,9 +565,7 @@ LC.Components.ComponentFunction = {
 			  } 
 			};
 			if (LC.Components.ComponentFunction.zIndex.length==0){//经过移除重复元素后数组为空
-				obj.css({"z-index":zIndexMinValue});
-				LC.Components.ComponentFunction.zIndex.push(obj);
-				console.log("移除后剩余0个，返回");
+				LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":zIndexMinValue}));
 				return;
 			};
 			//判断是否达到数组长度上限
@@ -591,11 +593,9 @@ LC.Components.ComponentFunction = {
 				maxIndex=zIndexMinValue+zIndexMaxSize;
 			};
 			//新对象z-index+1装入数组
-			obj.css({"z-index":(maxIndex+1)});
-			LC.Components.ComponentFunction.zIndex.push(obj);
+			LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":(maxIndex+1)}));
 		} else {//没有，装入，并设置初始值
-			obj.css({"z-index":zIndexMinValue});
-			LC.Components.ComponentFunction.zIndex.push(obj);
+			LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":zIndexMinValue}));
 		}
 	}
 };

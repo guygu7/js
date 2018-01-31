@@ -5,7 +5,7 @@ body {
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
-	font-family: LiSu ;
+	font-family: LiSu;
 }
 /**
  * 	背景桌布
@@ -18,7 +18,7 @@ body {
 	margin: 5px auto;
 	padding: 20px 75px 0px 75px;
 }
-.public{
+.public {
 	transition: 0.5s;
 	display: inline-block;
 	position: absolute;
@@ -34,7 +34,7 @@ body {
 	height: 550px;
 	position: absolute;
 	transition: 0.5s;
-	overflow:hidden;
+	overflow: hidden;
 	z-index: 1;
 	display: inline-block;
 }
@@ -57,14 +57,14 @@ body {
 /**
  * 	开始菜单
  */
-.menu-start{
-	width:170px;
-	height:300px;
+.menu-start {
+	width: 170px;
+	height: 300px;
 	position: absolute;
 	bottom: 50px;
-	left:50px;
+	left: 50px;
 	margin: 5px;
-	padding:5px;
+	padding: 5px;
 	border: 3px ridge #474B64;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
@@ -75,12 +75,12 @@ body {
  */
 .panel-outerlayer {
 	margin: 5px;
-	border: 3px ridge #BEBEBE /*#474B64*/;
+	border: 3px ridge #BEBEBE/*#474B64*/;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
 	z-index: 1;
 	position: absolute;
-	transition:0.2s;
+	transition: 0.2s;
 	display: inline-block;
 }
 
@@ -96,7 +96,7 @@ body {
 	text-align: center;
 	text-shadow: 0px 0px 5px #E6E6E6;
 	display: inline-block;
-	position: absolute;
+	position: relative;
 }
 /**
  * 	面板（内层，不透明）
@@ -104,11 +104,11 @@ body {
 .panel-innerlayer {
 	border: 2px ridge #474B64;
 	border-radius: 3px;
-	margin: 2px 0px 2px 0px;
+	/*margin: 2px 0px 2px 0px;*/
 	background-color: #BEBEBE;
 	border-radius: 3px;
 	transition: 0.1s;
-	position: absolute;
+	position: relative;
 	text-align: center;
 	display: inline-block;
 }
@@ -127,23 +127,26 @@ body {
 	right: -8px;
 	z-index: 99;
 	line-height: 14px;
-    text-align: center;
-    height: 23px;
-    width: 23px;
-    font-size: 15px;
-    text-shadow: 1px 1px 1px #E6E6E6;
+	text-align: center;
+	height: 23px;
+	width: 23px;
+	font-size: 15px;
+	text-shadow: 1px 1px 1px #E6E6E6;
 }
 .botton-colse:before {
-    content: "\2716";
+	content: "\2716";
 }
-.botton-colse:hover{
+.botton-colse:hover {
 	cursor: pointer;
 }
 .botton-colse:active {
 	padding-top: 3px;
 	background: repeating-linear-gradient(#717171 1%,#BEBEBE 100%);
 }
-.botton-start{
+/**
+ * 	开始按钮
+ */
+.botton-start {
 	border: 2px outset #717171;
 	border-radius: 3px;
 	display: inline-block;
@@ -154,7 +157,7 @@ body {
 	font-size: 1.5em;
 	text-align: center;
 }
-.botton-start:hover{
+.botton-start:hover {
 	transform: scaleX(1.05) scaleY(1.05);
 	cursor: pointer;
 }
@@ -162,20 +165,51 @@ body {
 	border: 2px inset;
 	background-color: #DCDCDC
 }
+/**
+ * 	角标右下
+ */
+.lowerright {
+	bottom: 1px;
+	right: 1px;
+}
+/**
+ * 	角标右上
+ */
+.upperright {
+	top: 1px;
+	right: 1px;
+}
+/**
+ * 	角标
+ */
+.cornersign{
+	height: 15px;
+	width: 15px;
+	background-color: #2AABD2;
+	border-radius: 8px;
+	position: absolute;
+	padding: 1px;
+	padding-left: 2px;
+	z-index: 99;
+	line-height: 14px;
+	text-align: center;
+	font-size: 10px;
+	font-weight: 600;
+}
 /*
-@media all, screen and (orientation: landscape)
-.status {
-    position: relative;
-    width: 90px;
-    height: 40px;
-    cursor: default;
-    margin: 2px;
-    padding: 2px;
-    float: left;
-    text-align: center;
-    border: solid 1px;
-    background: #FFFFFF;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: 0.5s;
-}*/
+ @media all, screen and (orientation: landscape)
+ .status {
+ position: relative;
+ width: 90px;
+ height: 40px;
+ cursor: default;
+ margin: 2px;
+ padding: 2px;
+ float: left;
+ text-align: center;
+ border: solid 1px;
+ background: #FFFFFF;
+ border-radius: 5px;
+ font-size: 1em;
+ transition: 0.5s;
+ }*/

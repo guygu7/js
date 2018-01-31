@@ -57,7 +57,8 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return this;
 		};
 	};
-	//自动重写宽高
+	/*
+	 * 自动重写宽高(未实现)
 	LC.Components.BasicComponent.prototype.autoSize=function(){
 		var childs = this.dom.children();
 		var width=0;
@@ -71,6 +72,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		  childs[i].css("margin-right");
 		};
 	};
+	*/
 	if ( typeof this.styleAlter != "function") {
 		/**
 		 * 样式修改(子类继承扩展)
@@ -103,7 +105,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			if(null==htmlLabel||""==htmlLabel.trim()){//未传参数，则默认为div标签
 				htmlLabel="div";
 			};
-			if(null==cssClass||""==cssClass.trim()){//未传参数，则默认为div标签
+			if(null==cssClass||""==cssClass.trim()){//未传参数，则默认没有样式，为空
 				cssClass="";
 			};
 			var basicComponent = $("<"+htmlLabel+"></"+htmlLabel+">").attr({

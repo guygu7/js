@@ -14,54 +14,59 @@
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="js/core.js"></script>
 		<script src="js/BasicComponent.js"></script>
+		<script src="js/Components.js"></script>
 		<script src="js/Menu.js"></script>
 		<script src="js/Scene.js"></script>
 		<script src="js/panel.js"></script>
 		<script src="js/button.js"></script>
+		<script src="js/table.js"></script>
+		<script src="js/corner.js"></script>
 		<script>
 			//构建主界面
-			var scene = LC.Components.SceneFactory.createScene("startScene");
-			//var startMenu = LC.Components.
-			
-			var menu1 = LC.Components.MenuFactory.createStartMenu("menuID");
-			var buttonstart = LC.Components.ButtonFactory.createButtonStart("buttonID");
-			scene.dom.append(menu1.dom.append(buttonstart.dom.append("start").click(function() {
+			var scene = LC.Components.SceneFactory.createScene();
+			var menu1 = LC.Components.MenuFactory.createStartMenu();
+			var buttonstart = LC.Components.ButtonFactory.createButtonStart();
+			scene.dom.append(menu1.dom.append(buttonstart.dom.append().click(function() {
 				scene.hide();
 				setTimeout("sceneNext.show()",100);
 			})));
 			/*-----构建次页面-----*/
 			//场景
-			var sceneNext = LC.Components.SceneFactory.createScene("nextScene");
+			var sceneNext = LC.Components.SceneFactory.createScene();
 			//面板主体
-			var panelbag = LC.Components.PanelFactory.createPanel("panelID");
+			var panelbag = LC.Components.PanelFactory.createPanel();
 			//关闭按钮
 			var buttonclose = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag);
 			//面板标题
-			var panelTitel = LC.Components.PanelFactory.createPanelTitle("panel2ID").setText("面板物品文字，eyoa,");
+			var panelTitel = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
 			//内部
-			var panel2 = LC.Components.PanelFactory.createPanel2("panelnID");
-			var panel3 = LC.Components.PanelFactory.createPanel2("paneln22ID");
-			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(panel2.dom).append(panel3.dom);
-			
+			var table = LC.Components.TableFactory.createTable(4,2,"测试");
+			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(table.dom);
+			var cell = LC.Components.PanelFactory.createPanel("??");
+			cell.dom.css({"width":"50px","height":"50px"});
+			table.setCell(3,1,cell);
+			var corner = LC.Components.CornerSignFactory.createCornerSign();
+			cell.dom.append(corner.dom);
+			corner.dom.append("999999");
 			//-----
 			//面板主体
-			var panelbag9 = LC.Components.PanelFactory.createPanel("panel9ID");
+			var panelbag9 = LC.Components.PanelFactory.createPanel();
 			//关闭按钮
 			var buttonclose9 = LC.Components.ButtonFactory.createButtonClose("button39ID",panelbag9);
 			//面板标题
-			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle("panel29ID").setText("面板物品文字，eyoa,");
+			var panelTitel9 = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
 			//内部
-			var panel29 = LC.Components.PanelFactory.createPanel2("paneln9ID");
-			var panel39 = LC.Components.PanelFactory.createPanel2("paneln22ID");
+			var panel29 = LC.Components.PanelFactory.createPanel2();
+			var panel39 = LC.Components.PanelFactory.createPanel2();
 			panelbag9.dom.append(buttonclose9.dom).append(panelTitel9.dom).append(panel29.dom).append(panel39.dom);
 			sceneNext.dom.append(panelbag9.dom);
 			//-----
 			
 			//打开面板按钮
-			var buttonShowbag = LC.Components.ButtonFactory.createButtonStart("button3ID");
+			var buttonShowbag = LC.Components.ButtonFactory.createButtonStart();
 			buttonShowbag.dom.append("showbag").click(function() {panelbag.show();});
 			//返回上级场景按钮
-			var buttonback = LC.Components.ButtonFactory.createButtonStart("button2ID");
+			var buttonback = LC.Components.ButtonFactory.createButtonStart();
 			buttonback.dom.append("back").click(function() {
 				sceneNext.hide();
 				setTimeout("scene.show()",100);
@@ -74,6 +79,7 @@
 			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
 			sceneNext.hide();
 			scene.show();
+			
 			
 		</script>
 	</body>
