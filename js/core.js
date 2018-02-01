@@ -470,8 +470,9 @@ LC.Components.ComponentFunction = {
 	 * obj 拖拽触发dom对象
 	 * moveobj 拖拽移动dom对象
 	 * parentObj 拖拽限制移动范围元素dom对象
+	 * isReset 是否在拖拽完成后还原位置
 	 */
-	drag : function(obj, moveobj, parentObj) {
+	drag : function(obj,moveobj,parentObj,isReset) {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
@@ -486,50 +487,67 @@ LC.Components.ComponentFunction = {
 			parentObj = parentObj.dom;
 		}
 		obj.bind("mousedown", start);
+		var gapX,gapY,maxX,minX,maxY,minY,initLeft,initTop;
 		function start(event) {
+			moveobj.attr({
+					"draggable":"true",
+				});
+			console.log("start,click:==============");
+			console.log(event);
+			console.log(event.target);
 			if (0 == event.button) {//左键点击
+				initLeft = parseInt(moveobj.css("left"));
+				initTop = parseInt(moveobj.css("top"));
 				LC.Components.ComponentFunction.zIndexToTop(moveobj);//置顶
 				gapX = parseInt(moveobj.css("left"))-event.clientX;
 				gapY = parseInt(moveobj.css("top"))-event.clientY;
-				maxX = parentObj.width()-moveobj.width()-moveobj.position().left+parseInt(moveobj.css("left"))-parseInt(moveobj.css("margin-right"))-parseInt(parentObj.css("padding-right"))-parseInt(moveobj.css("margin-left"))-parseInt(parentObj.css("padding-left"));
-				minX = parseInt(moveobj.css("left"))-moveobj.position().left-parseInt(moveobj.css("margin-right"))-parseInt(parentObj.css("padding-right"));
-				maxY = parentObj.height()-moveobj.height()-moveobj.position().top+parseInt(moveobj.css("top"))-parseInt(moveobj.css("margin-bottom"))-parseInt(parentObj.css("padding-bottom"))-parseInt(moveobj.css("margin-top"))-parseInt(parentObj.css("padding-top"));
-				minY = parseInt(moveobj.css("top"))-moveobj.position().top-parseInt(moveobj.css("margin-bottom"))-parseInt(parentObj.css("padding-bottom"));
+				maxX = (parentObj.width()-moveobj.width())-(moveobj.offset().left-parentObj.offset().left)+parseInt(moveobj.css("left"))-parseInt(moveobj.css("margin-right"))+parseInt(parentObj.css("padding-right"));
+				minX = parseInt(moveobj.css("left"))+parentObj.offset().left-moveobj.offset().left+parseInt(moveobj.css("margin-left"))+parseInt(parentObj.css("padding-left"));
+				maxY = (parentObj.height()-moveobj.height())-(moveobj.offset().top-parentObj.offset().top)+parseInt(moveobj.css("top"))-parseInt(moveobj.css("margin-bottom"))+parseInt(parentObj.css("padding-bottom"));
+				minY = parseInt(moveobj.css("top"))+parentObj.offset().top-moveobj.offset().top+parseInt(moveobj.css("margin-top"))+parseInt(parentObj.css("padding-top"));
 				moveobj.css({
 					"transition" : "0s",
 				});
 				//适应项目场景修正，其他情况可以去除
-				minX = minX+8;
-				minY = minY+5;
+				//minX = minX+5;
+				maxX = maxX-8;
+				//minY = minY+5;
 				//==============
 				//移除其他过度效果
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", stop);
 			}
 		};
+		var left,top;
 		function move(event) {
-			leftX = event.clientX+gapX;
-			if (leftX > maxX) {//限制不会移出右边
-				leftX = maxX;
-			} else if (leftX < minX) {//限制不会移出左边
-				leftX = minX;
+			left = event.clientX+gapX;
+			if (left > maxX) {//限制不会移出右边
+				left = maxX;
+			} else if (left < minX) {//限制不会移出左边
+				left = minX;
 			}
-			topY = event.clientY+gapY;
-			if (topY > maxY) {//限制不会移出下边
-				topY = maxY;
-			} else if (topY < minY) {//限制不会移出上边
-				topY = minY;
+			top = event.clientY+gapY;
+			if (top > maxY) {//限制不会移出下边
+				top = maxY;
+			} else if (top < minY) {//限制不会移出上边
+				top = minY;
 			}
-			//适应项目场景修正，其他情况可以去除
-			leftX = leftX-8;
-			topY = topY-3;
 			//=====================
 			moveobj.css({
-				"left" : leftX + "px",
-				"top" : topY + "px"
+				"left" : left + "px",
+				"top" : top + "px"
 			});
 		};
-		function stop() {
+		function stop(event) {
+			console.log("stop,mouseup:==============");
+			console.log(event);
+			console.log(event.target);
+			if (isReset) {
+				moveobj.css({
+					"left" : initLeft + "px",
+					"top" : initTop + "px"
+				});
+			};
 			moveobj.css({
 				"transition" : "",
 			});
@@ -537,6 +555,18 @@ LC.Components.ComponentFunction = {
 			$(document).unbind("mousemove", move);
 			$(document).unbind("mouseup", stop);
 		};
+	},
+	//下层的元素（绑定drop监听的元素），可以被放入的元素，被拖拽的元素
+	onDrop : function(obj,targetObj){
+		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
+			obj = obj.dom;
+		}
+		obj[0].addEventListener("mouseup",function(event){
+			/*console.log("event.target:");
+			console.log(event.target);
+			console.log("obj:");
+			console.log(obj);*/
+		});
 	},
 	zIndex:[],
 	/**
