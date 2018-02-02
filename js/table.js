@@ -38,6 +38,7 @@ LC.Components.Table.prototype.creatDOM = function( _line, _column,createFunction
 		basicComponent.append(tempColumn);
 	};
 	this.dom = this.styleAlter(basicComponent);
+	this.dom.self = this;
 	return this.dom;
 };
 //table中元素集合,map中为完整<tb>元素对象,dom需要obj.dom获得

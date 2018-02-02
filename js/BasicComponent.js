@@ -88,6 +88,8 @@ LC.Components.BasicComponent = function(basicComponentID) {
 	};
 	/**
 	 * 获取的DOM对像，通过.append()加入页面
+	 * dom中包含一个self属性
+	 * 可以通过dom.self获取到原对象
 	 */
 	dom=null;
 	if ( typeof this.creatDOM != "function") {
@@ -113,6 +115,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 				"class" : cssClass
 			});
 			this.dom = this.styleAlter(basicComponent);
+			this.dom.self = this;
 			return this.dom;
 		};
 	};

@@ -470,9 +470,10 @@ LC.Components.ComponentFunction = {
 	 * obj 拖拽触发dom对象
 	 * moveobj 拖拽移动dom对象
 	 * parentObj 拖拽限制移动范围元素dom对象
+	 * dropObj 拖拽进入的元素dom对象
 	 * isReset 是否在拖拽完成后还原位置
 	 */
-	drag : function(obj,moveobj,parentObj,isReset) {
+	drag : function(obj,moveobj,parentObj,dropObj,isReset) {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
@@ -486,15 +487,13 @@ LC.Components.ComponentFunction = {
 		} else if (parentObj.dom) {//适配，如果传入的不是dom，则转为dom
 			parentObj = parentObj.dom;
 		}
-		obj.bind("mousedown", start);
+		if (null == dropObj) {//适配，如果未传入dropObj，----则默认是moveobj的父元素
+		} else if (dropObj.dom) {//适配，如果传入的不是dom，则转为dom
+			dropObj = dropObj.dom;
+		}
+		obj.bind("mousedown", mousedown1);
 		var gapX,gapY,maxX,minX,maxY,minY,initLeft,initTop;
-		function start(event) {
-			moveobj.attr({
-					"draggable":"true",
-				});
-			console.log("start,click:==============");
-			console.log(event);
-			console.log(event.target);
+		function mousedown1(event) {
 			if (0 == event.button) {//左键点击
 				initLeft = parseInt(moveobj.css("left"));
 				initTop = parseInt(moveobj.css("top"));
@@ -505,17 +504,24 @@ LC.Components.ComponentFunction = {
 				minX = parseInt(moveobj.css("left"))+parentObj.offset().left-moveobj.offset().left+parseInt(moveobj.css("margin-left"))+parseInt(parentObj.css("padding-left"));
 				maxY = (parentObj.height()-moveobj.height())-(moveobj.offset().top-parentObj.offset().top)+parseInt(moveobj.css("top"))-parseInt(moveobj.css("margin-bottom"))+parseInt(parentObj.css("padding-bottom"));
 				minY = parseInt(moveobj.css("top"))+parentObj.offset().top-moveobj.offset().top+parseInt(moveobj.css("margin-top"))+parseInt(parentObj.css("padding-top"));
+				//移除其他过度效果
 				moveobj.css({
 					"transition" : "0s",
 				});
 				//适应项目场景修正，其他情况可以去除
-				//minX = minX+5;
 				maxX = maxX-8;
-				//minY = minY+5;
 				//==============
-				//移除其他过度效果
 				$(document).bind("mousemove", move);
-				$(document).bind("mouseup", stop);
+				$(document).bind("mouseup", mouseup1);
+				//给拖拽目标绑定dropin事件,表示拖拽的对象被拖入了目标,并返回标的对象
+				if(dropObj){//如果有传参，则为拖放，否则为拖拽
+					dropObj.bind("dropin",function (){
+						console.log(dropObj);
+						console.log(this);
+						console.log(this.dropObj);
+						return this.dropObj;
+					});
+				}
 			}
 		};
 		var left,top;
@@ -538,35 +544,63 @@ LC.Components.ComponentFunction = {
 				"top" : top + "px"
 			});
 		};
-		function stop(event) {
-			console.log("stop,mouseup:==============");
-			console.log(event);
-			console.log(event.target);
-			if (isReset) {
+		function mouseup1(event) {
+			//1.保存鼠标位置
+			mouseupX = event.clientX;
+			mouseupY = event.clientY;
+			if(dropObj){//如果有传参，则为拖放，否则为拖拽
+				//2.还原元素原始位置
 				moveobj.css({
-					"left" : initLeft + "px",
-					"top" : initTop + "px"
-				});
-			};
+						"left" : initLeft + "px",
+						"top" : initTop + "px"
+					});
+				//3.获取鼠标位置dom
+				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY)).trigger("dropin");
+				//4.判断是否满足拖放条件
+				console.log(dropTarget[0]);
+				console.log(dropObj[0]);
+				if(dropTarget[0] === dropObj[0]){
+					console.log("满足");
+					//4.1满足
+					//---.还原过度效果
+					moveobj.css({
+						"transition" : "",
+					});
+					//执行拖放操作...未完成...
+					alert("拖放");
+				} else {
+					console.log("不满足");
+					//4.2不满足,重新移动元素到当前位置
+					moveobj.css({
+						"left" : left + "px",
+						"top" : top + "px"
+					});
+					setTimeout(
+						function (){
+							//还原过度效果
+							moveobj.css({
+								"transition" : "",
+							});
+							//还原位置
+							if (isReset) {
+								moveobj.css({
+									"left" : initLeft + "px",
+									"top" : initTop + "px"
+								});
+							};
+						}(),1000
+					);
+				};
+				dropObj.unbind("dropin");
+			}
+			//还原过度效果
 			moveobj.css({
 				"transition" : "",
 			});
-			//还原过度效果
+			//解绑事件
 			$(document).unbind("mousemove", move);
-			$(document).unbind("mouseup", stop);
+			$(document).unbind("mouseup", mouseup1);
 		};
-	},
-	//下层的元素（绑定drop监听的元素），可以被放入的元素，被拖拽的元素
-	onDrop : function(obj,targetObj){
-		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
-			obj = obj.dom;
-		}
-		obj[0].addEventListener("mouseup",function(event){
-			/*console.log("event.target:");
-			console.log(event.target);
-			console.log("obj:");
-			console.log(obj);*/
-		});
 	},
 	zIndex:[],
 	/**
