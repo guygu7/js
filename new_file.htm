@@ -61,8 +61,8 @@
 			cell2.dom.append(corner2.dom);
 			corner2.dom.append("99");
 			//--添加拖拽
-			LC.Components.ComponentFunction.drag(corner,cell,sceneNext,panelbag2,true);
-			LC.Components.ComponentFunction.drag(corner2,cell2,sceneNext,panelbag2,true);
+			LC.Components.ComponentFunction.drag(corner,cell,sceneNext,cell2,true);
+			LC.Components.ComponentFunction.drag(corner2,cell2,sceneNext,cell2,true);
 			//-----
 			//打开面板按钮
 			var buttonShowbag = LC.Components.ButtonFactory.createButtonStart();

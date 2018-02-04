@@ -8,6 +8,8 @@ var LC = {};
 LC.CommonProperty = {
 	//通用标记属性，替代id
 	SIGN : "lcsign",
+	//底层桌面对象，用于终止置顶方法zIndexToTop
+	MAIN_DESK : $("#mainDesktop"),
 	//进度条过渡色：红色
 	COLOR_PROGRESS_RED : "repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%)",
 	//进度条过渡色：橙色
@@ -557,17 +559,19 @@ LC.Components.ComponentFunction = {
 				//3.获取鼠标位置dom
 				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY)).trigger("dropin");
 				//4.判断是否满足拖放条件
-				console.log(dropTarget[0]);
-				console.log(dropObj[0]);
 				if(dropTarget[0] === dropObj[0]){
 					console.log("满足");
 					//4.1满足
+					//执行拖放操作...未完成...
+					console.log(dropTarget);
+					//获取dropTarget父dom，并将dropTarget删除
+					dropTarget.parent().empty().append(moveobj);
+					//将moveobj写入该父dom
+					
 					//---.还原过度效果
 					moveobj.css({
 						"transition" : "",
 					});
-					//执行拖放操作...未完成...
-					alert("拖放");
 				} else {
 					console.log("不满足");
 					//4.2不满足,重新移动元素到当前位置
@@ -616,6 +620,14 @@ LC.Components.ComponentFunction = {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
+		//获取父一级dom
+		parentObj = obj.parent();
+		//判断是否已经到桌面
+		if (parentObj[0]==LC.CommonProperty.MAIN_DESK[0]){
+			return;//父元素为桌面，则表示本次对象为场景对象，不再执行，返回
+		}
+		//递归，获取父元素dom依次置顶
+		LC.Components.ComponentFunction.zIndexToTop(parentObj);
 		//获取全局变量中z-index[]数组长度
 		var zSize = LC.Components.ComponentFunction.zIndex.length;
 		//判断z-index是否有对象
