@@ -112,6 +112,16 @@ body {
 	text-align: center;
 	display: inline-block;
 }
+.panel-table-tb{
+	border: 2px ridge #474B64;
+	border-radius: 3px;
+	background-color: #BEBEBE;
+	border-radius: 3px;
+	transition: 0.1s;
+	position: relative;
+	text-align: center;
+	display: inline-block;
+}
 /**
  * 右上角的关闭按钮
  */

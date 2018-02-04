@@ -4,7 +4,7 @@
 LC.Components.Table = function() {
 };
 LC.Utils.extend(LC.Components.Table, LC.Components.BasicComponent);
-LC.Components.Table.prototype.creatDOM = function( _line, _column,createFunction) {
+LC.Components.Table.prototype.creatDOM = function(_line, _column, createFunction) {
 	var sign = LC.CommonProperty.SIGN;
 	var basicComponent = $("<table></table>").attr({
 		sign : this.getSignID(),
@@ -26,7 +26,10 @@ LC.Components.Table.prototype.creatDOM = function( _line, _column,createFunction
 			}
 			//创建<tb>的组件对象，方便操作
 			var tb = new LC.Components.BasicComponent();
-			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb","panel-innerlayer");
+			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb", " panel-table-tb ").css({
+				"width" : "50px",
+				"height" : "50px"
+			});
 			//将cell放入tb内
 			tb.cell = cell;
 			//将cell.dom放入tb.dom中
@@ -44,12 +47,12 @@ LC.Components.Table.prototype.creatDOM = function( _line, _column,createFunction
 //table中元素集合,map中为完整<tb>元素对象,dom需要obj.dom获得
 LC.Components.Table.prototype.cellsMap = new LC.Utils.Map();
 //获取table中tb元素对象,tb中包含一个cell对象
-LC.Components.Table.prototype.getCell = function( _line,_column) {
+LC.Components.Table.prototype.getCell = function(_line, _column) {
 	return this.cellsMap.get((_column + "-" + _line).toString());
 };
 //替换table中tb对象中包含的cell对象元素对象
 //obj必须为包含dom的完整对象
-LC.Components.Table.prototype.setCell = function( _line, _column,obj) {
+LC.Components.Table.prototype.setCell = function(_line, _column, obj) {
 	//1.从cellsMap中取出tb,重设tb中cell
 	var tb = this.cellsMap.get((_column + "-" + _line).toString());
 	if (!tb) {
@@ -71,9 +74,9 @@ LC.Components.TableFactory = {
 	 * table，创建并返回一个html对象table，调用.append()加入页面中显示
 	 * @param {String} _id id
 	 */
-	createTable : function( _line, _column,_id) {
+	createTable : function(_line, _column, _id) {
 		var table = new LC.Components.Table();
-		table.setSignID(_id).creatDOM( _line, _column,LC.Components.PanelFactory.createPanel2);
+		table.setSignID(_id).creatDOM(_line, _column, LC.Components.PanelFactory.createPanel2);
 		return table;
 	}
 };
