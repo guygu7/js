@@ -15,27 +15,27 @@ LC.Components.Button.prototype.setText = function(text) {
  */
 LC.Components.ButtonFactory = {
 	/**
-	 * 按钮，创建并返回一个按钮html对象button，调用.append()加入页面中显示
-	 * @param {Object} buttonID 菜单id
+	 * 菜单的按钮，创建并返回一个按钮html对象button，调用.append()加入页面中显示
+	 * @param {Object} _id 菜单id
 	 */
-	createButtonStart : function(buttonID) {
+	createButtonDropdown : function(_id) {
 		var button = new LC.Components.Button();
-		button.setSignID(buttonID).creatDOM("div", LC.CommonProperty.CSS_BUTTON_START).css({
-			"width":"150px",
+		button.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_BUTTON_DROPDOWN).css({
+			"width":"50px",
 			"height":"35px"
 		});
 		return button;
 	},
 	/**
 	 * 右上角关闭按钮，创建并返回一个关闭按钮html对象button，调用.append()加入页面中显示
-	 * @param {Object} buttonID 菜单id
+	 * @param {Object} _id 菜单id
 	 */
-	createButtonClose : function(buttonID,parten) {
+	createButtonClose : function(_id,parten) {
 		if (null==parten)parten=1;
 		var button = new LC.Components.Button();
-		button.setSignID(buttonID).creatDOM("div", LC.CommonProperty.CSS_BUTTON_CLOSE)[0].addEventListener("click",function(){
+		button.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_BUTTON_CLOSE)[0].addEventListener("click",function(){
 			parten.hide();
 		},false);
 		return button;
-	}
+	},
 };

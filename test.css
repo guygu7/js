@@ -36,6 +36,9 @@ body {
  * ========以上为通用公共属性==========
  */
 /**
+ * 	=======场景桌面======
+ */
+/**
  * 	背景桌布
  */
 .main-desktop {
@@ -61,25 +64,26 @@ body {
 	display: inline-block;
 }
 /**
- * 	开始菜单
+ * 	=======面板======
  */
-.menu-start {
-	width: 170px;
-	height: 300px;
-	position: absolute;
-	bottom: 50px;
-	left: 50px;
-	margin: 5px;
-	padding: 5px;
-	border: 3px ridge #474B64;
-	border-radius: 4px;
-	background-color: rgba(43,49,60,0.75);
+/**
+ * 	面板（不透明）
+ */
+.panel {
+	border: 2px ridge #474B64;
+	border-radius: 3px;
+	/*margin: 2px 0px 2px 0px;*/
+	background-color: #BEBEBE;
+	border-radius: 3px;
+	transition: 0.1s;
+	position: relative;
 	text-align: center;
+	display: inline-block;
 }
 /**
- * 	面板（外层，半透明）
+ * 	面板（外层，半透明，有边框和边距）
  */
-.panel-outerlayer {
+.panel-transparent {
 	margin: 5px;
 	border: 3px ridge #BEBEBE/*#474B64*/;
 	border-radius: 4px;
@@ -89,7 +93,6 @@ body {
 	transition: 0.2s;
 	display: inline-block;
 }
-
 /**
  * 	面板框标题栏
  */
@@ -105,19 +108,8 @@ body {
 	position: relative;
 }
 /**
- * 	面板（内层，不透明）
+ * 	表格单元格tb样式
  */
-.panel-innerlayer {
-	border: 2px ridge #474B64;
-	border-radius: 3px;
-	/*margin: 2px 0px 2px 0px;*/
-	background-color: #BEBEBE;
-	border-radius: 3px;
-	transition: 0.1s;
-	position: relative;
-	text-align: center;
-	display: inline-block;
-}
 .panel-table-tb{
 	border: 2px ridge #474B64;
 	border-radius: 3px;
@@ -128,6 +120,9 @@ body {
 	text-align: center;
 	display: inline-block;
 }
+/**
+ * 	=======按钮======
+ */
 /**
  * 右上角的关闭按钮
  */
@@ -160,9 +155,9 @@ body {
 	background: repeating-linear-gradient(#717171 1%,#BEBEBE 100%);
 }
 /**
- * 	首页开始按钮
+ * 	下拉菜单按钮
  */
-.botton-start {
+.botton-dropdown {
 	border: 2px outset #717171;
 	border-radius: 3px;
 	display: inline-block;
@@ -173,14 +168,17 @@ body {
 	font-size: 1.5em;
 	text-align: center;
 }
-.botton-start:hover {
+.botton-dropdown:hover {
 	transform: scaleX(1.05) scaleY(1.05);
 	cursor: pointer;
 }
-.botton-start:active {
+.botton-dropdown:active {
 	border: 2px inset;
 	background-color: #DCDCDC
 }
+/**
+ * 	=======角标======
+ */
 /**
  * 	角标右下
  */
@@ -198,7 +196,7 @@ body {
 /**
  * 	角标
  */
-.cornersign{
+.cornersign {
 	height: 15px;
 	width: 15px;
 	background-color: #2AABD2;
@@ -211,4 +209,23 @@ body {
 	text-align: center;
 	font-size: 10px;
 	font-weight: 600;
+}
+/**
+ * 	======菜单======
+ */
+/**
+ * 	下拉菜单
+ */
+.dropdown {
+	width: 170px;
+	height: 300px;
+	position: absolute;
+	bottom: 50px;
+	left: 50px;
+	margin: 5px;
+	padding: 5px;
+	border: 3px ridge #474B64;
+	border-radius: 4px;
+	background-color: rgba(43,49,60,0.75);
+	text-align: center;
 }

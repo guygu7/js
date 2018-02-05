@@ -38,30 +38,37 @@ LC.CommonProperty = {
 	 * CSS class:场景桌面
 	 */
 	CSS_SCENE_DESKTOP : " scene-desktop ",
+	//====面板====
 	/**
-	 * CSS class:开始菜单
+	 * CSS class:面板（）
 	 */
-	CSS_MENU_START : " menu-start ",
+	CSS_PANEL : " panel ",
 	/**
-	 * CSS class:面板（背景半透明）
+	 * CSS class:面板（背景半透明，有边框和边距）
 	 */
-	CSS_PANEL_TRANSPARENT : " panel-outerlayer ",
-	/**
-	 * CSS class:表格单元格tb样式
-	 */
-	CSS_PANEL_TABLE_TB : " panel-table-tb ",
+	CSS_PANEL_TRANSPARENT : " panel-transparent ",
 	/**
 	 * CSS class:面板（标题栏样式）
 	 */
 	CSS_PANEL_TITTLE : " panel-title ",
 	/**
-	 * CSS class:面板（）
+	 * CSS class:表格单元格tb样式
 	 */
-	CSS_PANEL : " panel-innerlayer ",
+	CSS_PANEL_TABLE_TB : " panel-table-tb ",
+	//====按钮====
 	/**
 	 * CSS class:右上角的关闭按钮
 	 */
 	CSS_BUTTON_CLOSE : " botton-colse ",
+	/**
+	 * CSS class:下拉菜单按钮
+	 */
+	CSS_BUTTON_DROPDOWN : " botton-dropdown ",
+	//====角标====
+	/**
+	 * CSS class:角标
+	 */
+	CSS_CORNERSIGN : " cornersign ",
 	/**
 	 * CSS class:置于右下（定位，用于角标）
 	 */
@@ -70,15 +77,11 @@ LC.CommonProperty = {
 	 * CSS class:置于右上（定位，用于角标）
 	 */
 	CSS_POSITION_UPPERRIGHT : " upperright ",
+	//====菜单====
 	/**
-	 * CSS class:角标
+	 * CSS class:下拉菜单
 	 */
-	CSS_CORNERSIGN : " cornersign ",
-	/**
-	 * CSS class:首页开始按钮
-	 */
-	CSS_BUTTON_START : "botton-start"
-	
+	CSS_DROPDOWN : " dropdown ",
 };
 /**
  * 全局变量 
