@@ -1,59 +1,28 @@
-
 /**
  * 组件空间中加入开始菜单类
  */
-LC.Components.Menu = function(menuID){
-	var _signID = menuID;
-	//自定义ID
-	if ( typeof this.getSignID != "function") {
-		/**
-		 * 获取自定义ID
-		 */
-		LC.Components.Menu.prototype.getSignID = function() {
-			return _signID;
-		};
-	};
-	if ( typeof this.setSignID != "function") {
-		/**
-		 * 设置自定义ID
-		 */
-		LC.Components.Menu.prototype.setSignID = function(ID) {
-			_signID = ID;
-			return this;
-		};
-	};
-	if ( typeof this.styleAlter != "function") {
-		/**
-		 * 样式修改(子类继承扩展)
-		 * @param {Object} menu 菜单对象
-		 * @param {Function} fn 修改函数
-		 */
-		LC.Components.Menu.prototype.styleAlter = function(menu, fn) {
-			if ( typeof fn == "function") {
-				fn(menu);
-			}
-			return menu;
-		};
-	};
+LC.Components.Menu = function() {
+};
+LC.Utils.extend(LC.Components.CornerSign, LC.Components.BasicComponent);
+LC.Components.CornerSign.prototype.setText = function(text) {
+	this.dom.append($("<div></div>").css({
+		"margin" : "auto"
+	}).append(text));
+	return this;
+};
+/**
+ * 组件空间中加入菜单工厂
+ */
+LC.Components.CornerSignFactory = {
 	/**
-	 * 获取的DOM对像，通过.append()加入页面
+	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
+	 * @param {Object} id 菜单id
 	 */
-	dom=null;
-	if ( typeof this.creatDOM != "function") {
-		/**
-		 * 创建的DOM对像
-		 * @return menuDOM
-		 */
-		LC.Components.Menu.prototype.creatDOM = function() {
-			var sign = LC.CommonProperty.SIGN;
-			var menu = $("<div></div>").attr({
-				sign : _signID,
-				"class" : "menu-start"
-			});
-			this.dom = this.styleAlter(menu);
-			return this.dom;
-		};
-	};
+	createCornerSign : function(_id) {
+		var cornerSign = new LC.Components.CornerSign();
+		cornerSign.setSignID(_id).creatDOM("div", " cornersign upperright ");
+		return cornerSign;
+	}
 };
 /**
  * 组件空间中加入菜单工厂

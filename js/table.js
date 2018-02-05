@@ -26,9 +26,9 @@ LC.Components.Table.prototype.creatDOM = function(_line, _column, createFunction
 			}
 			//创建<tb>的组件对象，方便操作
 			var tb = new LC.Components.BasicComponent();
-			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb", " panel-table-tb ").css({
-				"width" : "50px",
-				"height" : "50px"
+			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb",LC.CommonProperty.CSS_PANEL_TABLE_TB).css({
+				"width" : "51px",
+				"height" : "51px"
 			});
 			//将cell放入tb内
 			tb.cell = cell;

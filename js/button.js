@@ -20,7 +20,7 @@ LC.Components.ButtonFactory = {
 	 */
 	createButtonStart : function(buttonID) {
 		var button = new LC.Components.Button();
-		button.setSignID(buttonID).creatDOM("div", "botton-start").css({//测试用
+		button.setSignID(buttonID).creatDOM("div", LC.CommonProperty.CSS_BUTTON_START).css({
 			"width":"150px",
 			"height":"35px"
 		});
@@ -33,7 +33,7 @@ LC.Components.ButtonFactory = {
 	createButtonClose : function(buttonID,parten) {
 		if (null==parten)parten=1;
 		var button = new LC.Components.Button();
-		button.setSignID(buttonID).creatDOM("div", "botton-colse")[0].addEventListener("click",function(){
+		button.setSignID(buttonID).creatDOM("div", LC.CommonProperty.CSS_BUTTON_CLOSE)[0].addEventListener("click",function(){
 			parten.hide();
 		},false);
 		return button;

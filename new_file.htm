@@ -30,54 +30,7 @@
 				scene.hide();
 				setTimeout("sceneNext.show()",100);
 			})));
-			/*-----构建次页面-----*/
-			//场景
-			var sceneNext = LC.Components.SceneFactory.createScene();
-			//面板主体
-			var panelbag = LC.Components.PanelFactory.createPanel();
-			//关闭按钮
-			var buttonclose = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag);
-			//面板标题
-			var panelTitel = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
-			//内部
-			var table = LC.Components.TableFactory.createTable(4,2,"测试");
-			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(table.dom);
-			var cell = LC.Components.PanelFactory.createPanel("??");
-			cell.dom.css({"width":"50px","height":"50px"});
-			table.setCell(3,1,cell);
-			var corner = LC.Components.CornerSignFactory.createCornerSign();
-			cell.dom.append(corner.dom);
-			corner.dom.append("99");
-			/*-----复制一个面板-----*/
-			var panelbag2 = LC.Components.PanelFactory.createPanel();
-			var buttonclose2 = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag2);
-			var panelTitel2 = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
-			var table2 = LC.Components.TableFactory.createTable(4,2,"测试");
-			panelbag2.dom.append(buttonclose2.dom).append(panelTitel2.dom).append(table2.dom);
-			var cell2 = LC.Components.PanelFactory.createPanel("??");
-			cell2.dom.css({"width":"50px","height":"50px"});
-			table2.setCell(3,1,cell2);
-			var corner2 = LC.Components.CornerSignFactory.createCornerSign();
-			cell2.dom.append(corner2.dom);
-			corner2.dom.append("99");
-			//--添加拖拽
-			LC.Components.ComponentFunction.drag(corner,cell,sceneNext,cell2,true);
-			LC.Components.ComponentFunction.drag(corner2,cell2,sceneNext,cell2,true);
-			//-----
-			//打开面板按钮
-			var buttonShowbag = LC.Components.ButtonFactory.createButtonStart();
-			buttonShowbag.dom.append("showbag").click(function() {panelbag.show();});
-			//返回上级场景按钮
-			var buttonback = LC.Components.ButtonFactory.createButtonStart();
-			buttonback.dom.append("back").click(function() {
-				sceneNext.hide();
-				setTimeout("scene.show()",100);
-			});
-			sceneNext.dom.append(panelbag.dom).append(buttonShowbag.dom).append(buttonback.dom);
-			sceneNext.dom.append(panelbag2.dom);
-			//设置面板可拖动
-			LC.Components.ComponentFunction.drag(panelTitel,panelbag);
-			LC.Components.ComponentFunction.drag(panelTitel2,panelbag2);
+			
 			//加载全部场景
 			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
 			sceneNext.hide();

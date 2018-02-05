@@ -13,7 +13,7 @@ LC.Components.SceneFactory = {
 	 */
 	createScene : function(sceneID) {
 		var scene = new LC.Components.Scene();
-		scene.setSignID(sceneID).creatDOM("div","scene-desktop");
+		scene.setSignID(sceneID).creatDOM("div",LC.CommonProperty.CSS_SCENE_DESKTOP);
 		scene.hide = function(cssClass){
 			if(null==cssClass||""==cssClass.trim()){
 				cssClass=LC.CommonProperty.CSS_HIDE_EXPAND;

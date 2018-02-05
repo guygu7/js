@@ -19,9 +19,9 @@ LC.Components.PanelFactory = {
 	 * 半透明面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {String} panelID 面板id
 	 */
-	createPanel : function(_id) {
+	createPanelTransparent : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(_id).creatDOM("div", "panel-outerlayer");
+		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL_TRANSPARENT);
 		return panel;
 	},
 	/**
@@ -30,19 +30,19 @@ LC.Components.PanelFactory = {
 	 */
 	createPanelTitle : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(_id).creatDOM("div", "panel-title").css({
+		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL_TITTLE).css({
 			"width" : "100%",
 			"height" : "23px"
 		});
 		return panel;
 	},
 	/**
-	 * 不透明面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
+	 * 基本面板，创建并返回一个面板html对象panel，调用.append()加入页面中显示
 	 * @param {String} panelID 面板id
 	 */
-	createPanel2 : function(_id) {
+	createPanel : function(_id) {
 		var panel = new LC.Components.Panel();
-		panel.setSignID(_id).creatDOM("div", "panel-innerlayer").css({
+		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL).css({
 			"width" : "50px",
 			"height" : "50px"
 		});

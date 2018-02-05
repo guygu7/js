@@ -49,8 +49,9 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 */
 		LC.Components.BasicComponent.prototype.show = function() {
 			var className = this.dom.attr("class");
+			hideClass=LC.CommonProperty.CSS_HIDE_EXPAND.trim();
 			//去掉所有隐藏样式
-			className = className.replace(/hide-expand/, "").replace(/hide-shrink/, "");
+			className = className.replace(hideClass, "").replace(hideClass, "");
 			this.dom.attr({
 				"class" : className
 			});

@@ -11,16 +11,16 @@ LC.CommonProperty = {
 	//底层桌面对象，用于终止置顶方法zIndexToTop
 	MAIN_DESK : $("#mainDesktop"),
 	//进度条过渡色：红色
-	COLOR_PROGRESS_RED : "repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%)",
+	COLOR_PROGRESS_RED : " repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%) ",
 	//进度条过渡色：橙色
-	COLOR_PROGRESS_ORIGIN : "repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#D67B1B 97%,#532710 100%)",
-	COLOR_PROGRESS_ORIGIN2 : "repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#B05718 97%,#532710 100%)",
+	COLOR_PROGRESS_ORIGIN : " repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#D67B1B 97%,#532710 100%) ",
+	COLOR_PROGRESS_ORIGIN2 : " repeating-linear-gradient(#D78728 1%,#F5C84B 20%,#EE8C20 40%,#B05718 97%,#532710 100%) ",
 	//进度条过渡色：蓝色
-	COLOR_PROGRESS_BLUE : "repeating-linear-gradient(#5A230F 1%,#67DAEC 20%,#0584BB 40%,#048ABD 97%,#5B3123 100%)",
+	COLOR_PROGRESS_BLUE : " repeating-linear-gradient(#5A230F 1%,#67DAEC 20%,#0584BB 40%,#048ABD 97%,#5B3123 100%) ",
 	//进度条过渡色：石板灰
-	COLOR_PROGRESS_GREY : "repeating-linear-gradient(#5A230F 1%,#778899 20%,#708090 40%,#2F4F4F 97%,#5B3123 100%)",
+	COLOR_PROGRESS_GREY : " repeating-linear-gradient(#5A230F 1%,#778899 20%,#708090 40%,#2F4F4F 97%,#5B3123 100%) ",
 	//进度条过渡色：绿
-	COLOR_PROGRESS_GREEN : "repeating-linear-gradient(#5A230F 1%,#3DFF1E 15%,#5DD810 50%,#157600 97%,#5B3123 100%)",
+	COLOR_PROGRESS_GREEN : " repeating-linear-gradient(#5A230F 1%,#3DFF1E 15%,#5DD810 50%,#157600 97%,#5B3123 100%) ",
 	/*---CSS class---*/
 	/**
 	 * CSS class:hide-expand 隐藏特效（扩张消失）
@@ -29,8 +29,55 @@ LC.CommonProperty = {
 	/**
 	 * CSS class:hide-shrink 隐藏特效（缩小消失）
 	 */
-	CSS_HIDE_SHRINK : " hide-shrink "
-	
+	CSS_HIDE_SHRINK : " hide-shrink ",
+	/**
+	 * CSS class:背景桌布
+	 */
+	CSS_MAIN_DESKTOP : " main-desktop ",
+	/**
+	 * CSS class:场景桌面
+	 */
+	CSS_SCENE_DESKTOP : " scene-desktop ",
+	/**
+	 * CSS class:开始菜单
+	 */
+	CSS_MENU_START : " menu-start ",
+	/**
+	 * CSS class:面板（背景半透明）
+	 */
+	CSS_PANEL_TRANSPARENT : " panel-outerlayer ",
+	/**
+	 * CSS class:表格单元格tb样式
+	 */
+	CSS_PANEL_TABLE_TB : " panel-table-tb ",
+	/**
+	 * CSS class:面板（标题栏样式）
+	 */
+	CSS_PANEL_TITTLE : " panel-title ",
+	/**
+	 * CSS class:面板（）
+	 */
+	CSS_PANEL : " panel-innerlayer ",
+	/**
+	 * CSS class:右上角的关闭按钮
+	 */
+	CSS_BUTTON_CLOSE : " botton-colse ",
+	/**
+	 * CSS class:置于右下（定位，用于角标）
+	 */
+	CSS_POSITION_LOWERRIGHT : " lowerright ",
+	/**
+	 * CSS class:置于右上（定位，用于角标）
+	 */
+	CSS_POSITION_UPPERRIGHT : " upperright ",
+	/**
+	 * CSS class:角标
+	 */
+	CSS_CORNERSIGN : " cornersign ",
+	/**
+	 * CSS class:首页开始按钮
+	 */
+	CSS_BUTTON_START : "botton-start"
 	
 };
 /**
@@ -515,15 +562,16 @@ LC.Components.ComponentFunction = {
 				//==============
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", mouseup1);
+				/*
 				//给拖拽目标绑定dropin事件,表示拖拽的对象被拖入了目标,并返回标的对象
 				if(dropObj){//如果有传参，则为拖放，否则为拖拽
 					dropObj.bind("dropin",function (){
 						console.log(dropObj);
-						console.log(this);
 						console.log(this.dropObj);
-						return this.dropObj;
+						//return this.dropObj;
 					});
 				}
+				*/
 			}
 		};
 		var left,top;
@@ -557,17 +605,17 @@ LC.Components.ComponentFunction = {
 						"top" : initTop + "px"
 					});
 				//3.获取鼠标位置dom
-				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY)).trigger("dropin");
+				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY));
+				//模拟冒泡，当前元素不满足拖放条件，则继续寻找其父元素,直到兜底桌面
+				while(!(dropTarget[0] === dropObj[0])&&!(dropTarget[0]==LC.CommonProperty.MAIN_DESK[0])){
+					dropTarget = dropTarget.parent();
+				};
 				//4.判断是否满足拖放条件
 				if(dropTarget[0] === dropObj[0]){
 					console.log("满足");
 					//4.1满足
-					//执行拖放操作...未完成...
-					console.log(dropTarget);
-					//获取dropTarget父dom，并将dropTarget删除
+					//获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
 					dropTarget.parent().empty().append(moveobj);
-					//将moveobj写入该父dom
-					
 					//---.还原过度效果
 					moveobj.css({
 						"transition" : "",
@@ -595,7 +643,7 @@ LC.Components.ComponentFunction = {
 						}(),1000
 					);
 				};
-				dropObj.unbind("dropin");
+				//dropObj.unbind("dropin");
 			}
 			//还原过度效果
 			moveobj.css({

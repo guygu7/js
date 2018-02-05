@@ -15,12 +15,12 @@ LC.Components.CornerSign.prototype.setText = function(text) {
  */
 LC.Components.CornerSignFactory = {
 	/**
-	 * ，创建并返回一个关闭按钮html对象CornerSign，调用.append()加入页面中显示
+	 * 右上角标，创建并返回一个关闭按钮html对象CornerSign，调用.append()加入页面中显示
 	 * @param {Object} buttonID 菜单id
 	 */
 	createCornerSign : function(_id) {
 		var cornerSign = new LC.Components.CornerSign();
-		cornerSign.setSignID(_id).creatDOM("div", " cornersign upperright ");
+		cornerSign.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_CORNERSIGN+LC.CommonProperty.CSS_POSITION_UPPERRIGHT);
 		return cornerSign;
 	}
 };

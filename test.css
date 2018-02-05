@@ -8,35 +8,13 @@ body {
 	font-family: LiSu;
 }
 /**
- * 	背景桌布
+ * 	公共属性部分
  */
-.main-desktop {
-	background: #2c3e50;
-	border-radius: 5px;
-	width: 1100px;
-	height: 600px;
-	margin: 5px auto;
-	padding: 20px 75px 0px 75px;
-}
 .public {
 	transition: 0.5s;
 	display: inline-block;
 	position: absolute;
 	z-index: 1;
-}
-/**
- *  场景桌面
- */
-.scene-desktop {
-	background: #bdc3c7;
-	border-radius: 5px;
-	width: 950px;
-	height: 550px;
-	position: absolute;
-	transition: 0.5s;
-	overflow: hidden;
-	z-index: 1;
-	display: inline-block;
 }
 /**
  * 	隐藏特效（扩张消失）
@@ -53,6 +31,34 @@ body {
 	opacity: 0;
 	z-index: 0;
 	transform: scale(0);
+}
+/**
+ * ========以上为通用公共属性==========
+ */
+/**
+ * 	背景桌布
+ */
+.main-desktop {
+	background: #2c3e50;
+	border-radius: 5px;
+	width: 1100px;
+	height: 600px;
+	margin: 5px auto;
+	padding: 20px 75px 0px 75px;
+}
+/**
+ *  场景桌面
+ */
+.scene-desktop {
+	background: #bdc3c7;
+	border-radius: 5px;
+	width: 950px;
+	height: 550px;
+	position: absolute;
+	transition: 0.5s;
+	overflow: hidden;
+	z-index: 1;
+	display: inline-block;
 }
 /**
  * 	开始菜单
@@ -154,7 +160,7 @@ body {
 	background: repeating-linear-gradient(#717171 1%,#BEBEBE 100%);
 }
 /**
- * 	开始按钮
+ * 	首页开始按钮
  */
 .botton-start {
 	border: 2px outset #717171;
@@ -206,20 +212,3 @@ body {
 	font-size: 10px;
 	font-weight: 600;
 }
-/*
- @media all, screen and (orientation: landscape)
- .status {
- position: relative;
- width: 90px;
- height: 40px;
- cursor: default;
- margin: 2px;
- padding: 2px;
- float: left;
- text-align: center;
- border: solid 1px;
- background: #FFFFFF;
- border-radius: 5px;
- font-size: 1em;
- transition: 0.5s;
- }*/
