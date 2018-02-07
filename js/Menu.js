@@ -16,11 +16,49 @@ LC.Components.Dropdown.prototype.setText = function(text) {
  * 3. 按钮样式重设
  * 4. 按钮ID
  */
-LC.Components.Dropdown.prototype.setElement = function(_num,_test,_cssClass,_id){
-	if(!this._elementMap){
-		this._elementMap = new LC.Utils.Map();
+LC.Components.Dropdown.prototype.addElement = function(_num,_text,_cssClass,_id){
+	if(!this._elements){
+		this._elements = new Array();
 	}
-
+	//（未完成）校验_num为正整数
+	//创建元素，设定元素样式、ID
+	if (!_cssClass) {
+		_cssClass=LC.CommonProperty.CSS_BUTTON_DROPDOWN;
+	};
+	var element = new LC.Components.BasicComponent();
+	if (_id) {
+		element.setSignID(_id);
+	};
+	element.creatDOM("div",_cssClass);
+	if(_text){
+		element.dom.append($("<div></div>").css({
+			"position": "relative",
+			"top": "50%",
+	        "transform": "translateY(-50%)"
+		}).append(_text));
+	};
+	//将元素放入数组
+	this._elements.splice(Number(_num-1),0,element);
+	//更新菜单
+	this.dom.empty();
+	var elementsLength = this._elements.length;
+	var width = 0;
+	var height = 0;
+	for (var i=0; i < elementsLength ; i++) {
+		if(i==0){//将第一个元素置顶，并绑定点击事件
+			this._elements[i].dom.css({"z-index":"2"});
+			this._elements[i].dom.bind("click",function(e){
+				console.log($(e.target).eq(1).height());
+				if($(e.target).eq(1).height()==0){
+					$(e.target).siblings().css({"height":"50px"});
+				}else{
+					$(e.target).siblings().css({"height":"0px"});
+				}
+			});
+		}
+		console.log(this._elements[i].dom.outerWidth(true));
+		this.dom.append(this._elements[i].dom);
+	};
 	return this;
 };
 /**

@@ -160,8 +160,8 @@ body {
 .botton-dropdown {
 	border: 2px outset #717171;
 	border-radius: 3px;
-	display: inline-block;
-	margin: 2px 0px 2px 0px;
+	width:100px;
+	height:50px;
 	background-color: #BEBEBE;
 	border-radius: 3px;
 	transition: 0.1s;
@@ -217,13 +217,10 @@ body {
  * 	下拉菜单
  */
 .dropdown {
-	width: 170px;
-	height: 300px;
 	position: absolute;
 	bottom: 50px;
 	left: 50px;
 	margin: 5px;
-	padding: 5px;
 	border: 3px ridge #474B64;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);

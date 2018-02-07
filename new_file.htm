@@ -25,11 +25,17 @@
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
 			var menu = LC.Components.DropdownFactory.createDropdown();
-			var buttonstart = LC.Components.ButtonFactory.createButtonStart();
+			//var buttonstart = LC.Components.ButtonFactory.createButtonStart();
+			menu.addElement(1,"111");
+			menu.addElement(2,"222");
+			menu.addElement(3,"333");
+			menu.addElement(4,"444");
+			menu.addElement(5,"000");
+			menu.addElement(6,"666");
 			
-			
+			scene.dom.append(menu.dom);
 			//加载全部场景
-			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
+			$("#mainDesktop").append(scene.dom);
 			//sceneNext.hide();
 			scene.show();
 			
