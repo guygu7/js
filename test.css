@@ -32,6 +32,10 @@ body {
 	z-index: 0;
 	transform: scale(0);
 }
+.show-shrink {
+	opacity: 1;
+	transform: scale(1);
+}
 /**
  * ========以上为通用公共属性==========
  */
@@ -160,13 +164,16 @@ body {
 .botton-dropdown {
 	border: 2px outset #717171;
 	border-radius: 3px;
-	width:100px;
-	height:50px;
+	width:35px;
+	height:35px;
 	background-color: #BEBEBE;
-	border-radius: 3px;
-	transition: 0.1s;
-	font-size: 1.5em;
+	border-radius: 3000px;
+	font-size: 1em;
 	text-align: center;
+	vertical-align:middle;
+	transition: 0.1s;
+	line-height:200%;
+	font-weight:600;
 }
 .botton-dropdown:hover {
 	transform: scaleX(1.05) scaleY(1.05);
@@ -218,11 +225,12 @@ body {
  */
 .dropdown {
 	position: absolute;
-	bottom: 50px;
-	left: 50px;
+/*
 	margin: 5px;
 	border: 3px ridge #474B64;
-	border-radius: 4px;
+	border-radius: 100px;
 	background-color: rgba(43,49,60,0.75);
+	transition: 0.2s;
+	*/
 	text-align: center;
 }
