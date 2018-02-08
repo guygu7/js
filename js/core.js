@@ -30,8 +30,6 @@ LC.CommonProperty = {
 	 * CSS class:hide-shrink 隐藏特效（缩小消失）
 	 */
 	CSS_HIDE_SHRINK : " hide-shrink ",
-	
-	CSS_HIDE_TEST : " hide-test ",
 	/**
 	 * CSS class:背景桌布
 	 */
