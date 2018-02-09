@@ -5,13 +5,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Bootstrap 101 Template</title>
-		<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
 		<link href="test.css" rel="stylesheet">
 	</head>
 	<body>
 		<div id="mainDesktop" class="main-desktop"></div>
 		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
-		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="js/core.js"></script>
 		<script src="js/BasicComponent.js"></script>
 		<script src="js/Components.js"></script>
@@ -21,21 +19,35 @@
 		<script src="js/button.js"></script>
 		<script src="js/table.js"></script>
 		<script src="js/corner.js"></script>
+		<script src="js/progressbar.js"></script>
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
-			var menu = LC.Components.DropdownLeftFactory.createDropdownLeft();
-			//var buttonstart = LC.Components.ButtonFactory.createButtonStart();
-			menu.addElement(1,"111");
-			menu.addElement(2,"222");
-			menu.addElement(3,"333");
-			menu.addElement(4,"444");
-			menu.addElement(5,"000");
-			menu.addElement(6,"666");
-			
-			scene.dom.append(menu.dom);
-			//加载全部场景
 			$("#mainDesktop").append(scene.dom);
+			
+			var panel1 = LC.Components.PanelFactory.createPanel(null,"15%","80%");
+			panel1.addPosition("upperleft").addPosition("relative");
+			var panel2 = LC.Components.PanelFactory.createPanel(null,"13.5%","99%");
+			panel2.addPosition("upperright");
+			var panel3 = LC.Components.PanelFactory.createPanel(null,"85.5%","18.5%");
+			panel3.addPosition("lowerleft");
+			var panel4 = LC.Components.PanelFactory.createPanel(null,"70%","80%");
+			panel4.addPosition("upperleft").addPosition("relative");
+			scene.dom.append(panel1.dom).append(panel2.dom).append(panel4.dom).append(panel3.dom);
+			
+			//菜单
+			var menu = LC.Components.DropdownFactory.createDropdownUp();
+			menu.addElement(0,"菜单");
+			menu.addElement(1,"测试以");
+			menu.addElement(2,"测试2");
+			menu.addElement(3,"测试3");
+			menu.addPosition("lowerright");
+			panel4.dom.append(menu.dom);
+			//加载全部场景
+			
+			var progress1 = LC.Components.ProgressbarFactory.createProgressbar();
+			progress1.addPosition("lowerleft");
+			panel4.dom.append(progress1.dom);
 			//sceneNext.hide();
 			scene.show();
 			

@@ -28,12 +28,13 @@ LC.Components.Dropdown.prototype.addElement = function(_num,_text,_cssClass,_id)
 	if (_id) {
 		element.setSignID(_id);
 	};
+	if(_num!=0){_cssClass+=LC.CommonProperty.CSS_HIDE_SHRINK;}
 	element.creatDOM("div",_cssClass);
 	if(_text){
 		element.dom.append(_text);
 	};
 	//将元素放入数组
-	this._elements.splice(Number(_num-1),0,element);
+	this._elements.splice(Number(_num),0,element);
 	//更新菜单
 	this.dom.empty();
 	var elementsLength = this._elements.length;
@@ -41,7 +42,7 @@ LC.Components.Dropdown.prototype.addElement = function(_num,_text,_cssClass,_id)
 	this._elements[0].dom.css({"z-index":"2"});
 	this._elements[0].dom.bind("click",function(e){
 		var targets = $(e.target).siblings();
-		var targetsLength = $(e.target).siblings().length;
+		var targetsLength = $(e.target).siblings().length+1;
 		var hidetime = 0.2*targetsLength;
 		var showtime = 0.2;
 		for (var j=0; j < targetsLength; j++) {
@@ -71,27 +72,9 @@ LC.Components.Dropdown.prototype.getElement = function(_num){
 	return this._elements[i];
 };
 LC.Components.Dropdown.prototype.removeElement = function(_num){
-	return this._elements.splice(Number(_num-1),1);
+	return this._elements.splice(Number(_num),1);
 };
-/**
- * 组件空间中加入菜单工厂
- */
-LC.Components.DropdownFactory = {
-	/**
-	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
-	 * @param {String} _id 菜单id
-	 * @param {String} _cssClass 菜单样式
-	 */
-	createDropdown : function(_id,_cssClass) {
-		var dropdown = new LC.Components.Dropdown();
-		if (_cssClass){
-			dropdown.setSignID(_id).creatDOM("div",_cssClass);
-		}else{
-			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
-		}
-		return dropdown;
-	}
-};
+
 //===============上拉菜单=========================
 /**
  * 组件空间中加入下拉菜单类
@@ -123,12 +106,13 @@ LC.Components.DropdownUp.prototype.addElement = function(_num,_text,_cssClass,_i
 	if (_id) {
 		element.setSignID(_id);
 	};
+	if(_num!=0){_cssClass+=LC.CommonProperty.CSS_HIDE_SHRINK;}
 	element.creatDOM("div",_cssClass);
 	if(_text){
 		element.dom.append(_text);
 	};
 	//将元素放入数组
-	this._elements.splice(Number(_num-1),0,element);
+	this._elements.splice(Number(_num),0,element);
 	//更新菜单
 	this.dom.empty();
 	var elementsLength = this._elements.length;
@@ -137,20 +121,20 @@ LC.Components.DropdownUp.prototype.addElement = function(_num,_text,_cssClass,_i
 	menudom.css({"z-index":"2"});
 	menudom.bind("click",function(e){
 		var targets = $(e.target).siblings();
-		var targetsLength = $(e.target).siblings().length;
-		var hidetime = 0.1;
-		var showtime = 0.1*targetsLength;
+		var targetsLength = $(e.target).siblings().length+1;
+		var hidetime = 0.2;
+		var showtime = 0.2*targetsLength;
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
-				hidetime += 0.15;
+				hidetime += 0.2;
 				targets.eq(j).css({"transition":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
-				showtime -= 0.15;
+				showtime -= 0.2;
 				targets.eq(j).css({"transition":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
@@ -169,27 +153,9 @@ LC.Components.DropdownUp.prototype.getElement = function(_num){
 	return this._elements[i];
 };
 LC.Components.DropdownUp.prototype.removeElement = function(_num){
-	return this._elements.splice(Number(_num-1),1);
+	return this._elements.splice(Number(_num),1);
 };
-/**
- * 组件空间中加入菜单工厂
- */
-LC.Components.DropdownUpFactory = {
-	/**
-	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
-	 * @param {String} _id 菜单id
-	 * @param {String} _cssClass 菜单样式
-	 */
-	createDropdownUp : function(_id,_cssClass) {
-		var dropdown = new LC.Components.DropdownUp();
-		if (_cssClass){
-			dropdown.setSignID(_id).creatDOM("div",_cssClass);
-		}else{
-			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
-		}
-		return dropdown;
-	}
-};
+
 //============左横拉菜单============
 /**
  * 组件空间中加入下拉菜单类
@@ -221,13 +187,14 @@ LC.Components.DropdownLeft.prototype.addElement = function(_num,_text,_cssClass,
 	if (_id) {
 		element.setSignID(_id);
 	};
+	if(_num!=0){_cssClass+=LC.CommonProperty.CSS_HIDE_SHRINK;}
 	element.creatDOM("div",_cssClass);
 	if(_text){
 		element.dom.append(_text);
 	};
 	element.dom.css({"display" : "inline-block"});
 	//将元素放入数组
-	this._elements.splice(Number(_num-1),0,element);
+	this._elements.splice(Number(_num),0,element);
 	//更新菜单
 	this.dom.empty();
 	var elementsLength = this._elements.length;
@@ -235,7 +202,7 @@ LC.Components.DropdownLeft.prototype.addElement = function(_num,_text,_cssClass,
 	this._elements[0].dom.css({"z-index":"2"});
 	this._elements[0].dom.bind("click",function(e){
 		var targets = $(e.target).siblings();
-		var targetsLength = $(e.target).siblings().length;
+		var targetsLength = $(e.target).siblings().length+1;
 		var hidetime = 0.2*targetsLength;
 		var showtime = 0.2;
 		for (var j=0; j < targetsLength; j++) {
@@ -265,27 +232,9 @@ LC.Components.DropdownLeft.prototype.getElement = function(_num){
 	return this._elements[i];
 };
 LC.Components.DropdownLeft.prototype.removeElement = function(_num){
-	return this._elements.splice(Number(_num-1),1);
+	return this._elements.splice(Number(_num),1);
 };
-/**
- * 组件空间中加入菜单工厂
- */
-LC.Components.DropdownLeftFactory = {
-	/**
-	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
-	 * @param {String} _id 菜单id
-	 * @param {String} _cssClass 菜单样式
-	 */
-	createDropdownLeft : function(_id,_cssClass) {
-		var dropdown = new LC.Components.DropdownLeft();
-		if (_cssClass){
-			dropdown.setSignID(_id).creatDOM("div",_cssClass);
-		}else{
-			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
-		}
-		return dropdown;
-	}
-};
+
 //===============右横拉菜单=========================
 /**
  * 组件空间中加入下拉菜单类
@@ -317,13 +266,14 @@ LC.Components.DropdownRight.prototype.addElement = function(_num,_text,_cssClass
 	if (_id) {
 		element.setSignID(_id);
 	};
+	if(_num!=0){_cssClass+=LC.CommonProperty.CSS_HIDE_SHRINK;}
 	element.creatDOM("div",_cssClass);
 	if(_text){
 		element.dom.append(_text);
 	};
 	element.dom.css({"display" : "inline-block"});
 	//将元素放入数组
-	this._elements.splice(Number(_num-1),0,element);
+	this._elements.splice(Number(_num),0,element);
 	//更新菜单
 	this.dom.empty();
 	var elementsLength = this._elements.length;
@@ -332,20 +282,20 @@ LC.Components.DropdownRight.prototype.addElement = function(_num,_text,_cssClass
 	menudom.css({"z-index":"2"});
 	menudom.bind("click",function(e){
 		var targets = $(e.target).siblings();
-		var targetsLength = $(e.target).siblings().length;
-		var hidetime = 0.1;
-		var showtime = 0.1*targetsLength;
+		var targetsLength = $(e.target).siblings().length+1;
+		var hidetime = 0.2;
+		var showtime = 0.2*targetsLength;
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
-				hidetime += 0.15;
+				hidetime += 0.2;
 				targets.eq(j).css({"transition":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
-				showtime -= 0.15;
+				showtime -= 0.2;
 				targets.eq(j).css({"transition":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
@@ -364,12 +314,54 @@ LC.Components.DropdownRight.prototype.getElement = function(_num){
 	return this._elements[i];
 };
 LC.Components.DropdownRight.prototype.removeElement = function(_num){
-	return this._elements.splice(Number(_num-1),1);
+	return this._elements.splice(Number(_num),1);
 };
 /**
  * 组件空间中加入菜单工厂
  */
-LC.Components.DropdownRightFactory = {
+LC.Components.DropdownFactory = {
+	/**
+	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
+	 * @param {String} _id 菜单id
+	 * @param {String} _cssClass 菜单样式
+	 */
+	createDropdown : function(_id,_cssClass) {
+		var dropdown = new LC.Components.Dropdown();
+		if (_cssClass){
+			dropdown.setSignID(_id).creatDOM("div",_cssClass);
+		}else{
+			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
+		}
+		return dropdown;
+	},
+	/**
+	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
+	 * @param {String} _id 菜单id
+	 * @param {String} _cssClass 菜单样式
+	 */
+	createDropdownUp : function(_id,_cssClass) {
+		var dropdown = new LC.Components.DropdownUp();
+		if (_cssClass){
+			dropdown.setSignID(_id).creatDOM("div",_cssClass);
+		}else{
+			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
+		}
+		return dropdown;
+	},
+	/**
+	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
+	 * @param {String} _id 菜单id
+	 * @param {String} _cssClass 菜单样式
+	 */
+	createDropdownLeft : function(_id,_cssClass) {
+		var dropdown = new LC.Components.DropdownLeft();
+		if (_cssClass){
+			dropdown.setSignID(_id).creatDOM("div",_cssClass);
+		}else{
+			dropdown.setSignID(_id).creatDOM("div",LC.CommonProperty.CSS_DROPDOWN);
+		}
+		return dropdown;
+	},
 	/**
 	 * 菜单，创建并返回一个关闭按钮html对象Menu，调用.append()加入页面中显示
 	 * @param {String} _id 菜单id
@@ -385,5 +377,3 @@ LC.Components.DropdownRightFactory = {
 		return dropdown;
 	}
 };
-
-
