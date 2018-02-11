@@ -4,7 +4,16 @@
 LC.Components.Table = function() {
 };
 LC.Utils.extend(LC.Components.Table, LC.Components.BasicComponent);
-LC.Components.Table.prototype.creatDOM = function(_line, _column, createFunction) {
+/**
+ * 参数：</br>
+ * _line 行数,_column 列数,_width 元素格子宽度,_height 元素格子高度,cssclass 用于变换小格子样式
+ * @param {Number} _line
+ * @param {Number} _column
+ * @param {String} _width
+ * @param {String} _height
+ * @param {Function|String} createFunction
+ */
+LC.Components.Table.prototype.creatDOM = function(_line, _column, _width, _height, cssclass) {
 	var sign = LC.CommonProperty.SIGN;
 	var basicComponent = $("<table></table>").attr({
 		sign : this.getSignID(),
@@ -12,28 +21,33 @@ LC.Components.Table.prototype.creatDOM = function(_line, _column, createFunction
 	var tempColumn;
 	var cell;
 	var tb;
+	var classname = LC.CommonProperty.CSS_PANEL_TABLE_TB;
+	if (cssclass) {
+		classname = " " + cssclass + " ";
+	}
 	//由于this会发生变化，暂存ID
 	var signId = this.getSignID();
 	for (var i = 0; i < _line; i++) {
 		tempColumn = $("<tr></tr>");
 		for (var j = 0; j < _column; j++) {
-			//遍历插入传入的基本组件|样式，如果没有不插入
-			if ( typeof createFunction == "function") {//是一个工厂创建函数，则取dom
-				cell = createFunction(signId + "-" + (j + 1) + "-" + (i + 1));
-			} else if ( typeof createFunction == "string") {//是一个cssclass，则创建一个div
-				cell = new LC.Components.BasicComponent();
-				cell.setSignID(signId + "-" + (j + 1) + "-" + (i + 1)).creatDOM("div", createFunction);
-			}
 			//创建<tb>的组件对象，方便操作
 			var tb = new LC.Components.BasicComponent();
-			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb",LC.CommonProperty.CSS_PANEL_TABLE_TB).css({
-				"width" : "51px",
-				"height" : "51px"
+			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb", classname).css({
+				"width" : _width,
+				"height" : _height
+			});
+			//插入虚内容元素
+			cell = new LC.Components.BasicComponent();
+			cell.setSignID(signId + "-" + (j + 1) + "-" + (i + 1)).creatDOM("div");
+			cell.dom.css({
+				"width" : _width,
+				"height" : _height
 			});
 			//将cell放入tb内
 			tb.cell = cell;
 			//将cell.dom放入tb.dom中
 			tb.dom.append(cell.dom);
+
 			//将tb放入cellsMap中
 			this.cellsMap.put(((j + 1) + "-" + (i + 1)).toString(), tb);
 			tempColumn.append(tb.dom);
@@ -71,12 +85,31 @@ LC.Components.Table.prototype.setCell = function(_line, _column, obj) {
  */
 LC.Components.TableFactory = {
 	/**
-	 * table，创建并返回一个html对象table，调用.append()加入页面中显示
-	 * @param {String} _id id
+	 * table 型号51X51中格子，创建并返回一个html对象table，调用.append()加入页面中显示</br>
+	 * 参数:</br>
+	 * line 行数,_column 列数,_gridSize 格子大小("big"|"small"|像素px),_id id
+	 * @param {Number} _line
+	 * @param {Number} _column
+	 * @param {Number} _gridSize
+	 * @param {String} _id
 	 */
-	createTable : function(_line, _column, _id) {
+	createTable : function(_line, _column, _gridSize, _id) {
+		var gridWidth = "40px";
+		var gridHeight = "40px";
+		if (_gridSize) {
+			if ("big" == _gridSize) {
+				gridWidth = "60px";
+				gridHeight = "60px";
+			} else if ("small" == _gridSize) {
+				var gridWidth = "25px";
+				var gridHeight = "25px";
+			} else {
+				gridWidth = _gridSize;
+				gridHeight = _gridSize;
+			}
+		}
 		var table = new LC.Components.Table();
-		table.setSignID(_id).creatDOM(_line, _column, LC.Components.PanelFactory.createPanel2);
+		table.setSignID(_id).creatDOM(_line, _column, gridWidth, gridHeight);
 		return table;
-	}
+	},
 };

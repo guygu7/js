@@ -24,8 +24,8 @@
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
-			var menu1 = LC.Components.MenuFactory.createStartMenu();
-			var buttonstart = LC.Components.ButtonFactory.createButtonStart();
+			//var menu1 = LC.Components.MenuFactory.createMenu();
+			//var buttonstart = LC.Components.ButtonFactory.createButtonStart();
 			scene.dom.append(menu1.dom.append(buttonstart.dom.append().click(function() {
 				scene.hide();
 				setTimeout("sceneNext.show()",100);

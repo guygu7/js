@@ -40,11 +40,11 @@ LC.CommonProperty = {
 	CSS_SCENE_DESKTOP : " scene-desktop ",
 	//====面板====
 	/**
-	 * CSS class:面板（）
+	 * CSS class:面板（不透明）
 	 */
 	CSS_PANEL : " panel-basic ",
 	/**
-	 * CSS class:面板（）
+	 * CSS class:空气面板（用于布局）
 	 */
 	CSS_PANEL_AIR : " panel-air ",
 	/**
@@ -599,16 +599,6 @@ LC.Components.ComponentFunction = {
 				//==============
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", mouseup1);
-				/*
-				//给拖拽目标绑定dropin事件,表示拖拽的对象被拖入了目标,并返回标的对象
-				if(dropObj){//如果有传参，则为拖放，否则为拖拽
-					dropObj.bind("dropin",function (){
-						console.log(dropObj);
-						console.log(this.dropObj);
-						//return this.dropObj;
-					});
-				}
-				*/
 			}
 		};
 		var left,top;

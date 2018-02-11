@@ -69,7 +69,7 @@ LC.Components.Dropdown.prototype.addElement = function(_num,_text,_cssClass,_id)
 	return this;
 };
 LC.Components.Dropdown.prototype.getElement = function(_num){
-	return this._elements[i];
+	return this._elements[_num];
 };
 LC.Components.Dropdown.prototype.removeElement = function(_num){
 	return this._elements.splice(Number(_num),1);
@@ -126,7 +126,7 @@ LC.Components.DropdownUp.prototype.addElement = function(_num,_text,_cssClass,_i
 		var showtime = 0.2*targetsLength;
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
-			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
+			if (null==className||-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
 				hidetime += 0.2;
 				targets.eq(j).css({"transition":hidetime+"s"});
@@ -150,7 +150,7 @@ LC.Components.DropdownUp.prototype.addElement = function(_num,_text,_cssClass,_i
 	return this;
 };
 LC.Components.DropdownUp.prototype.getElement = function(_num){
-	return this._elements[i];
+	return this._elements[_num];
 };
 LC.Components.DropdownUp.prototype.removeElement = function(_num){
 	return this._elements.splice(Number(_num),1);
@@ -229,7 +229,7 @@ LC.Components.DropdownLeft.prototype.addElement = function(_num,_text,_cssClass,
 	return this;
 };
 LC.Components.DropdownLeft.prototype.getElement = function(_num){
-	return this._elements[i];
+	return this._elements[_num];
 };
 LC.Components.DropdownLeft.prototype.removeElement = function(_num){
 	return this._elements.splice(Number(_num),1);
@@ -311,7 +311,7 @@ LC.Components.DropdownRight.prototype.addElement = function(_num,_text,_cssClass
 	return this;
 };
 LC.Components.DropdownRight.prototype.getElement = function(_num){
-	return this._elements[i];
+	return this._elements[_num];
 };
 LC.Components.DropdownRight.prototype.removeElement = function(_num){
 	return this._elements.splice(Number(_num),1);

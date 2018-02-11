@@ -70,7 +70,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 */
 		LC.Components.BasicComponent.prototype.hide = function(hideType) {
 			var className = this.dom.attr("class");
-			if (null == cssClass || "" == cssClass.trim()) {//未传参数，则为默认隐藏样式
+			if (null == hideType || "" == hideType.trim()) {//未传参数，则为默认隐藏样式
 				hideType = LC.CommonProperty.CSS_HIDE_SHRINK;
 			};
 			if ("shrink" == hideType.trim()) {
@@ -98,7 +98,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			//去掉所有隐藏样式
 			var hideClass = LC.CommonProperty.CSS_HIDE_EXPAND.trim();
 			var hideClass2 = LC.CommonProperty.CSS_HIDE_SHRINK.trim();
-			className = className.replace(hideClass, "").replace(hideClass, "");
+			className = className.replace(hideClass, "").replace(hideClass2, "");
 			this.dom.attr({
 				"class" : className
 			});
@@ -109,7 +109,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 	if ( typeof this.addPosition != "function") {
 		/**
 		 * 添加定位</br>
-		 * 参数："lowerright"|"upperright"|"lowerleft"|"upperleft"|"relative"</br>
+		 * 参数："lowerright"|"upperright"|"lowerleft"|"upperleft"</br>
 		 * @param {String} positionType
 		 */
 		LC.Components.BasicComponent.prototype.addPosition = function(positionType) {
@@ -158,7 +158,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return this;
 		};
 	};
-	if ( typeof this.addPosition != "function") {
+	if ( typeof this.addPositionMode != "function") {
 		/**
 		 * 添加定位模式（绝对|相对）</br>
 		 * 参数："relative"|"absolute"</br>

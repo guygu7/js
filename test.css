@@ -70,23 +70,20 @@ body {
 .panel-basic {
 	border: 2px ridge #474B64;
 	border-radius: 3px;
-	margin: 0px;
 	background-color: #BEBEBE;
-	border-radius: 3px;
 	transition: 0.1s;
 	text-align: center;
-	display: inline-block;
 	position: relative;
-	overflow:hidden;
 }
 /**
- * 	空气面板
+ * 	空气面板（用于布局）
  */
 .panel-air {
 	margin: 0px;
 	text-align: center;
 	display: inline-block;
 	position: relative;
+	overflow:hidden;
 }
 /**
  * 	面板（外层，半透明，有边框和边距）
@@ -96,7 +93,7 @@ body {
 	border: 3px ridge #BEBEBE/*#474B64*/;
 	border-radius: 4px;
 	background-color: rgba(43,49,60,0.75);
-	z-index: 1;
+	z-index: 10;
 	position: absolute;
 	transition: 0.2s;
 	display: inline-block;
@@ -119,9 +116,9 @@ body {
  * 	表格单元格tb样式
  */
 .panel-table-tb{
-	border: 2px ridge #474B64;
+	border: 2px inset #474B64;
 	border-radius: 3px;
-	background-color: #BEBEBE;
+	background-color: rgba(149,149,60,0.35);
 	border-radius: 3px;
 	transition: 0.1s;
 	position: relative;
@@ -227,18 +224,21 @@ body {
 }
 /*======进度条======*/
 .progress{
-	border : 3px ridge #767676,
-	border-radius : 200px,
-	width : 100%,
+	border : 0px ridge #767676;
+	border-radius : 200px;
+	width : 100px;
 	height : 10px;
-	background-color: #080808
+	background-color: #BEBEBE;
+	overflow:hidden;
 }
 .progress-bar{
-	background-color: #2AABD2
+	height : 100%;
+	border-radius : 200px;
+	background-color: #2AABD2;
+	border-radius: progress;
 }
 .progress-shadow{
-	background-color: #2AABD2
-	opacity : 0.5
+	background-color: #474B64;
 }
 /*=======定位======*/
 /**

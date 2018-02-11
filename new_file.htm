@@ -24,33 +24,87 @@
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
 			$("#mainDesktop").append(scene.dom);
-			
-			var panel1 = LC.Components.PanelFactory.createPanel(null,"15%","80%");
-			panel1.addPosition("upperleft").addPosition("relative");
-			var panel2 = LC.Components.PanelFactory.createPanel(null,"13.5%","99%");
-			panel2.addPosition("upperright");
-			var panel3 = LC.Components.PanelFactory.createPanel(null,"85.5%","18.5%");
-			panel3.addPosition("lowerleft");
-			var panel4 = LC.Components.PanelFactory.createPanel(null,"70%","80%");
-			panel4.addPosition("upperleft").addPosition("relative");
-			scene.dom.append(panel1.dom).append(panel2.dom).append(panel4.dom).append(panel3.dom);
-			
-			//菜单
+			/*==========布局============*/
+			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null,"85%","100%");
+			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null,"15%","100%");
+			scene.dom.append(layout1.dom).append(layout2.dom);
+			var layout1_1 = LC.Components.PanelFactory.createPanelEmpty(null,"100%","80%");
+			var layout1_2 = LC.Components.PanelFactory.createPanelEmpty(null,"100%","19%");
+			layout1.dom.append(layout1_1.dom).append(layout1_2.dom);
+			var layout1_1_1 = LC.Components.PanelFactory.createPanelEmpty(null,"15%","100%");
+			var layout1_1_2 = LC.Components.PanelFactory.createPanelEmpty(null,"85%","100%");
+			layout1_1.dom.append(layout1_1_1.dom).append(layout1_1_2.dom);
+			//布局面板渲染
+			var panel1 = LC.Components.PanelFactory.createPanel();
+			var panel2 = LC.Components.PanelFactory.createPanel("SSADAD");
+			var panel3 = LC.Components.PanelFactory.createPanel();
+			var panel4 = LC.Components.PanelFactory.createPanel();
+			layout1_1_1.dom.append(panel1.dom);
+			layout1_1_2.dom.append(panel2.dom);
+			layout1_2.dom.append(panel3.dom);
+			layout2.dom.append(panel4.dom);
+			/*==========活动栏位===========*/
+			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null,"445px","300px");
+			var closeBut = LC.Components.ButtonFactory.createButtonClose(null,itemBag);
+			var titel = LC.Components.PanelFactory.createPanelTitle().setText("物品栏");
+			itemBag.dom.append(closeBut.dom).append(titel.dom);
+			itemBag.addPosition("upperright").addPositionMode("absolute");
+			itemBag.hide();
+			LC.Components.ComponentFunction.drag(titel,itemBag,scene);
+			scene.dom.append(itemBag.dom);
+			//添加内容
+			var table = LC.Components.TableFactory.createTable(4,10);
+			var cell = LC.Components.PanelFactory.createPanel("??");
+			cell.dom.css({"width":"90%","height":"90%"});
+			table.setCell(3,1,cell);
+			var corner = LC.Components.CornerSignFactory.createCornerSign();
+			cell.dom.append(corner.dom);
+			corner.dom.append("99");
+			itemBag.dom.append(table.dom);
+			/*==========活动栏位2===========*/
+			var itemBag2 = LC.Components.PanelFactory.createPanelTransparent(null,"445px","300px");
+			var closeBut2 = LC.Components.ButtonFactory.createButtonClose(null,itemBag2);
+			var titel2 = LC.Components.PanelFactory.createPanelTitle().setText("物品栏2");
+			itemBag2.dom.append(closeBut2.dom).append(titel2.dom);
+			itemBag2.addPosition("upperright").addPositionMode("absolute");
+			itemBag2.hide();
+			LC.Components.ComponentFunction.drag(titel2,itemBag2,scene);
+			scene.dom.append(itemBag2.dom);
+			//添加内容
+			var table2 = LC.Components.TableFactory.createTable(4,10);
+			itemBag2.dom.append(table2.dom);
+			//====拖拽测试====
+			//LC.Components.ComponentFunction.drag(cell,cell,scene,);
+			/*==========菜单============*/
 			var menu = LC.Components.DropdownFactory.createDropdownUp();
 			menu.addElement(0,"菜单");
-			menu.addElement(1,"测试以");
-			menu.addElement(2,"测试2");
-			menu.addElement(3,"测试3");
 			menu.addPosition("lowerright");
-			panel4.dom.append(menu.dom);
-			//加载全部场景
+			menu.addElement(1,"物品");
+			menu.addElement(2,"物品2");
+			menu.getElement(1).dom.bind("click",function(){
+				console.log("1");
+				itemBag.show();
+			});
+			menu.getElement(2).dom.bind("click",function(){
+				itemBag2.show();
+			});
+			panel2.dom.append(menu.dom);
+			//========
 			
-			var progress1 = LC.Components.ProgressbarFactory.createProgressbar();
-			progress1.addPosition("lowerleft");
-			panel4.dom.append(progress1.dom);
+			/*====进度条====*/
+			var progress = LC.Components.ProgressBarFactory.createProgressBar1();
+			progress.addPosition("lowerleft").setSize("500px","10px");
+			panel2.dom.append(progress.dom);
+			//===模拟===
+			var but = $("<div>but1</div>").css({"width":"30px","height":"20px","background-color":"#474B64"}).bind("click",function(){
+				progress.setRunWidth(10,1);
+				progress.setRunWidth(10,2);
+				progress.start();
+			});
+			panel2.dom.append(but);
+			//========
 			//sceneNext.hide();
 			scene.show();
-			
 			
 		</script>
 	</body>
