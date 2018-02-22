@@ -80,17 +80,22 @@ LC.CommonProperty = {
 	CSS_DROPDOWN : " dropdown ",
 	//====进度条====
 	/**
-	 * 进度条容器
+	 * CSS class:进度条容器
 	 */
 	CSS_PROGRESS : " progress ",
 	/**
-	 * 进度条
+	 * CSS class:进度条
 	 */
 	CSS_PROGRESS_BAR :" progress-bar ",
 	/**
-	 * 进度条影子
+	 * CSS class:进度条影子
 	 */
 	CSS_PROGRESS_SHADOW : " progress-shadow ",
+	//====遮罩层====
+	/**
+	 * CSS class:遮罩层 
+	 */
+	CSS_MASKLAYER : " masklayer ",
 	//====定位====
 	/**
 	 * CSS class:定位右下
@@ -121,6 +126,10 @@ LC.CommonProperty = {
  * 全局变量 
  */
 LC.GlobalVar={
+	/**
+	 * 可以用于接收拖放对象集合，用于拖放
+	 */
+	DROPSET : new Array(),
 };
 /**
  * 打印错误信息
@@ -400,7 +409,6 @@ LC.Utils.Map = function() {
 		};
 	};
 };
-
 /**
  * 定义组件命名空间
  */
@@ -556,7 +564,7 @@ LC.Components.ComponentFunction = {
 	 * obj 拖拽触发dom对象
 	 * moveobj 拖拽移动dom对象
 	 * parentObj 拖拽限制移动范围元素dom对象
-	 * dropObj 拖拽进入的元素dom对象
+	 * dropObj 拖拽进入的元素dom对象集合
 	 * isReset 是否在拖拽完成后还原位置
 	 */
 	drag : function(obj,moveobj,parentObj,dropObj,isReset) {
@@ -573,10 +581,11 @@ LC.Components.ComponentFunction = {
 		} else if (parentObj.dom) {//适配，如果传入的不是dom，则转为dom
 			parentObj = parentObj.dom;
 		}
+		/*
 		if (null == dropObj) {//适配，如果未传入dropObj，----则默认是moveobj的父元素
 		} else if (dropObj.dom) {//适配，如果传入的不是dom，则转为dom
 			dropObj = dropObj.dom;
-		}
+		}*/
 		obj.bind("mousedown", mousedown1);
 		var gapX,gapY,maxX,minX,maxY,minY,initLeft,initTop;
 		function mousedown1(event) {
@@ -633,20 +642,62 @@ LC.Components.ComponentFunction = {
 					});
 				//3.获取鼠标位置dom
 				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY));
+				/*
 				//模拟冒泡，当前元素不满足拖放条件，则继续寻找其父元素,直到兜底桌面
 				while(!(dropTarget[0] === dropObj[0])&&!(dropTarget[0]==LC.CommonProperty.MAIN_DESK[0])){
 					dropTarget = dropTarget.parent();
 				};
+				*/
 				//4.判断是否满足拖放条件
+				var flag = false;
+				for (var i=0; i < LC.GlobalVar.DROPSET.length; i++) {
+					var drop = LC.GlobalVar.DROPSET[i];
+					if(drop.dom){
+						drop = drop.dom;
+					}
+					if(dropTarget[0] === drop[0]){//满足了拖放条件
+						flag = true;
+						//进行判断，并执行操作
+						dropTarget.self;
+						drop.self;
+						//4.1.1是否覆盖替换
+						//获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
+						dropTarget.parent().empty().append(moveobj);
+						//---.还原过度效果
+						moveobj.css({
+							"transition" : "",
+						});
+						//4.1.2是否是叠加合并
+						
+						break;
+					}
+				};
+				if(!flag){
+					//遍历结束，未满足拖放条件
+					moveobj.css({
+							"left" : left + "px",
+							"top" : top + "px"
+						});
+					//还原位置
+					if (isReset) {
+						moveobj.css({
+							"left" : initLeft + "px",
+							"top" : initTop + "px"
+						});
+					};
+				}
+				/*
 				if(dropTarget[0] === dropObj[0]){
 					console.log("满足");
 					//4.1满足
+					//4.1.1是否覆盖替换
 					//获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
 					dropTarget.parent().empty().append(moveobj);
 					//---.还原过度效果
 					moveobj.css({
 						"transition" : "",
 					});
+					//4.1.2是否是叠加合并
 				} else {
 					console.log("不满足");
 					//4.2不满足,重新移动元素到当前位置
@@ -671,6 +722,7 @@ LC.Components.ComponentFunction = {
 					);
 				};
 				//dropObj.unbind("dropin");
+				*/
 			}
 			//还原过度效果
 			moveobj.css({

@@ -32,16 +32,16 @@ LC.Components.Table.prototype.creatDOM = function(_line, _column, _width, _heigh
 		for (var j = 0; j < _column; j++) {
 			//创建<tb>的组件对象，方便操作
 			var tb = new LC.Components.BasicComponent();
-			tb.setSignID((j + 1) + "-" + (i + 1)).creatDOM("tb", classname).css({
+			tb.setSignID("cell").creatDOM("tb", classname).css({
 				"width" : _width,
 				"height" : _height
 			});
 			//插入虚内容元素
 			cell = new LC.Components.BasicComponent();
-			cell.setSignID(signId + "-" + (j + 1) + "-" + (i + 1)).creatDOM("div");
+			cell.setSignID("item").creatDOM("div");
 			cell.dom.css({
-				"width" : _width,
-				"height" : _height
+				"width" : "100%",
+				"height" : "100%"
 			});
 			//将cell放入tb内
 			tb.cell = cell;

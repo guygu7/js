@@ -117,6 +117,16 @@ LC.Components.PanelFactory = {
 			"height" : _height
 		});
 		return panel;
-	}
+	},
+	/**
+	 * 创建遮罩层
+	 * @param {Object} _id
+	 */
+	createMaskLayer : function(_id){
+		var panel = new LC.Components.Panel();
+		if(!_id){panel.setSignID(_id);}
+		panel.creatDOM("div",LC.CommonProperty.CSS_MASKLAYER);
+		return panel;
+	},
 };
 

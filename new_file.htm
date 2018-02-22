@@ -25,14 +25,14 @@
 			var scene = LC.Components.SceneFactory.createScene();
 			$("#mainDesktop").append(scene.dom);
 			/*==========布局============*/
-			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null,"85%","100%");
-			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null,"15%","100%");
+			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
+			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
 			scene.dom.append(layout1.dom).append(layout2.dom);
-			var layout1_1 = LC.Components.PanelFactory.createPanelEmpty(null,"100%","80%");
-			var layout1_2 = LC.Components.PanelFactory.createPanelEmpty(null,"100%","19%");
+			var layout1_1 = LC.Components.PanelFactory.createPanelEmpty(null, "100%", "80%");
+			var layout1_2 = LC.Components.PanelFactory.createPanelEmpty(null, "100%", "19%");
 			layout1.dom.append(layout1_1.dom).append(layout1_2.dom);
-			var layout1_1_1 = LC.Components.PanelFactory.createPanelEmpty(null,"15%","100%");
-			var layout1_1_2 = LC.Components.PanelFactory.createPanelEmpty(null,"85%","100%");
+			var layout1_1_1 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
+			var layout1_1_2 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
 			layout1_1.dom.append(layout1_1_1.dom).append(layout1_1_2.dom);
 			//布局面板渲染
 			var panel1 = LC.Components.PanelFactory.createPanel();
@@ -44,68 +44,165 @@
 			layout1_2.dom.append(panel3.dom);
 			layout2.dom.append(panel4.dom);
 			/*==========活动栏位===========*/
-			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null,"445px","300px");
-			var closeBut = LC.Components.ButtonFactory.createButtonClose(null,itemBag);
+			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null, "445px", "300px");
+			var closeBut = LC.Components.ButtonFactory.createButtonClose(null, itemBag);
 			var titel = LC.Components.PanelFactory.createPanelTitle().setText("物品栏");
 			itemBag.dom.append(closeBut.dom).append(titel.dom);
 			itemBag.addPosition("upperright").addPositionMode("absolute");
 			itemBag.hide();
-			LC.Components.ComponentFunction.drag(titel,itemBag,scene);
+			LC.Components.ComponentFunction.drag(titel, itemBag, scene);
 			scene.dom.append(itemBag.dom);
 			//添加内容
-			var table = LC.Components.TableFactory.createTable(4,10);
-			var cell = LC.Components.PanelFactory.createPanel("??");
-			cell.dom.css({"width":"90%","height":"90%"});
-			table.setCell(3,1,cell);
-			var corner = LC.Components.CornerSignFactory.createCornerSign();
-			cell.dom.append(corner.dom);
-			corner.dom.append("99");
+			var table = LC.Components.TableFactory.createTable(4, 10);
+			/*
+			 var cell = LC.Components.PanelFactory.createPanel("??");
+			 cell.dom.css({"width":"90%","height":"90%"});
+			 table.setCell(1,1,cell);
+			 var corner = LC.Components.CornerSignFactory.createCornerSign();
+			 cell.dom.append(corner.dom);
+
+			 cell.dom.testp = "测试属性1";
+
+			 corner.dom.append("99");
+			 cell.item = item1;
+			 */
 			itemBag.dom.append(table.dom);
 			/*==========活动栏位2===========*/
-			var itemBag2 = LC.Components.PanelFactory.createPanelTransparent(null,"445px","300px");
-			var closeBut2 = LC.Components.ButtonFactory.createButtonClose(null,itemBag2);
-			var titel2 = LC.Components.PanelFactory.createPanelTitle().setText("物品栏2");
-			itemBag2.dom.append(closeBut2.dom).append(titel2.dom);
-			itemBag2.addPosition("upperright").addPositionMode("absolute");
-			itemBag2.hide();
-			LC.Components.ComponentFunction.drag(titel2,itemBag2,scene);
-			scene.dom.append(itemBag2.dom);
-			//添加内容
-			var table2 = LC.Components.TableFactory.createTable(4,10);
-			itemBag2.dom.append(table2.dom);
-			//====拖拽测试====
-			//LC.Components.ComponentFunction.drag(cell,cell,scene,);
+			/*
+			 var itemBag2 = LC.Components.PanelFactory.createPanelTransparent(null,"445px","300px");
+			 var closeBut2 = LC.Components.ButtonFactory.createButtonClose(null,itemBag2);
+			 var titel2 = LC.Components.PanelFactory.createPanelTitle().setText("物品栏2");
+			 itemBag2.dom.append(closeBut2.dom).append(titel2.dom);
+			 itemBag2.addPosition("upperright").addPositionMode("absolute");
+			 itemBag2.hide();
+			 LC.Components.ComponentFunction.drag(titel2,itemBag2,scene);
+			 scene.dom.append(itemBag2.dom);
+			 //添加内容
+			 var table2 = LC.Components.TableFactory.createTable(4,10);
+			 var cell2 = LC.Components.PanelFactory.createPanel("wupin");
+			 cell2.dom.css({"width":"90%","height":"90%"});
+			 table.setCell(3,1,cell2);
+			 var corner2 = LC.Components.CornerSignFactory.createCornerSign();
+			 cell2.dom.append(corner2.dom);
+
+			 corner2.dom.append("99");
+			 itemBag2.dom.append(table2.dom);
+			 //====拖拽测试====
+			 LC.Components.ComponentFunction.drag(cell,cell,scene,cell2,true);
+			 */
 			/*==========菜单============*/
 			var menu = LC.Components.DropdownFactory.createDropdownUp();
-			menu.addElement(0,"菜单");
+			menu.addElement(0, "菜单");
 			menu.addPosition("lowerright");
-			menu.addElement(1,"物品");
-			menu.addElement(2,"物品2");
-			menu.getElement(1).dom.bind("click",function(){
+			menu.addElement(1, "物品");
+			menu.addElement(2, "物品2");
+			menu.getElement(1).dom.bind("click", function() {
 				console.log("1");
 				itemBag.show();
 			});
-			menu.getElement(2).dom.bind("click",function(){
+			menu.getElement(2).dom.bind("click", function() {
 				itemBag2.show();
 			});
 			panel2.dom.append(menu.dom);
 			//========
-			
+
 			/*====进度条====*/
 			var progress = LC.Components.ProgressBarFactory.createProgressBar1();
-			progress.addPosition("lowerleft").setSize("500px","10px");
+			progress.addPosition("lowerleft").setSize("500px", "10px");
 			panel2.dom.append(progress.dom);
 			//===模拟===
-			var but = $("<div>but1</div>").css({"width":"30px","height":"20px","background-color":"#474B64"}).bind("click",function(){
-				progress.setRunWidth(10,1);
-				progress.setRunWidth(10,2);
+			var but = $("<div>but1</div>").css({
+				"width" : "30px",
+				"height" : "20px",
+				"background-color" : "#474B64"
+			}).bind("click", function() {
+				progress.setRunWidth(10, 1);
+				progress.setRunWidth(10, 2);
 				progress.start();
 			});
 			panel2.dom.append(but);
 			//========
 			//sceneNext.hide();
 			scene.show();
-			
+
+			//构建数据层
+			var DATA = {
+				player : {
+
+				},
+				role : {
+
+				},
+				item : {
+
+				},
+				skill : {
+
+				},
+				plat : {
+
+				}
+			};
+			LC.Data.Role = function() {
+				var _name;
+				LC.Components.BasicComponent.prototype.setName = function(pram) {
+					_name = pram;
+					return this;
+				};
+				LC.Components.BasicComponent.prototype.getName = function() {
+					return _name;
+				};
+				var _type;
+				LC.Components.BasicComponent.prototype.setType = function(pram) {
+					_type = pram;
+					return this;
+				};
+				LC.Components.BasicComponent.prototype.getType = function() {
+					return _type;
+				};
+				var _health;
+				LC.Components.BasicComponent.prototype.setType = function(pram) {
+					_health = pram;
+					return this;
+				};
+				LC.Components.BasicComponent.prototype.getType = function() {
+					return _health;
+				};
+				var _defense;
+				LC.Components.BasicComponent.prototype.setType = function(pram) {
+					_defense = pram;
+					return this;
+				};
+				LC.Components.BasicComponent.prototype.getType = function() {
+					return _defense;
+				};
+				
+			};
+			/*
+			 * 玩家属性：
+			 * 		角色
+			 * 		物品
+			 * 		技能
+			 * 角色：
+			 * 		名字
+			 *		类型：敌对、中立、
+			 * 		生命值、攻击、防御
+			 * 物品：
+			 * 		名字
+			 * 		类型：装备、消耗品、材料
+			 * 		数量、是否叠加、所属
+			 * 		其他属性
+			 * 技能：
+			 * 		名字、类型、等级
+			 * 		其他属性
+			 * 地图：
+			 * 		名字
+			 * 		角色
+			 * 		物品
+			 * 		建筑：以角色表示
+			 * 		类型、位置
+			 *
+			 */
 		</script>
 	</body>
 </html>
