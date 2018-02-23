@@ -20,6 +20,7 @@
 		<script src="js/table.js"></script>
 		<script src="js/corner.js"></script>
 		<script src="js/progressbar.js"></script>
+		<script src="js/dataModel.js"></script>
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
@@ -126,58 +127,10 @@
 			scene.show();
 
 			//构建数据层
-			var DATA = {
-				player : {
-
-				},
-				role : {
-
-				},
-				item : {
-
-				},
-				skill : {
-
-				},
-				plat : {
-
-				}
-			};
-			LC.Data.Role = function() {
-				var _name;
-				LC.Components.BasicComponent.prototype.setName = function(pram) {
-					_name = pram;
-					return this;
-				};
-				LC.Components.BasicComponent.prototype.getName = function() {
-					return _name;
-				};
-				var _type;
-				LC.Components.BasicComponent.prototype.setType = function(pram) {
-					_type = pram;
-					return this;
-				};
-				LC.Components.BasicComponent.prototype.getType = function() {
-					return _type;
-				};
-				var _health;
-				LC.Components.BasicComponent.prototype.setType = function(pram) {
-					_health = pram;
-					return this;
-				};
-				LC.Components.BasicComponent.prototype.getType = function() {
-					return _health;
-				};
-				var _defense;
-				LC.Components.BasicComponent.prototype.setType = function(pram) {
-					_defense = pram;
-					return this;
-				};
-				LC.Components.BasicComponent.prototype.getType = function() {
-					return _defense;
-				};
-				
-			};
+			//基本数据
+			//创建角色
+			var gameplayer = new LC.Data.Role();
+			gameplayer.setName("玩家角色").setType(LC.Data);
 			/*
 			 * 玩家属性：
 			 * 		角色
@@ -186,7 +139,7 @@
 			 * 角色：
 			 * 		名字
 			 *		类型：敌对、中立、
-			 * 		生命值、攻击、防御
+			 * 		生命值、攻击、防御、暴击、爆伤
 			 * 物品：
 			 * 		名字
 			 * 		类型：装备、消耗品、材料

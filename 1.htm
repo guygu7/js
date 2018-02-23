@@ -9,12 +9,39 @@
     </style>
 </head>
 <body>
+     <!--
      <div id="d1" style="width: 100px;height: 100px;background-color: red;position:absolute;">
-     </div>
-     <div id="d2" style="width: 100px;height: 100px;background-color: green;position:absolute;">
-     </div>
+          </div>
+          <div id="d2" style="width: 100px;height: 100px;background-color: green;position:absolute;">
+          </div>-->
+     
      <script> 
-     	console.log(document.elementFromPoint(10,10));
+     	model = function(){
+     		var a;
+     		model.prototype.set中文=function(pram){
+     			a = pram;
+     		};
+     		model.prototype.geta=function(){
+     			return a;
+     		};
+     		var obj = new Object();
+     		model.prototype.setobj=function(pram){
+     			obj.pram = pram;
+     		};
+     		model.prototype.getobj=function(){
+     			return obj;
+     		};
+     	};
+     	var modela = new model();
+        modela.set中文(1);
+        modela.setobj("obj1");
+     	console.log(modela.geta(1));
+     	console.log(modela.getobj());
+     	var modelb = new model();
+     	modelb.set中文(2);
+     	modela.setobj("obj2");
+     	console.log(modelb.geta(1));
+     	console.log(modela.getobj());
      </script>
 </body>
 </html>
