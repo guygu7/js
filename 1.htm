@@ -9,39 +9,29 @@
     </style>
 </head>
 <body>
+	<div id = "div1"></div>
      <!--
      <div id="d1" style="width: 100px;height: 100px;background-color: red;position:absolute;">
           </div>
           <div id="d2" style="width: 100px;height: 100px;background-color: green;position:absolute;">
           </div>-->
-     
+     <script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/BasicComponent.js"></script>
+		<script src="js/Components.js"></script>
+		<script src="js/Menu.js"></script>
+		<script src="js/Scene.js"></script>
+		<script src="js/panel.js"></script>
+		<script src="js/button.js"></script>
+		<script src="js/table.js"></script>
+		<script src="js/corner.js"></script>
+		<script src="js/progressbar.js"></script>
+		<script src="js/dataModel.js"></script>
      <script> 
-     	model = function(){
-     		var a;
-     		model.prototype.set中文=function(pram){
-     			a = pram;
-     		};
-     		model.prototype.geta=function(){
-     			return a;
-     		};
-     		var obj = new Object();
-     		model.prototype.setobj=function(pram){
-     			obj.pram = pram;
-     		};
-     		model.prototype.getobj=function(){
-     			return obj;
-     		};
-     	};
-     	var modela = new model();
-        modela.set中文(1);
-        modela.setobj("obj1");
-     	console.log(modela.geta(1));
-     	console.log(modela.getobj());
-     	var modelb = new model();
-     	modelb.set中文(2);
-     	modela.setobj("obj2");
-     	console.log(modelb.geta(1));
-     	console.log(modela.getobj());
+     	console.log(Math.floor(0/2));
+		var map = LC.Data.MapFactory.createMap(16,16);
+		var mapDom = LC.Data.MapFactory.drawMap(map);
+	    $("#div1").append(mapDom);
      </script>
 </body>
 </html>

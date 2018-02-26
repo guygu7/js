@@ -86,14 +86,14 @@ LC.CommonProperty = {
 	/**
 	 * CSS class:进度条
 	 */
-	CSS_PROGRESS_BAR :" progress-bar ",
+	CSS_PROGRESS_BAR : " progress-bar ",
 	/**
 	 * CSS class:进度条影子
 	 */
 	CSS_PROGRESS_SHADOW : " progress-shadow ",
 	//====遮罩层====
 	/**
-	 * CSS class:遮罩层 
+	 * CSS class:遮罩层
 	 */
 	CSS_MASKLAYER : " masklayer ",
 	//====定位====
@@ -123,9 +123,9 @@ LC.CommonProperty = {
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
 };
 /**
- * 全局变量 
+ * 全局变量
  */
-LC.GlobalVar={
+LC.GlobalVar = {
 	/**
 	 * 可以用于接收拖放对象集合，用于拖放
 	 */
@@ -567,7 +567,7 @@ LC.Components.ComponentFunction = {
 	 * dropObj 拖拽进入的元素dom对象集合
 	 * isReset 是否在拖拽完成后还原位置
 	 */
-	drag : function(obj,moveobj,parentObj,dropObj,isReset) {
+	drag : function(obj, moveobj, parentObj, dropObj, isReset) {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
@@ -582,43 +582,52 @@ LC.Components.ComponentFunction = {
 			parentObj = parentObj.dom;
 		}
 		/*
-		if (null == dropObj) {//适配，如果未传入dropObj，----则默认是moveobj的父元素
-		} else if (dropObj.dom) {//适配，如果传入的不是dom，则转为dom
-			dropObj = dropObj.dom;
-		}*/
+		 if (null == dropObj) {//适配，如果未传入dropObj，----则默认是moveobj的父元素
+		 } else if (dropObj.dom) {//适配，如果传入的不是dom，则转为dom
+		 dropObj = dropObj.dom;
+		 }*/
 		obj.bind("mousedown", mousedown1);
-		var gapX,gapY,maxX,minX,maxY,minY,initLeft,initTop;
+		var gapX,
+		    gapY,
+		    maxX,
+		    minX,
+		    maxY,
+		    minY,
+		    initLeft,
+		    initTop;
 		function mousedown1(event) {
 			if (0 == event.button) {//左键点击
 				initLeft = parseInt(moveobj.css("left"));
 				initTop = parseInt(moveobj.css("top"));
-				LC.Components.ComponentFunction.zIndexToTop(moveobj);//置顶
-				gapX = parseInt(moveobj.css("left"))-event.clientX;
-				gapY = parseInt(moveobj.css("top"))-event.clientY;
-				maxX = (parentObj.width()-moveobj.width())-(moveobj.offset().left-parentObj.offset().left)+parseInt(moveobj.css("left"))-parseInt(moveobj.css("margin-right"))+parseInt(parentObj.css("padding-right"));
-				minX = parseInt(moveobj.css("left"))+parentObj.offset().left-moveobj.offset().left+parseInt(moveobj.css("margin-left"))+parseInt(parentObj.css("padding-left"));
-				maxY = (parentObj.height()-moveobj.height())-(moveobj.offset().top-parentObj.offset().top)+parseInt(moveobj.css("top"))-parseInt(moveobj.css("margin-bottom"))+parseInt(parentObj.css("padding-bottom"));
-				minY = parseInt(moveobj.css("top"))+parentObj.offset().top-moveobj.offset().top+parseInt(moveobj.css("margin-top"))+parseInt(parentObj.css("padding-top"));
+				LC.Components.ComponentFunction.zIndexToTop(moveobj);
+				//置顶
+				gapX = parseInt(moveobj.css("left")) - event.clientX;
+				gapY = parseInt(moveobj.css("top")) - event.clientY;
+				maxX = (parentObj.width() - moveobj.width()) - (moveobj.offset().left - parentObj.offset().left) + parseInt(moveobj.css("left")) - parseInt(moveobj.css("margin-right")) + parseInt(parentObj.css("padding-right"));
+				minX = parseInt(moveobj.css("left")) + parentObj.offset().left - moveobj.offset().left + parseInt(moveobj.css("margin-left")) + parseInt(parentObj.css("padding-left"));
+				maxY = (parentObj.height() - moveobj.height()) - (moveobj.offset().top - parentObj.offset().top) + parseInt(moveobj.css("top")) - parseInt(moveobj.css("margin-bottom")) + parseInt(parentObj.css("padding-bottom"));
+				minY = parseInt(moveobj.css("top")) + parentObj.offset().top - moveobj.offset().top + parseInt(moveobj.css("margin-top")) + parseInt(parentObj.css("padding-top"));
 				//移除其他过度效果
 				moveobj.css({
 					"transition" : "0s",
 				});
 				//适应项目场景修正，其他情况可以去除
-				maxX = maxX-8;
+				maxX = maxX - 8;
 				//==============
 				$(document).bind("mousemove", move);
 				$(document).bind("mouseup", mouseup1);
 			}
 		};
-		var left,top;
+		var left,
+		    top;
 		function move(event) {
-			left = event.clientX+gapX;
+			left = event.clientX + gapX;
 			if (left > maxX) {//限制不会移出右边
 				left = maxX;
 			} else if (left < minX) {//限制不会移出左边
 				left = minX;
 			}
-			top = event.clientY+gapY;
+			top = event.clientY + gapY;
 			if (top > maxY) {//限制不会移出下边
 				top = maxY;
 			} else if (top < minY) {//限制不会移出上边
@@ -634,32 +643,32 @@ LC.Components.ComponentFunction = {
 			//1.保存鼠标位置
 			mouseupX = event.clientX;
 			mouseupY = event.clientY;
-			if(dropObj){//如果有传参，则为拖放，否则为拖拽
+			if (dropObj) {//如果有传参，则为拖放，否则为拖拽
 				//2.还原元素原始位置
 				moveobj.css({
-						"left" : initLeft + "px",
-						"top" : initTop + "px"
-					});
+					"left" : initLeft + "px",
+					"top" : initTop + "px"
+				});
 				//3.获取鼠标位置dom
 				var dropTarget = $(document.elementFromPoint(mouseupX, mouseupY));
 				/*
 				//模拟冒泡，当前元素不满足拖放条件，则继续寻找其父元素,直到兜底桌面
 				while(!(dropTarget[0] === dropObj[0])&&!(dropTarget[0]==LC.CommonProperty.MAIN_DESK[0])){
-					dropTarget = dropTarget.parent();
+				dropTarget = dropTarget.parent();
 				};
 				*/
 				//4.判断是否满足拖放条件
 				var flag = false;
-				for (var i=0; i < LC.GlobalVar.DROPSET.length; i++) {
+				for (var i = 0; i < LC.GlobalVar.DROPSET.length; i++) {
 					var drop = LC.GlobalVar.DROPSET[i];
-					if(drop.dom){
+					if (drop.dom) {
 						drop = drop.dom;
 					}
-					if(dropTarget[0] === drop[0]){//满足了拖放条件
+					if (dropTarget[0] === drop[0]) {//满足了拖放条件
 						flag = true;
 						//进行判断，并执行操作
-						dropTarget.self;
-						drop.self;
+						dropTarget.self
+						drop.self
 						//4.1.1是否覆盖替换
 						//获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
 						dropTarget.parent().empty().append(moveobj);
@@ -668,16 +677,16 @@ LC.Components.ComponentFunction = {
 							"transition" : "",
 						});
 						//4.1.2是否是叠加合并
-						
+
 						break;
 					}
 				};
-				if(!flag){
+				if (!flag) {
 					//遍历结束，未满足拖放条件
 					moveobj.css({
-							"left" : left + "px",
-							"top" : top + "px"
-						});
+						"left" : left + "px",
+						"top" : top + "px"
+					});
 					//还原位置
 					if (isReset) {
 						moveobj.css({
@@ -687,42 +696,42 @@ LC.Components.ComponentFunction = {
 					};
 				}
 				/*
-				if(dropTarget[0] === dropObj[0]){
-					console.log("满足");
-					//4.1满足
-					//4.1.1是否覆盖替换
-					//获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
-					dropTarget.parent().empty().append(moveobj);
-					//---.还原过度效果
-					moveobj.css({
-						"transition" : "",
-					});
-					//4.1.2是否是叠加合并
-				} else {
-					console.log("不满足");
-					//4.2不满足,重新移动元素到当前位置
-					moveobj.css({
-						"left" : left + "px",
-						"top" : top + "px"
-					});
-					setTimeout(
-						function (){
-							//还原过度效果
-							moveobj.css({
-								"transition" : "",
-							});
-							//还原位置
-							if (isReset) {
-								moveobj.css({
-									"left" : initLeft + "px",
-									"top" : initTop + "px"
-								});
-							};
-						}(),1000
-					);
-				};
-				//dropObj.unbind("dropin");
-				*/
+				 if(dropTarget[0] === dropObj[0]){
+				 console.log("满足");
+				 //4.1满足
+				 //4.1.1是否覆盖替换
+				 //获取dropTarget父dom，并将dropTarget删除，将moveobj写入该父dom
+				 dropTarget.parent().empty().append(moveobj);
+				 //---.还原过度效果
+				 moveobj.css({
+				 "transition" : "",
+				 });
+				 //4.1.2是否是叠加合并
+				 } else {
+				 console.log("不满足");
+				 //4.2不满足,重新移动元素到当前位置
+				 moveobj.css({
+				 "left" : left + "px",
+				 "top" : top + "px"
+				 });
+				 setTimeout(
+				 function (){
+				 //还原过度效果
+				 moveobj.css({
+				 "transition" : "",
+				 });
+				 //还原位置
+				 if (isReset) {
+				 moveobj.css({
+				 "left" : initLeft + "px",
+				 "top" : initTop + "px"
+				 });
+				 };
+				 }(),1000
+				 );
+				 };
+				 //dropObj.unbind("dropin");
+				 */
 			}
 			//还原过度效果
 			moveobj.css({
@@ -733,72 +742,110 @@ LC.Components.ComponentFunction = {
 			$(document).unbind("mouseup", mouseup1);
 		};
 	},
-	zIndex:[],
+	zIndex : [],
 	/**
-	 * 置顶显示方法(只能传入jQuery对象) 
+	 * 置顶显示方法(只能传入jQuery对象)
 	 */
-	zIndexToTop : function(obj){
+	zIndexToTop : function(obj) {
 		//堆栈最大长度，最多保存N个对象
-		var zIndexMaxSize=50;
+		var zIndexMaxSize = 50;
 		//堆栈中z-index初始值（最小值）
-		var zIndexMinValue=101;
+		var zIndexMinValue = 101;
 		//堆栈中z-index最大值，避免无限增大，重置运行次数为初始值（最小值）+N
-		var zIndexMaxValue=zIndexMinValue+zIndexMaxSize+100;
+		var zIndexMaxValue = zIndexMinValue + zIndexMaxSize + 100;
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
 		}
 		//获取父一级dom
 		parentObj = obj.parent();
 		//判断是否已经到桌面
-		if (parentObj[0]==LC.CommonProperty.MAIN_DESK[0]){
-			return;//父元素为桌面，则表示本次对象为场景对象，不再执行，返回
+		if (parentObj[0] == LC.CommonProperty.MAIN_DESK[0]) {
+			return;
+			//父元素为桌面，则表示本次对象为场景对象，不再执行，返回
 		}
 		//递归，获取父元素dom依次置顶
 		LC.Components.ComponentFunction.zIndexToTop(parentObj);
 		//获取全局变量中z-index[]数组长度
 		var zSize = LC.Components.ComponentFunction.zIndex.length;
 		//判断z-index是否有对象
-		if (LC.Components.ComponentFunction.zIndex.length>0){
+		if (LC.Components.ComponentFunction.zIndex.length > 0) {
 			//有，判断是否有相同对象
-			for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
-			//有相同对象则移除相同对象
-			  if(LC.Components.ComponentFunction.zIndex[i]===obj){
-			  	LC.Components.ComponentFunction.zIndex.splice(i,1)[0].css({"z-index":""});
-			  	i--;
-			  } 
+			for (var i = 0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
+				//有相同对象则移除相同对象
+				if (LC.Components.ComponentFunction.zIndex[i] === obj) {
+					LC.Components.ComponentFunction.zIndex.splice(i,1)[0].css({
+						"z-index" : ""
+					});
+					i--;
+				}
 			};
-			if (LC.Components.ComponentFunction.zIndex.length==0){//经过移除重复元素后数组为空
-				LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":zIndexMinValue}));
+			if (LC.Components.ComponentFunction.zIndex.length == 0) {//经过移除重复元素后数组为空
+				LC.Components.ComponentFunction.zIndex.push(obj.css({
+					"z-index" : zIndexMinValue
+				}));
 				return;
 			};
 			//判断是否达到数组长度上限
-			if(LC.Components.ComponentFunction.zIndex.length>=zIndexMaxSize){
+			if (LC.Components.ComponentFunction.zIndex.length >= zIndexMaxSize) {
 				//--达到上限则去除最开始的一个
-				LC.Components.ComponentFunction.zIndex.shift().css({"z-index":""});
+				LC.Components.ComponentFunction.zIndex.shift().css({
+					"z-index" : ""
+				});
 			}
 			//--然后取数组中z-index最大值
-			var maxIndex=0;
-			var index=1;
-			for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
+			var maxIndex = 0;
+			var index = 1;
+			for (var i = 0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
 				index = parseInt(LC.Components.ComponentFunction.zIndex[i].css("z-index"));
-				if (maxIndex<index) {
-					maxIndex=index;
+				if (maxIndex < index) {
+					maxIndex = index;
 				};
 			};
 			//--判断最大值是否达到z-index上限值
-			if (maxIndex>=zIndexMaxValue){
+			if (maxIndex >= zIndexMaxValue) {
 				//----达到上限则遍历数组，将数组对象中z-index值降低
-				for (var i=0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
+				for (var i = 0; i < LC.Components.ComponentFunction.zIndex.length; i++) {
 					index = LC.Components.ComponentFunction.zIndex[i].css("z-index");
-					LC.Components.ComponentFunction.zIndex[i].css({"z-index":index-(zIndexMaxValue-zIndexMinValue-zIndexMaxSize)});
+					LC.Components.ComponentFunction.zIndex[i].css({
+						"z-index" : index - (zIndexMaxValue - zIndexMinValue - zIndexMaxSize)
+					});
 				};
 				//重设当前最大值=zIndex初始值+保存对象个数N
-				maxIndex=zIndexMinValue+zIndexMaxSize;
+				maxIndex = zIndexMinValue + zIndexMaxSize;
 			};
 			//新对象z-index+1装入数组
-			LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":(maxIndex+1)}));
+			LC.Components.ComponentFunction.zIndex.push(obj.css({
+				"z-index" : (maxIndex + 1)
+			}));
 		} else {//没有，装入，并设置初始值
-			LC.Components.ComponentFunction.zIndex.push(obj.css({"z-index":zIndexMinValue}));
+			LC.Components.ComponentFunction.zIndex.push(obj.css({
+				"z-index" : zIndexMinValue
+			}));
 		}
+	},
+	/**
+	 * 概率随机算法</br>
+	 * 参数：</br>
+	 * Object[] arr1:参与随机的对象</br>
+	 * Number[] arr2:对应的随机的概率
+	 * @param {Object[]} arr1
+	 * @param {Number[]} arr2
+	 */
+	random : function(arr1, arr2) {
+		var sum = 0,
+		    factor = 0,
+		    random = Math.random();
+		for (var i = arr2.length - 1; i >= 0; i--) {
+			sum += arr2[i];
+			// 统计概率总和
+		};
+		random *= sum;
+		// 生成概率随机数
+		for (var i = arr2.length - 1; i >= 0; i--) {
+			factor += arr2[i];
+			if (random <= factor)
+				return arr1[i];
+		};
+		return null;
 	}
 };

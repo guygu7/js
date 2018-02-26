@@ -10,126 +10,126 @@ LC.Data = {
 		/**
 		 * 设置名称
 		 */
-		LC.Components.BasicComponent.prototype.setName = function(pram) {
+		LC.Data.Role.prototype.setName = function(pram) {
 			_name = pram;
 			return this;
 		};
 		/**
 		 * 获取名称
 		 */
-		LC.Components.BasicComponent.prototype.getName = function() {
+		LC.Data.Role.prototype.getName = function() {
 			return _name;
 		};
 		var _type;
 		/**
 		 * 设置类型
 		 */
-		LC.Components.BasicComponent.prototype.setType = function(pram) {
+		LC.Data.Role.prototype.setType = function(pram) {
 			_type = pram;
 			return this;
 		};
 		/**
 		 * 获取类型
 		 */
-		LC.Components.BasicComponent.prototype.getType = function() {
+		LC.Data.Role.prototype.getType = function() {
 			return _type;
 		};
 		var _health;
 		/**
 		 * 设置生命值
 		 */
-		LC.Components.BasicComponent.prototype.setHealth = function(pram) {
+		LC.Data.Role.prototype.setHealth = function(pram) {
 			_health = pram;
 			return this;
 		};
 		/**
 		 * 获取生命值
 		 */
-		LC.Components.BasicComponent.prototype.getHealth = function() {
+		LC.Data.Role.prototype.getHealth = function() {
 			return _health;
 		};
 		var _defense;
 		/**
 		 * 设置防御
 		 */
-		LC.Components.BasicComponent.prototype.setDefense = function(pram) {
+		LC.Data.Role.prototype.setDefense = function(pram) {
 			_defense = pram;
 			return this;
 		};
 		/**
 		 * 获取防御
 		 */
-		LC.Components.BasicComponent.prototype.getDefense = function() {
+		LC.Data.Role.prototype.getDefense = function() {
 			return _defense;
 		};
 		var crit;
 		/**
 		 * 设置暴击
 		 */
-		LC.Components.BasicComponent.prototype.setCrit = function(pram) {
+		LC.Data.Role.prototype.setCrit = function(pram) {
 			_crit = pram;
 			return this;
 		};
 		/**
 		 * 获取暴击
 		 */
-		LC.Components.BasicComponent.prototype.getCrit = function() {
+		LC.Data.Role.prototype.getCrit = function() {
 			return _crit;
 		};
 		var critStrike;
 		/**
 		 * 设置暴击伤害
 		 */
-		LC.Components.BasicComponent.prototype.setCritStrike = function(pram) {
+		LC.Data.Role.prototype.setCritStrike = function(pram) {
 			_critStrike = pram;
 			return this;
 		};
 		/**
 		 * 获取暴击伤害
 		 */
-		LC.Components.BasicComponent.prototype.getCritStrike = function() {
+		LC.Data.Role.prototype.getCritStrike = function() {
 			return _critStrike;
 		};
 		var buff;
 		/**
 		 * 设置buff状态
 		 */
-		LC.Components.BasicComponent.prototype.setBuff = function(pram) {
+		LC.Data.Role.prototype.setBuff = function(pram) {
 			_buff = pram;
 			return this;
 		};
 		/**
 		 * 获取buff状态
 		 */
-		LC.Components.BasicComponent.prototype.getBuff = function() {
+		LC.Data.Role.prototype.getBuff = function() {
 			return _buff;
 		};
 		var _friendliness;
 		/**
 		 * 设置友好度
 		 */
-		LC.Components.BasicComponent.prototype.setFriendliness = function(pram) {
+		LC.Data.Role.prototype.setFriendliness = function(pram) {
 			_friendliness = pram;
 			return this;
 		};
 		/**
 		 * 获取友好度
 		 */
-		LC.Components.BasicComponent.prototype.getFriendliness = function() {
+		LC.Data.Role.prototype.getFriendliness = function() {
 			return _friendliness;
 		};
 		var _friendlinessType;
 		/**
 		 * 设置友好度状态
 		 */
-		LC.Components.BasicComponent.prototype.setFriendlinessType = function(pram) {
+		LC.Data.Role.prototype.setFriendlinessType = function(pram) {
 			_friendlinessType = pram;
 			return this;
 		};
 		/**
 		 * 获取友好度状态
 		 */
-		LC.Components.BasicComponent.prototype.getFriendlinessType = function() {
+		LC.Data.Role.prototype.getFriendlinessType = function() {
 			return _friendlinessType;
 		};
 	},
@@ -141,56 +141,56 @@ LC.Data = {
 		/**
 		 * 设置名称
 		 */
-		LC.Components.BasicComponent.prototype.setName = function(pram) {
+		LC.Data.Item.prototype.setName = function(pram) {
 			_name = pram;
 			return this;
 		};
 		/**
 		 * 获取名称
 		 */
-		LC.Components.BasicComponent.prototype.getName = function() {
+		LC.Data.Item.prototype.getName = function() {
 			return _name;
 		};
 		var _type;
 		/**
 		 * 设置类型
 		 */
-		LC.Components.BasicComponent.prototype.setType = function(pram) {
+		LC.Data.Item.prototype.setType = function(pram) {
 			_type = pram;
 			return this;
 		};
 		/**
 		 * 获取类型
 		 */
-		LC.Components.BasicComponent.prototype.getType = function() {
+		LC.Data.Item.prototype.getType = function() {
 			return _type;
 		};
 		var _num;
 		/**
 		 * 设置数量
 		 */
-		LC.Components.BasicComponent.prototype.setNum = function(pram) {
+		LC.Data.Item.prototype.setNum = function(pram) {
 			_num = pram;
 			return this;
 		};
 		/**
 		 * 获取数量
 		 */
-		LC.Components.BasicComponent.prototype.getNum = function() {
+		LC.Data.Item.prototype.getNum = function() {
 			return _num;
 		};
 		var _maxNum;
 		/**
 		 * 设置最大数量（1为不可叠加）
 		 */
-		LC.Components.BasicComponent.prototype.setMaxNum = function(pram) {
+		LC.Data.Item.prototype.setMaxNum = function(pram) {
 			_maxNum = pram;
 			return this;
 		};
 		/**
 		 * 获取最大数量（1为不可叠加）
 		 */
-		LC.Components.BasicComponent.prototype.getMaxNum = function() {
+		LC.Data.Item.prototype.getMaxNum = function() {
 			return _maxNum;
 		};
 	},
@@ -202,42 +202,42 @@ LC.Data = {
 		/**
 		 * 设置名称
 		 */
-		LC.Components.BasicComponent.prototype.setName = function(pram) {
+		LC.Data.Skill.prototype.setName = function(pram) {
 			_name = pram;
 			return this;
 		};
 		/**
 		 * 获取名称
 		 */
-		LC.Components.BasicComponent.prototype.getName = function() {
+		LC.Data.Skill.prototype.getName = function() {
 			return _name;
 		};
 		var _type;
 		/**
 		 * 设置类型
 		 */
-		LC.Components.BasicComponent.prototype.setType = function(pram) {
+		LC.Data.Skill.prototype.setType = function(pram) {
 			_type = pram;
 			return this;
 		};
 		/**
 		 * 获取类型
 		 */
-		LC.Components.BasicComponent.prototype.getType = function() {
+		LC.Data.Skill.prototype.getType = function() {
 			return _type;
 		};
 		var _level;
 		/**
 		 * 设置等级
 		 */
-		LC.Components.BasicComponent.prototype.setLevel = function(pram) {
+		LC.Data.Skill.prototype.setLevel = function(pram) {
 			_level = pram;
 			return this;
 		};
 		/**
 		 * 获取等级
 		 */
-		LC.Components.BasicComponent.prototype.getLevel = function() {
+		LC.Data.Skill.prototype.getLevel = function() {
 			return _level;
 		};
 	},
@@ -249,71 +249,107 @@ LC.Data = {
 		/**
 		 * 设置名称
 		 */
-		LC.Components.BasicComponent.prototype.setName = function(pram) {
+		LC.Data.Plat.prototype.setName = function(pram) {
 			_name = pram;
 			return this;
 		};
 		/**
 		 * 获取名称
 		 */
-		LC.Components.BasicComponent.prototype.getName = function() {
+		LC.Data.Plat.prototype.getName = function() {
 			return _name;
 		};
 		var _type;
 		/**
 		 * 设置类型
 		 */
-		LC.Components.BasicComponent.prototype.setType = function(pram) {
+		LC.Data.Plat.prototype.setType = function(pram) {
 			_type = pram;
 			return this;
 		};
 		/**
 		 * 获取类型
 		 */
-		LC.Components.BasicComponent.prototype.getType = function() {
+		LC.Data.Plat.prototype.getType = function() {
 			return _type;
 		};
 		var roleMap = new LC.Utils.Map();
 		/**
 		 * 设置角色集合
 		 */
-		LC.Components.BasicComponent.prototype.setRoleMap = function(key, pram) {
+		LC.Data.Plat.prototype.setRoleMap = function(key, pram) {
 			_roleMap.put(key, pram);
 			return this;
 		};
 		/**
 		 * 获取角色集合
 		 */
-		LC.Components.BasicComponent.prototype.getRoleMap = function() {
+		LC.Data.Plat.prototype.getRoleMap = function() {
 			return _roleMap;
 		};
 		var itemMap = new LC.Utils.Map();
 		/**
 		 * 设置物品集合
 		 */
-		LC.Components.BasicComponent.prototype.setItemMap = function(pram) {
+		LC.Data.Plat.prototype.setItemMap = function(pram) {
 			_itemMap.put(key, pram);
 			return this;
 		};
 		/**
 		 * 获取物品集合
 		 */
-		LC.Components.BasicComponent.prototype.getItemMap = function() {
+		LC.Data.Plat.prototype.getItemMap = function() {
 			return _itemMap;
 		};
-		var _position;
+		var _positionX;
 		/**
-		 * 设置位置（坐标）
+		 * 设置坐标x
 		 */
-		LC.Components.BasicComponent.prototype.setPosition = function(pram) {
-			_position = pram;
+		LC.Data.Plat.prototype.setPositionX = function(x) {
+			_positionX = x;
 			return this;
 		};
 		/**
-		 * 获取位置（坐标）
+		 * 获取坐标x
 		 */
-		LC.Components.BasicComponent.prototype.getPosition = function() {
-			return _position;
+		LC.Data.Plat.prototype.getPositionX = function() {
+			return _positionX;
+		};
+		var _positionY;
+		/**
+		 * 设置坐标y
+		 */
+		LC.Data.Plat.prototype.setPositionY = function(y) {
+			_positionY = y;
+			return this;
+		};
+		/**
+		 * 获取坐标y
+		 */
+		LC.Data.Plat.prototype.getPositionY = function() {
+			return _positionY;
+		};
+		var _link = new LC.Utils.Map();
+		/**
+		 * 设置道路
+		 */
+		LC.Data.Plat.prototype.setLink = function(pram, flag) {
+			if (!this._link) {
+				this._link = new LC.Utils.Map();
+			}
+			if (pram) {
+				if (!flag) {
+					flag = "true";
+				}
+				this._link.put(pram, flag);
+			}
+			return this;
+		};
+		/**
+		 * 获取道路
+		 */
+		LC.Data.Plat.prototype.getLink = function() {
+			return this._link;
 		};
 	},
 	Player : function() {
@@ -321,14 +357,14 @@ LC.Data = {
 		/**
 		 * 设置角色
 		 */
-		LC.Components.BasicComponent.prototype.setRole = function(pram) {
+		LC.Data.Player.prototype.setRole = function(pram) {
 			_role = pram;
 			return this;
 		};
 		/**
 		 * 获取角色
 		 */
-		LC.Components.BasicComponent.prototype.getRole = function() {
+		LC.Data.Player.prototype.getRole = function() {
 			return _role;
 		};
 	}
@@ -432,7 +468,7 @@ LC.Data.CommonProperty = {
  */
 LC.Data.RoleFactory = {
 	/**
-	 * 创建玩家角色 
+	 * 创建玩家角色
 	 */
 	createPlayer : function() {
 		var role = new LC.Data.Role();
@@ -444,14 +480,145 @@ LC.Data.RoleFactory = {
 		return role;
 	},
 };
-
-LC.Data.PlatFactory = {
+LC.Data.MapFactory = {
 	/**
-	 *	创建营地
+	 *	创建地图
 	 */
-	createCampsite : function() {
-		var plat = new LC.Data.Plat();
-		plat.setName("出生营地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.SAFEZONE);
-		
+	createMap : function(x, y) {
+		var mapMap = new LC.Utils.Map();
+		for (var i = 0; i < x; i++) {
+			for (var j = 0; j < y; j++) {
+				var plat = new LC.Data.Plat();
+				plat.setPositionX(i).setPositionY(j);
+				plat.setLink("top").setLink("left").setLink("bottom").setLink("right");
+				mapMap.put(i + "," + j, plat);
+			};
+		};
+		/*
+		for (var i = 0; i < x; i++) {
+		for (var j = 0; j < y; j++) {
+		console.log(i+","+j);
+		console.log(mapMap.get(i + "," + j).getLink());
+		};
+		};*/
+
+		//构建墙壁
+		var creatWall = function(x, y, x1, y1) {
+			var minX = x;
+			var minY = y;
+			var maxX = x1;
+			var maxY = y1;
+			var linka = LC.Components.ComponentFunction.random(["top", "left", "bottom", "right"], [0.25, 0.25, 0.25, 0.25]);
+			//console.log(linka);
+			var tempa;
+			if (linka == "top") {
+				tempStartX = minX + Math.floor((maxX - minX) / 2);
+				tempEndX = tempStartX;
+				tempStartY = minY;
+				tempEndY = minY + Math.floor((maxY - minY) / 2);
+			} else if (linka == "left") {
+				tempStartX = minX;
+				tempEndX = minX + Math.floor((maxX - minX) / 2);
+				tempStartY = minY + Math.floor((maxY - minY) / 2);
+				tempEndY = tempStartY;
+			} else if (linka == "bottom") {
+				tempStartX = minX + Math.floor((maxX - minX) / 2);
+				tempEndX = tempStartX;
+				tempStartY = minY + Math.floor((maxY - minY) / 2);
+				tempEndY = maxY;
+			} else if (linka == "right") {
+				tempStartX = minX + Math.floor((maxX - minX) / 2);
+				tempEndX = maxX;
+				tempStartY = minY + Math.floor((maxY - minY) / 2);
+				tempEndY = tempStartY;
+			}
+			if (tempStartX == tempEndX) {
+				for (var i = tempStartY; i < tempEndY; i++) {
+					mapMap.get((tempEndX - 1) + "," + i).setLink("right", "false");
+					if (mapMap.get((tempEndX) + "," + i)) {
+						mapMap.get((tempEndX) + "," + i).setLink("left", "false");
+					}
+				};
+			} else if (tempStartY == tempEndY) {
+				for (var i = tempStartX; i < tempEndX; i++) {
+					mapMap.get(i + "," + (tempEndY - 1)).setLink("bottom", "false");
+					if (mapMap.get(i + "," + (tempEndY))) {
+						mapMap.get(i + "," + (tempEndY)).setLink("top", "false");
+					}
+				};
+			}
+			if ((maxX - minX) > 2 && (maxY - minY) > 2) {
+				creatWall(minX, minY, minX + Math.floor((maxX - minX) / 2), minY + Math.floor((maxY - minY) / 2));
+				creatWall(minX + Math.floor((maxX - minX) / 2), minY, maxX, minY + Math.floor((maxY - minY) / 2));
+				creatWall(minX,minY+Math.floor((maxY - minY) / 2), minX + Math.floor((maxX - minX) / 2), maxY);
+				creatWall(minX + Math.floor((maxX - minX) / 2), minY + Math.floor((maxY - minY) / 2), maxX, maxY);
+			}
+
+		};
+		creatWall(0, 0, x, y);
+		return mapMap;
 	},
+	drawMap : function(map) {
+		var t = $("<div></div>");
+		var map = map;
+		var i1 = 0;		while (i1 || i1 == 0) {
+			var j1 = 0;
+			var plat;
+			if (!map.get(j1 + "," + i1) || null == map.get(j1 + "," + i1)) {
+				break;
+			}
+			while (j1 || j1 == 0) {
+				plat = map.get(j1 + "," + i1);
+				if (plat || null != plat) {
+					var top = "#ff0000",
+					    right = "#ff0000",
+					    bottom = "#ff0000",
+					    left = "#ff0000";
+					if (plat.getLink().get("top") == "false") {
+						top = "#00ff00";
+					}
+					if (plat.getLink().get("right") == "false") {
+						right = "#00ff00";
+					}
+					if (plat.getLink().get("bottom") == "false") {
+						bottom = "#00ff00";
+					}
+					if (plat.getLink().get("left") == "false") {
+						left = "#00ff00";
+					}
+					var str = top + " " + right + " " + bottom + " " + left;
+					var t1 = $("<div></div>").attr({
+						linka : j1 + "," + i1
+					}).css({
+						"width" : "30px",
+						"height" : "30px",
+						//"border-style" : str,
+						"border-style" : "solid",
+						"border-color": str,
+						"display" : "inline-block",
+						"position" : "relative",
+						"overflow":"hidden",
+						"margin" : "-4px 0px",
+					});
+					t.append(t1);
+					j1++;
+				} else {
+					break;
+				}
+			}
+			t.append($("</br>"));
+			i1++;
+		}
+		return t;
+	}
 };
+/*
+ LC.Data.PlatFactory = {
+ *	创建营地
+ createCampsite : function() {
+ var plat = new LC.Data.Plat();
+ plat.setName("出生营地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.SAFEZONE);
+
+ },
+ };
+ */
