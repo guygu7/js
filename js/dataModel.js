@@ -570,21 +570,21 @@ LC.Data.MapFactory = {
 			while (j1 || j1 == 0) {
 				plat = map.get(j1 + "," + i1);
 				if (plat || null != plat) {
-					var top = "#ff0000",
-					    right = "#ff0000",
-					    bottom = "#ff0000",
-					    left = "#ff0000";
+					var top = "#ffffff",
+					    right = "#ffffff",
+					    bottom = "#ffffff",
+					    left = "#ffffff";
 					if (plat.getLink().get("top") == "false") {
-						top = "#00ff00";
+						top = "#000000";
 					}
 					if (plat.getLink().get("right") == "false") {
-						right = "#00ff00";
+						right = "#000000";
 					}
 					if (plat.getLink().get("bottom") == "false") {
-						bottom = "#00ff00";
+						bottom = "#000000";
 					}
 					if (plat.getLink().get("left") == "false") {
-						left = "#00ff00";
+						left = "#000000";
 					}
 					var str = top + " " + right + " " + bottom + " " + left;
 					var t1 = $("<div></div>").attr({
