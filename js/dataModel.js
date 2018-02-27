@@ -486,11 +486,21 @@ LC.Data.MapFactory = {
 	 */
 	createMap : function(x, y) {
 		var mapMap = new LC.Utils.Map();
-		for (var i = 0; i < x; i++) {
-			for (var j = 0; j < y; j++) {
+		for (var i = 1; i <= x; i++) {
+			for (var j = 1; j <= y; j++) {
 				var plat = new LC.Data.Plat();
 				plat.setPositionX(i).setPositionY(j);
 				plat.setLink("top").setLink("left").setLink("bottom").setLink("right");
+				if (i==1) {
+					plat.setLink("left","false");
+				} else if (i==x){
+					plat.setLink("right","false");
+				}
+				if (j==1) {
+					plat.setLink("top","false");
+				} else if (j==x){
+					plat.setLink("bottom","false");
+				}
 				mapMap.put(i + "," + j, plat);
 			};
 		};
@@ -508,7 +518,7 @@ LC.Data.MapFactory = {
 			var minY = y;
 			var maxX = x1;
 			var maxY = y1;
-			var linka = LC.Components.ComponentFunction.random(["top", "left", "bottom", "right"], [0.25, 0.25, 0.25, 0.25]);
+			var linka = LC.Components.ComponentFunction.random(["top","left","bottom","right"], [0.25, 0.25,0.25, 0.25]);
 			//console.log(linka);
 			var tempa;
 			if (linka == "top") {
@@ -524,50 +534,58 @@ LC.Data.MapFactory = {
 			} else if (linka == "bottom") {
 				tempStartX = minX + Math.floor((maxX - minX) / 2);
 				tempEndX = tempStartX;
-				tempStartY = minY + Math.floor((maxY - minY) / 2);
+				tempStartY = minY + Math.ceil((maxY - minY) / 2);
 				tempEndY = maxY;
 			} else if (linka == "right") {
-				tempStartX = minX + Math.floor((maxX - minX) / 2);
+				tempStartX = minX + Math.ceil((maxX - minX) / 2);
 				tempEndX = maxX;
 				tempStartY = minY + Math.floor((maxY - minY) / 2);
 				tempEndY = tempStartY;
 			}
 			if (tempStartX == tempEndX) {
-				for (var i = tempStartY; i < tempEndY; i++) {
-					mapMap.get((tempEndX - 1) + "," + i).setLink("right", "false");
-					if (mapMap.get((tempEndX) + "," + i)) {
-						mapMap.get((tempEndX) + "," + i).setLink("left", "false");
+				for (var i = tempStartY; i <= tempEndY; i++) {
+					mapMap.get((tempEndX) + "," + i).setLink("right", "false");
+					if (mapMap.get((tempEndX +1) + "," + i)) {
+						mapMap.get((tempEndX +1) + "," + i).setLink("left", "false");
 					}
 				};
 			} else if (tempStartY == tempEndY) {
-				for (var i = tempStartX; i < tempEndX; i++) {
-					mapMap.get(i + "," + (tempEndY - 1)).setLink("bottom", "false");
-					if (mapMap.get(i + "," + (tempEndY))) {
-						mapMap.get(i + "," + (tempEndY)).setLink("top", "false");
+				for (var i = tempStartX; i <= tempEndX; i++) {
+					mapMap.get(i + "," + (tempEndY )).setLink("bottom", "false");
+					if (mapMap.get(i + "," + (tempEndY+1))) {
+						mapMap.get(i + "," + (tempEndY+1)).setLink("top", "false");
 					}
 				};
 			}
-			if ((maxX - minX) > 2 && (maxY - minY) > 2) {
+			if ((maxX - minX) >= 2 && (maxY - minY) >= 2) {
+				//左上区域
+				console.log(minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+  (minY+  Math.floor((maxY - minY) / 2)));
 				creatWall(minX, minY, minX + Math.floor((maxX - minX) / 2), minY + Math.floor((maxY - minY) / 2));
-				creatWall(minX + Math.floor((maxX - minX) / 2), minY, maxX, minY + Math.floor((maxY - minY) / 2));
-				creatWall(minX,minY+Math.floor((maxY - minY) / 2), minX + Math.floor((maxX - minX) / 2), maxY);
-				creatWall(minX + Math.floor((maxX - minX) / 2), minY + Math.floor((maxY - minY) / 2), maxX, maxY);
+				//右上区域
+				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2)));
+				creatWall(minX + Math.ceil((maxX - minX) / 2), minY, maxX, minY + Math.floor((maxY - minY) / 2));
+				//左下区域
+				console.log(minX+","+(minY+Math.ceil((maxY - minY) / 2))+","+ (minX + Math.floor((maxX - minX) / 2))+","+maxY);
+				creatWall(minX,minY+Math.ceil((maxY - minY) / 2), minX + Math.floor((maxX - minX) / 2), maxY);
+				//右下区域
+				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY);
+				creatWall(minX + Math.ceil((maxX - minX) / 2), minY + Math.ceil((maxY - minY) / 2), maxX, maxY);
 			}
 
 		};
-		creatWall(0, 0, x, y);
+		creatWall(1, 1, x, y);
 		return mapMap;
 	},
 	drawMap : function(map) {
 		var t = $("<div></div>");
 		var map = map;
-		var i1 = 0;		while (i1 || i1 == 0) {
-			var j1 = 0;
+		var i1 = 1;		while (i1 ) {
+			var j1 = 1;
 			var plat;
 			if (!map.get(j1 + "," + i1) || null == map.get(j1 + "," + i1)) {
 				break;
 			}
-			while (j1 || j1 == 0) {
+			while (j1 ) {
 				plat = map.get(j1 + "," + i1);
 				if (plat || null != plat) {
 					var top = "#ffffff",
@@ -590,15 +608,15 @@ LC.Data.MapFactory = {
 					var t1 = $("<div></div>").attr({
 						linka : j1 + "," + i1
 					}).css({
-						"width" : "30px",
-						"height" : "30px",
+						"width" : "20px",
+						"height" : "20px",
 						//"border-style" : str,
 						"border-style" : "solid",
 						"border-color": str,
 						"display" : "inline-block",
 						"position" : "relative",
 						"overflow":"hidden",
-						"margin" : "-4px 0px",
+						"margin" : "-2px 0px",
 					});
 					t.append(t1);
 					j1++;
@@ -609,6 +627,7 @@ LC.Data.MapFactory = {
 			t.append($("</br>"));
 			i1++;
 		}
+		t.css({"transform":"rotateX(55deg) rotateY(0deg) rotateZ(40deg)",});
 		return t;
 	}
 };
