@@ -28,9 +28,30 @@
 		<script src="js/progressbar.js"></script>
 		<script src="js/dataModel.js"></script>
      <script> 
-		var map = LC.Data.MapFactory.createMap(256,256);
-		var mapDom = LC.Data.MapFactory.drawMap(map);
-	    $("#div1").append(mapDom);
+		var worker = new Worker("js/webwork.js");
+			var createMap = LC.Data.MapFactory.createMap;
+			var drawMap = LC.Data.MapFactory.drawMap;
+			var mapFactory = {
+				 a : 1
+			};
+			worker.postMessage([64,mapFactory]);
+			 worker.onmessage = function (event) {
+				 console.log(event);
+				 console.log(event.data);
+				var data=event.data;
+				$("#div1").append(data);
+			  };
+					  //worker.terminate();
+	/*
+				 //鍙戦�娑堟伅
+			worker.postMessage(["100",createMap]);
+						  worker.onmessage = function(event) {
+							  alert(event.data);
+						  };
+				   console.log(worker);
+		   */
+	
+		  
      </script>
 </body>
 </html>
