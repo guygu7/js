@@ -28,19 +28,56 @@
 		<script src="js/progressbar.js"></script>
 		<script src="js/dataModel.js"></script>
      <script> 
+     	/*
+		 var arr = {};
+				  for (var i=0; i < 1000; i++) {
+					  var key = "i"+i;  
+					  var obj = {};
+					 var value = obj ; 
+					 arr[key] = value;  
+					 for (var j=0; j < 1000; j++) {
+					   var key1="j"+j;
+					   var value2="aaa";
+					   arr[key][key1]=value2;
+					 };
+				  };
+				  console.log(arr);*/
+		/*
+				fn = function(i,j){
+							 this.str=i+","+j;
+						 };
+					var tObj = new Object();
+				   for (var i=0; i < 100000; i++) {
+					   tObj[i] = new Object();
+					 for (var j=0; j < 100000; j++) {
+						 tObj[i][j] = new Object();
+						 tObj[i][j].fun = fn;
+					 };
+				  };
+				  console.log(tObj);
+				   for (var i=0; i < 1000; i++) {
+					 for (var j=0; j < 1000; j++) {
+						 tObj[i][j].fun(i,j);
+					 };
+				  };
+				  console.log(tObj);*/
+		
+		/*
 		var worker = new Worker("js/webwork.js");
-			var createMap = LC.Data.MapFactory.createMap;
-			var drawMap = LC.Data.MapFactory.drawMap;
-			var mapFactory = {
-				 a : 1
-			};
-			worker.postMessage([64,mapFactory]);
-			 worker.onmessage = function (event) {
-				 console.log(event);
-				 console.log(event.data);
-				var data=event.data;
-				$("#div1").append(data);
-			  };
+					var createMap = LC.Data.MapFactory.createMap;
+					var drawMap = LC.Data.MapFactory.drawMap;
+					var mapFactory = {
+						 a : 1
+					};
+					worker.postMessage([64,mapFactory]);
+					 worker.onmessage = function (event) {
+						 console.log(event);
+						 console.log(event.data);
+						var data=event.data;
+						$("#div1").append(data);
+					  };
+					  */
+		
 					  //worker.terminate();
 	/*
 				 //鍙戦�娑堟伅
@@ -50,8 +87,8 @@
 						  };
 				   console.log(worker);
 		   */
+	LC.Data.MapFactory.createMap(128,128);
 	
-		  
      </script>
 </body>
 </html>

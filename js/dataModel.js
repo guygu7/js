@@ -504,14 +504,39 @@ LC.Data.MapFactory = {
 				mapMap.put(i + "," + j, plat);
 			};
 		};
-		/*
-		for (var i = 0; i < x; i++) {
-		for (var j = 0; j < y; j++) {
-		console.log(i+","+j);
-		console.log(mapMap.get(i + "," + j).getLink());
+		minX =1,minY=1, maxX=x ,maxY=y;
+		var stack = [];
+		var lv = 1;
+		//while((maxX - minX) >= 2 && (maxY - minY) >= 2){
+		stack.push(minX+","+minY+","+maxX+","+maxY);
+		var tempStack;
+		while () {
+			if ((maxX - minX) >= 2 && (maxY - minY) >= 2) {
+				//左上区域
+				console.log(minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+  (minY+  Math.floor((maxY - minY) / 2)));
+				stack.push([]);
+				stack[lv].push(minX+","+ minY+","+ minX + Math.floor((maxX - minX) / 2)+","+ minY + Math.floor((maxY - minY) / 2));
+				/*
+				//右上区域
+				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2)));
+				stack[lv].push([minX + Math.ceil((maxX - minX) / 2), minY, maxX, minY + Math.floor((maxY - minY) / 2)]);
+				//左下区域
+				console.log(minX+","+(minY+Math.ceil((maxY - minY) / 2))+","+ (minX + Math.floor((maxX - minX) / 2))+","+maxY);
+				stack[lv].push([minX,minY+Math.ceil((maxY - minY) / 2), minX + Math.floor((maxX - minX) / 2), maxY]);
+				//右下区域
+				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY);
+				stack[lv].push([minX + Math.ceil((maxX - minX) / 2), minY + Math.ceil((maxY - minY) / 2), maxX, maxY]);
+				*/
+			}
+			tempStack = stack[lv];
+			//计算 stack[lv]中4个元素中值是否可以继续循环
+			//可以循环，则tempStack传入下一个循环中
+			lv++;
 		};
-		};*/
-
+		
+		//}
+		console.log(stack);
+		/*
 		//构建墙壁
 		var creatWall = function(x, y, x1, y1) {
 			var minX = x;
@@ -574,6 +599,7 @@ LC.Data.MapFactory = {
 
 		};
 		creatWall(1, 1, x, y);
+		*/
 		return mapMap;
 	},
 	drawMap : function(map) {
