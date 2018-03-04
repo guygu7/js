@@ -87,8 +87,25 @@
 						  };
 				   console.log(worker);
 		   */
-	LC.Data.MapFactory.createMap(128,128);
-	
+	map = LC.Data.MapFactory.createMap(256,256);
+	//temp = LC.Data.MapFactory.drawMap(map);
+	//$("#div1").append(temp);
+	/*
+	var stack = {
+			"1,1,2,2" : ["1,n,n,n","2,n,n,n","3,n,n,n","4,n,n,n"],
+		};
+		var nowKey;
+		var stackKeys = Object.keys(stack);
+				for (var i=0; i < stackKeys.length; i++) {
+				  nowKey =  stackKeys[i];
+				  nowValue = stack[nowKey];
+				console.log(nowKey);
+				console.log(nowValue);
+				};
+				
+				delete stack[nowKey];
+				console.log(stack);
+				*/
      </script>
 </body>
 </html>

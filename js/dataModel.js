@@ -501,14 +501,107 @@ LC.Data.MapFactory = {
 				} else if (j==x){
 					plat.setLink("bottom","false");
 				}
+				//该位置效率低下
 				mapMap.put(i + "," + j, plat);
+				
 			};
 		};
-		minX =1,minY=1, maxX=x ,maxY=y;
-		var stack = [];
-		var lv = 1;
+		//开始创建墙壁
+		var stack = {};
+		var startKey = "1,1,"+x+","+y;
+		if ((x - 1) >= 2 && (y - 1) >= 2) {//初次判断，初次计算
+			//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
+			var startValue = [1+","+ 1+","+ (1 + Math.floor((x - 1) / 2))+","+ (1 + Math.floor((y - 1) / 2))
+			,(1 + Math.ceil((x - 1) / 2))+","+ 1+","+ x+","+ (1 + Math.floor((y - 1) / 2))
+			,1+","+(1+Math.ceil((y - 1) / 2))+","+ (1 + Math.floor((x - 1) / 2))+","+y
+			,(1 + Math.ceil((x - 1) / 2))+","+ (1 + Math.ceil((y - 1) / 2))+","+ x+","+ y];
+		}
+		stack[startKey]=startValue;
+		var minX,minY,maxX,maxY,tempStartX,tempEndX,tempStartY,tempEndY,nowKey,nowValue,stackKeys,linka,tempa,key,value;
+		stackKeys = Object.keys(stack);
+				while(stackKeys.length>=1){
+				stackKeys = Object.keys(stack);
+				for (var i=0; i < stackKeys.length; i++) {
+				  nowKey =  stackKeys[i];
+				  console.log(nowKey);
+				  nowValue = stack[nowKey];//是一个array [下一级4各区域]
+				  for (var j=0; j < nowValue.length; j++) {//处理下一级4各区域
+				  	console.log(nowKey);
+				  	console.log(nowValue);
+					arr = nowValue[j].split(",");//分割字符串得到区域xy上下限值
+					minX = Number(arr[0]);
+					minY = Number(arr[1]);
+					maxX = Number(arr[2]);
+					maxY = Number(arr[3]);
+					//开始设置墙
+					linka = LC.Components.ComponentFunction.random(["top","left","bottom","right"], [0.25, 0.25,0.25, 0.25]);
+					//console.log(linka);
+					tempa;
+					if (linka == "top") {
+						tempStartX = minX + Math.floor((maxX - minX) / 2);
+						tempEndX = tempStartX;
+						tempStartY = minY;
+						tempEndY = minY + Math.floor((maxY - minY) / 2);
+					} else if (linka == "left") {
+						tempStartX = minX;
+						tempEndX = minX + Math.floor((maxX - minX) / 2);
+						tempStartY = minY + Math.floor((maxY - minY) / 2);
+						tempEndY = tempStartY;
+					} else if (linka == "bottom") {
+						tempStartX = minX + Math.floor((maxX - minX) / 2);
+						tempEndX = tempStartX;
+						tempStartY = minY + Math.ceil((maxY - minY) / 2);
+						tempEndY = maxY;
+					} else if (linka == "right") {
+						tempStartX = minX + Math.ceil((maxX - minX) / 2);
+						tempEndX = maxX;
+						tempStartY = minY + Math.floor((maxY - minY) / 2);
+						tempEndY = tempStartY;
+					}
+					if (tempStartX == tempEndX) {
+						for (var i1 = tempStartY; i1 <= tempEndY; i1++) {
+							mapMap.get((tempEndX) + "," + i1).setLink("right", "false");
+							if (mapMap.get((tempEndX +1) + "," + i1)) {
+								mapMap.get((tempEndX +1) + "," + i1).setLink("left", "false");
+							}
+						};
+					} else if (tempStartY == tempEndY) {
+						for (var i1 = tempStartX; i1 <= tempEndX; i1++) {
+							mapMap.get(i1 + "," + (tempEndY )).setLink("bottom", "false");
+							if (mapMap.get(i1 + "," + (tempEndY+1))) {
+								mapMap.get(i1 + "," + (tempEndY+1)).setLink("top", "false");
+							}
+						};
+					}					
+					//判断是否满足继续生成子区域数据
+					if ((maxX - minX) >= 2 && (maxY - minY) >= 2) {
+						console.log("符合条件，继续");
+						//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
+						key = nowValue[j];
+						console.log(key);
+						value = [minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+ (minY + Math.floor((maxY - minY) / 2))
+						,(minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2))
+						,minX+","+(minY+Math.ceil((maxY - minY) / 2))+","+ (minX + Math.floor((maxX - minX) / 2))+","+maxY
+						,(minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY];
+						stack[key] = value;
+						//console.log(value);
+						//console.log(stack);
+					}else{
+						console.log("不符合条件");
+					}
+					console.log("-----------------");
+				  };
+				  //该组数据处理完后，将该组数据从stack中移除
+				  delete stack[nowKey];
+				  console.log(stack);
+				  console.log("=================");
+				  
+				};
+				 console.log("*********************");
+			};
+		
 		//while((maxX - minX) >= 2 && (maxY - minY) >= 2){
-		stack.push(minX+","+minY+","+maxX+","+maxY);
+		/*
 		var tempStack;
 		while () {
 			if ((maxX - minX) >= 2 && (maxY - minY) >= 2) {
@@ -516,7 +609,6 @@ LC.Data.MapFactory = {
 				console.log(minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+  (minY+  Math.floor((maxY - minY) / 2)));
 				stack.push([]);
 				stack[lv].push(minX+","+ minY+","+ minX + Math.floor((maxX - minX) / 2)+","+ minY + Math.floor((maxY - minY) / 2));
-				/*
 				//右上区域
 				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2)));
 				stack[lv].push([minX + Math.ceil((maxX - minX) / 2), minY, maxX, minY + Math.floor((maxY - minY) / 2)]);
@@ -526,16 +618,15 @@ LC.Data.MapFactory = {
 				//右下区域
 				console.log((minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY);
 				stack[lv].push([minX + Math.ceil((maxX - minX) / 2), minY + Math.ceil((maxY - minY) / 2), maxX, maxY]);
-				*/
 			}
 			tempStack = stack[lv];
 			//计算 stack[lv]中4个元素中值是否可以继续循环
 			//可以循环，则tempStack传入下一个循环中
 			lv++;
 		};
-		
+		*/
 		//}
-		console.log(stack);
+		//console.log(stack);
 		/*
 		//构建墙壁
 		var creatWall = function(x, y, x1, y1) {
