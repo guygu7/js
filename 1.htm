@@ -28,68 +28,28 @@
 		<script src="js/progressbar.js"></script>
 		<script src="js/dataModel.js"></script>
      <script> 
-     	/*
-		 var arr = {};
-				  for (var i=0; i < 1000; i++) {
-					  var key = "i"+i;  
-					  var obj = {};
-					 var value = obj ; 
-					 arr[key] = value;  
-					 for (var j=0; j < 1000; j++) {
-					   var key1="j"+j;
-					   var value2="aaa";
-					   arr[key][key1]=value2;
-					 };
-				  };
-				  console.log(arr);*/
-		/*
-				fn = function(i,j){
-							 this.str=i+","+j;
-						 };
-					var tObj = new Object();
-				   for (var i=0; i < 100000; i++) {
-					   tObj[i] = new Object();
-					 for (var j=0; j < 100000; j++) {
-						 tObj[i][j] = new Object();
-						 tObj[i][j].fun = fn;
-					 };
-				  };
-				  console.log(tObj);
-				   for (var i=0; i < 1000; i++) {
-					 for (var j=0; j < 1000; j++) {
-						 tObj[i][j].fun(i,j);
-					 };
-				  };
-				  console.log(tObj);*/
-		
-		/*
-		var worker = new Worker("js/webwork.js");
-					var createMap = LC.Data.MapFactory.createMap;
-					var drawMap = LC.Data.MapFactory.drawMap;
-					var mapFactory = {
-						 a : 1
-					};
-					worker.postMessage([64,mapFactory]);
-					 worker.onmessage = function (event) {
-						 console.log(event);
-						 console.log(event.data);
-						var data=event.data;
-						$("#div1").append(data);
-					  };
-					  */
-		
-					  //worker.terminate();
-	/*
-				 //鍙戦�娑堟伅
-			worker.postMessage(["100",createMap]);
-						  worker.onmessage = function(event) {
-							  alert(event.data);
-						  };
-				   console.log(worker);
-		   */
+     /*
+    	var stack = {};
+    	x =10;y=10;
+		var startKey = "1,1,"+x+","+y;
+		if ((x - 1) >= 2 && (y - 1) >= 2) {//初次判断，初次计算
+			//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
+			var startValue = {1:1+","+ 1+","+ (1 + Math.floor((x - 1) / 2))+","+ (1 + Math.floor((y - 1) / 2))
+			,2:(1 + Math.ceil((x - 1) / 2))+","+ 1+","+ x+","+ (1 + Math.floor((y - 1) / 2))
+			,3:1+","+(1+Math.ceil((y - 1) / 2))+","+ (1 + Math.floor((x - 1) / 2))+","+y
+			,4:(1 + Math.ceil((x - 1) / 2))+","+ (1 + Math.ceil((y - 1) / 2))+","+ x+","+ y};
+		}
+		stack[startKey]=startValue;
+		stackKeys = Object.keys(stack);
+		nowKey =  stackKeys[0];
+	    nowValue = stack[nowKey];
+    	console.log(nowValue);
+    	nowKey2=2;
+    	console.log(nowValue[nowKey2]);
+    	*/
 	map = LC.Data.MapFactory.createMap(256,256);
-	//temp = LC.Data.MapFactory.drawMap(map);
-	//$("#div1").append(temp);
+	temp = LC.Data.MapFactory.drawMap(map);
+	$("#div1").append(temp);
 	/*
 	var stack = {
 			"1,1,2,2" : ["1,n,n,n","2,n,n,n","3,n,n,n","4,n,n,n"],

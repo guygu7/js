@@ -335,13 +335,15 @@ LC.Data = {
 		 */
 		LC.Data.Plat.prototype.setLink = function(pram, flag) {
 			if (!this._link) {
-				this._link = new LC.Utils.Map();
+				//this._link = new LC.Utils.Map();
+				this._link = {};
 			}
 			if (pram) {
 				if (!flag) {
 					flag = "true";
 				}
-				this._link.put(pram, flag);
+				//this._link.put(pram, flag);
+				this._link[pram]=flag;
 			}
 			return this;
 		};
@@ -490,6 +492,7 @@ LC.Data.MapFactory = {
 			for (var j = 1; j <= y; j++) {
 				var plat = new LC.Data.Plat();
 				plat.setPositionX(i).setPositionY(j);
+				//该位置效率低下
 				plat.setLink("top").setLink("left").setLink("bottom").setLink("right");
 				if (i==1) {
 					plat.setLink("left","false");
@@ -501,9 +504,7 @@ LC.Data.MapFactory = {
 				} else if (j==x){
 					plat.setLink("bottom","false");
 				}
-				//该位置效率低下
 				mapMap.put(i + "," + j, plat);
-				
 			};
 		};
 		//开始创建墙壁
@@ -511,24 +512,30 @@ LC.Data.MapFactory = {
 		var startKey = "1,1,"+x+","+y;
 		if ((x - 1) >= 2 && (y - 1) >= 2) {//初次判断，初次计算
 			//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
-			var startValue = [1+","+ 1+","+ (1 + Math.floor((x - 1) / 2))+","+ (1 + Math.floor((y - 1) / 2))
-			,(1 + Math.ceil((x - 1) / 2))+","+ 1+","+ x+","+ (1 + Math.floor((y - 1) / 2))
-			,1+","+(1+Math.ceil((y - 1) / 2))+","+ (1 + Math.floor((x - 1) / 2))+","+y
-			,(1 + Math.ceil((x - 1) / 2))+","+ (1 + Math.ceil((y - 1) / 2))+","+ x+","+ y];
+			var startValue = {0:1+","+ 1+","+ (1 + Math.floor((x - 1) / 2))+","+ (1 + Math.floor((y - 1) / 2))
+			,1:(1 + Math.ceil((x - 1) / 2))+","+ 1+","+ x+","+ (1 + Math.floor((y - 1) / 2))
+			,2:1+","+(1+Math.ceil((y - 1) / 2))+","+ (1 + Math.floor((x - 1) / 2))+","+y
+			,3:(1 + Math.ceil((x - 1) / 2))+","+ (1 + Math.ceil((y - 1) / 2))+","+ x+","+ y};
 		}
 		stack[startKey]=startValue;
-		var minX,minY,maxX,maxY,tempStartX,tempEndX,tempStartY,tempEndY,nowKey,nowValue,stackKeys,linka,tempa,key,value;
+		var minX,minY,maxX,maxY,tempStartX,tempEndX,tempStartY,tempEndY,nowKey,nowValue,stackKeys,linka,tempa,key,value,arr,nowKey2;
 		stackKeys = Object.keys(stack);
+		var xn = 0;
 				while(stackKeys.length>=1){
 				stackKeys = Object.keys(stack);
 				for (var i=0; i < stackKeys.length; i++) {
 				  nowKey =  stackKeys[i];
-				  console.log(nowKey);
+				  //console.log(nowKey);
 				  nowValue = stack[nowKey];//是一个array [下一级4各区域]
-				  for (var j=0; j < nowValue.length; j++) {//处理下一级4各区域
-				  	console.log(nowKey);
-				  	console.log(nowValue);
+				  for (var j=0; j < Object.keys(nowValue).length; j++) {//处理下一级4各区域
+				  	xn++;
+				  	//console.log(nowKey);
+				  	//console.log(nowValue);
+				  	/*
 					arr = nowValue[j].split(",");//分割字符串得到区域xy上下限值
+					*/
+				  	nowKey2 = j;
+				  	arr = nowValue[nowKey2].split(",");//分割字符串得到区域xy上下限值
 					minX = Number(arr[0]);
 					minY = Number(arr[1]);
 					maxX = Number(arr[2]);
@@ -575,31 +582,32 @@ LC.Data.MapFactory = {
 					}					
 					//判断是否满足继续生成子区域数据
 					if ((maxX - minX) >= 2 && (maxY - minY) >= 2) {
-						console.log("符合条件，继续");
+						//console.log("符合条件，继续");
 						//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
-						key = nowValue[j];
-						console.log(key);
-						value = [minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+ (minY + Math.floor((maxY - minY) / 2))
-						,(minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2))
-						,minX+","+(minY+Math.ceil((maxY - minY) / 2))+","+ (minX + Math.floor((maxX - minX) / 2))+","+maxY
-						,(minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY];
+						//key = nowValue[j];
+						key = nowValue[nowKey2];
+						//console.log(key);
+						value = {0:minX+","+ minY+","+ (minX + Math.floor((maxX - minX) / 2))+","+ (minY + Math.floor((maxY - minY) / 2))
+						,1:(minX + Math.ceil((maxX - minX) / 2))+","+ minY+","+ maxX+","+ (minY + Math.floor((maxY - minY) / 2))
+						,2:minX+","+(minY+Math.ceil((maxY - minY) / 2))+","+ (minX + Math.floor((maxX - minX) / 2))+","+maxY
+						,3:(minX + Math.ceil((maxX - minX) / 2))+","+ (minY + Math.ceil((maxY - minY) / 2))+","+ maxX+","+ maxY};
 						stack[key] = value;
 						//console.log(value);
 						//console.log(stack);
 					}else{
-						console.log("不符合条件");
+						//console.log("不符合条件");
 					}
-					console.log("-----------------");
+					//console.log("-----------------");
 				  };
 				  //该组数据处理完后，将该组数据从stack中移除
 				  delete stack[nowKey];
-				  console.log(stack);
-				  console.log("=================");
+				 // console.log(stack);
+				  //console.log("=================");
 				  
 				};
-				 console.log("*********************");
+				 //console.log("*********************");
 			};
-		
+			 console.log(xn);
 		//while((maxX - minX) >= 2 && (maxY - minY) >= 2){
 		/*
 		var tempStack;
@@ -691,12 +699,14 @@ LC.Data.MapFactory = {
 		};
 		creatWall(1, 1, x, y);
 		*/
+		console.log("执行完毕");
 		return mapMap;
 	},
 	drawMap : function(map) {
-		var t = $("<div></div>");
+		var t = document.createElement("div");//$("<div></div>");
 		var map = map;
-		var i1 = 1;		while (i1 ) {
+		var i1 = 1;
+		var top,right,bottom,left,key,str,link;		while (i1 ) {
 			var j1 = 1;
 			var plat;
 			if (!map.get(j1 + "," + i1) || null == map.get(j1 + "," + i1)) {
@@ -705,23 +715,33 @@ LC.Data.MapFactory = {
 			while (j1 ) {
 				plat = map.get(j1 + "," + i1);
 				if (plat || null != plat) {
-					var top = "#ffffff",
-					    right = "#ffffff",
-					    bottom = "#ffffff",
+					 top = "#ffffff";
+					    right = "#ffffff";
+					    bottom = "#ffffff";
 					    left = "#ffffff";
-					if (plat.getLink().get("top") == "false") {
+					   link = plat.getLink();
+					    key = "top";
+					//if (plat.getLink().get("top") == "false") {
+					if (link[key] == "false") {
 						top = "#000000";
 					}
-					if (plat.getLink().get("right") == "false") {
+					key = "right";
+					//if (plat.getLink().get("right") == "false") {
+					if (link[key] == "false") {
 						right = "#000000";
 					}
-					if (plat.getLink().get("bottom") == "false") {
+					key = "bottom";
+					if (link[key] == "false") {
 						bottom = "#000000";
 					}
-					if (plat.getLink().get("left") == "false") {
+					key = "left";
+					if (link[key] == "false") {
 						left = "#000000";
 					}
-					var str = top + " " + right + " " + bottom + " " + left;
+					str = top + " " + right + " " + bottom + " " + left;
+					var t1 = document.createElement("div");
+					t1.style= "width:20px;height:20px;border-style:solid;border-color:"+str+";display:inline-block;position:relative;overflow:hidden;margin:-2px 0px ";
+					/*
 					var t1 = $("<div></div>").attr({
 						linka : j1 + "," + i1
 					}).css({
@@ -735,16 +755,19 @@ LC.Data.MapFactory = {
 						"overflow":"hidden",
 						"margin" : "-2px 0px",
 					});
-					t.append(t1);
+					*/
+					//t.append(t1);
+					t.appendChild(t1);
 					j1++;
 				} else {
 					break;
 				}
 			}
-			t.append($("</br>"));
+			t.appendChild(document.createElement("br"));
 			i1++;
 		}
-		t.css({"transform":"rotateX(55deg) rotateY(0deg) rotateZ(40deg)",});
+		console.log("执行完毕");
+		//t.css({"transform":"rotateX(55deg) rotateY(0deg) rotateZ(40deg)",});
 		return t;
 	}
 };

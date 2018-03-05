@@ -191,28 +191,33 @@ LC.Utils.extend = function(sub, sup) {
  * keysRemoveDuplicate
  */
 LC.Utils.Map = function() {
-	this.elements = new Array();
+	//this.elements = new Array();
+	this.elements = {};
 	//获取MAP元素个数
 	if ( typeof this.size != "function") {
 		LC.Utils.Map.prototype.size = function() {
-			return this.elements.length;
+			//return this.elements.length;
+			return Object.keys(this.elements).length;
 		};
 	};
 	//判断MAP是否为空
 	if ( typeof this.isEmpty != "function") {
 		LC.Utils.Map.prototype.isEmpty = function() {
-			return (this.elements.length < 1);
+			//return (this.elements.length < 1);
+			return (Object.keys(this.elements).length < 1);
 		};
 	};
 	//删除MAP所有元素
 	if ( typeof this.clear != "function") {
 		LC.Utils.Map.prototype.clear = function() {
-			this.elements = new Array();
+			//this.elements = new Array();
+			this.elements = {};
 		};
 	};
 	//向MAP中增加元素（key, value)
 	if ( typeof this.put != "function") {
 		LC.Utils.Map.prototype.put = function(_key, _value) {
+			/*
 			if (this.get(_key)) {
 				this.removeByKey(_key);
 			};
@@ -220,12 +225,15 @@ LC.Utils.Map = function() {
 				key : _key,
 				value : _value
 			});
+			*/
+			this.elements[_key]=_value;
 		};
 	};
-	//删除指定KEY的元素，成功返回True，失败返回False
+	//删除指定KEY的元素			(作废)//，成功返回True，失败返回False
 	if ( typeof this.removeByKey != "function") {
 		LC.Utils.Map.prototype.removeByKey = function(_key) {
-			var bln = false;
+			delete this.elements[_key];
+			/*
 			try {
 				for ( i = 0; i < this.elements.length; i++) {
 					if (this.elements[i].key == _key) {
@@ -237,8 +245,10 @@ LC.Utils.Map = function() {
 				bln = false;
 			}
 			return bln;
+			*/
 		};
 	};
+	/*
 	//删除指定VALUE的元素，成功返回True，失败返回False
 	if ( typeof this.removeByValue != "function") {
 		LC.Utils.Map.prototype.removeByValue = function(_value) {//removeByValueAndKey
@@ -273,9 +283,11 @@ LC.Utils.Map = function() {
 			return bln;
 		};
 	};
+	*/
 	//获取指定KEY的元素值VALUE，失败返回NULL
 	if ( typeof this.get != "function") {
 		LC.Utils.Map.prototype.get = function(_key) {
+			/*
 			try {
 				for ( i = 0; i < this.elements.length; i++) {
 					if (this.elements[i].key == _key) {
@@ -286,8 +298,11 @@ LC.Utils.Map = function() {
 				return null;
 			}
 			return null;
+			*/
+			return this.elements[_key];
 		};
 	};
+	/*
 	//获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
 	if ( typeof this.element != "function") {
 		LC.Utils.Map.prototype.element = function(_index) {
@@ -345,16 +360,21 @@ LC.Utils.Map = function() {
 			return bln;
 		};
 	};
+	*/
 	//获取MAP中所有VALUE的数组（ARRAY）
 	if ( typeof this.values != "function") {
 		LC.Utils.Map.prototype.values = function() {
+			return Object.values(this.elements);
+			/*
 			var arr = new Array();
 			for ( i = 0; i < this.elements.length; i++) {
 				arr.push(this.elements[i].value);
 			}
 			return arr;
+			*/
 		};
 	};
+	/*
 	//获取MAP中所有VALUE的数组（ARRAY）
 	if ( typeof this.valuesByKey != "function") {
 		LC.Utils.Map.prototype.valuesByKey = function(_key) {
@@ -367,16 +387,21 @@ LC.Utils.Map = function() {
 			return arr;
 		};
 	};
+	*/
 	//获取MAP中所有KEY的数组（ARRAY）
 	if ( typeof this.keys != "function") {
 		LC.Utils.Map.prototype.keys = function() {
+			return Object.keys(this.elements);
+			/*
 			var arr = new Array();
 			for ( i = 0; i < this.elements.length; i++) {
 				arr.push(this.elements[i].key);
 			}
 			return arr;
+			*/
 		};
 	};
+	/*
 	//获取key通过value
 	if ( typeof this.keysByValue != "function") {
 		LC.Utils.Map.prototype.keysByValue = function(_value) {
@@ -408,6 +433,7 @@ LC.Utils.Map = function() {
 			return arr;
 		};
 	};
+	*/
 };
 /**
  * 定义组件命名空间
