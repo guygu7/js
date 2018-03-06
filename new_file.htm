@@ -128,35 +128,40 @@
 
 			//构建数据层
 			//基本数据
+			var mapX=256;
+			var mapY=256;
+			//构建地图
+			map = LC.Data.MapFactory.createMap(mapX,mapY);
+			//随机获取一个初始地点,设置初始地点,限制在大地图中间生成
+			var initX = Math.floor(Math.random()*(Math.floor(mapX*2/3)));
+			if (initX<(Math.floor(mapX*1/3))){
+				initX=(Math.floor(mapX*1/3));
+			}
+			var initY = Math.floor(Math.random()*(Math.floor(mapY*2/3)));
+			if (initY<(Math.floor(mapY*1/3))){
+				initY=(Math.floor(mapY*1/3));
+			}
+			map.get(initX+","+initY).setName("出生地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.HOME);
+			//地图上分布物体======未完成===========
+			
 			//创建角色
-			var gameplayer = new LC.Data.Role();
-			//gameplayer.setName("玩家角色").setType(LC.Data);
-			LC.Data.MapFactory.createMap(8,8);
-			/*
-			 * 玩家属性：
-			 * 		角色
-			 * 		物品
-			 * 		技能
-			 * 角色：
-			 * 		名字
-			 *		类型：敌对、中立、
-			 * 		生命值、攻击、防御、暴击、爆伤
-			 * 物品：
-			 * 		名字
-			 * 		类型：装备、消耗品、材料
-			 * 		数量、是否叠加、所属
-			 * 		其他属性
-			 * 技能：
-			 * 		名字、类型、等级
-			 * 		其他属性
-			 * 地图：
-			 * 		名字
-			 * 		角色
-			 * 		物品
-			 * 		建筑：以角色表示
-			 * 		类型、位置
-			 *
-			 */
+			var gameplayer = new LC.Data.DataModle.Role();
+			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
+			
+			
+			
+			//动态数据、实时存档
+			LC.Data.DynamicData={};
+			LC.Data.DynamicData.Map=map;//保存地图
+			LC.Data.DynamicData.Home=initX+","+initY;//保存初始地点位置
+			LC.Data.DynamicData.PlayerRole=gameplayer;//保存玩家角色信息
+			
+			console.log(map.get(LC.Data.DynamicData.Home));
+
+
+
+
+
 		</script>
 	</body>
 </html>
