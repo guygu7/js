@@ -5,17 +5,83 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Bootstrap 101 Template</title>
-		 <style type="text/css">
-    </style>
-</head>
-<body>
-	<div id = "div1"></div>
-     <!--
-     <div id="d1" style="width: 100px;height: 100px;background-color: red;position:absolute;">
-          </div>
-          <div id="d2" style="width: 100px;height: 100px;background-color: green;position:absolute;">
-          </div>-->
-     <script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
+		<style type="text/css">
+			#div1 {
+				width: 150px;
+				height: 150px;
+				border: 3px outset #F0AD4E;
+				box-shadow: inset 0 0 0 1px black, inset 0 0 0 6px #F0AD4E;
+				padding: 30px;
+				position: relative;
+				left: 30px;
+			}
+			#div2 {
+				width: 0;
+				height: 0;
+				border-width: 10px 5px;
+				border-style: solid;
+				border-color: rgb(255,255,255,0) #5BC0DE rgb(255,255,255,0) rgb(255,255,255,0);
+				position: absolute;
+				left: -5px;
+				bottom: 5px;
+			}
+			.test {
+				width: 300px;
+				padding: 30px 20px;
+				margin-left: 60px;
+				background: #beceeb;
+				position: relative;
+			}
+			.test span {
+				width: 0;
+				height: 0;
+				font-size: 0;
+				overflow: hidden;
+				position: absolute;
+			}
+			.test span.bot {
+				border-width: 20px;
+				border-style: solid;
+				border-color: #ffffff #beceeb #beceeb #ffffff;
+				left: -40px;
+				top: 40px;
+			}
+			.test span.top {
+				border-width: 10px 20px;
+				border-style: dashed solid solid dashed;
+				border-color: transparent #ffffff #ffffff transparent;
+				left: -40px;
+				top: 60px;
+			}
+			#div3{
+				border: 3px outset #F0AD4E;
+				background-color: #3C3C3C;
+				transition : width 0.3s ,height 0.3s 0.3s;
+			}
+			.hide{
+				width: 0px;
+				height: 0px;
+			}
+			.show{
+				width: 150px;
+				height: 150px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="test">
+			<span class="bot"></span>
+			<span class="top"></span>
+			CSS “边框法”实现气泡对话框效果一
+		</div>
+		<div id = "div1"><div id = "div2"></div></div>
+		<div id = "div3" class="show"></div>
+		<!--
+		<div id="d1" style="width: 100px;height: 100px;background-color: red;position:absolute;">
+		</div>
+		<div id="d2" style="width: 100px;height: 100px;background-color: green;position:absolute;">
+		</div>-->
+		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
 		<script src="js/core.js"></script>
 		<script src="js/BasicComponent.js"></script>
 		<script src="js/Components.js"></script>
@@ -27,45 +93,13 @@
 		<script src="js/corner.js"></script>
 		<script src="js/progressbar.js"></script>
 		<script src="js/dataModel.js"></script>
-     <script> 
-     /*
-    	var stack = {};
-    	x =10;y=10;
-		var startKey = "1,1,"+x+","+y;
-		if ((x - 1) >= 2 && (y - 1) >= 2) {//初次判断，初次计算
-			//计算该区域的子区域xy上下限值，生成新的一组数据并放入stack
-			var startValue = {1:1+","+ 1+","+ (1 + Math.floor((x - 1) / 2))+","+ (1 + Math.floor((y - 1) / 2))
-			,2:(1 + Math.ceil((x - 1) / 2))+","+ 1+","+ x+","+ (1 + Math.floor((y - 1) / 2))
-			,3:1+","+(1+Math.ceil((y - 1) / 2))+","+ (1 + Math.floor((x - 1) / 2))+","+y
-			,4:(1 + Math.ceil((x - 1) / 2))+","+ (1 + Math.ceil((y - 1) / 2))+","+ x+","+ y};
-		}
-		stack[startKey]=startValue;
-		stackKeys = Object.keys(stack);
-		nowKey =  stackKeys[0];
-	    nowValue = stack[nowKey];
-    	console.log(nowValue);
-    	nowKey2=2;
-    	console.log(nowValue[nowKey2]);
-    	*/
-	map = LC.Data.MapFactory.createMap(256,256);
-	temp = LC.Data.MapFactory.drawMap(map);
-	$("#div1").append(temp);
-	/*
-	var stack = {
-			"1,1,2,2" : ["1,n,n,n","2,n,n,n","3,n,n,n","4,n,n,n"],
-		};
-		var nowKey;
-		var stackKeys = Object.keys(stack);
-				for (var i=0; i < stackKeys.length; i++) {
-				  nowKey =  stackKeys[i];
-				  nowValue = stack[nowKey];
-				console.log(nowKey);
-				console.log(nowValue);
-				};
-				
-				delete stack[nowKey];
-				console.log(stack);
-				*/
-     </script>
-</body>
+		<script>
+			/*
+			 map = LC.Data.MapFactory.createMap(256,256);
+			 temp = LC.Data.MapFactory.drawMap(map);
+			 $("#div1").append(temp);
+			 */
+
+		</script>
+	</body>
 </html>
