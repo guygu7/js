@@ -43,20 +43,20 @@ LC.Components.Dropdown.prototype.addElement = function(_num,_text,_cssClass,_id)
 	this._elements[0].dom.bind("click",function(e){
 		var targets = $(e.target).siblings();
 		var targetsLength = $(e.target).siblings().length+1;
-		var hidetime = 0.2*targetsLength;
+		var hidetime = 0.2*(targetsLength-1);
 		var showtime = 0.2;
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
 				hidetime -= 0.2;
-				targets.eq(j).css({"transition":hidetime+"s"});
+				targets.eq(j).css({"transition-delay":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
 				showtime += 0.2;
-				targets.eq(j).css({"transition":showtime+"s"});
+				targets.eq(j).css({"transition-delay":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
 				});
@@ -123,19 +123,19 @@ LC.Components.DropdownUp.prototype.addElement = function(_num,_text,_cssClass,_i
 		var targets = $(e.target).siblings();
 		var targetsLength = $(e.target).siblings().length+1;
 		var hidetime = 0.2;
-		var showtime = 0.2*targetsLength;
+		var showtime = 0.2*(targetsLength-1);
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (null==className||-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
 				hidetime += 0.2;
-				targets.eq(j).css({"transition":hidetime+"s"});
+				targets.eq(j).css({"transition-delay":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
 				showtime -= 0.2;
-				targets.eq(j).css({"transition":showtime+"s"});
+				targets.eq(j).css({"transition-delay":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
 				});
@@ -203,20 +203,20 @@ LC.Components.DropdownLeft.prototype.addElement = function(_num,_text,_cssClass,
 	this._elements[0].dom.bind("click",function(e){
 		var targets = $(e.target).siblings();
 		var targetsLength = $(e.target).siblings().length+1;
-		var hidetime = 0.2*targetsLength;
+		var hidetime = 0.2*(targetsLength-1);
 		var showtime = 0.2;
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
 				hidetime -= 0.2;
-				targets.eq(j).css({"transition":hidetime+"s"});
+				targets.eq(j).css({"transition-delay":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
 				showtime += 0.2;
-				targets.eq(j).css({"transition":showtime+"s"});
+				targets.eq(j).css({"transition-delay":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
 				});
@@ -284,19 +284,19 @@ LC.Components.DropdownRight.prototype.addElement = function(_num,_text,_cssClass
 		var targets = $(e.target).siblings();
 		var targetsLength = $(e.target).siblings().length+1;
 		var hidetime = 0.2;
-		var showtime = 0.2*targetsLength;
+		var showtime = 0.2*(targetsLength-1);
 		for (var j=0; j < targetsLength; j++) {
 			var className = targets.eq(j).attr("class");
 			if (-1 == className.search(LC.CommonProperty.CSS_HIDE_SHRINK.trim())) {//校验是否被隐藏
 				className+=LC.CommonProperty.CSS_HIDE_SHRINK;
 				hidetime += 0.2;
-				targets.eq(j).css({"transition":hidetime+"s"});
+				targets.eq(j).css({"transition-delay":hidetime+"s"});
 				targets.eq(j).attr({
 					"class" : className
 				});
 			}else{
 				showtime -= 0.2;
-				targets.eq(j).css({"transition":showtime+"s"});
+				targets.eq(j).css({"transition-delay":showtime+"s"});
 				targets.eq(j).attr({
 					"class" : className.replace(LC.CommonProperty.CSS_HIDE_SHRINK, "")
 				});

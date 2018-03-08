@@ -66,6 +66,29 @@
 				width: 150px;
 				height: 150px;
 			}
+			/*条纹背景http://blog.csdn.net/fareise/article/details/51501909*/
+			#div4{
+				width: 750px;
+				height: 150px;
+				/*
+				background: -webkit-linear-gradient(right bottom,#2E6DA4,#767676);  
+        		background: linear-gradient(right bottom,red,blue);   
+        		*/
+        		/*
+        		background: linear-gradient(to right, #fb3 50%, #58a 0);  
+				background-size:30px 100%;  
+				*/
+				/*
+				background: repeating-linear-gradient(60deg, #fb3, #fb3 15px, #58a 0, #58a 30px);
+				background-size:30px 30px;  
+				*/
+				background: #EB9316;  
+				background-image: repeating-linear-gradient(45deg,  
+				hsla(0,0%,100%,.1),  
+				hsla(0,0%,100%,.1)3px,  
+				transparent 10px,transparent 10px); 
+				background-size:8px 8px;  
+			}
 		</style>
 	</head>
 	<body>
@@ -76,6 +99,7 @@
 		</div>
 		<div id = "div1"><div id = "div2"></div></div>
 		<div id = "div3" class="show"></div>
+		<div id="div4"></div>
 		<!--
 		<div id="d1" style="width: 100px;height: 100px;background-color: red;position:absolute;">
 		</div>
