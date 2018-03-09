@@ -123,7 +123,17 @@
 			 temp = LC.Data.MapFactory.drawMap(map);
 			 $("#div1").append(temp);
 			 */
-
+			//实现跟随鼠标移动3D变化
+			function move(event) {
+				tempY = ($(window).height()/2);
+				console.log((((event.clientY-tempY)/tempY)*45));
+				tempX = ($(window).width()/2);
+				console.log((((event.clientX-tempX)/tempX)*45));
+				str = "rotateX("+(((tempY-event.clientY)/tempY)*20)+"deg)";
+				str += "rotateY("+(((tempX-event.clientX)/tempX)*20)+"deg)";
+				$("#div3").css({"transform": str});
+			}
+			$(document).bind("mousemove", move);
 		</script>
 	</body>
 </html>
