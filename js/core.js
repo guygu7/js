@@ -9,7 +9,8 @@ LC.CommonProperty = {
 	//通用标记属性，替代id
 	SIGN : "lcsign",
 	//底层桌面对象，用于终止置顶方法zIndexToTop
-	MAIN_DESK : $("#mainDesktop"),
+	//MAIN_DESK : $("#mainDesktop"),
+	MAIN_DESK : $("body"),
 	//进度条过渡色：红色
 	COLOR_PROGRESS_RED : " repeating-linear-gradient(#5A230F 1%,#FAAA87 20%,#E6815A 40%,#9E4635 97%,#5B3123 100%) ",
 	//进度条过渡色：橙色
@@ -218,15 +219,15 @@ LC.Utils.Map = function() {
 	if ( typeof this.put != "function") {
 		LC.Utils.Map.prototype.put = function(_key, _value) {
 			/*
-			if (this.get(_key)) {
-				this.removeByKey(_key);
-			};
-			this.elements.push({
-				key : _key,
-				value : _value
-			});
-			*/
-			this.elements[_key]=_value;
+			 if (this.get(_key)) {
+			 this.removeByKey(_key);
+			 };
+			 this.elements.push({
+			 key : _key,
+			 value : _value
+			 });
+			 */
+			this.elements[_key] = _value;
 		};
 	};
 	//删除指定KEY的元素			(作废)//，成功返回True，失败返回False
@@ -234,131 +235,131 @@ LC.Utils.Map = function() {
 		LC.Utils.Map.prototype.removeByKey = function(_key) {
 			delete this.elements[_key];
 			/*
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].key == _key) {
-						this.elements.splice(i, 1);
-						return true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-			*/
+			 try {
+			 for ( i = 0; i < this.elements.length; i++) {
+			 if (this.elements[i].key == _key) {
+			 this.elements.splice(i, 1);
+			 return true;
+			 }
+			 }
+			 } catch (e) {
+			 bln = false;
+			 }
+			 return bln;
+			 */
 		};
 	};
 	/*
 	//删除指定VALUE的元素，成功返回True，失败返回False
 	if ( typeof this.removeByValue != "function") {
-		LC.Utils.Map.prototype.removeByValue = function(_value) {//removeByValueAndKey
-			var bln = false;
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].value == _value) {
-						this.elements.splice(i, 1);
-						return true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-		};
+	LC.Utils.Map.prototype.removeByValue = function(_value) {//removeByValueAndKey
+	var bln = false;
+	try {
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].value == _value) {
+	this.elements.splice(i, 1);
+	return true;
+	}
+	}
+	} catch (e) {
+	bln = false;
+	}
+	return bln;
+	};
 	};
 	//删除指定VALUE的元素，成功返回True，失败返回False
 	if ( typeof this.removeByValueAndKey != "function") {
-		LC.Utils.Map.prototype.removeByValueAndKey = function(_key, _value) {
-			var bln = false;
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].value == _value && this.elements[i].key == _key) {
-						this.elements.splice(i, 1);
-						return true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-		};
+	LC.Utils.Map.prototype.removeByValueAndKey = function(_key, _value) {
+	var bln = false;
+	try {
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].value == _value && this.elements[i].key == _key) {
+	this.elements.splice(i, 1);
+	return true;
+	}
+	}
+	} catch (e) {
+	bln = false;
+	}
+	return bln;
+	};
 	};
 	*/
 	//获取指定KEY的元素值VALUE，失败返回NULL
 	if ( typeof this.get != "function") {
 		LC.Utils.Map.prototype.get = function(_key) {
 			/*
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].key == _key) {
-						return this.elements[i].value;
-					}
-				}
-			} catch (e) {
-				return null;
-			}
-			return null;
-			*/
+			 try {
+			 for ( i = 0; i < this.elements.length; i++) {
+			 if (this.elements[i].key == _key) {
+			 return this.elements[i].value;
+			 }
+			 }
+			 } catch (e) {
+			 return null;
+			 }
+			 return null;
+			 */
 			return this.elements[_key];
 		};
 	};
 	/*
 	//获取指定索引的元素（使用element.key，element.value获取KEY和VALUE），失败返回NULL
 	if ( typeof this.element != "function") {
-		LC.Utils.Map.prototype.element = function(_index) {
-			if (_index < 0 || _index >= this.elements.length) {
-				return null;
-			}
-			return this.elements[_index];
-		};
+	LC.Utils.Map.prototype.element = function(_index) {
+	if (_index < 0 || _index >= this.elements.length) {
+	return null;
+	}
+	return this.elements[_index];
+	};
 	};
 	//判断MAP中是否含有指定KEY的元素
 	if ( typeof this.containsKey != "function") {
-		LC.Utils.Map.prototype.containsKey = function(_key) {
-			var bln = false;
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].key == _key) {
-						bln = true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-		};
+	LC.Utils.Map.prototype.containsKey = function(_key) {
+	var bln = false;
+	try {
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].key == _key) {
+	bln = true;
+	}
+	}
+	} catch (e) {
+	bln = false;
+	}
+	return bln;
+	};
 	};
 	//判断MAP中是否含有指定VALUE的元素
 	if ( typeof this.containsValue != "function") {
-		LC.Utils.Map.prototype.containsValue = function(_value) {
-			var bln = false;
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].value == _value) {
-						bln = true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-		};
+	LC.Utils.Map.prototype.containsValue = function(_value) {
+	var bln = false;
+	try {
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].value == _value) {
+	bln = true;
+	}
+	}
+	} catch (e) {
+	bln = false;
+	}
+	return bln;
+	};
 	};
 	//判断MAP中是否含有指定VALUE的元素
 	if ( typeof this.containsObj != "function") {
-		LC.Utils.Map.prototype.containsObj = function(_key, _value) {
-			var bln = false;
-			try {
-				for ( i = 0; i < this.elements.length; i++) {
-					if (this.elements[i].value == _value && this.elements[i].key == _key) {
-						bln = true;
-					}
-				}
-			} catch (e) {
-				bln = false;
-			}
-			return bln;
-		};
+	LC.Utils.Map.prototype.containsObj = function(_key, _value) {
+	var bln = false;
+	try {
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].value == _value && this.elements[i].key == _key) {
+	bln = true;
+	}
+	}
+	} catch (e) {
+	bln = false;
+	}
+	return bln;
+	};
 	};
 	*/
 	//获取MAP中所有VALUE的数组（ARRAY）
@@ -366,26 +367,26 @@ LC.Utils.Map = function() {
 		LC.Utils.Map.prototype.values = function() {
 			return Object.values(this.elements);
 			/*
-			var arr = new Array();
-			for ( i = 0; i < this.elements.length; i++) {
-				arr.push(this.elements[i].value);
-			}
-			return arr;
-			*/
+			 var arr = new Array();
+			 for ( i = 0; i < this.elements.length; i++) {
+			 arr.push(this.elements[i].value);
+			 }
+			 return arr;
+			 */
 		};
 	};
 	/*
 	//获取MAP中所有VALUE的数组（ARRAY）
 	if ( typeof this.valuesByKey != "function") {
-		LC.Utils.Map.prototype.valuesByKey = function(_key) {
-			var arr = new Array();
-			for ( i = 0; i < this.elements.length; i++) {
-				if (this.elements[i].key == _key) {
-					arr.push(this.elements[i].value);
-				}
-			}
-			return arr;
-		};
+	LC.Utils.Map.prototype.valuesByKey = function(_key) {
+	var arr = new Array();
+	for ( i = 0; i < this.elements.length; i++) {
+	if (this.elements[i].key == _key) {
+	arr.push(this.elements[i].value);
+	}
+	}
+	return arr;
+	};
 	};
 	*/
 	//获取MAP中所有KEY的数组（ARRAY）
@@ -393,47 +394,47 @@ LC.Utils.Map = function() {
 		LC.Utils.Map.prototype.keys = function() {
 			return Object.keys(this.elements);
 			/*
-			var arr = new Array();
-			for ( i = 0; i < this.elements.length; i++) {
-				arr.push(this.elements[i].key);
-			}
-			return arr;
-			*/
+			 var arr = new Array();
+			 for ( i = 0; i < this.elements.length; i++) {
+			 arr.push(this.elements[i].key);
+			 }
+			 return arr;
+			 */
 		};
 	};
 	/*
-	//获取key通过value
-	if ( typeof this.keysByValue != "function") {
-		LC.Utils.Map.prototype.keysByValue = function(_value) {
-			var arr = new Array();
-			for ( i = 0; i < this.elements.length; i++) {
-				if (_value == this.elements[i].value) {
-					arr.push(this.elements[i].key);
-				}
-			}
-			return arr;
-		};
-	};
-	//获取MAP中所有KEY的数组（ARRAY）
-	if ( typeof this.keysRemoveDuplicate != "function") {
-		LC.Utils.Map.prototype.keysRemoveDuplicate = function() {
-			var arr = new Array();
-			for ( i = 0; i < this.elements.length; i++) {
-				var flag = true;
-				for (var j = 0; j < arr.length; j++) {
-					if (arr[j] == this.elements[i].key) {
-						flag = false;
-						break;
-					}
-				}
-				if (flag) {
-					arr.push(this.elements[i].key);
-				}
-			}
-			return arr;
-		};
-	};
-	*/
+	 //获取key通过value
+	 if ( typeof this.keysByValue != "function") {
+	 LC.Utils.Map.prototype.keysByValue = function(_value) {
+	 var arr = new Array();
+	 for ( i = 0; i < this.elements.length; i++) {
+	 if (_value == this.elements[i].value) {
+	 arr.push(this.elements[i].key);
+	 }
+	 }
+	 return arr;
+	 };
+	 };
+	 //获取MAP中所有KEY的数组（ARRAY）
+	 if ( typeof this.keysRemoveDuplicate != "function") {
+	 LC.Utils.Map.prototype.keysRemoveDuplicate = function() {
+	 var arr = new Array();
+	 for ( i = 0; i < this.elements.length; i++) {
+	 var flag = true;
+	 for (var j = 0; j < arr.length; j++) {
+	 if (arr[j] == this.elements[i].key) {
+	 flag = false;
+	 break;
+	 }
+	 }
+	 if (flag) {
+	 arr.push(this.elements[i].key);
+	 }
+	 }
+	 return arr;
+	 };
+	 };
+	 */
 };
 /**
  * 定义组件命名空间
@@ -873,5 +874,42 @@ LC.Components.ComponentFunction = {
 				return arr1[i];
 		};
 		return null;
+	},
+	addInfo : function(obj,infoObj) {
+		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
+			obj = obj.dom;
+		}
+		if(null == infoObj){
+			infoObj = LC.infoObj;
+		}
+		if (infoObj.dom) {//适配，如果传入的不是dom，则转为dom
+			infoObj = infoObj.dom;
+		}
+		obj.mouseover(showInfo);
+		function showInfo (event) {
+			tempwidth = Number(infoObj.height());
+			LC.Components.ComponentFunction.zIndexToTop(infoObj);
+			var tempParent = infoObj.parent();
+			var tempLeft = event.clientX-tempParent.offset().left-Number(tempParent.css("padding-left").replace("px",""));
+			var tempTop = event.clientY-tempParent.offset().top-Number(tempParent.css("padding-top").replace("px",""))-Number(infoObj.css("height").replace("px",""));
+			if((tempLeft+infoObj.outerWidth(true))>tempParent.outerWidth()){
+				tempLeft = tempLeft-infoObj.outerWidth(true);
+			}
+			if(tempTop<tempParent.offset().top){
+				tempTop = tempTop+Number(infoObj.css("height").replace("px",""));
+			}
+			console.log(tempTop);
+			infoObj.css({
+				//"left" : event.clientX-tempParent.offset().left-Number(tempParent.css("padding-left").replace("px","")),
+				"left" : tempLeft,
+				//"top" : event.clientY-tempParent.offset().top-Number(tempParent.css("padding-top").replace("px",""))-Number(infoObj.css("height").replace("px","")),
+				"top" : tempTop,
+			});
+			infoObj.self.show();
+		};
+		obj.mouseout(hideInfo);
+		function hideInfo (){
+			infoObj.self.hide();
+		};
 	}
 };

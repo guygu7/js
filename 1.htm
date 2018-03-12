@@ -132,6 +132,12 @@
 				str = "rotateX("+(((tempY-event.clientY)/tempY)*20)+"deg)";
 				str += "rotateY("+(((tempX-event.clientX)/tempX)*20)+"deg)";
 				$("#div3").css({"transform": str});
+				/*
+				$("div").css({"top": (-(((tempY-event.clientY)/tempY)*5))+"px",
+				"left" : (-(((tempX-event.clientX)/tempX)*5))+"px",
+				"position": "relative",
+				});
+				*/
 			}
 			$(document).bind("mousemove", move);
 		</script>

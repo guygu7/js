@@ -75,7 +75,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			};
 			if ("shrink" == hideType.trim()) {
 				hideType = LC.CommonProperty.CSS_HIDE_SHRINK;
-			} else if ("expand"==hideType.trim()) {
+			} else if ("expand" == hideType.trim()) {
 				hideType = LC.CommonProperty.CSS_HIDE_EXPAND;
 			}
 			//去掉所有隐藏样式
@@ -118,15 +118,15 @@ LC.Components.BasicComponent = function(basicComponentID) {
 				return this;
 			};
 			positionType = positionType.trim();
-			if ("lowerright"==positionType) {//右下
+			if ("lowerright" == positionType) {//右下
 				positionType = LC.CommonProperty.CSS_POSITION_LOWERRIGHT;
-			} else if ("upperright"==positionType) {//右上
+			} else if ("upperright" == positionType) {//右上
 				positionType = LC.CommonProperty.CSS_POSITION_UPPERRIGHT;
-			} else if ("lowerleft"==positionType) {//左下
+			} else if ("lowerleft" == positionType) {//左下
 				positionType = LC.CommonProperty.CSS_POSITION_LOWERLEFT;
-			} else if ("upperleft"==positionType) {//左上
+			} else if ("upperleft" == positionType) {//左上
 				positionType = LC.CommonProperty.CSS_POSITION_UPPERLEFT;
-			} 
+			}
 			//去掉所有定位样式
 			var positionClass = LC.CommonProperty.CSS_POSITION_LOWERRIGHT.trim();
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_UPPERRIGHT.trim();
@@ -151,7 +151,8 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_UPPERRIGHT.trim();
 			var positionClass3 = LC.CommonProperty.CSS_POSITION_LOWERLEFT.trim();
 			var positionClass4 = LC.CommonProperty.CSS_POSITION_UPPERLEFT.trim();
-			className = className.replace(positionClass, "").replace(positionClass2, "").replace(positionClass3, "").replace(positionClass4, "");;
+			className = className.replace(positionClass, "").replace(positionClass2, "").replace(positionClass3, "").replace(positionClass4, "");
+			;
 			this.dom.attr({
 				"class" : className
 			});
@@ -170,11 +171,11 @@ LC.Components.BasicComponent = function(basicComponentID) {
 				return this;
 			};
 			positionType = positionType.trim();
-			if ("relative"==positionType) {//相对
+			if ("relative" == positionType) {//相对
 				positionType = LC.CommonProperty.CSS_POSITION_RELATIVE;
-			} else if ("absolute"==positionType) {//绝对
+			} else if ("absolute" == positionType) {//绝对
 				positionType = LC.CommonProperty.CSS_POSITION_ABSOLUTE;
-			} 
+			}
 			//去掉所有定位样式
 			var positionClass = LC.CommonProperty.CSS_POSITION_RELATIVE.trim();
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_ABSOLUTE.trim();
@@ -195,7 +196,8 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			//去掉所有定位样式
 			var positionClass = LC.CommonProperty.CSS_POSITION_RELATIVE.trim();
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_ABSOLUTE.trim();
-			className = className.replace(positionClass, "").replace(positionClass2, "").replace(positionClass3, "").replace(positionClass4, "");;
+			className = className.replace(positionClass, "").replace(positionClass2, "").replace(positionClass3, "").replace(positionClass4, "");
+			;
 			this.dom.attr({
 				"class" : className
 			});
@@ -264,4 +266,4 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return this.dom;
 		};
 	};
-}; 
+};

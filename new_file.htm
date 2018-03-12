@@ -20,11 +20,13 @@
 		<script src="js/table.js"></script>
 		<script src="js/corner.js"></script>
 		<script src="js/progressbar.js"></script>
+		<script src="js/infoDIV.js"></script>
 		<script src="js/dataModel.js"></script>
 		<script>
 			//构建主界面
 			var scene = LC.Components.SceneFactory.createScene();
 			$("#mainDesktop").append(scene.dom);
+			$("#mainDesktop").append(LC.infoObj.dom);
 			/*==========布局============*/
 			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
 			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
@@ -125,6 +127,10 @@
 			//========
 			//sceneNext.hide();
 			scene.show();
+
+			//var info = LC.Components.InfoDIVFactory.createInfoDIV();
+			//itemBag.addInfo();
+			LC.Components.ComponentFunction.addInfo(itemBag);
 
 			//构建数据层
 			//基本数据

@@ -14,8 +14,21 @@ LC.Components.Button.prototype.setText = function(text) {
  * 组件空间中加入悬浮信息窗工厂
  */
 LC.Components.InfoDIVFactory = {
-	createButtonDropdown : function(_id) {
-		var button = new LC.Components.InfoDIV();
-		
+	createInfoDIV : function(_id) {
+		var infoDIV = new LC.Components.InfoDIV();
+		infoDIV.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL).css({
+			"pointer-events":"none",
+			"width":"150px",
+			"height":"235px"
+		});
+		//默认隐藏
+		infoDIV.hide();
+		infoDIV.addPositionMode("relative");
+		return infoDIV;
 	}
 };
+/**
+ * 设定一个全局的信息窗口 
+ */
+LC.infoObj = LC.Components.InfoDIVFactory.createInfoDIV();
+
