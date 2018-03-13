@@ -898,7 +898,6 @@ LC.Components.ComponentFunction = {
 			if(tempTop<tempParent.offset().top){
 				tempTop = tempTop+Number(infoObj.css("height").replace("px",""));
 			}
-			console.log(tempTop);
 			infoObj.css({
 				//"left" : event.clientX-tempParent.offset().left-Number(tempParent.css("padding-left").replace("px","")),
 				"left" : tempLeft,
