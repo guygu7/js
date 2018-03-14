@@ -36,7 +36,7 @@ LC.Components.PanelFactory = {
 	createPanelTitle : function(_id) {
 		var panel = new LC.Components.Panel();
 		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL_TITTLE).css({
-			"width" : "100%",
+			"width" : "99%",
 			"height" : "23px"
 		});
 		return panel;
@@ -48,12 +48,13 @@ LC.Components.PanelFactory = {
 	 * @param {Number} _height 高度
 	 */
 	createPanel : function(_id,_width,_height) {
-		if(!_width){_width = "99%";}
-		if(!_height){_height = "99%";}
+		if(!_width){_width = "98%";}
+		if(!_height){_height = "98%";}
 		var panel = new LC.Components.Panel();
 		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL).css({
 			"width" : _width,
-			"height" : _height
+			"height" : _height,
+			"float":"left",
 		});
 		return panel;
 	},

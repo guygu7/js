@@ -28,6 +28,7 @@
 			$("#mainDesktop").append(scene.dom);
 			$("#mainDesktop").append(LC.infoObj.dom);
 			/*==========布局============*/
+			/*
 			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
 			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
 			scene.dom.append(layout1.dom).append(layout2.dom);
@@ -39,13 +40,20 @@
 			layout1_1.dom.append(layout1_1_1.dom).append(layout1_1_2.dom);
 			//布局面板渲染
 			var panel1 = LC.Components.PanelFactory.createPanel();
-			var panel2 = LC.Components.PanelFactory.createPanel("SSADAD");
+			var panel2 = LC.Components.PanelFactory.createPanel();
 			var panel3 = LC.Components.PanelFactory.createPanel();
 			var panel4 = LC.Components.PanelFactory.createPanel();
 			layout1_1_1.dom.append(panel1.dom);
 			layout1_1_2.dom.append(panel2.dom);
 			layout1_2.dom.append(panel3.dom);
 			layout2.dom.append(panel4.dom);
+			*/
+			//布局面板渲染
+			var panel1 = LC.Components.PanelFactory.createPanel(null,"170px","565px");
+			var panel2 = LC.Components.PanelFactory.createPanel(null,"900px","400px");
+			var panel3 = LC.Components.PanelFactory.createPanel(null,"900px","150px");
+			//var panel4 = LC.Components.PanelFactory.createPanel();
+			scene.dom.append(panel1.dom).append(panel2.dom).append(panel3.dom);
 			/*==========活动栏位===========*/
 			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null, "445px", "300px");
 			var closeBut = LC.Components.ButtonFactory.createButtonClose(null, itemBag);
@@ -56,7 +64,7 @@
 			LC.Components.ComponentFunction.drag(titel, itemBag, scene);
 			scene.dom.append(itemBag.dom);
 			//添加内容
-			var table = LC.Components.TableFactory.createTable(4, 10);
+			var table = LC.Components.TableFactory.createTable(1, 40);
 			/*
 			 var cell = LC.Components.PanelFactory.createPanel("??");
 			 cell.dom.css({"width":"90%","height":"90%"});
