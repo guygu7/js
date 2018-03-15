@@ -46,12 +46,14 @@ LC.Components.PanelFactory = {
 	 * @param {String} _id 面板id
 	 * @param {Number} _width 宽度
 	 * @param {Number} _height 高度
+	 * @param {Number} _cssStyle css样式，不传则为默认样式
 	 */
-	createPanel : function(_id,_width,_height) {
+	createPanel : function(_id,_width,_height,_cssStyle) {
 		if(!_width){_width = "98%";}
 		if(!_height){_height = "98%";}
+		if(!_cssStyle){_cssStyle = LC.CommonProperty.CSS_PANEL;}
 		var panel = new LC.Components.Panel();
-		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL).css({
+		panel.setSignID(_id).creatDOM("div", _cssStyle).css({
 			"width" : _width,
 			"height" : _height,
 			"float":"left",

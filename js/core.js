@@ -45,6 +45,11 @@ LC.CommonProperty = {
 	 */
 	CSS_PANEL : " panel-basic ",
 	/**
+	 * CSS class:面板-突起面板（不透明）
+	 */
+	CSS_PANEL_PROTRUDING : " panel-protruding ",
+	
+	/**
 	 * CSS class:空气面板（用于布局）
 	 */
 	CSS_PANEL_AIR : " panel-air ",
