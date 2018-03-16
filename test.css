@@ -5,7 +5,27 @@ body {
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
-	font-family: LiSu;
+	font-family: YouYuan;
+	-webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    cursor: default;
+    text-shadow: 1px 1px 1px rgb(100,100,100);
+}
+/**
+ * 	突起文字
+ */
+
+/**
+ * 	凹陷文字
+ */
+.panel-title,.botton-dropdown{
+	font-weight:700;
+	color: rgb(60,60,15);
+    text-shadow: -1px 0 rgb(146,118,89),    /*向左阴影*/  
+            0 -1px  rgb(225,213,193) ,    /*向上阴影*/  
+            1px 0  rgb(225,213,193) ,     /*向右阴影*/  
+            0 1px rgb(146,118,89) ; /*向下阴影*/ 
 }
 /**
  * 	公共属性部分
@@ -88,6 +108,23 @@ body {
 	/*border: 4px ridge rgb(240,240,190)*//*#474B64*/;
 	padding:5px 5px 5px 5px;
 	border-radius: 3px;
+	box-shadow : 0 0 1px 1px rgb(90,90,90),
+				-2px 0 rgb(186,168,139) inset,    /*向左阴影*/  
+                0 -2px rgb(215,203,183) inset,    /*向上阴影*/  
+                2px 0 rgb(225,213,193) inset,     /*向右阴影*/  
+                0 2px rgb(186,168,139) inset;/*向下阴影*/  
+	background-color: rgb(210,200,150)/*#BEBEBE*/;
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	text-align: left;
+	position: relative;
+}
+/**
+ * 	面板-（备用）
+ */
+.panel-1 {
+	/*border: 4px ridge rgb(240,240,190)*//*#474B64*/;
+	padding:5px 5px 5px 5px;
+	border-radius: 3px;
 	box-shadow : 0px 0px 1px 1px rgb(100,100,100),
 	0px 0px 0px 3px rgb(213,204,150)inset,
 	0px 0px 3px 3px rgb(100,100,100) inset,
@@ -136,16 +173,13 @@ body {
 		*/
 	background: -webkit-linear-gradient(-45deg,rgb(200,200,150) 1%,rgb(225,222,190) 35%,rgb(195,185,130) 60%);
 	box-shadow : 0px 8px 8px -6px rgb(60,60,60);
-	color: rgb(60,60,15);
+	
 	/*#E4E6E5;*/
 	padding-left: 3px;
 	margin: 0px 0px 10px 0px;
 	text-align: center;
 	/*text-shadow: 0px 0px 5px  #E6E6E6;*/
-	text-shadow: -1px 0 #333,    /*向左阴影*/  
-                0 -1px #333,    /*向上阴影*/  
-                1px 0 #E6E6E6,     /*向右阴影*/  
-                0 1px #E6E6E6;     /*向下阴影*/  
+	
     font-size : 120%;
 	display: inline-block;
 	position: relative;
@@ -220,11 +254,9 @@ body {
 	height:45px;
 	border-radius: 300px;
 	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
-	line-height:42px;
-	font-weight:500;
+	line-height:45px;
 	overflow:hidden;
 	white-space:nowrap;
-	
 	box-shadow: 
 				0 0 1px 1px rgb(90,90,90),
 				0 0 0px 2px rgb(186,168,139) inset,
@@ -235,14 +267,7 @@ body {
                 0 5px rgb(186,168,139) inset;/*向下阴影*/  
 	
 	background-color:rgb(215,200,150);
-	color: rgb(97,83,57);
 	text-align: center;
-	font-size: 18px;
-	text-shadow: /*1px 1px 1px #E6E6E6;*/
-			-1px 0 rgb(235,223,203),    /*向左阴影*/  
-            0 -1px rgb(186,168,139),    /*向上阴影*/  
-            1px 0 rgb(186,168,139),     /*向右阴影*/  
-            0 1px rgb(235,223,203);     /*向下阴影*/  
 }
 /*
 .botton-dropdown:hover {

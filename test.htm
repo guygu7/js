@@ -1,72 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --><title>Bootstrap 101 Template</title>
-		<!-- Bootstrap -->
-		<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
-		<link href="test.css" rel="stylesheet">
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --><!-- WARNING: Respond.js doesn't work if you view the page via file:// --><!--[if lt IE 9]>
-		<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+		<meta charset="UTF-8">
+		<title>Title</title>
 	</head>
 	<body>
-		<progress max="100" value="10" ></progress>
-		<div id="test"></div>
-		<button id="but">
-			but
-		</button>
-		<button id="but2">
-			but2
-		</button>
-		<div id="divF" class="panel-outerlayer">
-			<div id="divC1" class="panel-outerlayer" style="width: 30px;height: 30px">aaa</div><div id="divC2" class="panel-outerlayer" style="width: 30px;height: 30px">aaa</div></br>
-			<div id="divC3" class="panel-outerlayer" style="width: 30px;height: 30px">aaa</div><div id="divC4" class="panel-outerlayer" style="width: 30px;height: 30px">aaa</div></br>
-			<div id="divC5" class="panel-outerlayer" style="width: 30px;height: 30px">aaa</div>
-		</div>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="js/core.js"></script>
-		<script src="js/progressbar_bak.js"></script>
 		<script>
-			var inside = $("#divC1");
-			var childs = $("#divF").children();
-			var width=0;
-			var height=0;
-			for (var i=0; i < childs.length; i++) {
-			console.log(childs.eq(i));
-			  width = width + Number(childs.eq(i).css("width").replace("px",""));
-			  width = width + Number(childs.eq(i).css("margin-top").replace("px",""));
-			  width = width + Number(childs.eq(i).css("margin-bottom").replace("px",""));
-			  height = height + Number(childs.eq(i).css("height").replace("px",""));
-			  height = height + Number(childs.eq(i).css("margin-left").replace("px",""));
-			  height = height + Number(childs.eq(i).css("margin-right").replace("px",""));
-				console.log("width:"+width);
-				console.log("height:"+height);
-			};
+			var Accommodation = ( function() {
+					function Accommodation() {
+					}
+
+					//此处定义的所有变量都是私有的
+					var _isLocked = false,
+					    _isAlarmed = false,
+					    _alarmMessage = "Alarm actiated!";
+
+					//**仅在当前作用域中定义的函数（未在构造函数原型上定义）也是私有的**
+					function _alarm() {
+						_isAlarmed = true;
+						alert(_alarmMessage);
+					}
+
+					function disableAlarm() {
+						_isAlarmed = false;
+					}
+
+					//**所有定义在原型上方法都是“公有”的，当我们在此处创建的类在闭包结束处被返回后，就可以在当前作用域之外**
+					//访问这些方法了
+					Accommodation.prototype.lock = function() {
+						_isLocked = true;
+						_alarm();
+					};
+					Accommodation.prototype.unlock = function() {
+						_isLocked = false;
+						_disableAlarm();
+					};
+					//定义一个getter函数来对来对私有变量的值作只读访问——相当于受保护的
+					Accommodation.prototype.getIsLocked = function() {
+						return _isLocked;
+					};
+
+					//setter函数进行只写访问
+					Accommodation.prototype.setAlarmMessage = function(message) {
+						_alarmMessage = message;
+					};
+
+					//返回在这个作用域中创建的类，使之在外层作用域中即后面代码的所有位置都可用
+					return Accommodation;
+				}());
+
+			//创建一个对象实例
+			var house = new Accommodation();
+			var house2 = new Accommodation();
+			house.lock();
+			//弹出警告消息“Alarm activeted”
+			house._alarm();
+			//错误！_alarm()未公开，无法直接访问
+			alert(house._isLocked);
+			//undefined(私有，在闭包外不能访问)
+			house.getIsLocked();
+			//true(返回isLocked,但不允许对其直接访问，所以该变量是只读的)
+			house.setAlarmMessage("The alarm is now activated!");
+			house.lock();
+			house2.lock();
+			//弹出警告消息“The alarm is now activated!”
 		</script>
-		<script>
-			var progress1 = LC.Components.ProgressBarFactory.createProgressBar1("testID");
-			var progress2 = LC.Components.ProgressBarFactory.createProgressBar1("testID2");
-			$("#test").append(progress1.dom).append(progress2.dom);
-			$("#but").on("click", function() {
-				progress1.setWidth(70,1).setWidth(70,2);
-				progress1.start();
-				progress2.setWidth(80,1).setWidth(80,2);
-				progress2.start();
-			});
-			$("#but2").on("click", function() {
-				progress1.setWidth(80,1).setWidth(80,2);
-				progress1.start();
-				progress2.setWidth(70,1).setWidth(70,2);
-				progress2.start();
-			});
-		</script>
-		<script></script>
 	</body>
 </html>

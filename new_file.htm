@@ -162,9 +162,12 @@
 			var gameplayer = new LC.Data.DataModle.Role();
 			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 			//在左侧面板中增加角色信息板
-			var rolePanel = LC.Components.PanelFactory.createPanel(null,"158px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
-			
+			var rolePanel = LC.Components.PanelFactory.createPanel(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
+			test22="测试";
+			rolePanel.dom.append("<li>"+test22+"</li>");
+			test22="测试变更";
 			panel1.dom.append(rolePanel.dom);
+			test22=123;
 			//将角色简要信息显示在左侧面板上
 			
 			
