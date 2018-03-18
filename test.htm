@@ -6,9 +6,11 @@
 	</head>
 	<body>
 		<script>
-			var Accommodation = ( function() {
+		/*
+			var Accommodation =  
+				function() {
 					function Accommodation() {
-					}
+						}
 
 					//此处定义的所有变量都是私有的
 					var _isLocked = false,
@@ -47,7 +49,8 @@
 
 					//返回在这个作用域中创建的类，使之在外层作用域中即后面代码的所有位置都可用
 					return Accommodation;
-				}());
+				}()
+			;
 
 			//创建一个对象实例
 			var house = new Accommodation();
@@ -64,6 +67,60 @@
 			house.lock();
 			house2.lock();
 			//弹出警告消息“The alarm is now activated!”
+			*/
+			/*
+			var Role = (function(){
+				function Role (){
+					console.log("内部被执行");
+				};
+				console.log("被执行");
+				var attr1 = "N";
+				Role.prototype.setAttr1 = function(pram){
+					attr1 = pram;
+				};
+				Role.prototype.getAttr1 = function(){
+					return attr1;
+				};
+				return Role;
+			}());
+			console.log("New之前");
+			var role1 = new Role();
+			console.log("New之后");
+			*/
+			var CustomType = function(){
+					
+				};
+			var singleton = function() {
+			    var privateVariable = 10;
+			    /*
+			    function privateFun() {
+			        return false;
+			    }
+				*/
+			    // 创建对象
+			    var object = new CustomType(); // customType为一个对象类型, 暂且用new Object()代替
+			    object.publicProperty = privateVariable;
+			    object.getPrivateVariable = function() {
+			        return privateVariable;
+			    };
+				object.setPrivateVariable = function(pram) {
+					privateVariable = pram;
+			    };
+			    return object;
+			};
+			var newA = singleton();
+			var newA2 = singleton();
+			newA.setPrivateVariable(1);
+			console.log(newA.getPrivateVariable());
+			console.log(newA2.getPrivateVariable());
+			/*
+			var role2 = new Role();
+			role1.setAttr1(1);
+			console.log(role1);
+			console.log(role1.attr);
+			console.log(role1.getAttr1());
+			console.log(role2.getAttr1());
+			*/
 		</script>
 	</body>
 </html>
