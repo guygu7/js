@@ -111,132 +111,6 @@ LC.Data.DataModle = {
 	 *	角色（可交互对象）
 	 */
 	Role : function() {
-		var name;
-		/**
-		 * 设置名称
-		 */
-		LC.Data.DataModle.Role.prototype.setName = function(_pram) {
-			this.name = _pram;
-			return this;
-		};
-		/**
-		 * 获取名称
-		 */
-		LC.Data.DataModle.Role.prototype.getName = function() {
-			return this.name;
-		};
-		var type;
-		/**
-		 * 设置类型
-		 */
-		LC.Data.DataModle.Role.prototype.setType = function(_pram) {
-			this.type = _pram;
-			return this;
-		};
-		/**
-		 * 获取类型
-		 */
-		LC.Data.DataModle.Role.prototype.getType = function() {
-			return this.type;
-		};
-		var health;
-		/**
-		 * 设置生命值
-		 */
-		LC.Data.DataModle.Role.prototype.setHealth = function(_pram) {
-			this.health = _pram;
-			return this;
-		};
-		/**
-		 * 获取生命值
-		 */
-		LC.Data.DataModle.Role.prototype.getHealth = function() {
-			return this.health;
-		};
-		var defense;
-		/**
-		 * 设置防御
-		 */
-		LC.Data.DataModle.Role.prototype.setDefense = function(_pram) {
-			this.defense = _pram;
-			return this;
-		};
-		/**
-		 * 获取防御
-		 */
-		LC.Data.DataModle.Role.prototype.getDefense = function() {
-			return this.defense;
-		};
-		var crit;
-		/**
-		 * 设置暴击
-		 */
-		LC.Data.DataModle.Role.prototype.setCrit = function(_pram) {
-			this.crit = _pram;
-			return this;
-		};
-		/**
-		 * 获取暴击
-		 */
-		LC.Data.DataModle.Role.prototype.getCrit = function() {
-			return this.crit;
-		};
-		var critStrike;
-		/**
-		 * 设置暴击伤害
-		 */
-		LC.Data.DataModle.Role.prototype.setCritStrike = function(_pram) {
-			this.critStrike = _pram;
-			return this;
-		};
-		/**
-		 * 获取暴击伤害
-		 */
-		LC.Data.DataModle.Role.prototype.getCritStrike = function() {
-			return this.critStrike;
-		};
-		var buff;
-		/**
-		 * 设置buff状态
-		 */
-		LC.Data.DataModle.Role.prototype.setBuff = function(_pram) {
-			this.buff = _pram;
-			return this;
-		};
-		/**
-		 * 获取buff状态
-		 */
-		LC.Data.DataModle.Role.prototype.getBuff = function() {
-			return this.buff;
-		};
-		var friendliness;
-		/**
-		 * 设置友好度
-		 */
-		LC.Data.DataModle.Role.prototype.setFriendliness = function(_pram) {
-			this.friendliness = _pram;
-			return this;
-		};
-		/**
-		 * 获取友好度
-		 */
-		LC.Data.DataModle.Role.prototype.getFriendliness = function() {
-			return this.friendliness;
-		};
-		var friendlinessType;
-		/**
-		 * 设置友好度状态
-		 */
-		LC.Data.DataModle.Role.prototype.setFriendlinessType = function(_pram) {
-			this.friendlinessType = _pram;
-			return this;
-		};
-		/**
-		 * 获取友好度状态
-		 */
-		LC.Data.DataModle.Role.prototype.getFriendlinessType = function() {
-			return this.friendlinessType;
-		};
 		/**
 		 * 初始化数据 
 		 * 生命100，防御0，暴击5%，暴击伤害120%，友好度0，友好状态_中立
@@ -254,8 +128,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置名称
 		 */
-		LC.Data.DataModle.Item.prototype.setName = function(_pram) {
-			this.name = _pram;
+		LC.Data.DataModle.Item.prototype.setName = function(pram) {
+			this.name = pram;
 			return this;
 		};
 		/**
@@ -268,8 +142,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置类型
 		 */
-		LC.Data.DataModle.Item.prototype.setType = function(_pram) {
-			this.type = _pram;
+		LC.Data.DataModle.Item.prototype.setType = function(pram) {
+			this.type = pram;
 			return this;
 		};
 		/**
@@ -282,8 +156,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置数量
 		 */
-		LC.Data.DataModle.Item.prototype.setNum = function(_pram) {
-			this.num = _pram;
+		LC.Data.DataModle.Item.prototype.setNum = function(pram) {
+			this.num = pram;
 			return this;
 		};
 		/**
@@ -296,8 +170,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置最大数量（1为不可叠加）
 		 */
-		LC.Data.DataModle.Item.prototype.setMaxNum = function(_pram) {
-			this.maxNum = _pram;
+		LC.Data.DataModle.Item.prototype.setMaxNum = function(pram) {
+			this.maxNum = pram;
 			return this;
 		};
 		/**
@@ -315,8 +189,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置名称
 		 */
-		LC.Data.DataModle.Skill.prototype.setName = function(_pram) {
-			this.name = _pram;
+		LC.Data.DataModle.Skill.prototype.setName = function(pram) {
+			this.name = pram;
 			return this;
 		};
 		/**
@@ -329,8 +203,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置类型
 		 */
-		LC.Data.DataModle.Skill.prototype.setType = function(_pram) {
-			this.type = _pram;
+		LC.Data.DataModle.Skill.prototype.setType = function(pram) {
+			this.type = pram;
 			return this;
 		};
 		/**
@@ -343,8 +217,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置等级
 		 */
-		LC.Data.DataModle.Skill.prototype.setLevel = function(_pram) {
-			this.level = _pram;
+		LC.Data.DataModle.Skill.prototype.setLevel = function(pram) {
+			this.level = pram;
 			return this;
 		};
 		/**
@@ -362,8 +236,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置名称
 		 */
-		LC.Data.DataModle.Plat.prototype.setName = function(_pram) {
-			this.name = _pram;
+		LC.Data.DataModle.Plat.prototype.setName = function(pram) {
+			this.name = pram;
 			return this;
 		};
 		/**
@@ -376,8 +250,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置类型
 		 */
-		LC.Data.DataModle.Plat.prototype.setType = function(_pram) {
-			this.type = _pram;
+		LC.Data.DataModle.Plat.prototype.setType = function(pram) {
+			this.type = pram;
 			return this;
 		};
 		/**
@@ -390,11 +264,11 @@ LC.Data.DataModle = {
 		/**
 		 * 设置角色集合
 		 */
-		LC.Data.DataModle.Plat.prototype.setRoleMap = function(_key, _pram) {
+		LC.Data.DataModle.Plat.prototype.setRoleMap = function(_key, pram) {
 			if(null == this.roleMap){
 				this.roleMap = new LC.Utils.Map();
 			}
-			this.roleMap.put(_key, _pram);
+			this.roleMap.put(_key, pram);
 			return this;
 		};
 		/**
@@ -407,11 +281,11 @@ LC.Data.DataModle = {
 		/**
 		 * 设置物品集合
 		 */
-		LC.Data.DataModle.Plat.prototype.setItemMap = function(_key,_pram) {
+		LC.Data.DataModle.Plat.prototype.setItemMap = function(_key,pram) {
 			if(null == this.itemMap){
 				this.itemMap = new LC.Utils.Map();
 			}
-			this.itemMap.put(_key, _pram);
+			this.itemMap.put(_key, pram);
 			return this;
 		};
 		/**
@@ -452,15 +326,15 @@ LC.Data.DataModle = {
 		/**
 		 * 设置道路
 		 */
-		LC.Data.DataModle.Plat.prototype.setLink = function(_pram, _flag) {
+		LC.Data.DataModle.Plat.prototype.setLink = function(pram, _flag) {
 			if (!this.link) {
 				this.link = new LC.Utils.Map();
 			}
-			if (_pram) {
+			if (pram) {
 				if (!_flag) {
 					_flag = "true";
 				}
-				this.link.put(_pram, _flag);
+				this.link.put(pram, _flag);
 			}
 			return this;
 		};
@@ -476,8 +350,8 @@ LC.Data.DataModle = {
 		/**
 		 * 设置角色
 		 */
-		LC.Data.DataModle.Player.prototype.setRole = function(_pram) {
-			role = _pram;
+		LC.Data.DataModle.Player.prototype.setRole = function(pram) {
+			role = pram;
 			return this;
 		};
 		/**
@@ -493,11 +367,170 @@ LC.Data.DataModle = {
  *	数据工厂，用于组装基础数据
  */
 LC.Data.RoleFactory = {
+	createRole : function() {
+		roleObj = new LC.Data.DataModle.Role();
+		//定义监听数组集合
+		var _listeners=[];
+		//传入监听者（订阅者、观察者），存入
+		roleObj.addListener = function(obj) {
+			_listeners.push(obj);
+			return this;
+		};
+		//传入监听者（订阅者、观察者），移除
+		roleObj.removeListener = function(obj) {
+			//遍历对比移除
+			for (var i=0; i < _listeners.length; i++) {
+				if(_listeners[i] == obj){
+					_listeners.splice(i,1);
+					break;
+				}
+			};
+			return this;
+		};
+		//获取监听者（订阅者、观察者）对象
+		roleObj.getListeners= function() {
+			return _listeners;
+		};
+		
+		var _name;
+		/**
+		 * 设置名称
+		 */
+		roleObj.setName = function(pram) {
+			_name = pram;
+			//遍历监听者（订阅者、观察者）对象，并执行默认的监听方法
+			listeners = this.getListeners();
+			for (var i=0; i < listeners.length; i++) {
+			  listeners[i].listenerFunction(_name);
+			};
+			return this;
+		};
+		
+		/**
+		 * 获取名称
+		 */
+		roleObj.getName = function() {
+			return _name;
+		};
+		var _type;
+		/**
+		 * 设置类型
+		 */
+		roleObj.setType = function(pram) {
+			_type = pram;
+			return this;
+		};
+		/**
+		 * 获取类型
+		 */
+		roleObj.getType = function() {
+			return _type;
+		};
+		var _health;
+		/**
+		 * 设置生命值
+		 */
+		roleObj.setHealth = function(pram) {
+			_health = pram;
+			return this;
+		};
+		/**
+		 * 获取生命值
+		 */
+		roleObj.getHealth = function() {
+			return _health;
+		};
+		var _defense;
+		/**
+		 * 设置防御
+		 */
+		roleObj.setDefense = function(pram) {
+			_defense = pram;
+			return this;
+		};
+		/**
+		 * 获取防御
+		 */
+		roleObj.getDefense = function() {
+			return _defense;
+		};
+		var _crit;
+		/**
+		 * 设置暴击
+		 */
+		roleObj.setCrit = function(pram) {
+			_crit = pram;
+			return this;
+		};
+		/**
+		 * 获取暴击
+		 */
+		roleObj.getCrit = function() {
+			return _crit;
+		};
+		var _critStrike;
+		/**
+		 * 设置暴击伤害
+		 */
+		roleObj.setCritStrike = function(pram) {
+			_critStrike = pram;
+			return this;
+		};
+		/**
+		 * 获取暴击伤害
+		 */
+		roleObj.getCritStrike = function() {
+			return _critStrike;
+		};
+		var _buff;
+		/**
+		 * 设置buff状态
+		 */
+		roleObj.setBuff = function(pram) {
+			_buff = pram;
+			return this;
+		};
+		/**
+		 * 获取buff状态
+		 */
+		roleObj.getBuff = function() {
+			return _buff;
+		};
+		var _friendliness;
+		/**
+		 * 设置友好度
+		 */
+		roleObj.setFriendliness = function(pram) {
+			_friendliness = pram;
+			return this;
+		};
+		/**
+		 * 获取友好度
+		 */
+		roleObj.getFriendliness = function() {
+			return _friendliness;
+		};
+		var _friendlinessType;
+		/**
+		 * 设置友好度状态
+		 */
+		roleObj.setFriendlinessType = function(pram) {
+			_friendlinessType = pram;
+			return this;
+		};
+		/**
+		 * 获取友好度状态
+		 */
+		roleObj.getFriendlinessType = function() {
+			return _friendlinessType;
+		};
+		return roleObj;
+	},
 	/**
 	 * 创建玩家角色
 	 */
 	createPlayer : function() {
-		var role = new LC.Data.DataModle.Role();
+		var role = new LC.Data.RoleFactory.createRole();
 		role.setName("玩家角色").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 		role.setHealth(10);
 		role.setDefense(0);

@@ -3,124 +3,189 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Title</title>
+		<link href="test.css" rel="stylesheet">
 	</head>
 	<body>
+		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/BasicComponent.js"></script>
+		<script src="js/Components.js"></script>
+		<script src="js/Menu.js"></script>
+		<script src="js/Scene.js"></script>
+		<script src="js/panel.js"></script>
+		<script src="js/button.js"></script>
+		<script src="js/table.js"></script>
+		<script src="js/corner.js"></script>
+		<script src="js/progressbar.js"></script>
+		<script src="js/infoDIV.js"></script>
+		<script src="js/dataModel.js"></script>
+		<div id="mainDesktop" class="main-desktop"></div>
 		<script>
-		/*
-			var Accommodation =  
-				function() {
-					function Accommodation() {
-						}
-
-					//此处定义的所有变量都是私有的
-					var _isLocked = false,
-					    _isAlarmed = false,
-					    _alarmMessage = "Alarm actiated!";
-
-					//**仅在当前作用域中定义的函数（未在构造函数原型上定义）也是私有的**
-					function _alarm() {
-						_isAlarmed = true;
-						alert(_alarmMessage);
-					}
-
-					function disableAlarm() {
-						_isAlarmed = false;
-					}
-
-					//**所有定义在原型上方法都是“公有”的，当我们在此处创建的类在闭包结束处被返回后，就可以在当前作用域之外**
-					//访问这些方法了
-					Accommodation.prototype.lock = function() {
-						_isLocked = true;
-						_alarm();
-					};
-					Accommodation.prototype.unlock = function() {
-						_isLocked = false;
-						_disableAlarm();
-					};
-					//定义一个getter函数来对来对私有变量的值作只读访问——相当于受保护的
-					Accommodation.prototype.getIsLocked = function() {
-						return _isLocked;
-					};
-
-					//setter函数进行只写访问
-					Accommodation.prototype.setAlarmMessage = function(message) {
-						_alarmMessage = message;
-					};
-
-					//返回在这个作用域中创建的类，使之在外层作用域中即后面代码的所有位置都可用
-					return Accommodation;
-				}()
-			;
-
-			//创建一个对象实例
-			var house = new Accommodation();
-			var house2 = new Accommodation();
-			house.lock();
-			//弹出警告消息“Alarm activeted”
-			house._alarm();
-			//错误！_alarm()未公开，无法直接访问
-			alert(house._isLocked);
-			//undefined(私有，在闭包外不能访问)
-			house.getIsLocked();
-			//true(返回isLocked,但不允许对其直接访问，所以该变量是只读的)
-			house.setAlarmMessage("The alarm is now activated!");
-			house.lock();
-			house2.lock();
-			//弹出警告消息“The alarm is now activated!”
-			*/
-			/*
-			var Role = (function(){
-				function Role (){
-					console.log("内部被执行");
-				};
-				console.log("被执行");
-				var attr1 = "N";
-				Role.prototype.setAttr1 = function(pram){
-					attr1 = pram;
-				};
-				Role.prototype.getAttr1 = function(){
-					return attr1;
-				};
-				return Role;
-			}());
-			console.log("New之前");
-			var role1 = new Role();
-			console.log("New之后");
-			*/
-			var CustomType = function(){
-					
-				};
-			var singleton = function() {
-			    var privateVariable = 10;
-			    /*
-			    function privateFun() {
-			        return false;
-			    }
-				*/
-			    // 创建对象
-			    var object = new CustomType(); // customType为一个对象类型, 暂且用new Object()代替
-			    object.publicProperty = privateVariable;
-			    object.getPrivateVariable = function() {
-			        return privateVariable;
-			    };
-				object.setPrivateVariable = function(pram) {
-					privateVariable = pram;
-			    };
-			    return object;
+		
+			var role1 = LC.Data.RoleFactory.createRole();
+			var role2 = LC.Data.RoleFactory.createRole();
+			role1.setName("role1");
+			role2.setName("role2");
+			
+			var rolePanel = LC.Components.PanelFactory.createPanel(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
+			test22="测试";
+			rolePanel.dom.append("<li>"+test22+"</li>");
+			test22="测试变更";//变更变量不会立即修改页面
+			$("#mainDesktop").append(rolePanel.dom);
+			
+			var viewDataBind = function(view,data){
+				//获取data对象所有方法，筛选出get、set，获取被保护字段名
+				
+				//监听，当执行对应set方法时修改view，并立即更新页面
+				
 			};
-			var newA = singleton();
-			var newA2 = singleton();
-			newA.setPrivateVariable(1);
-			console.log(newA.getPrivateVariable());
-			console.log(newA2.getPrivateVariable());
-			/*
-			var role2 = new Role();
-			role1.setAttr1(1);
-			console.log(role1);
-			console.log(role1.attr);
-			console.log(role1.getAttr1());
-			console.log(role2.getAttr1());
-			*/
-		</script>
+			//将视图实例对象与数据实例对象绑定，视图监听数据
+			viewDataBind(rolePanel,role1);
+			//修改数据实例，验证视图变化
+			role1.setName("role1NameChange");
+			
+		</script>	
+			
+		<!--<script>	
+			var Event = (function() {
+				var global = this,
+				    Event,
+				    _default = 'default';
+				Event = function() {
+					var _listen,
+					    _trigger,
+					    _remove,
+					    _slice = Array.prototype.slice,
+					    _shift = Array.prototype.shift,
+					    _unshift = Array.prototype.unshift,
+					    namespaceCache = {},
+					    _create,
+					    find,
+					    each = function(ary, fn) {
+						var ret;
+						for (var i = 0,
+						    l = ary.length; i < l; i++) {
+							var n = ary[i];
+							ret = fn.call(n, i, n);
+						}
+						return ret;
+					};
+					_listen = function(key, fn, cache) {
+						if (!cache[key]) {
+							cache[key] = [];
+						}
+						cache[key].push(fn);
+					};
+					_remove = function(key, cache, fn) {
+						if (cache[key]) {
+							if (fn) {
+								for (var i = cache[key].length; i >= 0; i--) {
+									if (cache[key][i] === fn) {
+										cache[key].splice(i, 1);
+									}
+								}
+							} else {
+								cache[key] = [];
+							}
+						}
+					};
+					_trigger = function() {
+						var cache = _shift.call(arguments),
+						    key = _shift.call(arguments),
+						    args =
+						    arguments,
+						    _self = this,
+						    ret,
+						    stack = cache[key];
+						if (!stack || !stack.length) {
+							return;
+						}
+						return each(stack, function() {
+							this.apply(_self, args);
+						});
+					};
+					_create = function(namespace) {
+						var namespace = namespace || _default;
+						var cache = {},
+						    offlineStack = [], //离线事件
+						    ret = {
+							listen : function(key, fn, last) {
+								_listen(key, fn, cache);
+								if (offlineStack === null) {
+									return;
+								}
+								if (last === 'last') {
+									offlineStack.length && offlineStack.pop()();
+								} else {
+									each(offlineStack, function() {
+										this();
+									});
+								}
+								offlineStack = null;
+							},
+							one : function(key, fn, last) {
+								_remove(key, cache);
+								this.listen(key, fn, last);
+							},
+							remove : function(key, fn) {
+								_remove(key, cache, fn);
+							},
+							trigger : function() {
+								var fn,
+								    args,
+								    _self = this;
+								_unshift.call(arguments, cache);
+								args = arguments;
+								fn = function() {
+									return _trigger.apply(_self, args);
+								};
+								if (offlineStack) {
+									return offlineStack.push(fn);
+								}
+								return fn();
+							}
+						};
+						return namespace ? (namespaceCache[namespace] ? namespaceCache[namespace] : namespaceCache[namespace] = ret) : ret;
+					};
+					return {
+						create : _create,
+						one : function(key, fn, last) {
+							var event = this.create();
+							event.one(key, fn, last);
+						},
+						remove : function(key, fn) {
+							var event = this.create();
+							event.remove(key, fn);
+						},
+						listen : function(key, fn, last) {
+							var event = this.create();
+							event.listen(key, fn, last);
+						},
+						trigger : function() {
+							var event = this.create();
+							event.trigger.apply(this, arguments);
+						}
+					};
+				}();
+				return Event;
+			})();
+			/********* 先发布后订阅 *********/
+			Event.trigger('click', 1);
+			Event.listen('click', function(a) {
+				console.log(a);
+				//1
+			});
+			/********* 使用命名空间 *********/
+			Event.create('namespace1').listen('click', function(a) {
+				console.log(a);
+				//1
+			});
+			Event.create('namespace1').trigger('click', 1);
+			Event.create('namespace3').listen('click', function(a) {
+				console.log(a);
+				//2
+			});
+			Event.create('namespace3').trigger('click', 2);
+		</script>-->
 	</body>
 </html>
