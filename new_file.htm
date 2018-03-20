@@ -39,20 +39,20 @@
 			var layout1_1_2 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
 			layout1_1.dom.append(layout1_1_1.dom).append(layout1_1_2.dom);
 			//布局面板渲染
-			var panel1 = LC.Components.PanelFactory.createPanel();
-			var panel2 = LC.Components.PanelFactory.createPanel();
-			var panel3 = LC.Components.PanelFactory.createPanel();
-			var panel4 = LC.Components.PanelFactory.createPanel();
+			var panel1 = LC.Components.PanelFactory.createPanelBasic();
+			var panel2 = LC.Components.PanelFactory.createPanelBasic();
+			var panel3 = LC.Components.PanelFactory.createPanelBasic();
+			var panel4 = LC.Components.PanelFactory.createPanelBasic();
 			layout1_1_1.dom.append(panel1.dom);
 			layout1_1_2.dom.append(panel2.dom);
 			layout1_2.dom.append(panel3.dom);
 			layout2.dom.append(panel4.dom);
 			*/
 			//布局面板渲染
-			var panel1 = LC.Components.PanelFactory.createPanel(null,"170px","565px");
-			var panel2 = LC.Components.PanelFactory.createPanel(null,"900px","400px");
-			var panel3 = LC.Components.PanelFactory.createPanel(null,"900px","150px");
-			//var panel4 = LC.Components.PanelFactory.createPanel();
+			var panel1 = LC.Components.PanelFactory.createPanelBasic(null,"170px","565px");
+			var panel2 = LC.Components.PanelFactory.createPanelBasic(null,"900px","400px");
+			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"900px","150px");
+			//var panel4 = LC.Components.PanelFactory.createPanelBasic();
 			scene.dom.append(panel1.dom).append(panel2.dom).append(panel3.dom);
 			/*==========活动栏位===========*/
 			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null, "445px", "300px");
@@ -66,7 +66,7 @@
 			//添加内容
 			var table = LC.Components.TableFactory.createTable(1, 40);
 			/*
-			 var cell = LC.Components.PanelFactory.createPanel("??");
+			 var cell = LC.Components.PanelFactory.createPanelBasic("??");
 			 cell.dom.css({"width":"90%","height":"90%"});
 			 table.setCell(1,1,cell);
 			 var corner = LC.Components.CornerSignFactory.createCornerSign();
@@ -90,7 +90,7 @@
 			 scene.dom.append(itemBag2.dom);
 			 //添加内容
 			 var table2 = LC.Components.TableFactory.createTable(4,10);
-			 var cell2 = LC.Components.PanelFactory.createPanel("wupin");
+			 var cell2 = LC.Components.PanelFactory.createPanelBasic("wupin");
 			 cell2.dom.css({"width":"90%","height":"90%"});
 			 table.setCell(3,1,cell2);
 			 var corner2 = LC.Components.CornerSignFactory.createCornerSign();
@@ -159,17 +159,25 @@
 			//地图上分布物体======未完成===========
 			
 			//创建角色
-			var gameplayer = new LC.Data.DataModle.Role();
-			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
+			var gameplayer = new LC.Data.RoleFactory.createRole();
 			//在左侧面板中增加角色信息板
-			var rolePanel = LC.Components.PanelFactory.createPanel(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
-			test22="测试";
-			rolePanel.dom.append("<li>"+test22+"</li>");
-			test22="测试变更";
+			var rolePanel = LC.Components.PanelFactory.createPanelBasic(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
 			panel1.dom.append(rolePanel.dom);
-			test22=123;
-			//将角色简要信息显示在左侧面板上
-			
+			//角色信息板中添加各种数据显示
+			rolePanel.dom.append($("<div id='name'></div>"));
+			rolePanel.dom.append($("<div id='health'></div>"));
+			//将角色信息板 视图实例 监听 数据实例 
+			gameplayer.addListener(rolePanel);
+			//设定视图响应
+			rolePanel.addResponseMethod("setName",function(pram){
+				rolePanel.dom.children("#name").text(pram);
+			});
+			rolePanel.addResponseMethod("setHealth",function(pram){
+				rolePanel.dom.children("#health").text(pram);
+			});
+			//初始化玩家角色数据
+			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
+			console.log(gameplayer.getHealth());
 			
 			//动态数据、实时存档
 			LC.Data.DynamicData={};

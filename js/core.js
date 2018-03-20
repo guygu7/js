@@ -880,6 +880,11 @@ LC.Components.ComponentFunction = {
 		};
 		return null;
 	},
+	/**
+	 * 为某一元素添加详细信息面板，在鼠标悬停时显示详细信息面板infoObj
+	 * @param {Object} obj（添加显示infoObj的元素）
+	 * @param {Object} infoObj（非必需）
+	 */
 	addInfo : function(obj,infoObj) {
 		if (obj.dom) {//适配，如果传入的不是dom，则转为dom
 			obj = obj.dom;
@@ -915,5 +920,28 @@ LC.Components.ComponentFunction = {
 		function hideInfo (){
 			infoObj.self.hide();
 		};
-	}
+	},
+	/**
+	 * 自定义事件监听，被监听对象的具体方法调用时，执行该方法，遍历监听者（订阅者、观察者）对象，并执行其对应的触发函数
+	 * 该方法主要用于数据模型 LC.Data 实例创建方法中
+	 * @param {Object} methodName（被监听对象的方法名）
+	 * @param {Object} pram（可传参数，会传入触发函数中）
+	 */
+	event : function(methodName,pram){
+		//遍历监听者（订阅者、观察者）对象，并执行默认的监听方法
+		var listeners = this.getListeners();
+		console.log(listeners);
+		if(listeners.length>0){
+			for (var i=0; i < listeners.length; i++) {
+			  //获取对应响应方法
+			  console.log(listeners[i]);
+			  method = listeners[i].getResponseMethod(methodName);
+			  console.log(method);
+			  //让监听者（订阅者、观察者）对象执行响应方法，并传入修改的参数
+			  if(method){
+				  method.call(listeners[i],pram);
+			  }
+			};
+		}
+	},
 };

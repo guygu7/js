@@ -398,11 +398,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setName = function(pram) {
 			_name = pram;
-			//遍历监听者（订阅者、观察者）对象，并执行默认的监听方法
-			listeners = this.getListeners();
-			for (var i=0; i < listeners.length; i++) {
-			  listeners[i].listenerFunction(_name);
-			};
+			LC.Components.ComponentFunction.event.call(this,"setName",pram);
 			return this;
 		};
 		
@@ -418,6 +414,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setType = function(pram) {
 			_type = pram;
+			LC.Components.ComponentFunction.event.call(this,"setType",pram);
 			return this;
 		};
 		/**
@@ -432,6 +429,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setHealth = function(pram) {
 			_health = pram;
+			LC.Components.ComponentFunction.event.call(this,"setHealth",pram);
 			return this;
 		};
 		/**
@@ -446,6 +444,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setDefense = function(pram) {
 			_defense = pram;
+			LC.Components.ComponentFunction.event.call(this,"setDefense",pram);
 			return this;
 		};
 		/**
@@ -460,6 +459,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setCrit = function(pram) {
 			_crit = pram;
+			LC.Components.ComponentFunction.event.call(this,"setCrit",pram);
 			return this;
 		};
 		/**
@@ -474,6 +474,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setCritStrike = function(pram) {
 			_critStrike = pram;
+			LC.Components.ComponentFunction.event.call(this,"setCritStrike",pram);
 			return this;
 		};
 		/**
@@ -488,6 +489,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setBuff = function(pram) {
 			_buff = pram;
+			LC.Components.ComponentFunction.event.call(this,"setBuff",pram);
 			return this;
 		};
 		/**
@@ -502,6 +504,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setFriendliness = function(pram) {
 			_friendliness = pram;
+			LC.Components.ComponentFunction.event.call(this,"setFriendliness",pram);
 			return this;
 		};
 		/**
@@ -516,6 +519,7 @@ LC.Data.RoleFactory = {
 		 */
 		roleObj.setFriendlinessType = function(pram) {
 			_friendlinessType = pram;
+			LC.Components.ComponentFunction.event.call(this,"setFriendlinessType",pram);
 			return this;
 		};
 		/**

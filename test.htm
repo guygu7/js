@@ -21,29 +21,62 @@
 		<script src="js/dataModel.js"></script>
 		<div id="mainDesktop" class="main-desktop"></div>
 		<script>
-		
+			
+			//+++++data++++
 			var role1 = LC.Data.RoleFactory.createRole();
 			var role2 = LC.Data.RoleFactory.createRole();
 			role1.setName("role1");
 			role2.setName("role2");
-			
-			var rolePanel = LC.Components.PanelFactory.createPanel(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
-			test22="测试";
-			rolePanel.dom.append("<li>"+test22+"</li>");
-			test22="测试变更";//变更变量不会立即修改页面
+			//+++++++++++++
+			//+++++view++++
+			var rolePanel = LC.Components.PanelFactory.createPanelBasic(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
+			rolePanel.dom.text(role1.getName());
 			$("#mainDesktop").append(rolePanel.dom);
+			var rolePanel12 = LC.Components.PanelFactory.createPanelBasic(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
+			rolePanel12.dom.text(role1.getName());
+			$("#mainDesktop").append(rolePanel12.dom);
+			var rolePanel2 = LC.Components.PanelFactory.createPanelBasic(null,"160px","80px",LC.CommonProperty.CSS_PANEL_PROTRUDING);
+			rolePanel2.dom.text(role2.getName());
+			$("#mainDesktop").append(rolePanel2.dom);
+			//+++++++++++++
 			
-			var viewDataBind = function(view,data){
-				//获取data对象所有方法，筛选出get、set，获取被保护字段名
-				
-				//监听，当执行对应set方法时修改view，并立即更新页面
-				
-			};
-			//将视图实例对象与数据实例对象绑定，视图监听数据
-			viewDataBind(rolePanel,role1);
+			//rolePanel监听role1
+			role1.addListener(rolePanel);
+			role2.addListener(rolePanel2);
+			role1.addListener(rolePanel12);
+			
+			role1.removeListener(rolePanel);
+			role1.addListener(rolePanel2);
+			//设定响应
+			rolePanel.addResponseMethod("setName",function(){
+				rolePanel.dom.text(role1.getName());
+			});
+			rolePanel12.addResponseMethod("setName",function(){
+				rolePanel12.dom.text(role1.getName());
+			});
+			//rolePanel.removeResponseMethod("setName");
+			rolePanel2.addResponseMethod("setName",function(){
+				rolePanel2.dom.text(role2.getName());
+			});
+			
 			//修改数据实例，验证视图变化
 			role1.setName("role1NameChange");
-			
+			$("#mainDesktop").append("<button id='but1'>改变1号名字1</button>");
+			$("#mainDesktop").append("<button id='but2'>改变1号名字2</button>");
+			$("#mainDesktop").append("<button id='but3'>改变2号名字1</button>");
+			$("#mainDesktop").append("<button id='but4'>改变2号名字2</button>");
+			$("#but1").bind("click",function(){
+				role1.setName("小明");
+			});
+			$("#but2").bind("click",function(){
+				role1.setName("小明2号");
+			});
+			$("#but3").bind("click",function(){
+				role2.setName("小王");
+			});
+			$("#but4").bind("click",function(){
+				role2.setName("小王2号");
+			});
 		</script>	
 			
 		<!--<script>	

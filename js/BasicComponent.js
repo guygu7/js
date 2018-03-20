@@ -266,7 +266,8 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return this.dom;
 		};
 	};
-	//监听者默认方法
-	LC.Components.BasicComponent.prototype.listenerFunction =  function(pram) {
+	//执行监听者默认方法
+	LC.Components.BasicComponent.prototype.listenerFunction =  function(fnName,pram) {
+		
 	};
 };
