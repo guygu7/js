@@ -922,6 +922,7 @@ LC.Components.ComponentFunction = {
 		};
 	},
 	/**
+	 * (用于监听方法执行，用法：写于要被监听的方法中，通过call调用，例：LC.Components.ComponentFunction.event.call(this,"setName",pram);) 
 	 * 自定义事件监听，被监听对象的具体方法调用时，执行该方法，遍历监听者（订阅者、观察者）对象，并执行其对应的触发函数
 	 * 该方法主要用于数据模型 LC.Data 实例创建方法中
 	 * @param {Object} methodName（被监听对象的方法名）
@@ -930,18 +931,71 @@ LC.Components.ComponentFunction = {
 	event : function(methodName,pram){
 		//遍历监听者（订阅者、观察者）对象，并执行默认的监听方法
 		var listeners = this.getListeners();
-		console.log(listeners);
 		if(listeners.length>0){
 			for (var i=0; i < listeners.length; i++) {
 			  //获取对应响应方法
-			  console.log(listeners[i]);
 			  method = listeners[i].getResponseMethod(methodName);
-			  console.log(method);
 			  //让监听者（订阅者、观察者）对象执行响应方法，并传入修改的参数
 			  if(method){
 				  method.call(listeners[i],pram);
 			  }
 			};
 		}
+	},
+	/**
+	 * (用法：写于被监听对象创建方法中)
+	 * 为被监听对象定义监听者集合
+ 	 * @param {Object} newObj（创建的实例对象）
+	 */
+	listener : function(newObj){
+		//定义监听数组集合
+		var _listeners=[];
+		//传入监听者（订阅者、观察者），存入
+		newObj.addListener = function(obj) {
+			_listeners.push(obj);
+			return this;
+		};
+		//传入监听者（订阅者、观察者），移除
+		newObj.removeListener = function(obj) {
+			//遍历对比移除
+			for (var i=0; i < _listeners.length; i++) {
+				if(_listeners[i] == obj){
+					_listeners.splice(i,1);
+					break;
+				}
+			};
+			return this;
+		};
+		//获取监听者（订阅者、观察者）对象
+		newObj.getListeners= function() {
+			return _listeners;
+		};
+	},
+	/**
+	 * (用法：写于监听对象创建方法中)
+	 * 在监听者中定义响应方法集合
+	 * @param {Object} newObj（创建的实例对象）
+	 */
+	responseMethod : function(newObj){
+		//定义响应方法集合
+		var _responseMethods = new LC.Utils.Map();
+		//传入 监听方法名 和 响应方法函数 ，存入（注意：同一方法名只能有一个，再次存入会覆盖）
+		newObj.addResponseMethod = function(methodName,fn) {
+			_responseMethods.put(methodName,fn);
+			return this;
+		};
+		//传入 监听方法名 ，移除对应响应方法函数
+		newObj.removeResponseMethod = function(methodName) {
+			_responseMethods.removeByKey(methodName);
+			return this;
+		};
+		//获取所有响应方法函数的Map集合
+		newObj.getResponseMethods= function() {
+			return _responseMethods;
+		};
+		//获取单个响应方法函数
+		newObj.getResponseMethod= function(methodName) {
+			return _responseMethods.get(methodName);
+		};
 	},
 };

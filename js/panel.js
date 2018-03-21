@@ -17,26 +17,8 @@ LC.Components.Panel.prototype.setText = function(text) {
 LC.Components.PanelFactory = {
 	createPanel : function(){
 		var panel = new LC.Components.Panel();
-		//定义响应方法集合
-		var _responseMethods = new LC.Utils.Map();
-		//传入 监听方法名 和 响应方法函数 ，存入（注意：同一方法名只能有一个，再次存入会覆盖）
-		panel.addResponseMethod = function(methodName,fn) {
-			_responseMethods.put(methodName,fn);
-			return this;
-		};
-		//传入 监听方法名 ，移除对应响应方法函数
-		panel.removeResponseMethod = function(methodName) {
-			_responseMethods.removeByKey(methodName);
-			return this;
-		};
-		//获取所有响应方法函数的Map集合
-		panel.getResponseMethods= function() {
-			return _responseMethods;
-		};
-		//获取单个响应方法函数
-		panel.getResponseMethod= function(methodName) {
-			return _responseMethods.get(methodName);
-		};
+		//定义监听响应方法集合
+		LC.Components.ComponentFunction.responseMethod(panel);
 		return panel;
 	},
 	/**

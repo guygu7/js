@@ -232,118 +232,7 @@ LC.Data.DataModle = {
 	 * 地图（区域地图）
 	 */
 	Plat : function() {
-		var name;
-		/**
-		 * 设置名称
-		 */
-		LC.Data.DataModle.Plat.prototype.setName = function(pram) {
-			this.name = pram;
-			return this;
-		};
-		/**
-		 * 获取名称
-		 */
-		LC.Data.DataModle.Plat.prototype.getName = function() {
-			return this.name;
-		};
-		var type;
-		/**
-		 * 设置类型
-		 */
-		LC.Data.DataModle.Plat.prototype.setType = function(pram) {
-			this.type = pram;
-			return this;
-		};
-		/**
-		 * 获取类型
-		 */
-		LC.Data.DataModle.Plat.prototype.getType = function() {
-			return this.type;
-		};
-		var roleMap = new LC.Utils.Map();
-		/**
-		 * 设置角色集合
-		 */
-		LC.Data.DataModle.Plat.prototype.setRoleMap = function(_key, pram) {
-			if(null == this.roleMap){
-				this.roleMap = new LC.Utils.Map();
-			}
-			this.roleMap.put(_key, pram);
-			return this;
-		};
-		/**
-		 * 获取角色集合
-		 */
-		LC.Data.DataModle.Plat.prototype.getRoleMap = function() {
-			return this.roleMap;
-		};
-		var itemMap = new LC.Utils.Map();
-		/**
-		 * 设置物品集合
-		 */
-		LC.Data.DataModle.Plat.prototype.setItemMap = function(_key,pram) {
-			if(null == this.itemMap){
-				this.itemMap = new LC.Utils.Map();
-			}
-			this.itemMap.put(_key, pram);
-			return this;
-		};
-		/**
-		 * 获取物品集合
-		 */
-		LC.Data.DataModle.Plat.prototype.getItemMap = function() {
-			return this.itemMap;
-		};
-		var positionX;
-		/**
-		 * 设置坐标x
-		 */
-		LC.Data.DataModle.Plat.prototype.setPositionX = function(_x) {
-			this.positionX = _x;
-			return this;
-		};
-		/**
-		 * 获取坐标x
-		 */
-		LC.Data.DataModle.Plat.prototype.getPositionX = function() {
-			return this.positionX;
-		};
-		var positionY;
-		/**
-		 * 设置坐标y
-		 */
-		LC.Data.DataModle.Plat.prototype.setPositionY = function(_y) {
-			this.positionY = _y;
-			return this;
-		};
-		/**
-		 * 获取坐标y
-		 */
-		LC.Data.DataModle.Plat.prototype.getPositionY = function() {
-			return this.positionY;
-		};
-		var link = new LC.Utils.Map();
-		/**
-		 * 设置道路
-		 */
-		LC.Data.DataModle.Plat.prototype.setLink = function(pram, _flag) {
-			if (!this.link) {
-				this.link = new LC.Utils.Map();
-			}
-			if (pram) {
-				if (!_flag) {
-					_flag = "true";
-				}
-				this.link.put(pram, _flag);
-			}
-			return this;
-		};
-		/**
-		 * 获取道路
-		 */
-		LC.Data.DataModle.Plat.prototype.getLink = function() {
-			return this.link;
-		};
+		
 	},
 	Player : function() {
 		var role;
@@ -369,29 +258,8 @@ LC.Data.DataModle = {
 LC.Data.RoleFactory = {
 	createRole : function() {
 		roleObj = new LC.Data.DataModle.Role();
-		//定义监听数组集合
-		var _listeners=[];
-		//传入监听者（订阅者、观察者），存入
-		roleObj.addListener = function(obj) {
-			_listeners.push(obj);
-			return this;
-		};
-		//传入监听者（订阅者、观察者），移除
-		roleObj.removeListener = function(obj) {
-			//遍历对比移除
-			for (var i=0; i < _listeners.length; i++) {
-				if(_listeners[i] == obj){
-					_listeners.splice(i,1);
-					break;
-				}
-			};
-			return this;
-		};
-		//获取监听者（订阅者、观察者）对象
-		roleObj.getListeners= function() {
-			return _listeners;
-		};
-		
+		//定义监听对象集合
+		LC.Components.ComponentFunction.listener(roleObj);
 		var _name;
 		/**
 		 * 设置名称
@@ -401,7 +269,6 @@ LC.Data.RoleFactory = {
 			LC.Components.ComponentFunction.event.call(this,"setName",pram);
 			return this;
 		};
-		
 		/**
 		 * 获取名称
 		 */
@@ -544,6 +411,131 @@ LC.Data.RoleFactory = {
 	},
 };
 LC.Data.MapFactory = {
+	createPlat : function() {
+		var platObj = new LC.Data.DataModle.Plat();
+		//定义监听对象集合
+		LC.Components.ComponentFunction.listener(platObj);
+		var _name;
+		/**
+		 * 设置名称
+		 */
+		platObj.setName = function(pram) {
+			_name = pram;
+			LC.Components.ComponentFunction.event.call(this,"setName",pram);
+			return this;
+		};
+		/**
+		 * 获取名称
+		 */
+		platObj.getName = function() {
+			return _name;
+		};
+		var _type;
+		/**
+		 * 设置类型
+		 */
+		platObj.setType = function(pram) {
+			_type = pram;
+			LC.Components.ComponentFunction.event.call(this,"setType",pram);
+			return this;
+		};
+		/**
+		 * 获取类型
+		 */
+		platObj.getType = function() {
+			return _type;
+		};
+		var _roleMap = new LC.Utils.Map();
+		/**
+		 * 设置角色集合
+		 */
+		platObj.setRoleMap = function(key, pram) {
+			if(null == _roleMap){
+				_roleMap = new LC.Utils.Map();
+			}
+			_roleMap.put(key, pram);
+			LC.Components.ComponentFunction.event.call(this,"setRoleMap",pram);
+			return this;
+		};
+		/**
+		 * 获取角色集合
+		 */
+		platObj.getRoleMap = function() {
+			return _roleMap;
+		};
+		var _itemMap = new LC.Utils.Map();
+		/**
+		 * 设置物品集合
+		 */
+		platObj.setItemMap = function(key,pram) {
+			if(null == _itemMap){
+				_itemMap = new LC.Utils.Map();
+			}
+			_itemMap.put(key, pram);
+			LC.Components.ComponentFunction.event.call(this,"setItemMap",pram);
+			return this;
+		};
+		/**
+		 * 获取物品集合
+		 */
+		platObj.getItemMap = function() {
+			return _itemMap;
+		};
+		var _positionX;
+		/**
+		 * 设置坐标x
+		 */
+		platObj.setPositionX = function(pram) {
+			_positionX = pram;
+			LC.Components.ComponentFunction.event.call(this,"setPositionX",pram);
+			return this;
+		};
+		/**
+		 * 获取坐标x
+		 */
+		platObj.getPositionX = function() {
+			return _positionX;
+		};
+		var _positionY;
+		/**
+		 * 设置坐标y
+		 */
+		platObj.setPositionY = function(pram) {
+			_positionY = pram;
+			LC.Components.ComponentFunction.event.call(this,"setPositionY",pram);
+			return this;
+		};
+		/**
+		 * 获取坐标y
+		 */
+		platObj.getPositionY = function() {
+			return _positionY;
+		};
+		var _link = new LC.Utils.Map();
+		/**
+		 * 设置道路
+		 */
+		platObj.setLink = function(pram, flag) {
+			if (!_link) {
+				_link = new LC.Utils.Map();
+			}
+			if (pram) {
+				if (!flag) {
+					flag = "true";
+				}
+				_link.put(pram, flag);
+			}
+			LC.Components.ComponentFunction.event.call(this,"setLink",pram);
+			return this;
+		};
+		/**
+		 * 获取道路
+		 */
+		platObj.getLink = function() {
+			return _link;
+		};
+		return platObj;
+	},
 	/**
 	 *	创建地图
 	 * @return Map<"x,y",LC.Data.DataModle.Plat()>
@@ -552,7 +544,7 @@ LC.Data.MapFactory = {
 		var mapMap = new LC.Utils.Map();
 		for (var i = 1; i <= x; i++) {
 			for (var j = 1; j <= y; j++) {
-				var plat = new LC.Data.DataModle.Plat();
+				var plat = LC.Data.MapFactory.createPlat();
 				plat.setPositionX(i).setPositionY(j);
 				//该位置效率低下
 				plat.setLink(LC.Data.CommonProperty.PLAT.PLAT_LINK.TOP).setLink(LC.Data.CommonProperty.PLAT.PLAT_LINK.LEFT).setLink(LC.Data.CommonProperty.PLAT.PLAT_LINK.BOTTOM).setLink(LC.Data.CommonProperty.PLAT.PLAT_LINK.RIGHT);
@@ -742,6 +734,7 @@ LC.Data.MapFactory = {
 		return t;
 	}
 };
+
 /*
  LC.Data.PlatFactory = {
  *	创建营地

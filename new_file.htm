@@ -118,6 +118,7 @@
 			//========
 
 			/*====进度条====*/
+			/*
 			var progress = LC.Components.ProgressBarFactory.createProgressBar1();
 			progress.addPosition("lowerleft").setSize("500px", "10px");
 			panel2.dom.append(progress.dom);
@@ -132,6 +133,7 @@
 				progress.start();
 			});
 			panel2.dom.append(but);
+			*/
 			//========
 			//sceneNext.hide();
 			scene.show();
@@ -158,6 +160,7 @@
 			map.get(initX+","+initY).setName("出生地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.HOME);
 			//地图上分布物体======未完成===========
 			
+			//******创建角色实例，角色面板视图实例，并绑定*****
 			//创建角色
 			var gameplayer = new LC.Data.RoleFactory.createRole();
 			//在左侧面板中增加角色信息板
@@ -178,7 +181,35 @@
 			//初始化玩家角色数据
 			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 			console.log(gameplayer.getHealth());
+			//*****************************
 			
+			//主面板加入各种显示及按钮
+			var moveNorth = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			panel2.dom.append(moveNorth.dom);
+			var moveEast = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
+			panel2.dom.append(moveEast.dom);
+			var moveSouth = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
+			panel2.dom.append(moveSouth.dom);
+			var moveWest = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
+			panel2.dom.append(moveWest.dom);
+			
+			//当前所在地图数据实例绑定主面板视图实例
+			//获取出生地,设置监听
+			map.get(initX+","+initY).addListener(panel2);
+			//设定视图响应（暂不实现）
+			/*
+			panel2.addResponseMethod("",function(pram){
+				panel2.dom.children("#name").text(pram);
+			});
+			*/
+			console.log(map.get(initX+","+initY).getLink().get("top"));
+			console.log(map.get(initX+","+initY).getLink().get("right"));
+			console.log(map.get(initX+","+initY).getLink().get("bottom"));
+			console.log(map.get(initX+","+initY).getLink().get("left"));
+			moveNorth.dom.text(map.get(initX+","+initY).getLink().get("top")=="true"?"向北":"X");
+			moveEast.dom.text(map.get(initX+","+initY).getLink().get("right")=="true"?"向东":"X");
+			moveSouth.dom.text(map.get(initX+","+initY).getLink().get("bottom")=="true"?"向南":"X");
+			moveWest.dom.text(map.get(initX+","+initY).getLink().get("left")=="true"?"向西":"X");
 			//动态数据、实时存档
 			LC.Data.DynamicData={};
 			LC.Data.DynamicData.Map=map;//保存地图
