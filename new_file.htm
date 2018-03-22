@@ -50,8 +50,8 @@
 			*/
 			//布局面板渲染
 			var panel1 = LC.Components.PanelFactory.createPanelBasic(null,"170px","565px");
-			var panel2 = LC.Components.PanelFactory.createPanelBasic(null,"900px","400px");
-			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"900px","150px");
+			var panel2 = LC.Components.PanelFactory.createPanelBasic(null,"904px","404px");
+			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"904px","150px");
 			//var panel4 = LC.Components.PanelFactory.createPanelBasic();
 			scene.dom.append(panel1.dom).append(panel2.dom).append(panel3.dom);
 			/*==========活动栏位===========*/
@@ -148,7 +148,7 @@
 			var mapY=256;
 			//构建地图
 			map = LC.Data.MapFactory.createMap(mapX,mapY);
-			//随机获取一个初始地点,设置初始地点,限制在大地图中间生成
+			//初始地点,随机设置一个初始地点,限制在大地图中间生成
 			var initX = Math.floor(Math.random()*(Math.floor(mapX*2/3)));
 			if (initX<(Math.floor(mapX*1/3))){
 				initX=(Math.floor(mapX*1/3));
@@ -158,6 +158,9 @@
 				initY=(Math.floor(mapY*1/3));
 			}
 			map.get(initX+","+initY).setName("出生地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.HOME);
+			//在初始地点构建据点
+			map.get(initX+","+initY).setLink("stronghold");
+			//在地图上构建其他据点
 			//地图上分布物体======未完成===========
 			
 			//******创建角色实例，角色面板视图实例，并绑定*****
@@ -182,34 +185,65 @@
 			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 			console.log(gameplayer.getHealth());
 			//*****************************
+			//定义当前所在地图变量
+			var nowplat = map.get(initX+","+initY);
 			
-			//主面板加入各种显示及按钮
+			//主面板加入各种显示及按钮,同时绑定事件
 			var moveNorth = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			panel2.dom.append(moveNorth.dom);
+			moveNorth.dom.bind("click",function(){//点击进行位置移动
+				if(nowplat.getLink().get("top")=="true"){//判断是否可以移动
+					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())-1));
+					mainPanelLoadData(nowplat);
+				}
+			});
 			var moveEast = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			panel2.dom.append(moveEast.dom);
+			moveEast.dom.bind("click",function(){//点击进行位置移动
+				if(nowplat.getLink().get("right")=="true"){//判断是否可以移动
+					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
+					mainPanelLoadData(nowplat);
+				}
+			});
 			var moveSouth = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			panel2.dom.append(moveSouth.dom);
+			moveSouth.dom.bind("click",function(){//点击进行位置移动
+				if(nowplat.getLink().get("bottom")=="true"){//判断是否可以移动
+					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())+1));
+					mainPanelLoadData(nowplat);
+				}
+			});
 			var moveWest = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			panel2.dom.append(moveWest.dom);
-			
-			//当前所在地图数据实例绑定主面板视图实例
-			//获取出生地,设置监听
-			map.get(initX+","+initY).addListener(panel2);
-			//设定视图响应（暂不实现）
-			/*
-			panel2.addResponseMethod("",function(pram){
-				panel2.dom.children("#name").text(pram);
+			moveWest.dom.bind("click",function(){//点击进行位置移动
+				if(nowplat.getLink().get("left")=="true"){//判断是否可以移动
+					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
+					mainPanelLoadData(nowplat);
+				}
 			});
-			*/
-			console.log(map.get(initX+","+initY).getLink().get("top"));
-			console.log(map.get(initX+","+initY).getLink().get("right"));
-			console.log(map.get(initX+","+initY).getLink().get("bottom"));
-			console.log(map.get(initX+","+initY).getLink().get("left"));
-			moveNorth.dom.text(map.get(initX+","+initY).getLink().get("top")=="true"?"向北":"X");
-			moveEast.dom.text(map.get(initX+","+initY).getLink().get("right")=="true"?"向东":"X");
-			moveSouth.dom.text(map.get(initX+","+initY).getLink().get("bottom")=="true"?"向南":"X");
-			moveWest.dom.text(map.get(initX+","+initY).getLink().get("left")=="true"?"向西":"X");
+			
+			var info = LC.Components.PanelFactory.createPanelBasic(null,"80px","25px");
+			panel2.dom.append(info.dom);
+			
+			var enter = LC.Components.PanelFactory.createPanelBasic(null,"80px","25px");
+			panel2.dom.append(info.dom);
+			
+			//传入plat地图实例,主面板装入地图数据，同时绑定监听
+			mainPanelLoadData = function (plat){
+				moveNorth.dom.text(plat.getLink().get("top")=="true"?"向北":"X");
+				moveEast.dom.text(plat.getLink().get("right")=="true"?"向东":"X");
+				moveSouth.dom.text(plat.getLink().get("bottom")=="true"?"向南":"X");
+				moveWest.dom.text(plat.getLink().get("left")=="true"?"向西":"X");
+				info.dom.text(plat.getPositionX()+","+plat.getPositionY());
+				plat.addListener(panel2);
+			};
+			
+			//启动时初次载入地图
+			mainPanelLoadData(nowplat);
+			
+			
+			
+			
 			//动态数据、实时存档
 			LC.Data.DynamicData={};
 			LC.Data.DynamicData.Map=map;//保存地图
