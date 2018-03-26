@@ -15,6 +15,7 @@
 		<script src="js/Components.js"></script>
 		<script src="js/Menu.js"></script>
 		<script src="js/Scene.js"></script>
+		<script src="js/internalScene.js"></script>
 		<script src="js/panel.js"></script>
 		<script src="js/button.js"></script>
 		<script src="js/table.js"></script>
@@ -27,32 +28,16 @@
 			var scene = LC.Components.SceneFactory.createScene();
 			$("#mainDesktop").append(scene.dom);
 			$("#mainDesktop").append(LC.infoObj.dom);
-			/*==========布局============*/
-			/*
-			var layout1 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
-			var layout2 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
-			scene.dom.append(layout1.dom).append(layout2.dom);
-			var layout1_1 = LC.Components.PanelFactory.createPanelEmpty(null, "100%", "80%");
-			var layout1_2 = LC.Components.PanelFactory.createPanelEmpty(null, "100%", "19%");
-			layout1.dom.append(layout1_1.dom).append(layout1_2.dom);
-			var layout1_1_1 = LC.Components.PanelFactory.createPanelEmpty(null, "15%", "100%");
-			var layout1_1_2 = LC.Components.PanelFactory.createPanelEmpty(null, "85%", "100%");
-			layout1_1.dom.append(layout1_1_1.dom).append(layout1_1_2.dom);
-			//布局面板渲染
-			var panel1 = LC.Components.PanelFactory.createPanelBasic();
-			var panel2 = LC.Components.PanelFactory.createPanelBasic();
-			var panel3 = LC.Components.PanelFactory.createPanelBasic();
-			var panel4 = LC.Components.PanelFactory.createPanelBasic();
-			layout1_1_1.dom.append(panel1.dom);
-			layout1_1_2.dom.append(panel2.dom);
-			layout1_2.dom.append(panel3.dom);
-			layout2.dom.append(panel4.dom);
-			*/
 			//布局面板渲染
 			var panel1 = LC.Components.PanelFactory.createPanelBasic(null,"170px","565px");
-			var panel2 = LC.Components.PanelFactory.createPanelBasic(null,"904px","404px");
-			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"904px","150px");
+			var panel2 = LC.Components.PanelFactory.createPanelEmpty(null,"918px","416px");
+			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"904px","145px");
 			//var panel4 = LC.Components.PanelFactory.createPanelBasic();
+			var internalSceneBasic = LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px");
+			//内部据点界面
+			var internalSceneStronghold = LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px");
+			internalSceneStronghold.hide();//初始隐藏
+			panel2.dom.append(internalSceneBasic.dom).append(internalSceneStronghold.dom);
 			scene.dom.append(panel1.dom).append(panel2.dom).append(panel3.dom);
 			/*==========活动栏位===========*/
 			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null, "445px", "300px");
@@ -114,14 +99,14 @@
 			menu.getElement(2).dom.bind("click", function() {
 				itemBag2.show();
 			});
-			panel2.dom.append(menu.dom);
+			internalSceneBasic.dom.append(menu.dom);
 			//========
 
 			/*====进度条====*/
 			/*
 			var progress = LC.Components.ProgressBarFactory.createProgressBar1();
 			progress.addPosition("lowerleft").setSize("500px", "10px");
-			panel2.dom.append(progress.dom);
+			internalSceneBasic.dom.append(progress.dom);
 			//===模拟===
 			var but = $("<div>but1</div>").css({
 				"width" : "30px",
@@ -132,7 +117,7 @@
 				progress.setRunWidth(10, 2);
 				progress.start();
 			});
-			panel2.dom.append(but);
+			internalSceneBasic.dom.append(but);
 			*/
 			//========
 			//sceneNext.hide();
@@ -185,64 +170,128 @@
 			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 			console.log(gameplayer.getHealth());
 			//*****************************
-			//定义当前所在地图变量
-			var nowplat = map.get(initX+","+initY);
 			
+			//**********大地图界面，视图构建*********
+			/**
+			 * 定义当前所在地图变量
+			 */
+			var nowplat = map.get(initX+","+initY);
 			//主面板加入各种显示及按钮,同时绑定事件
+			/**
+			 * 向北移动的按钮 
+			 */
 			var moveNorth = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
-			panel2.dom.append(moveNorth.dom);
+			internalSceneBasic.dom.append(moveNorth.dom);
 			moveNorth.dom.bind("click",function(){//点击进行位置移动
 				if(nowplat.getLink().get("top")=="true"){//判断是否可以移动
 					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())-1));
-					mainPanelLoadData(nowplat);
+					internalSceneLoadData(nowplat);
 				}
 			});
+			/**
+			 * 向东移动的按钮 
+			 */
 			var moveEast = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
-			panel2.dom.append(moveEast.dom);
+			internalSceneBasic.dom.append(moveEast.dom);
 			moveEast.dom.bind("click",function(){//点击进行位置移动
 				if(nowplat.getLink().get("right")=="true"){//判断是否可以移动
 					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
-					mainPanelLoadData(nowplat);
+					internalSceneLoadData(nowplat);
 				}
 			});
+			/**
+			 * 向南移动的按钮 
+			 */
 			var moveSouth = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
-			panel2.dom.append(moveSouth.dom);
+			internalSceneBasic.dom.append(moveSouth.dom);
 			moveSouth.dom.bind("click",function(){//点击进行位置移动
 				if(nowplat.getLink().get("bottom")=="true"){//判断是否可以移动
 					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())+1));
-					mainPanelLoadData(nowplat);
+					internalSceneLoadData(nowplat);
 				}
 			});
+			/**
+			 * 向西移动的按钮 
+			 */
 			var moveWest = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
-			panel2.dom.append(moveWest.dom);
+			internalSceneBasic.dom.append(moveWest.dom);
 			moveWest.dom.bind("click",function(){//点击进行位置移动
 				if(nowplat.getLink().get("left")=="true"){//判断是否可以移动
 					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
-					mainPanelLoadData(nowplat);
+					internalSceneLoadData(nowplat);
 				}
 			});
-			
+			/**
+			 * 坐标显示面板 
+			 */
 			var info = LC.Components.PanelFactory.createPanelBasic(null,"80px","25px");
-			panel2.dom.append(info.dom);
-			
+			internalSceneBasic.dom.append(info.dom);
+			/**
+			 * 进入 
+			 */
 			var enter = LC.Components.PanelFactory.createPanelBasic(null,"80px","25px");
-			panel2.dom.append(info.dom);
-			
-			//传入plat地图实例,主面板装入地图数据，同时绑定监听
-			mainPanelLoadData = function (plat){
+			internalSceneBasic.dom.append(enter.dom);
+			enter.dom.bind("click",function(){//点击进行位置移动
+				//判断是否可以进入（未实现）
+				//进入，隐藏当前内部场景-大地图界面，显示-内部据点界面
+				internalSceneBasic.hide();
+				internalSceneStronghold.show();
+				//移动菜单
+				internalSceneStronghold.dom.append(menu.dom);
+			});
+			/**
+			 *  传入plat地图实例,内部场景-大地图界面装入地图数据，同时绑定监听（用于更新界面数据）
+			 */
+			internalSceneLoadData = function (plat){
 				moveNorth.dom.text(plat.getLink().get("top")=="true"?"向北":"X");
 				moveEast.dom.text(plat.getLink().get("right")=="true"?"向东":"X");
 				moveSouth.dom.text(plat.getLink().get("bottom")=="true"?"向南":"X");
 				moveWest.dom.text(plat.getLink().get("left")=="true"?"向西":"X");
 				info.dom.text(plat.getPositionX()+","+plat.getPositionY());
-				plat.addListener(panel2);
+				enter.dom.text("进入");
+				plat.addListener(internalSceneBasic);
 			};
+			//**********************************
 			
-			//启动时初次载入地图
-			mainPanelLoadData(nowplat);
+			//启动时初次载入地图数据
+			internalSceneLoadData(nowplat);
 			
+			//*********内部据点界面，视图构建***********
+			//定义可交互对象承载视图框
+			var interactiveObject1 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			var interactiveObject2 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			var interactiveObject3 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			//定义移动按钮，移动到其他地方
+			//返回地图
+			var moveReturn = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			internalSceneStronghold.dom.append(moveReturn.dom);
+			moveReturn.dom.bind("click",function(){//点击进行位置移动
+				//判断是否可以返回（未实现）
+				//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
+				internalSceneBasic.show();
+				internalSceneStronghold.hide();
+				//移动菜单
+				internalSceneBasic.dom.append(menu.dom);
+			});
+			//可能移动至其他地方
+			var move1 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			
+			/**
+			 *  传入plat地图实例,内部场景-内部据点界面装入地图数据，同时绑定监听（用于更新界面数据）
+			 */
+			internalSceneStrongholdLoadData = function (plat){
+				moveReturn.dom.text("返回大地图");
+				plat.addListener(internalSceneStronghold);
+			};
+			//************************************
+			//启动时初次载入地图数据
+			internalSceneStrongholdLoadData(nowplat);
 			
+			//**********交互对象交互界面，视图构建*********
+			//************************************
+			
+			//***********战斗界面，视图构建*************
+			//************************************
 			
 			//动态数据、实时存档
 			LC.Data.DynamicData={};

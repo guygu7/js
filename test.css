@@ -144,7 +144,6 @@ body {
 	text-align: center;
 	display: inline-block;
 	position: relative;
-	overflow:hidden;
 }
 /**
  * 	面板（外层，半透明，有边框和边距）
