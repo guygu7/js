@@ -378,16 +378,17 @@
 			internalSceneStrongholdLoadData(nowplat);
 			
 			//**********交互对象交互界面，视图构建*********
-			internalSceneInteraction.dom.append();
+			//internalSceneInteraction.dom.append();
 			//交互按钮
 			//返回
 			var moveInternalSceneStronghold = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
-			internalSceneStronghold.dom.append(moveInternalSceneStronghold.dom);
+			internalSceneInteraction.dom.append(moveInternalSceneStronghold.dom);
 			moveInternalSceneStronghold.dom.bind("click",function(){//点击进行位置移动
 				//判断是否可以返回（未实现）
 				//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
-				internalSceneBasic.show();
-				internalSceneStronghold.hide();
+				internalSceneInteraction.hide();
+				internalSceneBasic.hide();
+				internalSceneStronghold.show();
 				//移动菜单
 				internalSceneBasic.dom.append(menu.dom);
 			});
