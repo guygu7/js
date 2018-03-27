@@ -33,11 +33,16 @@
 			var panel2 = LC.Components.PanelFactory.createPanelEmpty(null,"918px","416px");
 			var panel3 = LC.Components.PanelFactory.createPanelBasic(null,"904px","145px");
 			//var panel4 = LC.Components.PanelFactory.createPanelBasic();
+			//初始大地图界面
 			var internalSceneBasic = LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px");
 			//内部据点界面
 			var internalSceneStronghold = LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px");
 			internalSceneStronghold.hide();//初始隐藏
-			panel2.dom.append(internalSceneBasic.dom).append(internalSceneStronghold.dom);
+			//交互对象交互界面
+			var internalSceneInteraction = LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px");
+			internalSceneInteraction.hide();//初始隐藏
+			
+			panel2.dom.append(internalSceneBasic.dom).append(internalSceneStronghold.dom).append(internalSceneInteraction.dom);
 			scene.dom.append(panel1.dom).append(panel2.dom).append(panel3.dom);
 			/*==========活动栏位===========*/
 			var itemBag = LC.Components.PanelFactory.createPanelTransparent(null, "445px", "300px");
@@ -143,8 +148,27 @@
 				initY=(Math.floor(mapY*1/3));
 			}
 			map.get(initX+","+initY).setName("出生地").setType(LC.Data.CommonProperty.PLAT.PLAT_TYPE.HOME);
-			//在初始地点构建据点
+			//在初始地点构建内部据点
 			map.get(initX+","+initY).setLink("stronghold");
+			//据点中添加交互对象
+			var obj1 = new LC.Data.RoleFactory.createRole();
+			obj1.setName("实体角色1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj2 = new LC.Data.RoleFactory.createRole();
+			obj2.setName("实体角色2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj3 = new LC.Data.RoleFactory.createRole();
+			obj3.setName("实体角色3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj4 = new LC.Data.RoleFactory.createRole();
+			obj4.setName("静态建筑1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			var obj5 = new LC.Data.RoleFactory.createRole();
+			obj5.setName("静态建筑2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			var obj6 = new LC.Data.RoleFactory.createRole();
+			obj6.setName("静态建筑3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			map.get(initX+","+initY).addRole("交互对象1",obj1);
+			map.get(initX+","+initY).addRole("交互对象2",obj2);
+			//map.get(initX+","+initY).addRole("交互对象3",obj3);
+			map.get(initX+","+initY).addRole("静态建筑1",obj4);
+			map.get(initX+","+initY).addRole("静态建筑2",obj5);
+			map.get(initX+","+initY).addRole("静态建筑3",obj6);
 			//在地图上构建其他据点
 			//地图上分布物体======未完成===========
 			
@@ -258,14 +282,34 @@
 			
 			//*********内部据点界面，视图构建***********
 			//定义可交互对象承载视图框
+			//1区域（用于装实际角色）
 			var interactiveObject1 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject1.hide();
+			interactiveObject1.dom.bind("click",function(){
+				//判断是否可以交互|切换界面（未实现）
+				
+				//界面切换，隐藏当前内部场景-内部据点界面，显示-交互对象交互界面
+				internalSceneStronghold.hide();
+				internalSceneInteraction.show();
+			});
 			var interactiveObject2 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject2.hide();
 			var interactiveObject3 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject3.hide();
+			//2区域（用于装静态建筑）
+			var interactiveObject4 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject4.hide();
+			var interactiveObject5 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject5.hide();
+			var interactiveObject6 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			interactiveObject6.hide();
+			
+			internalSceneStronghold.dom.append(interactiveObject1.dom).append(interactiveObject2.dom).append(interactiveObject3.dom).append(interactiveObject4.dom).append(interactiveObject5.dom).append(interactiveObject6.dom);
 			//定义移动按钮，移动到其他地方
 			//返回地图
-			var moveReturn = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
-			internalSceneStronghold.dom.append(moveReturn.dom);
-			moveReturn.dom.bind("click",function(){//点击进行位置移动
+			var moveInternalSceneBasic = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			internalSceneStronghold.dom.append(moveInternalSceneBasic.dom);
+			moveInternalSceneBasic.dom.bind("click",function(){//点击进行位置移动
 				//判断是否可以返回（未实现）
 				//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
 				internalSceneBasic.show();
@@ -280,7 +324,53 @@
 			 *  传入plat地图实例,内部场景-内部据点界面装入地图数据，同时绑定监听（用于更新界面数据）
 			 */
 			internalSceneStrongholdLoadData = function (plat){
-				moveReturn.dom.text("返回大地图");
+				moveInternalSceneBasic.dom.text("返回大地图");
+				//读取交互对象数据
+				var objMap = plat.getRoleMap();
+				//判断里面至少有1个交互对象
+				if(null!=objMap){
+					if(objMap.size()>0){
+						//获取所有对象数组
+						objarr = objMap.values();
+						//遍历写入
+						var i1=0,i2=0;
+						for (var i=0; i < objarr.length; i++) {
+							if(objarr[i].getType()==LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC){
+								switch(i1){
+									case 0:interactiveObject1.dom.text(objarr[i].getName());
+										interactiveObject1.show();
+										i1++;
+										break;
+									case 1:interactiveObject2.dom.text(objarr[i].getName());
+										interactiveObject2.show();
+										i1++;
+										break;	
+									case 2:interactiveObject3.dom.text(objarr[i].getName());
+										interactiveObject3.show();
+										i1++;
+										break;	
+									default:
+								}
+							}else if(objarr[i].getType()==LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING){
+								switch(i2){
+									case 0:interactiveObject4.dom.text(objarr[i].getName());
+										interactiveObject4.show();
+										i2++;
+										break;
+									case 1:interactiveObject5.dom.text(objarr[i].getName());
+										interactiveObject5.show();
+										i2++;
+										break;	
+									case 2:interactiveObject6.dom.text(objarr[i].getName());
+										interactiveObject6.show();
+										i2++;
+										break;	
+									default:
+								}
+							}
+						};
+					}
+				}
 				plat.addListener(internalSceneStronghold);
 			};
 			//************************************
@@ -288,6 +378,25 @@
 			internalSceneStrongholdLoadData(nowplat);
 			
 			//**********交互对象交互界面，视图构建*********
+			internalSceneInteraction.append();
+			//交互按钮
+			//返回
+			var moveInternalSceneStronghold = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
+			internalSceneStronghold.dom.append(moveInternalSceneStronghold.dom);
+			moveInternalSceneStronghold.dom.bind("click",function(){//点击进行位置移动
+				//判断是否可以返回（未实现）
+				//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
+				internalSceneBasic.show();
+				internalSceneStronghold.hide();
+				//移动菜单
+				internalSceneBasic.dom.append(menu.dom);
+			});
+			/**
+			 *  传入plat地图实例,内部场景-内部据点界面装入地图数据，同时绑定监听（用于更新界面数据）
+			 */
+			internalSceneStrongholdLoadData = function (plat){
+				
+			};
 			//************************************
 			
 			//***********战斗界面，视图构建*************

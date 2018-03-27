@@ -25,7 +25,10 @@ LC.Data.CommonProperty = {
 			 * NPC
 			 */
 			NPC : "NPC",
-
+			/**
+			 * 静态建筑
+			 */
+			BUILDING:"building",
 		},
 		/**
 		 * 角色友好状态
@@ -447,18 +450,32 @@ LC.Data.MapFactory = {
 		};
 		var _roleMap = new LC.Utils.Map();
 		/**
-		 * 设置角色集合
+		 * 添加角色(交互对象),Map(key, pram)
 		 */
-		platObj.setRoleMap = function(key, pram) {
+		platObj.addRole = function(key, pram) {
 			if(null == _roleMap){
 				_roleMap = new LC.Utils.Map();
 			}
 			_roleMap.put(key, pram);
-			LC.Components.ComponentFunction.event.call(this,"setRoleMap",pram);
+			LC.Components.ComponentFunction.event.call(this,"addRole",pram);
 			return this;
 		};
 		/**
-		 * 获取角色集合
+		 * 删除角色(交互对象)
+		 */
+		platObj.removeRole = function(key) {
+			_roleMap.removeByKey(key);
+			LC.Components.ComponentFunction.event.call(this,"removeRole",pram);
+			return this;
+		};
+		/**
+		 * 获取单个角色(交互对象)
+		 */
+		platObj.getRole = function(key) {
+			return _roleMap.get(key);
+		};
+		/**
+		 * 获取角色集合(交互对象)
 		 */
 		platObj.getRoleMap = function() {
 			return _roleMap;
