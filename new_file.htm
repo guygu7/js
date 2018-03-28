@@ -199,7 +199,7 @@
 			/**
 			 * 定义当前所在地图变量
 			 */
-			var nowplat = map.get(initX+","+initY);
+			LC.GlobalVar.CURRENT_LOCATION = map.get(initX+","+initY);
 			//主面板加入各种显示及按钮,同时绑定事件
 			/**
 			 * 向北移动的按钮 
@@ -207,9 +207,11 @@
 			var moveNorth = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			internalSceneBasic.dom.append(moveNorth.dom);
 			moveNorth.dom.bind("click",function(){//点击进行位置移动
-				if(nowplat.getLink().get("top")=="true"){//判断是否可以移动
-					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())-1));
-					internalSceneLoadData(nowplat);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_BASIC){//判断当前活动的场景是否为：初始大地图界面
+					if(LC.GlobalVar.CURRENT_LOCATION.getLink().get("top")=="true"){//判断是否可以移动
+						LC.GlobalVar.CURRENT_LOCATION = map.get(LC.GlobalVar.CURRENT_LOCATION.getPositionX()+","+(Number(LC.GlobalVar.CURRENT_LOCATION.getPositionY())-1));
+						internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
+					}
 				}
 			});
 			/**
@@ -218,9 +220,11 @@
 			var moveEast = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			internalSceneBasic.dom.append(moveEast.dom);
 			moveEast.dom.bind("click",function(){//点击进行位置移动
-				if(nowplat.getLink().get("right")=="true"){//判断是否可以移动
-					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
-					internalSceneLoadData(nowplat);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_BASIC){//判断当前活动的场景是否为：初始大地图界面
+					if(LC.GlobalVar.CURRENT_LOCATION.getLink().get("right")=="true"){//判断是否可以移动
+						LC.GlobalVar.CURRENT_LOCATION = map.get((Number(LC.GlobalVar.CURRENT_LOCATION.getPositionX())-1)+","+LC.GlobalVar.CURRENT_LOCATION.getPositionY());
+						internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
+					}
 				}
 			});
 			/**
@@ -229,9 +233,11 @@
 			var moveSouth = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			internalSceneBasic.dom.append(moveSouth.dom);
 			moveSouth.dom.bind("click",function(){//点击进行位置移动
-				if(nowplat.getLink().get("bottom")=="true"){//判断是否可以移动
-					nowplat = map.get(nowplat.getPositionX()+","+(Number(nowplat.getPositionY())+1));
-					internalSceneLoadData(nowplat);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_BASIC){//判断当前活动的场景是否为：初始大地图界面
+					if(LC.GlobalVar.CURRENT_LOCATION.getLink().get("bottom")=="true"){//判断是否可以移动
+						LC.GlobalVar.CURRENT_LOCATION = map.get(LC.GlobalVar.CURRENT_LOCATION.getPositionX()+","+(Number(LC.GlobalVar.CURRENT_LOCATION.getPositionY())+1));
+						internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
+					}
 				}
 			});
 			/**
@@ -240,9 +246,11 @@
 			var moveWest = LC.Components.PanelFactory.createPanelBasic(null,"40px","25px");
 			internalSceneBasic.dom.append(moveWest.dom);
 			moveWest.dom.bind("click",function(){//点击进行位置移动
-				if(nowplat.getLink().get("left")=="true"){//判断是否可以移动
-					nowplat = map.get((Number(nowplat.getPositionX())-1)+","+nowplat.getPositionY());
-					internalSceneLoadData(nowplat);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_BASIC){//判断当前活动的场景是否为：初始大地图界面
+					if(LC.GlobalVar.CURRENT_LOCATION.getLink().get("left")=="true"){//判断是否可以移动
+						LC.GlobalVar.CURRENT_LOCATION = map.get((Number(LC.GlobalVar.CURRENT_LOCATION.getPositionX())-1)+","+LC.GlobalVar.CURRENT_LOCATION.getPositionY());
+						internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
+					}
 				}
 			});
 			/**
@@ -256,29 +264,58 @@
 			var enter = LC.Components.PanelFactory.createPanelBasic(null,"80px","25px");
 			internalSceneBasic.dom.append(enter.dom);
 			enter.dom.bind("click",function(){//点击进行位置移动
-				//判断是否可以进入（未实现）
-				//进入，隐藏当前内部场景-大地图界面，显示-内部据点界面
-				internalSceneBasic.hide();
-				internalSceneStronghold.show();
-				//移动菜单
-				internalSceneStronghold.dom.append(menu.dom);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_BASIC){//判断当前活动的场景是否为：初始大地图界面
+					//判断是否可以进入（未实现）
+					//进入，隐藏当前内部场景-大地图界面，显示-内部据点界面
+					internalSceneBasic.hide();
+					internalSceneStronghold.show();
+					//移动菜单
+					internalSceneStronghold.dom.append(menu.dom);
+					
+					internalSceneStronghold.loadData(LC.GlobalVar.CURRENT_LOCATION);
+				}
 			});
 			/**
 			 *  传入plat地图实例,内部场景-大地图界面装入地图数据，同时绑定监听（用于更新界面数据）
+			 *  ps：由于每个场景都不一样，载入清除页面数据方法都需要单独定义
 			 */
-			internalSceneLoadData = function (plat){
+			internalSceneBasic.loadData = function (plat){
+				LC.GlobalVar.CURRENT_INTERNAL_SCENE=LC.CommonProperty.INTERNAL_SCENE_BASIC;//当前活动的场景变更为：初始大地图界面
+				internalSceneBasic.clearData(plat);//清除原有数据,避免数据残留
 				moveNorth.dom.text(plat.getLink().get("top")=="true"?"向北":"X");
+				moveNorth.show();
 				moveEast.dom.text(plat.getLink().get("right")=="true"?"向东":"X");
+				moveEast.show();
 				moveSouth.dom.text(plat.getLink().get("bottom")=="true"?"向南":"X");
+				moveSouth.show();
 				moveWest.dom.text(plat.getLink().get("left")=="true"?"向西":"X");
+				moveWest.show();
 				info.dom.text(plat.getPositionX()+","+plat.getPositionY());
+				info.show();
 				enter.dom.text("进入");
-				plat.addListener(internalSceneBasic);
+				enter.show();
+				plat.addListener(internalSceneBasic);//添加监听
+			};
+			/**
+			 *  清除场景中的数据,同时解绑监听
+			 *  ps：由于每个场景都不一样，载入清除页面数据方法都需要单独定义
+			 */
+			internalSceneBasic.clearData = function (plat){
+				moveNorth.dom.text("");
+				moveNorth.hide();
+				moveEast.dom.text("");
+				moveEast.hide();
+				moveSouth.dom.text("");
+				moveSouth.hide();
+				moveWest.dom.text("");
+				moveWest.hide();
+				info.dom.text("");
+				info.hide();
+				enter.dom.text("");
+				enter.hide();
+				plat.removeListener(internalSceneBasic);
 			};
 			//**********************************
-			
-			//启动时初次载入地图数据
-			internalSceneLoadData(nowplat);
 			
 			//*********内部据点界面，视图构建***********
 			//定义可交互对象承载视图框
@@ -286,11 +323,12 @@
 			var interactiveObject1 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			interactiveObject1.hide();
 			interactiveObject1.dom.bind("click",function(){
-				//判断是否可以交互|切换界面（未实现）
-				
-				//界面切换，隐藏当前内部场景-内部据点界面，显示-交互对象交互界面
-				internalSceneStronghold.hide();
-				internalSceneInteraction.show();
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_STRONGHOLD){//判断当前活动的场景是否为：内部据点界面
+					//判断是否可以交互|切换界面（未实现）
+					//界面切换，隐藏当前内部场景-内部据点界面，显示-交互对象交互界面
+					internalSceneStronghold.hide();
+					internalSceneInteraction.show();
+				}
 			});
 			var interactiveObject2 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			interactiveObject2.hide();
@@ -310,21 +348,28 @@
 			var moveInternalSceneBasic = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			internalSceneStronghold.dom.append(moveInternalSceneBasic.dom);
 			moveInternalSceneBasic.dom.bind("click",function(){//点击进行位置移动
-				//判断是否可以返回（未实现）
-				//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
-				internalSceneBasic.show();
-				internalSceneStronghold.hide();
-				//移动菜单
-				internalSceneBasic.dom.append(menu.dom);
+				if(LC.GlobalVar.CURRENT_INTERNAL_SCENE==LC.CommonProperty.INTERNAL_SCENE_STRONGHOLD){//判断当前活动的场景是否为：内部据点界面
+					//判断是否可以返回（未实现）
+					//返回，隐藏当前内部场景-内部据点界面，显示-大地图界面
+					internalSceneBasic.show();
+					internalSceneStronghold.hide();
+					//移动菜单
+					internalSceneBasic.dom.append(menu.dom);
+					internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
+				}
 			});
 			//可能移动至其他地方
 			var move1 = LC.Components.PanelFactory.createPanelBasic("","40px","25px");
 			
 			/**
 			 *  传入plat地图实例,内部场景-内部据点界面装入地图数据，同时绑定监听（用于更新界面数据）
+			 * ps：由于每个场景都不一样，载入清除页面数据方法都需要单独定义
 			 */
-			internalSceneStrongholdLoadData = function (plat){
+			internalSceneStronghold.loadData = function (plat){
+				LC.GlobalVar.CURRENT_INTERNAL_SCENE=LC.CommonProperty.INTERNAL_SCENE_STRONGHOLD;//当前活动的场景变更为：内部据点界面
+				internalSceneStronghold.clearData(plat);//清除原有数据,避免数据残留
 				moveInternalSceneBasic.dom.text("返回大地图");
+				moveInternalSceneBasic.show();
 				//读取交互对象数据
 				var objMap = plat.getRoleMap();
 				//判断里面至少有1个交互对象
@@ -371,11 +416,30 @@
 						};
 					}
 				}
-				plat.addListener(internalSceneStronghold);
+				plat.addListener(internalSceneStronghold);//添加监听
+			};
+			/**
+			 *  清除场景中的数据,同时解绑监听
+			 *  ps：由于每个场景都不一样，载入清除页面数据方法都需要单独定义
+			 */
+			internalSceneStronghold.clearData=function(plat){
+				moveInternalSceneBasic.dom.text("");
+				moveInternalSceneBasic.hide();
+				interactiveObject1.dom.text("");
+				interactiveObject1.hide();
+				interactiveObject2.dom.text("");
+				interactiveObject2.hide();
+				interactiveObject3.dom.text("");
+				interactiveObject3.hide();
+				interactiveObject4.dom.text("");
+				interactiveObject4.hide();
+				interactiveObject5.dom.text("");
+				interactiveObject5.hide();
+				interactiveObject6.dom.text("");
+				interactiveObject6.hide();
+				plat.removeListener(internalSceneStronghold);
 			};
 			//************************************
-			//启动时初次载入地图数据
-			internalSceneStrongholdLoadData(nowplat);
 			
 			//**********交互对象交互界面，视图构建*********
 			//internalSceneInteraction.dom.append();
@@ -395,9 +459,11 @@
 			/**
 			 *  传入plat地图实例,内部场景-内部据点界面装入地图数据，同时绑定监听（用于更新界面数据）
 			 */
-			internalSceneStrongholdLoadData = function (plat){
+			/*
+			internalSceneStronghold.loadData = function (plat){
 				
 			};
+			*/
 			//************************************
 			
 			//***********战斗界面，视图构建*************
@@ -412,7 +478,8 @@
 			console.log(map.get(LC.Data.DynamicData.Home));
 			
 
-
+			//启动时初次载入地图数据
+			internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
 
 
 		</script>

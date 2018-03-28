@@ -127,6 +127,19 @@ LC.CommonProperty = {
 	 *  CSS class:相对定位
 	 */
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
+	//++++++++++++++
+	/**
+	 *  初始大地图界面	ps:值可以随意修改,不同即可
+	 */
+	INTERNAL_SCENE_BASIC : "INTERNAL_SCENE_BASIC",
+	/**
+	 *  内部据点界面	ps:值可以随意修改,不同即可
+	 */
+	INTERNAL_SCENE_STRONGHOLD : "INTERNAL_SCENE_STRONGHOLD",
+	/**
+	 *  交互对象交互界面	ps:值可以随意修改,不同即可
+	 */
+	INTERNAL_SCENE_INTERACTION : "INTERNAL_SCENE_INTERACTION",
 };
 /**
  * 全局变量
@@ -136,6 +149,16 @@ LC.GlobalVar = {
 	 * 可以用于接收拖放对象集合，用于拖放
 	 */
 	DROPSET : new Array(),
+	//=========视图层========
+	/**
+	 * true表示当前视图 
+	 */
+	CURRENT_INTERNAL_SCENE : null,
+	//=========数据层========
+	/**
+	 * 当前位置地图对象（plat对象） 
+	 */
+	CURRENT_LOCATION : null,
 };
 /**
  * 打印错误信息
