@@ -81,7 +81,9 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			//去掉所有隐藏样式
 			var hideClass = LC.CommonProperty.CSS_HIDE_EXPAND.trim();
 			var hideClass2 = LC.CommonProperty.CSS_HIDE_SHRINK.trim();
-			className = className.replace(hideClass, "").replace(hideClass, "");
+			//该替换方法只会替换一个，会有BUG，更改为正则替换
+			//className = className.replace(hideClass, "").replace(hideClass, "");
+			className=className.replace(new RegExp(hideClass,"\g"),"").replace(new RegExp(hideClass2,"\g"),"");
 			//重新添加隐藏样式
 			this.dom.attr({
 				"class" : className + hideType

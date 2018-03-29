@@ -50,3 +50,80 @@ LC.Components.InternalSceneFactory = {
 		return scene;
 	},
 };
+/**
+ * 定义几个默认内部场景
+ * 默认方法：loadData(plat),clearData(plat)
+ */
+LC.DefaultInternalScene = {
+	/**
+	 * 初始大地图界面
+	 * 默认方法：loadData(plat),clearData(plat)
+	 */
+	internalSceneBasic : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	/**
+	 * 内部据点界面,初始隐藏
+	 * 默认方法：loadData(plat),clearData(plat)
+	 */
+	internalSceneStronghold : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	/**
+	 * 交互对象交互界面,初始隐藏
+	 * 默认方法：loadData(plat),clearData(plat)
+	 */
+	internalSceneInteraction : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	/**
+	 * 清空全部界面数据及监听 
+	 */
+	clearData : function(plat){
+		if (null==plat) {
+			plat = LC.GlobalVar.CURRENT_LOCATION;
+		};
+		LC.DefaultInternalScene.internalSceneBasic.clearData(plat);
+		LC.DefaultInternalScene.internalSceneStronghold.clearData(plat);
+		LC.DefaultInternalScene.internalSceneInteraction.clearData(plat);
+		return plat;
+	},
+	/**
+	 * 一键隐藏全部界面 
+	 */
+	hide : function(){
+		LC.DefaultInternalScene.internalSceneBasic.hide();
+		LC.DefaultInternalScene.internalSceneStronghold.hide();
+		LC.DefaultInternalScene.internalSceneInteraction.hide();
+	},
+	/**
+	 * 切换场景;
+	 * （必须）传入即将跳转到的目标场景scene（LC.DefaultInternalScene.?），
+	 * 1.隐藏全部场景；2.清除全部场景数据、监听；3.重新载入当前数据到目标场景scene
+	 */
+	switchScene : function(switchScene1){
+		console.log(switchScene1);
+		//进入，隐藏其他界面，显示-目标界面switchScene
+		LC.DefaultInternalScene.hide();
+		switchScene1.show();
+		//移动菜单
+		switchScene1.dom.append(menu.dom);
+		//注意，清空监听！(默认清空当前所在plat对象)
+		LC.DefaultInternalScene.clearData();
+		//目标界面switchScene 载入数据
+		switchScene1.loadData(LC.GlobalVar.CURRENT_LOCATION);
+	},
+};
+/*
+ * 界面切换范本
+function() {//点击进行位置移动
+	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.??1) {//判断当前活动的场景是否为：??界面
+		//当前活动的场景变更为：??1界面
+		LC.GlobalVar.CURRENT_INTERNAL_SCENE = LC.CommonProperty.??2;
+		//判断是否可以进入（未实现）
+		//进入，隐藏其他界面，显示-??2界面
+		LC.DefaultInternalScene.hide();
+		LC.DefaultInternalScene.??2.show();
+		//移动菜单
+		//LC.DefaultInternalScene.internalSceneStronghold.dom.append(menu.dom);
+		//注意，清空监听！(默认清空当前所在plat对象)
+		LC.DefaultInternalScene.clearData();
+		//??2界面 载入数据
+		LC.DefaultInternalScene.??2.loadData(LC.GlobalVar.CURRENT_LOCATION);
+	}
+};
+*/

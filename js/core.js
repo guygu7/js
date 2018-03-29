@@ -153,7 +153,7 @@ LC.GlobalVar = {
 	/**
 	 * true表示当前视图 
 	 */
-	CURRENT_INTERNAL_SCENE : null,
+	CURRENT_INTERNAL_SCENE : LC.CommonProperty.INTERNAL_SCENE_BASIC,
 	//=========数据层========
 	/**
 	 * 当前位置地图对象（plat对象） 
