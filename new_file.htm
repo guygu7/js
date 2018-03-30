@@ -160,7 +160,8 @@
 			 * 定义当前所在地图变量
 			 */
 			LC.GlobalVar.CURRENT_LOCATION = map.get(initX + "," + initY);
-			//据点中添加交互对象
+			//++++++++建立测试数据++++++++
+			//据点中添加交互对象,模拟随机生成的数据
 			var obj1 = new LC.Data.RoleFactory.createRole();
 			obj1.setName("实体角色1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
 			var obj2 = new LC.Data.RoleFactory.createRole();
@@ -180,6 +181,42 @@
 			map.get(initX+","+initY).addRole("静态建筑2",obj5);
 			map.get(initX+","+initY).addRole("静态建筑3",obj6);
 			//在地图上构建其他据点
+			//新增数个交互对象
+			var obj7 = new LC.Data.RoleFactory.createRole();
+			obj7.setName("新增实体角色1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj8 = new LC.Data.RoleFactory.createRole();
+			obj8.setName("新增实体角色2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj9 = new LC.Data.RoleFactory.createRole();
+			obj9.setName("新增实体角色3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			var obj10 = new LC.Data.RoleFactory.createRole();
+			obj10.setName("新增静态建筑1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			var obj11 = new LC.Data.RoleFactory.createRole();
+			obj11.setName("新增静态建筑2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			var obj12 = new LC.Data.RoleFactory.createRole();
+			obj12.setName("新增静态建筑3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.BUILDING);
+			//北方地图添加若干交互对象
+			map.get(initX+","+(initY-1)).addRole("新增实体角色1",obj7);
+			map.get(initX+","+(initY-1)).addRole("新增实体角色2",obj8);
+			map.get(initX+","+(initY-1)).addRole("新增实体角色3",obj9);
+			map.get(initX+","+(initY-1)).addRole("新增静态建筑1",obj10);
+			//东方地图添加若干交互对象
+			map.get((initX+1)+","+initY).addRole("交互对象1",obj1);
+			map.get((initX+1)+","+initY).addRole("新增实体角色1",obj7);
+			map.get((initX+1)+","+initY).addRole("新增静态建筑2",obj11);
+			//南方地图添加若干交互对象
+			map.get(initX+","+(initY+1)).addRole("交互对象2",obj2);
+			//西方地图添加若干交互对象
+			map.get((initX-1)+","+initY).addRole("新增静态建筑3",obj12);
+			//给交互对象添加交互属性
+			var action1 = LC.Data.ActionFactory.createAction();
+			action1.setName(LC.Data.CommonProperty.ACTION.ACTION_NAME.TALLK).setType(LC.Data.CommonProperty.ACTION.ACTION_TYPE.TYPE1);
+			var action2 = LC.Data.ActionFactory.createAction();
+			action1.setName(LC.Data.CommonProperty.ACTION.ACTION_NAME.ACTION).setType(LC.Data.CommonProperty.ACTION.ACTION_TYPE.TYPE1);
+			obj7.addAction("tallk",action1);
+			obj7.addAction("action",action2);
+			//++++++++++++++++++++++++++
+			
+			
 			//地图上分布物体======未完成===========
 			
 			//******创建角色实例，角色面板视图实例，并绑定*****
@@ -201,8 +238,7 @@
 				rolePanel.dom.children("#health").text(pram);
 			});
 			//初始化玩家角色数据
-			gameplayer.init().setName("玩家名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
-			console.log(gameplayer.getHealth());
+			gameplayer.init().setName("人物名称").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.PLAYER);
 			//*****************************
 			
 			//***********战斗界面，视图构建*************

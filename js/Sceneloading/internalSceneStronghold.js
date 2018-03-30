@@ -8,6 +8,8 @@ interactiveObject1.dom.bind("click", function() {
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_STRONGHOLD) {//判断当前活动的场景是否为：内部据点界面
 		//当前活动的场景变更为：交互对象交互界面
 		LC.GlobalVar.CURRENT_INTERNAL_SCENE = LC.CommonProperty.INTERNAL_SCENE_INTERACTION;
+		//当前正在的交互对象变更为：
+		LC.GlobalVar.CURRENT_INTERACTIVE_OBJECT = interactiveObject1.role;
 		//判断是否可以交互|切换界面（未实现）
 		//进入，隐藏其他界面，显示-交互对象交互界面
 		LC.DefaultInternalScene.switchScene(LC.DefaultInternalScene.internalSceneInteraction);
@@ -67,16 +69,22 @@ LC.DefaultInternalScene.internalSceneStronghold.loadData = function(plat) {
 					switch(i1) {
 					case 0:
 						interactiveObject1.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject1.role = objarr[i];
 						interactiveObject1.show();
 						i1++;
 						break;
 					case 1:
 						interactiveObject2.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject2.role = objarr[i];
 						interactiveObject2.show();
 						i1++;
 						break;
 					case 2:
 						interactiveObject3.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject3.role = objarr[i];
 						interactiveObject3.show();
 						i1++;
 						break;
@@ -86,16 +94,22 @@ LC.DefaultInternalScene.internalSceneStronghold.loadData = function(plat) {
 					switch(i2) {
 					case 0:
 						interactiveObject4.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject4.role = objarr[i];
 						interactiveObject4.show();
 						i2++;
 						break;
 					case 1:
 						interactiveObject5.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject5.role = objarr[i];
 						interactiveObject5.show();
 						i2++;
 						break;
 					case 2:
 						interactiveObject6.dom.text(objarr[i].getName());
+						//暂存对象
+						interactiveObject6.role = objarr[i];
 						interactiveObject6.show();
 						i2++;
 						break;
@@ -128,6 +142,13 @@ LC.DefaultInternalScene.internalSceneStronghold.clearData = function(plat) {
 	interactiveObject5.hide();
 	interactiveObject6.dom.text("");
 	interactiveObject6.hide();
+	//清除暂存对象
+	interactiveObject1.role = null;
+	interactiveObject2.role = null;
+	interactiveObject3.role = null;
+	interactiveObject4.role = null;
+	interactiveObject5.role = null;
+	interactiveObject6.role = null;
 	//移除监听
 	plat.removeListener(LC.DefaultInternalScene.internalSceneStronghold);
 };

@@ -29,7 +29,7 @@ moveEast.dom.bind("click", function() {//点击进行位置移动
 			//注意，清空监听！(默认清空当前所在plat对象，须在位置变更前执行)
 			LC.DefaultInternalScene.clearData();
 			//更新当前位置变量
-			LC.GlobalVar.CURRENT_LOCATION = map.get((Number(LC.GlobalVar.CURRENT_LOCATION.getPositionX()) - 1) + "," + LC.GlobalVar.CURRENT_LOCATION.getPositionY());
+			LC.GlobalVar.CURRENT_LOCATION = map.get((Number(LC.GlobalVar.CURRENT_LOCATION.getPositionX()) + 1) + "," + LC.GlobalVar.CURRENT_LOCATION.getPositionY());
 			//重新载入数据 
 			LC.DefaultInternalScene.internalSceneBasic.loadData(LC.GlobalVar.CURRENT_LOCATION);
 		}
@@ -111,6 +111,16 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	//添加监听
 	plat.addListener(LC.DefaultInternalScene.internalSceneBasic);
 };
+//设定视图响应
+LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(pram){
+	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
+		//重新载入数据
+		moveNorth.dom.text(plat.getLink().get("top") == "true" ? "向北" : "X");
+		moveEast.dom.text(plat.getLink().get("right") == "true" ? "向东" : "X");
+		moveSouth.dom.text(plat.getLink().get("bottom") == "true" ? "向南" : "X");
+		moveWest.dom.text(plat.getLink().get("left") == "true" ? "向西" : "X");
+	}
+});
 /**
  *  清除场景中的数据,同时解绑监听
  * 	注意：必须传入plat对象解绑监听！

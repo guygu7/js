@@ -46,6 +46,25 @@ LC.Data.CommonProperty = {
 		}
 	},
 	/**
+	 * 交互动作 
+	 */
+	ACTION : {
+		/**
+		 * 交互动作名称 
+		 */
+		ACTION_NAME : {
+			TALLK : "交谈",
+			ACTION : "测试动作",
+		},
+		/**
+		 * 交互动作类型
+		 */
+		ACTION_TYPE :{
+			TYPE1 : "类型1",
+			TYPE2 : "类型2",
+		},
+	},
+	/**
 	 *  物品
 	 */
 	ITEM : {
@@ -122,6 +141,12 @@ LC.Data.DataModle = {
 			this.setHealth(100).setDefense(0).setCrit(5).setCritStrike(120).setFriendliness(0).setFriendlinessType(LC.Data.CommonProperty.ROLE.ROLE_FriendlinessType.NEUTRAL);
 			return this;
 		};
+	},
+	/**
+	 * 交互动作 
+	 */
+	Action : function(){
+		
 	},
 	/**
 	 * 物品
@@ -398,6 +423,43 @@ LC.Data.RoleFactory = {
 		roleObj.getFriendlinessType = function() {
 			return _friendlinessType;
 		};
+		
+		
+		//设置可交互动作属性集合
+		var _actionMap = new LC.Utils.Map();
+		/**
+		 * 添加交互动作(动作对象),Map(key, pram)
+		 */
+		roleObj.addAction = function(key, pram) {
+			//（未实现）若只有一个参数，检测参数是否为交互动作(动作对象)，是则设置key=Action.getName()
+			if(null == _actionMap){
+				_actionMap = new LC.Utils.Map();
+			}
+			_actionMap.put(key, pram);
+			LC.Components.ComponentFunction.event.call(this,"addAction",pram);
+			return this;
+		};
+		/**
+		 * 删除交互动作(动作对象)
+		 */
+		roleObj.removeAction = function(key) {
+			_actionMap.removeByKey(key);
+			LC.Components.ComponentFunction.event.call(this,"removeAction",pram);
+			return this;
+		};
+		/**
+		 * 获取单个交互动作(动作对象)
+		 */
+		roleObj.getAction = function(key) {
+			return _actionMap.get(key);
+		};
+		/**
+		 * 获取交互动作对象集合
+		 */
+		roleObj.getActionMap = function() {
+			return _actionMap;
+		};
+		
 		return roleObj;
 	},
 	/**
@@ -411,6 +473,44 @@ LC.Data.RoleFactory = {
 		role.setCrit(0);
 		role.setCritStrike(125);
 		return role;
+	},
+};
+LC.Data.ActionFactory = {
+	createAction : function() {
+		actionObj = new LC.Data.DataModle.Action();
+		//定义监听对象集合
+		LC.Components.ComponentFunction.listener(actionObj);
+		var _name;
+		/**
+		 * 设置名称
+		 */
+		actionObj.setName = function(pram) {
+			_name = pram;
+			LC.Components.ComponentFunction.event.call(this,"setName",pram);
+			return this;
+		};
+		/**
+		 * 获取名称
+		 */
+		actionObj.getName = function() {
+			return _name;
+		};
+		var _type;
+		/**
+		 * 设置类型
+		 */
+		actionObj.setType = function(pram) {
+			_type = pram;
+			LC.Components.ComponentFunction.event.call(this,"setType",pram);
+			return this;
+		};
+		/**
+		 * 获取类型
+		 */
+		actionObj.getType = function() {
+			return _type;
+		};
+		return actionObj;
 	},
 };
 LC.Data.MapFactory = {

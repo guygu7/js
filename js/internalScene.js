@@ -92,11 +92,10 @@ LC.DefaultInternalScene = {
 	},
 	/**
 	 * 切换场景;
-	 * （必须）传入即将跳转到的目标场景scene（LC.DefaultInternalScene.?），
+	 * （必须）传入即将跳转到的目标场景scene（LC.DefaultInternalScene.?）,
 	 * 1.隐藏全部场景；2.清除全部场景数据、监听；3.重新载入当前数据到目标场景scene
 	 */
-	switchScene : function(switchScene1){
-		console.log(switchScene1);
+	switchScene : function(switchScene1,loadData){
 		//进入，隐藏其他界面，显示-目标界面switchScene
 		LC.DefaultInternalScene.hide();
 		switchScene1.show();
@@ -105,7 +104,13 @@ LC.DefaultInternalScene = {
 		//注意，清空监听！(默认清空当前所在plat对象)
 		LC.DefaultInternalScene.clearData();
 		//目标界面switchScene 载入数据
-		switchScene1.loadData(LC.GlobalVar.CURRENT_LOCATION);
+		if (switchScene1 == LC.DefaultInternalScene.internalSceneStronghold||switchScene1 == LC.DefaultInternalScene.internalSceneBasic){
+			//判断为切换至大地图、据点界面
+			switchScene1.loadData(LC.GlobalVar.CURRENT_LOCATION);
+		}else if(switchScene1 == LC.DefaultInternalScene.internalSceneInteraction){
+			//判断为切换至交互界面
+			switchScene1.loadData(LC.GlobalVar.CURRENT_INTERACTIVE_OBJECT);
+		}
 	},
 };
 /*

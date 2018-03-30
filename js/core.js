@@ -159,6 +159,10 @@ LC.GlobalVar = {
 	 * 当前位置地图对象（plat对象） 
 	 */
 	CURRENT_LOCATION : null,
+	/**
+	 * 当前正在的交互对象 （role对象）
+	 */
+	CURRENT_INTERACTIVE_OBJECT : null,
 };
 /**
  * 打印错误信息
