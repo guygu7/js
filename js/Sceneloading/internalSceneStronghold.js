@@ -122,6 +122,10 @@ LC.DefaultInternalScene.internalSceneStronghold.loadData = function(plat) {
 	//添加监听
 	plat.addListener(LC.DefaultInternalScene.internalSceneStronghold);
 };
+//设定视图响应
+LC.DefaultInternalScene.internalSceneStronghold.addResponseMethod("",function(pram){
+	
+});
 /**
  *  清除场景中的数据,同时解绑监听;
  * 	注意：必须传入plat对象解绑监听！

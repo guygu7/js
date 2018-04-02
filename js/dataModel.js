@@ -642,7 +642,7 @@ LC.Data.MapFactory = {
 				}
 				_link.put(pram, flag);
 			}
-			LC.Components.ComponentFunction.event.call(this,"setLink",pram);
+			LC.Components.ComponentFunction.event.call(this,"setLink",pram,flag);
 			return this;
 		};
 		/**

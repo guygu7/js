@@ -949,13 +949,13 @@ LC.Components.ComponentFunction = {
 		};
 	},
 	/**
-	 * (用于监听方法执行，用法：写于要被监听的方法中，通过call调用，例：LC.Components.ComponentFunction.event.call(this,"setName",pram);) 
+	 * (用于监听方法执行，用法：写于要被监听的方法中，通过call调用，例：LC.Components.ComponentFunction.event.call(this,"setName",...prams);) 
 	 * 自定义事件监听，被监听对象的具体方法调用时，执行该方法，遍历监听者（订阅者、观察者）对象，并执行其对应的触发函数
 	 * 该方法主要用于数据模型 LC.Data 实例创建方法中
 	 * @param {Object} methodName（被监听对象的方法名）
-	 * @param {Object} pram（可传参数，会传入触发函数中）
+	 * @param {Object} ...pram（可传参数，会传入触发函数中，可传任意多个参数）
 	 */
-	event : function(methodName,pram){
+	event : function(methodName, prams){
 		//遍历监听者（订阅者、观察者）对象，并执行默认的监听方法
 		var listeners = this.getListeners();
 		if(listeners.length>0){
@@ -964,7 +964,19 @@ LC.Components.ComponentFunction = {
 			  method = listeners[i].getResponseMethod(methodName);
 			  //让监听者（订阅者、观察者）对象执行响应方法，并传入修改的参数
 			  if(method){
-				  method.call(listeners[i],pram);
+				var str = "method.call(listeners[i]";
+			  	//对arguments进行处理，去掉第一个参数methodName后传入响应方法中;ps:无法彻底删除最后一个参数，但最后一个为undefind;
+			  	for (var i=0; i < arguments.length; i++) {
+				  arguments[i] = arguments[i+1];
+				  //使用eval()执行后，可以彻底删除最后一个参数,最后一个参数不写入str即可
+				  if(!(i==(arguments.length-1))){
+				  	str = str+",arguments["+i+"]";
+				  }
+				};
+				str = str+");";
+				//为了使响应方法的可以透明化传入多个参数，采用eval()执行;ps:使用js压缩可能出现问题
+				eval(str);
+				//method.call(listeners[i],prams);采用eval方法后弃置
 			  }
 			};
 		}

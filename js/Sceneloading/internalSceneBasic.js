@@ -112,13 +112,61 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	plat.addListener(LC.DefaultInternalScene.internalSceneBasic);
 };
 //设定视图响应
-LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(pram){
+LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(pram,flag){
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
 		//重新载入数据
-		moveNorth.dom.text(plat.getLink().get("top") == "true" ? "向北" : "X");
-		moveEast.dom.text(plat.getLink().get("right") == "true" ? "向东" : "X");
-		moveSouth.dom.text(plat.getLink().get("bottom") == "true" ? "向南" : "X");
-		moveWest.dom.text(plat.getLink().get("left") == "true" ? "向西" : "X");
+		switch(pram){
+				case "top":
+				  switch(flag){
+				  	case "true":
+				  		moveNorth.dom.text("向北");
+				  		break;
+				  	case "false":
+				  		moveNorth.dom.text("X");
+				  		break;
+				  	default:
+				  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+				  }
+				  break;
+				case "right":
+					switch(flag){
+					  	case "true":
+					  		moveEast.dom.text("向东");
+					  		break;
+					  	case "false":
+					  		moveEast.dom.text("X");
+					  		break;
+					  	default:
+					  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+					  }
+				  break;
+				case "bottom":
+					switch(flag){
+					  	case "true":
+					  		moveSouth.dom.text("向南");
+					  		break;
+					  	case "false":
+					  		moveSouth.dom.text("X");
+					  		break;
+					  	default:
+					  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+					  }
+				  break;
+				case "left":
+					switch(flag){
+				  	case "true":
+				  		moveWest.dom.text("向西");
+				  		break;
+				  	case "false":
+				  		moveWest.dom.text("X");
+				  		break;
+				  	default:
+				  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+				  }
+				  break;
+				default:
+				LC.warning("出现错误,没有找到对应的Link:"+pram);
+			}
 	}
 });
 /**

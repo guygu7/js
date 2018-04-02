@@ -17,3 +17,6 @@
 		每次循环结束时将当前循环开始时放入的参数（对象）从stack中移除，
 		如此循环直至stack为空则模拟递归结束；
 4.console命令会占用一定资源
+
+5.使用了eval()方法，js压缩时可能出现问题（未证实）
+位置：core.js - LC.Components.ComponentFunction.event function
