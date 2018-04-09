@@ -4,7 +4,7 @@
 /**
  * 向北移动的按钮
  */
-var moveNorth = LC.Components.PanelFactory.createPanelBasic("", "40px", "25px");
+var moveNorth = LC.Components.PanelFactory.createPanelBasic("", "40px", "25px","button-moveNorth");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveNorth.dom);
 moveNorth.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面

@@ -38,4 +38,17 @@ LC.Components.ButtonFactory = {
 		},false);
 		return button;
 	},
+	/**
+	 * 向北移动按钮
+ 	 * @param {Object} id
+	 */
+	createButtonMoveNorth:function(id) {
+		if(!_cssStyle){_cssStyle = LC.CommonProperty.}
+		var panel = new LC.Components.PanelFactory.createPanel();
+		panel.setSignID(_id).creatDOM("div", _cssStyle).css({
+			"width" : _width,
+			"height" : _height,
+		});
+		return panel;
+	}
 };
