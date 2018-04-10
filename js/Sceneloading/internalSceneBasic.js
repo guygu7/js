@@ -4,7 +4,7 @@
 /**
  * 向北移动的按钮
  */
-var moveNorth = LC.Components.PanelFactory.createPanelBasic(null, "40px", "25px","button-moveNorth");
+var moveNorth = LC.Components.ButtonFactory.createButtonMoveNorth();
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveNorth.dom);
 moveNorth.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
@@ -96,7 +96,7 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	//清除原有数据,避免数据残留
 	LC.DefaultInternalScene.clearData();
 	//重新载入数据
-	moveNorth.dom.text(plat.getLink().get("top") == "true" ? "向北" : "X");
+	moveNorth.setText(plat.getLink().get("top") == "true" ? "向北" : "X");
 	moveNorth.show();
 	moveEast.dom.text(plat.getLink().get("right") == "true" ? "向东" : "X");
 	moveEast.show();

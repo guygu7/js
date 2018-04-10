@@ -127,6 +127,18 @@ LC.CommonProperty = {
 	 *  CSS class:相对定位
 	 */
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
+	/**
+	 *  CSS class:向北移动按钮
+	 */
+	CSS_BOTTON_MOVENORTH :" botton-moveNorth ",
+	/**
+	 *  CSS class:向北移动按钮-文本
+	 */
+	CSS_BOTTON_MOVENORTH_TEXT :" botton-moveNorth-text ",
+	/**
+	 *  CSS class:向北移动按钮-箭头
+	 */
+	CSS_BOTTON_MOVENORTH_ARROW : " botton-moveNorth-arrow ",
 	//++++++++++++++
 	/**
 	 *  初始大地图界面	ps:值可以随意修改,不同即可

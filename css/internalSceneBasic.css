@@ -1,0 +1,53 @@
+/**
+ * 	大地图界面、及其中组件的样式
+ */
+/* 向北移动按钮样式 */
+.botton-moveNorth-arrow {
+	display: block;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	position: absolute;
+	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 10px rgb(213,204,150) inset, 0px 0px 3px 11px rgb(100,100,100) inset, 0px 0px 3px 11px rgb(170,150,95) inset;
+	border-radius: 2px;
+	background-color: rgba(255,255,255,0);
+	transform: rotateX(50deg) rotate(45deg);
+	top: 0px;
+	left:5px;
+}
+.botton-moveNorth-text {
+	width: 88px;
+	height: 40px;
+	position: absolute;
+	background-color: rgba(200,180,125,1);/*不透明，需要与所在面板颜色一致*/
+	top: 30px;
+	left:-9px;
+	overflow: hidden;
+}
+.botton-moveNorth-text:before {
+	content: "";
+	width: 14px;
+	height: 0px;
+	position: absolute;
+	box-shadow: 2px -1px 2px 2px rgb(100,100,100), 0px 0px 2px 2px rgb(170,150,95) inset;
+	background-color: rgba(255,255,255,0);
+	left: 1px;
+}
+.botton-moveNorth-text:after {
+	content: "";
+	width: 14px;
+	height: 0px;
+	position: absolute;
+	box-shadow: -2px -1px 2px 2px rgb(100,100,100), 0px 0px 2px 2px rgb(170,150,95) inset;
+	background-color: rgba(255,255,255,0);
+	right: 1px;
+}
+.botton-moveNorth{
+	
+}
+.botton-moveNorth:hover .botton-moveNorth-arrow {
+	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 10px rgb(233,224,170) inset, 0px 0px 3px 11px rgb(100,100,100) inset, 0px 0px 3px 11px rgb(170,150,95) inset;
+}
+.botton-moveNorth:active .botton-moveNorth-arrow {
+	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 10px rgb(193,184,130) inset, 0px 0px 3px 11px rgb(100,100,100) inset, 0px 0px 3px 11px rgb(170,150,95) inset;
+}

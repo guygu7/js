@@ -43,12 +43,16 @@ LC.Components.ButtonFactory = {
  	 * @param {Object} id
 	 */
 	createButtonMoveNorth:function(id) {
-		if(!_cssStyle){_cssStyle = LC.CommonProperty.}
-		var panel = new LC.Components.PanelFactory.createPanel();
-		panel.setSignID(_id).creatDOM("div", _cssStyle).css({
-			"width" : _width,
-			"height" : _height,
-		});
-		return panel;
+		var moveNorth = LC.Components.PanelFactory.createPanel();
+		var moveNorth1 = LC.Components.PanelFactory.createPanel();
+		var moveNorth2 = LC.Components.PanelFactory.createPanel();
+		moveNorth.setSignID(id).creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH);
+		moveNorth1.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_ARROW);
+		moveNorth2.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_TEXT);
+		moveNorth.dom.append(moveNorth1.dom).append(moveNorth2.dom);
+		moveNorth.setText=function(pram){
+			moveNorth2.dom.text(pram);
+		};
+		return moveNorth;
 	}
 };

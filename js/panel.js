@@ -28,7 +28,7 @@ LC.Components.PanelFactory = {
 	createPanelTransparent : function(_id,_width,_height) {
 		if(!_width){_width = "100%";}
 		if(!_height){_height = "100%";}
-		var panel = new LC.Components.PanelFactory.createPanel();
+		var panel = LC.Components.PanelFactory.createPanel();
 		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL_TRANSPARENT).css({
 			"width" : _width,
 			"height" : _height
@@ -40,7 +40,7 @@ LC.Components.PanelFactory = {
 	 * @param {String} panelID 面板id
 	 */
 	createPanelTitle : function(_id) {
-		var panel = new LC.Components.PanelFactory.createPanel();
+		var panel = LC.Components.PanelFactory.createPanel();
 		panel.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_PANEL_TITTLE).css({
 			"width" : "99%",
 			"height" : "23px"
@@ -58,7 +58,7 @@ LC.Components.PanelFactory = {
 		if(!_width){_width = "98%";}
 		if(!_height){_height = "98%";}
 		if(!_cssStyle){_cssStyle = LC.CommonProperty.CSS_PANEL;}
-		var panel = new LC.Components.PanelFactory.createPanel();
+		var panel = LC.Components.PanelFactory.createPanel();
 		panel.setSignID(_id).creatDOM("div", _cssStyle).css({
 			"width" : _width,
 			"height" : _height,
