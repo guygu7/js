@@ -14,12 +14,18 @@ LC.Components.Button.prototype.setText = function(text) {
  * 组件空间中加入按钮工厂
  */
 LC.Components.ButtonFactory = {
+	createButton : function(){
+		var button = new LC.Components.Button();
+		//定义监听响应方法集合
+		LC.Components.ComponentFunction.responseMethod(button);
+		return button;
+	},
 	/**
 	 * 菜单的按钮，创建并返回一个按钮html对象button，调用.append()加入页面中显示
 	 * @param {Object} _id 菜单id
 	 */
 	createButtonDropdown : function(_id) {
-		var button = new LC.Components.Button();
+		var button = LC.Components.ButtonFactory.createButton();
 		button.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_BUTTON_DROPDOWN).css({
 			"width":"50px",
 			"height":"35px"
@@ -32,27 +38,48 @@ LC.Components.ButtonFactory = {
 	 */
 	createButtonClose : function(_id,parten) {
 		if (null==parten)parten=1;
-		var button = new LC.Components.Button();
+		var button = LC.Components.ButtonFactory.createButton();
 		button.setSignID(_id).creatDOM("div", LC.CommonProperty.CSS_BUTTON_CLOSE)[0].addEventListener("click",function(){
 			parten.hide();
 		},false);
 		return button;
 	},
 	/**
-	 * 向北移动按钮
+	 * 向北移动按钮（上箭头）
  	 * @param {Object} id
 	 */
 	createButtonMoveNorth:function(id) {
-		var moveNorth = LC.Components.PanelFactory.createPanel();
-		var moveNorth1 = LC.Components.PanelFactory.createPanel();
-		var moveNorth2 = LC.Components.PanelFactory.createPanel();
-		moveNorth.setSignID(id).creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH);
-		moveNorth1.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_ARROW);
-		moveNorth2.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_TEXT);
-		moveNorth.dom.append(moveNorth1.dom).append(moveNorth2.dom);
-		moveNorth.setText=function(pram){
-			moveNorth2.dom.text(pram);
+		var moveBotton = LC.Components.ButtonFactory.createButton();//整体容器
+		var botton = LC.Components.ButtonFactory.createButton();//按钮图像容器(装入箭头/遮挡块)
+		var arrow = LC.Components.ButtonFactory.createButton();//箭头
+		var block = LC.Components.ButtonFactory.createButton();//遮挡块
+		var text = LC.Components.ButtonFactory.createButton();//文字
+		moveBotton.creatDOM("div");
+		botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH);
+		arrow.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_ARROW);
+		block.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_TEXT);
+		text.creatDOM("div");
+		moveBotton.dom.append(botton.dom.append(arrow.dom).append(block.dom)).append(text.dom);
+		moveBotton.setText = function(pram){
+			text.dom.text(pram);
 		};
-		return moveNorth;
+		return moveBotton;
+	},
+	/**
+	 * 向南移动按钮（下箭头）
+ 	 * @param {Object} id
+	 */
+	createButtonMoveSouth:function(id) {
+		var moveSouth = LC.Components.ButtonFactory.createButton();
+		var moveSouth1 = LC.Components.ButtonFactory.createButton();
+		var moveSouth2 = LC.Components.ButtonFactory.createButton();
+		moveSouth.setSignID(id).creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH);
+		moveSouth1.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH_ARROW);
+		moveSouth2.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH_TEXT);
+		moveSouth.dom.append(moveSouth1.dom).append(moveSouth2.dom);
+		moveSouth.setText = function(pram){
+			moveSouth2.dom.text(pram);
+		};
+		return moveSouth;
 	}
 };

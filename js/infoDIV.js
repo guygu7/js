@@ -4,7 +4,7 @@
 LC.Components.InfoDIV = function() {
 };
 LC.Utils.extend(LC.Components.InfoDIV, LC.Components.BasicComponent);
-LC.Components.Button.prototype.setText = function(text) {
+LC.Components.InfoDIV.prototype.setText = function(text) {
 	this.dom.append($("<div></div>").css({
 		"margin" : "auto"
 	}).append(text));

@@ -224,12 +224,13 @@ LC.Components.BasicComponent = function(basicComponentID) {
 	 };
 	 };
 	 */
+	/* 已废弃
 	if ( typeof this.styleAlter != "function") {
-		/**
+		**
 		 * 样式修改(子类继承扩展)
 		 * @param {Object} basicComponent 组件对象
 		 * @param {Function} fn 修改函数
-		 */
+		 *
 		LC.Components.BasicComponent.prototype.styleAlter = function(basicComponent, fn) {
 			if ( typeof fn == "function") {
 				fn(basicComponent);
@@ -237,6 +238,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 			return basicComponent;
 		};
 	};
+	*/
 	/**
 	 * 获取的DOM对像，通过.append()加入页面
 	 * dom中包含一个self属性
@@ -265,13 +267,11 @@ LC.Components.BasicComponent = function(basicComponentID) {
 				sign : _signID,
 				"class" : cssClass
 			});
-			this.dom = this.styleAlter(basicComponent);
+			//已废弃this.dom = this.styleAlter(basicComponent);
+			this.dom = basicComponent;
 			this.dom.self = this;
 			return this.dom;
 		};
 	};
-	//执行监听者默认方法
-	LC.Components.BasicComponent.prototype.listenerFunction =  function(fnName,pram) {
-		
-	};
+	
 };

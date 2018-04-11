@@ -54,7 +54,7 @@ LC.Components.Table.prototype.creatDOM = function(_line, _column, _width, _heigh
 		};
 		basicComponent.append(tempColumn);
 	};
-	this.dom = this.styleAlter(basicComponent);
+	this.dom = basicComponent;
 	this.dom.self = this;
 	return this.dom;
 };
