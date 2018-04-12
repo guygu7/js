@@ -45,41 +45,35 @@ LC.Components.ButtonFactory = {
 		return button;
 	},
 	/**
-	 * 向北移动按钮（上箭头）
+	 * 移动按钮（东南西北）
  	 * @param {Object} id
 	 */
-	createButtonMoveNorth:function(id) {
+	createButtonMove:function(pram) {
 		var moveBotton = LC.Components.ButtonFactory.createButton();//整体容器
 		var botton = LC.Components.ButtonFactory.createButton();//按钮图像容器(装入箭头/遮挡块)
 		var arrow = LC.Components.ButtonFactory.createButton();//箭头
 		var block = LC.Components.ButtonFactory.createButton();//遮挡块
 		var text = LC.Components.ButtonFactory.createButton();//文字
-		moveBotton.creatDOM("div");
-		botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH);
-		arrow.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_ARROW);
-		block.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVENORTH_TEXT);
-		text.creatDOM("div");
+		switch(pram){
+			case "top":
+				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE);
+				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_TOPTEXT);
+				break;
+			case "bottom":
+				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE+LC.CommonProperty.CSS_DIRECTION_DOWNWARD);
+				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_BOTTOMTEXT);
+				break;
+			default:
+			moveBotton.creatDOM("div");
+			text.creatDOM("div");
+		}
+		moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE);
+		arrow.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_ARROW);
+		block.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_BLOCK);
 		moveBotton.dom.append(botton.dom.append(arrow.dom).append(block.dom)).append(text.dom);
 		moveBotton.setText = function(pram){
 			text.dom.text(pram);
 		};
 		return moveBotton;
 	},
-	/**
-	 * 向南移动按钮（下箭头）
- 	 * @param {Object} id
-	 */
-	createButtonMoveSouth:function(id) {
-		var moveSouth = LC.Components.ButtonFactory.createButton();
-		var moveSouth1 = LC.Components.ButtonFactory.createButton();
-		var moveSouth2 = LC.Components.ButtonFactory.createButton();
-		moveSouth.setSignID(id).creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH);
-		moveSouth1.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH_ARROW);
-		moveSouth2.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVESOUTH_TEXT);
-		moveSouth.dom.append(moveSouth1.dom).append(moveSouth2.dom);
-		moveSouth.setText = function(pram){
-			moveSouth2.dom.text(pram);
-		};
-		return moveSouth;
-	}
 };

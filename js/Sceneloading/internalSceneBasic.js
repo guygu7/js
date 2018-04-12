@@ -4,7 +4,7 @@
 /**
  * 向北移动的按钮
  */
-var moveNorth = LC.Components.ButtonFactory.createButtonMoveNorth();
+var moveNorth = LC.Components.ButtonFactory.createButtonMove("top");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveNorth.dom);
 moveNorth.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
@@ -38,7 +38,7 @@ moveEast.dom.bind("click", function() {//点击进行位置移动
 /**
  * 向南移动的按钮
  */
-var moveSouth = LC.Components.ButtonFactory.createButtonMoveSouth();
+var moveSouth = LC.Components.ButtonFactory.createButtonMove("bottom");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveSouth.dom);
 moveSouth.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面

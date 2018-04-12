@@ -128,29 +128,30 @@ LC.CommonProperty = {
 	 */
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
 	/**
-	 *  CSS class:向北移动按钮（上箭头）
+	 *  CSS class:移动按钮-通用整体包裹容器
 	 */
-	CSS_BOTTON_MOVEARROW :" botton-move ",
+	CSS_BOTTON_MOVE :" button-move ",
 	/**
-	 *  CSS class:向北移动按钮（上箭头）-箭头
+	 *  CSS class:移动按钮-通用内部包裹容器
 	 */
-	CSS_BOTTON_MOVEARROW : " botton-moveArrow ",
+	CSS_BOTTON_MOVE_INSIDE :" botton-moveInside ",
 	/**
-	 *  CSS class:向北移动按钮（上箭头）-文本
+	 *  CSS class:移动按钮-通用箭头
 	 */
-	CSS_BOTTON_MOVEBLOCK :" botton-moveBlock ",
+	CSS_BOTTON_MOVE_ARROW : " botton-moveArrow ",
 	/**
-	 *  CSS class:向南移动按钮（下箭头）
+	 *  CSS class:移动按钮-通用遮挡块
 	 */
-	CSS_BOTTON_MOVESOUTH :" botton-moveSouth ",
+	CSS_BOTTON_MOVE_BLOCK :" botton-moveBlock ",
 	/**
-	 *  CSS class:向南移动按钮（下箭头）-文本
+	 *  CSS class:移动按钮（上箭头）-文本
 	 */
-	CSS_BOTTON_MOVESOUTH_TEXT :" botton-moveSouth-text ",
+	CSS_BOTTON_MOVE_TOPTEXT :" botton-moveTopText ",
 	/**
-	 *  CSS class:向南移动按钮（下箭头）-箭头
+	 *  CSS class:方向控制-旋转180°朝下
 	 */
-	CSS_BOTTON_MOVESOUTH_ARROW : " botton-moveSouth-arrow ",
+	CSS_DIRECTION_DOWNWARD :" direction-downward ",
+	
 	//++++++++++++++
 	/**
 	 *  初始大地图界面	ps:值可以随意修改,不同即可
