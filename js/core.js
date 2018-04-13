@@ -128,9 +128,21 @@ LC.CommonProperty = {
 	 */
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
 	/**
-	 *  CSS class:移动按钮-通用整体包裹容器
+	 *  CSS class:移动按钮-↑向北(整体包裹容器，定位)
 	 */
-	CSS_BOTTON_MOVE :" button-move ",
+	CSS_BOTTON_MOVE_NORTH :" button-moveNorth ",
+	/**
+	 *  CSS class:移动按钮-↓向南(整体包裹容器，定位)
+	 */
+	CSS_BOTTON_MOVE_SOUTH :" button-moveSouth ",
+	/**
+	 *  CSS class:移动按钮-←向西(整体包裹容器，定位)
+	 */
+	CSS_BOTTON_MOVE_WEST :" button-moveWest ",
+	/**
+	 *  CSS class:移动按钮-→向东(整体包裹容器，定位)
+	 */
+	CSS_BOTTON_MOVE_EAST :" button-moveEast ",
 	/**
 	 *  CSS class:移动按钮-通用内部包裹容器
 	 */
@@ -148,9 +160,29 @@ LC.CommonProperty = {
 	 */
 	CSS_BOTTON_MOVE_TOPTEXT :" botton-moveTopText ",
 	/**
+	 *  CSS class:移动按钮（下箭头）-文本
+	 */
+	CSS_BOTTON_MOVE_BOTTOMTEXT :" botton-moveBottomText ",
+	/**
+	 *  CSS class:移动按钮（左箭头）-文本
+	 */
+	CSS_BOTTON_MOVE_LEFTTEXT :" botton-moveLeftText ",
+	/**
+	 *  CSS class:移动按钮（右箭头）-文本
+	 */
+	CSS_BOTTON_MOVE_RIGHTTEXT :" botton-moveRightText ",
+	/**
 	 *  CSS class:方向控制-旋转180°朝下
 	 */
 	CSS_DIRECTION_DOWNWARD :" direction-downward ",
+	/**
+	 *  CSS class:方向控制-旋转90°朝右
+	 */
+	CSS_DIRECTION_RIGHTWARD :" direction-rightward ",
+	/**
+	 *  CSS class:方向控制-旋转270°朝左
+	 */
+	CSS_DIRECTION_LEFTWARD :" direction-leftward ",
 	
 	//++++++++++++++
 	/**

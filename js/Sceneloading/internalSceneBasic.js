@@ -21,7 +21,7 @@ moveNorth.dom.bind("click", function() {//点击进行位置移动
 /**
  * 向东移动的按钮
  */
-var moveEast = LC.Components.PanelFactory.createPanelBasic(null, "40px", "25px");
+var moveEast = LC.Components.ButtonFactory.createButtonMove("right");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveEast.dom);
 moveEast.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
@@ -55,7 +55,7 @@ moveSouth.dom.bind("click", function() {//点击进行位置移动
 /**
  * 向西移动的按钮
  */
-var moveWest = LC.Components.PanelFactory.createPanelBasic(null, "40px", "25px");
+var moveWest = LC.Components.ButtonFactory.createButtonMove("left");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(moveWest.dom);
 moveWest.dom.bind("click", function() {//点击进行位置移动
 	if (LC.GlobalVar.CURRENT_INTERNAL_SCENE == LC.CommonProperty.INTERNAL_SCENE_BASIC) {//判断当前活动的场景是否为：初始大地图界面
@@ -108,8 +108,18 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	  	default:
 	  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
 	}
-	moveEast.dom.text(plat.getLink().get("right") == "true" ? "向东" : "X");
-	moveEast.show();
+	switch(plat.getLink().get("right")){
+		case "true":
+	  		moveEast.setText("向东");
+	  		moveEast.show();
+	  		break;
+	  	case "false":
+	  		moveEast.setText("");
+	  		moveEast.hide();
+	  		break;
+	  	default:
+	  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+	}
 	switch(plat.getLink().get("bottom")){
 		case "true":
 	  		moveSouth.setText("向南");
@@ -122,8 +132,18 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	  	default:
 	  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
 	}
-	moveWest.dom.text(plat.getLink().get("left") == "true" ? "向西" : "X");
-	moveWest.show();
+	switch(plat.getLink().get("left")){
+		case "true":
+	  		moveWest.setText("向南");
+	  		moveWest.show();
+	  		break;
+	  	case "false":
+	  		moveWest.setText("");
+	  		moveWest.hide();
+	  		break;
+	  	default:
+	  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
+	}
 	info.dom.text(plat.getPositionX() + "," + plat.getPositionY());
 	info.show();
 	enter.dom.text("进入");
@@ -153,10 +173,12 @@ LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(
 				case "right":
 					switch(flag){
 					  	case "true":
-					  		moveEast.dom.text("向东");
+					  		moveEast.setText("向东");
+					  		moveEast.show();
 					  		break;
 					  	case "false":
-					  		moveEast.dom.text("X");
+					  		moveEast.setText("");
+					  		moveEast.hide();
 					  		break;
 					  	default:
 					  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
@@ -179,10 +201,12 @@ LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(
 				case "left":
 					switch(flag){
 				  	case "true":
-				  		moveWest.dom.text("向西");
+				  		moveWest.setText("向西");
+				  		moveWest.show();
 				  		break;
 				  	case "false":
-				  		moveWest.dom.text("X");
+				  		moveWest.setText("");
+				  		moveWest.hide();
 				  		break;
 				  	default:
 				  	LC.warning("Link\""+pram+"\"的状态出现错误,没有对应的状态:"+flag);
@@ -201,11 +225,11 @@ LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(
 LC.DefaultInternalScene.internalSceneBasic.clearData = function(plat) {
 	moveNorth.setText("");
 	moveNorth.hide();
-	moveEast.dom.text("");
+	moveEast.setText("");
 	moveEast.hide();
 	moveSouth.setText("");
 	moveSouth.hide();
-	moveWest.dom.text("");
+	moveWest.setText("");
 	moveWest.hide();
 	info.dom.text("");
 	info.hide();

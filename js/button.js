@@ -58,16 +58,27 @@ LC.Components.ButtonFactory = {
 			case "top":
 				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE);
 				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_TOPTEXT);
+				moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE_NORTH);
 				break;
 			case "bottom":
 				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE+LC.CommonProperty.CSS_DIRECTION_DOWNWARD);
 				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_BOTTOMTEXT);
+				moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE_SOUTH);
+				break;
+			case "left":
+				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE+LC.CommonProperty.CSS_DIRECTION_LEFTWARD);
+				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_LEFTTEXT);
+				moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE_WEST);
+				break;
+			case "right":
+				botton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_INSIDE+LC.CommonProperty.CSS_DIRECTION_RIGHTWARD);
+				text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_RIGHTTEXT);
+				moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE_EAST);
 				break;
 			default:
 			moveBotton.creatDOM("div");
 			text.creatDOM("div");
 		}
-		moveBotton.creatDOM("div",LC.CommonProperty.CSS_BOTTON_MOVE);
 		arrow.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_ARROW);
 		block.creatDOM("div", LC.CommonProperty.CSS_BOTTON_MOVE_BLOCK);
 		moveBotton.dom.append(botton.dom.append(arrow.dom).append(block.dom)).append(text.dom);

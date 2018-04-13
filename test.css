@@ -65,7 +65,7 @@ body {
 	width: 1100px;
 	height: 610px;
 	margin: 5px auto;
-	padding: 20px 50px 0px 50px;
+	padding: 5px 50px 0px 50px;
 }
 /**
  *  场景桌面
@@ -74,7 +74,7 @@ body {
 	background: rgb(230,230,180)/*#bdc3c7*/;
 	border-radius: 5px;
 	width: 1100px;
-	height: 580px;
+	height: 600px;
 	position: absolute;
 	transition: 0.5s;
 	overflow: hidden;

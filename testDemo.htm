@@ -5,85 +5,75 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Bootstrap 101 Template</title>
-		<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+		
 		<link href="test.css" rel="stylesheet">
+		<style>
+			.d-out{
+				width: 120px;
+				height: 120px;
+				background-color: #5CB85C;
+				
+				position: relative;
+				border-radius: 100px;
+			}
+			.d1{
+				width: 60px;
+				height: 60px;
+				background-color: #EBEBEB;
+				top:30px;
+				left:30px;
+				position: relative;
+				border-radius: 100px;
+				transition:1s;
+			}
+			.d1-1{
+				top:0px;
+				left:45px;/*60-15*/
+				width: 30px;
+				height: 30px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+			}
+			.d1-2{
+				top:45px;
+				right:0px;
+				width: 30px;
+				height: 30px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+			}
+			.d1-3{
+				bottom:0px;
+				left:45px;
+				width: 30px;
+				height: 30px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+			}
+			.d1:hover + .d-out{
+				transform: rotate(360deg);
+			}
+		</style>
 	</head>
 	<body>
-		<div id="mainDesktop" class="main-desktop"></div>
-		<script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
-		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<script src="js/core.js"></script>
-		<script src="js/BasicComponent.js"></script>
-		<script src="js/Components.js"></script>
-		<script src="js/Menu.js"></script>
-		<script src="js/Scene.js"></script>
-		<script src="js/panel.js"></script>
-		<script src="js/button.js"></script>
-		<script src="js/table.js"></script>
-		<script src="js/corner.js"></script>
-		<script>
-			//构建主界面
-			var scene = LC.Components.SceneFactory.createScene();
-			//var menu1 = LC.Components.MenuFactory.createMenu();
-			//var buttonstart = LC.Components.ButtonFactory.createButtonStart();
-			scene.dom.append(menu1.dom.append(buttonstart.dom.append().click(function() {
-				scene.hide();
-				setTimeout("sceneNext.show()",100);
-			})));
-			/*-----构建次页面-----*/
-			//场景
-			var sceneNext = LC.Components.SceneFactory.createScene();
-			//面板主体
-			var panelbag = LC.Components.PanelFactory.createPanel();
-			//关闭按钮
-			var buttonclose = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag);
-			//面板标题
-			var panelTitel = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
-			//内部
-			var table = LC.Components.TableFactory.createTable(4,2,"测试");
-			panelbag.dom.append(buttonclose.dom).append(panelTitel.dom).append(table.dom);
-			var cell = LC.Components.PanelFactory.createPanel("??");
-			cell.dom.css({"width":"50px","height":"50px"});
-			table.setCell(3,1,cell);
-			var corner = LC.Components.CornerSignFactory.createCornerSign();
-			cell.dom.append(corner.dom);
-			corner.dom.append("99");
-			/*-----复制一个面板-----*/
-			var panelbag2 = LC.Components.PanelFactory.createPanel();
-			var buttonclose2 = LC.Components.ButtonFactory.createButtonClose("button3ID",panelbag2);
-			var panelTitel2 = LC.Components.PanelFactory.createPanelTitle().setText("面板物品文字，eyoa,");
-			var table2 = LC.Components.TableFactory.createTable(4,2,"测试");
-			panelbag2.dom.append(buttonclose2.dom).append(panelTitel2.dom).append(table2.dom);
-			var cell2 = LC.Components.PanelFactory.createPanel("??");
-			cell2.dom.css({"width":"50px","height":"50px"});
-			table2.setCell(3,1,cell2);
-			var corner2 = LC.Components.CornerSignFactory.createCornerSign();
-			cell2.dom.append(corner2.dom);
-			corner2.dom.append("99");
-			//--添加拖拽
-			LC.Components.ComponentFunction.drag(corner,cell,sceneNext,cell2,true);
-			LC.Components.ComponentFunction.drag(corner2,cell2,sceneNext,cell2,true);
-			//-----
-			//打开面板按钮
-			var buttonShowbag = LC.Components.ButtonFactory.createButtonStart();
-			buttonShowbag.dom.append("showbag").click(function() {panelbag.show();});
-			//返回上级场景按钮
-			var buttonback = LC.Components.ButtonFactory.createButtonStart();
-			buttonback.dom.append("back").click(function() {
-				sceneNext.hide();
-				setTimeout("scene.show()",100);
-			});
-			sceneNext.dom.append(panelbag.dom).append(buttonShowbag.dom).append(buttonback.dom);
-			sceneNext.dom.append(panelbag2.dom);
-			//设置面板可拖动
-			LC.Components.ComponentFunction.drag(panelTitel,panelbag);
-			LC.Components.ComponentFunction.drag(panelTitel2,panelbag2);
-			//加载全部场景
-			$("#mainDesktop").append(scene.dom).append(sceneNext.dom);
-			sceneNext.hide();
-			scene.show();
-			
-			
-		</script>
+		<div id="mainDesktop" class="main-desktop">
+			<div style="top:100px;left:100px;">
+				<div class="d1">
+				</div>
+				<div class="d-out">
+					<div class="d1-1">
+					</div>
+					<div class="d1-2">
+					</div>
+					<div class="d1-3">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 	</body>
 </html>

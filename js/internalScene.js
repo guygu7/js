@@ -59,17 +59,17 @@ LC.DefaultInternalScene = {
 	 * 初始大地图界面
 	 * 默认方法：loadData(plat),clearData(plat)
 	 */
-	internalSceneBasic : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	internalSceneBasic : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","427px"),
 	/**
 	 * 内部据点界面,初始隐藏
 	 * 默认方法：loadData(plat),clearData(plat)
 	 */
-	internalSceneStronghold : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	internalSceneStronghold : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","427px"),
 	/**
 	 * 交互对象交互界面,初始隐藏
 	 * 默认方法：loadData(plat),clearData(plat)
 	 */
-	internalSceneInteraction : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","404px"),
+	internalSceneInteraction : LC.Components.InternalSceneFactory.createInternalSceneBasic(null,"904px","427px"),
 	/**
 	 * 清空全部界面数据及监听 
 	 */

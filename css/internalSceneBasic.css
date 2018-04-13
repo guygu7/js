@@ -4,14 +4,16 @@
 /* 向北移动按钮样式 （上箭头）*/
 
 .botton-moveInside{
-	width: 60px;
-	height: 60px;
+	width: 89px;
+	height: 55px;
 	position: absolute;
 }
-.botton-moveInside:hover .botton-moveArrow,.botton-moveInside:hover .botton-moveArrow{
+.botton-moveInside:hover .botton-moveArrow,
+.button-moveNorth:hover .botton-moveArrow,.button-moveSouth:hover .botton-moveArrow,.button-moveWest:hover .botton-moveArrow,.button-moveEast:hover .botton-moveArrow{
 	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 10px rgb(233,224,170) inset, 0px 0px 3px 11px rgb(100,100,100) inset, 0px 0px 3px 11px rgb(170,150,95) inset;
 }
-.botton-moveInside:active .botton-moveArrow,.botton-moveInside:active .botton-moveArrow{
+.botton-moveInside:active .botton-moveArrow,
+.button-moveNorth:active .botton-moveArrow,.button-moveSouth:active .botton-moveArrow,.button-moveWest:active .botton-moveArrow,.button-moveEast:active .botton-moveArrow{
 	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 10px rgb(193,184,130) inset, 0px 0px 3px 11px rgb(100,100,100) inset, 0px 0px 3px 11px rgb(170,150,95) inset;
 }
 
@@ -35,6 +37,7 @@
 	top: 30px;
 	left:1px;
 	overflow: hidden;
+	z-index:0;
 }
 .botton-moveBlock:before {
 	content: "";
@@ -44,6 +47,7 @@
 	box-shadow: 2px -1px 2px 2px rgb(100,100,100), 0px 0px 2px 2px rgb(170,150,95) inset;
 	background-color: rgba(255,255,255,0);
 	left: 1px;
+	z-index:1;
 }
 .botton-moveBlock:after {
 	content: "";
@@ -53,21 +57,66 @@
 	box-shadow: -2px -1px 2px 2px rgb(100,100,100), 0px 0px 2px 2px rgb(170,150,95) inset;
 	background-color: rgba(255,255,255,0);
 	right: 1px;
+	z-index:1;
 }
 
 .botton-moveTopText{
 	text-align: center;
 	width: 88px;
 	height: 20px;
-	top:27px;
+	top:29px;
+	position: absolute;
+}
+.botton-moveBottomText{
+	text-align: center;
+	width: 88px;
+	height: 20px;
+	top:6px;
+	position: absolute;
+}
+.botton-moveLeftText{
+	text-align: center;
+	width:65px;
+	height: 20px;
+	top:33px;
+	right:-30px;
+	position: absolute;
+}
+.botton-moveRightText{
+	text-align: center;
+	width:65px;
+	height: 20px;
+	top:33px;
+	left:-30px;
 	position: absolute;
 }
 
-.button-move{
+.button-moveNorth{
 	top:3px;
 	left:381px;
 	width:89px;
 	height:55px;
+	position:absolute;
+}
+.button-moveSouth{
+	bottom:3px;
+	left:381px;
+	width:89px;
+	height:55px;
+	position:absolute;
+}
+.button-moveWest{
+	top:180px;
+	left:3px;
+	width:55px;
+	height:89px;
+	position:absolute;
+}
+.button-moveEast{
+	top:180px;
+	right:3px;
+	width:55px;
+	height:89px;
 	position:absolute;
 }
 
@@ -77,7 +126,22 @@
 .direction-downward{
 	transform:rotate(180deg);
 }
-
+/**
+ * 	旋转方向90°朝右
+ */
+.direction-rightward{
+	top:17px;
+	left:-17px;
+	transform:rotate(90deg);
+}
+/**
+ * 	旋转方向270°朝左
+ */
+.direction-leftward{
+	top:17px;
+	left:-17px;
+	transform:rotate(270deg);
+}
 
 /* 向东移动按钮样式 （右箭头）*/
 
