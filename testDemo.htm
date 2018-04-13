@@ -13,7 +13,7 @@
 				height: 120px;
 				background-color: #5CB85C;
 				
-				position: relative;
+				position: absolute;
 				border-radius: 100px;
 			}
 			.d1{
@@ -22,9 +22,10 @@
 				background-color: #EBEBEB;
 				top:30px;
 				left:30px;
-				position: relative;
+				position: absolute;
 				border-radius: 100px;
 				transition:1s;
+				z-index: 99;
 			}
 			.d1-1{
 				top:0px;
@@ -60,7 +61,7 @@
 	</head>
 	<body>
 		<div id="mainDesktop" class="main-desktop">
-			<div style="top:100px;left:100px;">
+			<div style="top:100px;left:100px;position: relative;">
 				<div class="d1">
 				</div>
 				<div class="d-out">
