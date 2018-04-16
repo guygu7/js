@@ -87,4 +87,35 @@ LC.Components.ButtonFactory = {
 		};
 		return moveBotton;
 	},
+	/**
+	 * 带环形菜单的按钮 
+	 */
+	createButtonCircularMenu : function(){
+		//整体容器
+		var all = LC.Components.ButtonFactory.createButton();
+		all.creatDOM("div",);//整体容器样式
+		//中间主要内容
+		var mainButton = LC.Components.ButtonFactory.createButton();
+		moveBotton.creatDOM("div",);//中心圆样式
+		all.dom.append(mainButton.dom).append(menu.dom);
+		//添加菜单元素的方法
+		all.addElement=function(){
+			//菜单容器
+			var menu = LC.Components.ButtonFactory.createButton();
+			menu.creatDOM("div",);//菜单容器样式
+			//菜单中包含按钮
+			var menulist1 = LC.Components.ButtonFactory.createButton();
+			var menulist2 = LC.Components.ButtonFactory.createButton();
+			menulist1.creatDOM("div",);
+			menulist1.creatDOM("div",);
+			menu.dom.append(menulist1.dom).append(menulist2.dom);
+			
+		};
+		//移除菜单元素的方法
+		all.removeElement=function(){
+			
+		};
+		
+		return all;
+	},
 };

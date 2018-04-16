@@ -127,6 +127,7 @@ LC.CommonProperty = {
 	 *  CSS class:相对定位
 	 */
 	CSS_POSITION_ABSOLUTE : " position-absolute ",
+	//==移动按钮（方向箭头）==
 	/**
 	 *  CSS class:移动按钮-↑向北(整体包裹容器，定位)
 	 */
@@ -183,6 +184,9 @@ LC.CommonProperty = {
 	 *  CSS class:方向控制-旋转270°朝左
 	 */
 	CSS_DIRECTION_LEFTWARD :" direction-leftward ",
+	//==带环形菜单按钮==
+	CSS_BOTTON_circularMenu:" button-circularMenu ",
+	CSS_BOTTON_circularMenu_middleContent:" button-circularMenu-middleContent ",
 	
 	//++++++++++++++
 	/**

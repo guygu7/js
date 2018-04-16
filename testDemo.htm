@@ -13,7 +13,9 @@
 				height: 50px;
 				position: absolute;
 				border-radius: 100px;
-				transition:0.6s;
+				transition:0.4s;
+				transform: rotate(-180deg) ;
+				opacity: 0; 
 			}
 			.d1{
 				width: 50px;
@@ -25,7 +27,7 @@
 			}
 			.d1-1{
 				top:0px;
-				left:19px;/*60-15*/
+				left:19px;/*25-6*/
 				width: 12px;
 				height: 12px;
 				background-color: #31B0D5;
@@ -34,6 +36,16 @@
 				font-size:5px;
 			}
 			.d1-2{
+				top:6px;
+				right:6px;
+				width: 12px;
+				height: 12px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+				font-size:5px;
+			}
+			.d1-3{
 				top:19px;
 				right:0px;
 				width: 12px;
@@ -42,7 +54,17 @@
 				position: absolute;
 				border-radius: 100px;
 			}
-			.d1-3{
+			.d1-4{
+				bottom:6px;
+				right:6px;
+				width: 12px;
+				height: 12px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+				font-size:5px;
+			}
+			.d1-5{
 				bottom:0px;
 				left:19px;
 				width: 12px;
@@ -51,8 +73,38 @@
 				position: absolute;
 				border-radius: 100px;
 			}
+			.d1-6{
+				bottom:6px;
+				left:6px;
+				width: 12px;
+				height: 12px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+				font-size:5px;
+			}
+			.d1-7{
+				top:19px;
+				left:0px;
+				width: 12px;
+				height: 12px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+			}
+			.d1-8{
+				top:6px;
+				left:6px;
+				width: 12px;
+				height: 12px;
+				background-color: #31B0D5;
+				position: absolute;
+				border-radius: 100px;
+				font-size:5px;
+			}
 			.d1:hover + .d-out,.d-out:hover{
-				transform: rotate(-360deg) scale(3);
+				transform: rotate(0deg) scale(3);
+				opacity: 1; 
 			}
 			.d1:hover div.d-out>.d1-2,.d-out:hover .d1-2{
 				background-color: black;
@@ -71,6 +123,16 @@
 					</div>
 					<div class="d1-3">
 					</div>
+					<div class="d1-4">
+					</div>
+					<div class="d1-5">
+					</div>
+					<div class="d1-6">
+					</div>
+					<div class="d1-7">
+					</div>
+					<div class="d1-8">
+					</div>
 				</div>
 			</div>
 			<div style="top:100px;left:180px;position: relative;">
@@ -83,6 +145,10 @@
 					</div>
 					<div class="d1-3">
 					</div>
+					<div class="d1-4">
+					</div>
+					
+					
 				</div>
 			</div>
 		</div>

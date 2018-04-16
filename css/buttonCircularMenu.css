@@ -1,0 +1,81 @@
+/**
+ *  带环形菜单按钮,鼠标放上时自动展开样式
+ */
+
+/*整体容器*/
+.button-circularMenu {
+	position: relative;
+	z-index: 1000;
+}
+.button-circularMenu:hover {
+	z-index: 10;
+}
+
+/*中间内容样式*/
+.button-circularMenu-middleContent {
+	width: 50px;
+	height: 50px;
+	background-color: #EBEBEB;
+	position: absolute;
+	border-radius: 100px;
+	z-index: 10;
+}
+
+/*圆形菜单容器*/
+.button-circularMenu-menu {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	border-radius: 100px;
+	transition: 0.4s;
+	transform: rotate(-180deg);
+	opacity: 0; 
+}
+/*鼠标放上时自动展开样式*/
+.button-circularMenu-middleContent:hover + .button-circularMenu-menu, .button-circularMenu-menu:hover {
+	transform: rotate(0deg) scale(3);
+	opacity: 1; 
+}
+
+/*菜单元素8个*/
+.button-circularMenu-menulist1 {
+	top: 0px;
+	left: 19px;/*25-6*/
+}
+.button-circularMenu-menulist2 {
+	top: 6px;
+	right: 6px;
+}
+.button-circularMenu-menulist3 {
+	top: 19px;
+	right: 0px;
+}
+.button-circularMenu-menulist4 {
+	bottom: 6px;
+	right: 6px;
+}
+.button-circularMenu-menulist5 {
+	bottom: 0px;
+	left: 19px;
+}
+.button-circularMenu-menulist6 {
+	bottom: 6px;
+	left: 6px;
+}
+.button-circularMenu-menulist7 {
+	top: 19px;
+	left: 0px;
+}
+.button-circularMenu-menulist8 {
+	top: 6px;
+	left: 6px;
+}
+.button-circularMenu-menulist1, .button-circularMenu-menulist2, .button-circularMenu-menulist3, .button-circularMenu-menulist4, .button-circularMenu-menulist5, .button-circularMenu-menulist6, .button-circularMenu-menulist7, .button-circularMenu-menulist8 {
+	width: 12px;
+	height: 12px;
+	background-color: #31B0D5;
+	position: absolute;
+	border-radius: 100px;
+	font-size: 5px;
+}
+
