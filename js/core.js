@@ -184,10 +184,72 @@ LC.CommonProperty = {
 	 *  CSS class:方向控制-旋转270°朝左
 	 */
 	CSS_DIRECTION_LEFTWARD :" direction-leftward ",
-	//==带环形菜单按钮==
-	CSS_BOTTON_circularMenu:" button-circularMenu ",
-	CSS_BOTTON_circularMenu_middleContent:" button-circularMenu-middleContent ",
+	/**
+	 *	CSS class:交互对象，角色组面板定位
+	 */
+	CSS_roleGroup : " roleGroup ",
+	/**
+	 *  CSS class:交互对象，角色组面板内部元素定位 
+	 */
+	CSS_roleGroup_role1 : " roleGroup-role1 ",
+	/**
+	 *  CSS class:交互对象，角色组面板内部元素定位 
+	 */
+	CSS_roleGroup_role2 : " roleGroup-role2 ",
+	/**
+	 *  CSS class:交互对象，角色组面板内部元素定位 
+	 */
+	CSS_roleGroup_role3 : " roleGroup-role3 ",
 	
+	//==带环形菜单按钮==
+	/**
+	 *  CSS class:带环形菜单按钮-整体容器
+	 */
+	CSS_BOTTON_circularMenu:" button-circularMenu ",
+	/**
+	 *  CSS class:带环形菜单按钮-中间内容样式
+	 */
+	CSS_BOTTON_circularMenu_middleContent:" button-circularMenu-middleContent ",
+	/**
+	 *  CSS class:带环形菜单按钮-圆形菜单容器
+	 */
+	CSS_BOTTON_circularMenu_menu:" button-circularMenu-menu ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素1
+	 */
+	CSS_BOTTON_circularMenu_menuElement1:" button-circularMenu-menuElement1 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素2
+	 */
+	CSS_BOTTON_circularMenu_menuElement2:" button-circularMenu-menuElement2 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素3
+	 */
+	CSS_BOTTON_circularMenu_menuElement3:" button-circularMenu-menuElement3 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素4
+	 */
+	CSS_BOTTON_circularMenu_menuElement4:" button-circularMenu-menuElement4 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素5
+	 */
+	CSS_BOTTON_circularMenu_menuElement5:" button-circularMenu-menuElement5 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素6
+	 */
+	CSS_BOTTON_circularMenu_menuElement6:" button-circularMenu-menuElement6 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素7
+	 */
+	CSS_BOTTON_circularMenu_menuElement7:" button-circularMenu-menuElement7 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素8
+	 */
+	CSS_BOTTON_circularMenu_menuElement8:" button-circularMenu-menuElement8 ",
+	/**
+	 *  CSS class:带环形菜单按钮-菜单元素文本
+	 */
+	CSS_BOTTON_circularMenu_menuElementText:" button-circularMenu-menuElementText ",
 	//++++++++++++++
 	/**
 	 *  初始大地图界面	ps:值可以随意修改,不同即可

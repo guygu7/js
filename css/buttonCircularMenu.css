@@ -38,39 +38,39 @@
 }
 
 /*菜单元素8个*/
-.button-circularMenu-menulist1 {
+.button-circularMenu-menuElement1 {
 	top: 0px;
 	left: 19px;/*25-6*/
 }
-.button-circularMenu-menulist2 {
+.button-circularMenu-menuElement2 {
 	top: 6px;
 	right: 6px;
 }
-.button-circularMenu-menulist3 {
+.button-circularMenu-menuElement3 {
 	top: 19px;
 	right: 0px;
 }
-.button-circularMenu-menulist4 {
+.button-circularMenu-menuElement4 {
 	bottom: 6px;
 	right: 6px;
 }
-.button-circularMenu-menulist5 {
+.button-circularMenu-menuElement5 {
 	bottom: 0px;
 	left: 19px;
 }
-.button-circularMenu-menulist6 {
+.button-circularMenu-menuElement6 {
 	bottom: 6px;
 	left: 6px;
 }
-.button-circularMenu-menulist7 {
+.button-circularMenu-menuElement7 {
 	top: 19px;
 	left: 0px;
 }
-.button-circularMenu-menulist8 {
+.button-circularMenu-menuElement8 {
 	top: 6px;
 	left: 6px;
 }
-.button-circularMenu-menulist1, .button-circularMenu-menulist2, .button-circularMenu-menulist3, .button-circularMenu-menulist4, .button-circularMenu-menulist5, .button-circularMenu-menulist6, .button-circularMenu-menulist7, .button-circularMenu-menulist8 {
+.button-circularMenu-menuElement1, .button-circularMenu-menuElement2, .button-circularMenu-menuElement3, .button-circularMenu-menuElement4, .button-circularMenu-menuElement5, .button-circularMenu-menuElement6, .button-circularMenu-menuElement7, .button-circularMenu-menuElement8 {
 	width: 12px;
 	height: 12px;
 	background-color: #31B0D5;
@@ -78,4 +78,11 @@
 	border-radius: 100px;
 	font-size: 5px;
 }
-
+.button-circularMenu-menuElementText{
+	width: 10px;
+	height: 7px;
+	font-size:5px;
+	top:2px;
+	left:1px;
+	position: absolute;
+}

@@ -70,6 +70,27 @@ moveWest.dom.bind("click", function() {//点击进行位置移动
 	}
 });
 /**
+ * 场景交互对象角色组 
+ */
+var roleGroup = LC.Components.PanelFactory.createPanelEmpty(null,"200px","200px");
+LC.DefaultInternalScene.internalSceneBasic.dom.append(roleGroup.dom);
+//添加定位
+roleGroup.addCssClass(LC.CommonProperty.CSS_roleGroup);
+//交互角色的带环形菜单按钮
+role_1 = LC.Components.ButtonFactory.createButtonCircularMenu();
+role_2 = LC.Components.ButtonFactory.createButtonCircularMenu();
+role_3 = LC.Components.ButtonFactory.createButtonCircularMenu();
+role_1.addCssClass(LC.CommonProperty.CSS_roleGroup_role1);
+role_2.addCssClass(LC.CommonProperty.CSS_roleGroup_role2);
+role_3.addCssClass(LC.CommonProperty.CSS_roleGroup_role3);
+roleGroup.dom.append(role_1.dom).append(role_2.dom).append(role_3.dom);
+roleGroup.clearData = function(){
+	role_1.clearData();
+	role_2.clearData();
+	role_3.clearData();
+};
+
+/**
  * 坐标显示面板
  */
 var info = LC.Components.PanelFactory.createPanelBasic(null, "80px", "25px");
@@ -96,6 +117,17 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	//清除原有数据,避免数据残留
 	LC.DefaultInternalScene.clearData();
 	//重新载入数据
+	//角色面板数据
+	roleGroup.clearData();
+	roleGroup.hide();
+	if (null!=plat.getRoleMap()&&0<plat.getRoleMap().size()){//判断有角色数据
+		roles = plat.getRoleMap().values();
+		for (var i=0; i < roles.length; i++) {
+			roles[i];
+		};
+		roleGroup.show();
+	}
+	//方向箭头数据
 	switch(plat.getLink().get("top")){
 		case "true":
 	  		moveNorth.setText("向北");
@@ -215,6 +247,7 @@ LC.DefaultInternalScene.internalSceneBasic.addResponseMethod("setLink",function(
 				default:
 				LC.warning("出现错误,没有找到对应的Link:"+pram);
 			}
+		
 	}
 });
 /**

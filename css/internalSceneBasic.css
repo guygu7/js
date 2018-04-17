@@ -1,7 +1,7 @@
 /**
  * 	大地图界面、及其中组件的样式
  */
-/* 向北移动按钮样式 （上箭头）*/
+/* 移动按钮样式 （箭头）*/
 
 .botton-moveInside{
 	width: 89px;
@@ -142,9 +142,29 @@
 	left:-17px;
 	transform:rotate(270deg);
 }
-
-/* 向东移动按钮样式 （右箭头）*/
-
-/* 向南移动按钮样式（下箭头） */
-
-/* 向西移动按钮样式 */
+/*	交互对象，角色组面板定位	*/
+.roleGroup{
+	top:30px;
+	left:30px;
+	position:absolute;
+}
+.roleGroup-role1{
+	top:0px;
+	left:0px;
+	position:absolute;
+}
+.roleGroup-role2{
+	top:0px;
+	left:70px;
+	position:absolute;
+}
+.roleGroup-role3{
+	top:0px;
+	left:140px;
+	position:absolute;
+}
+.roleGroup-role4{
+	top:0px;
+	left:0px;
+	position:absolute;
+}
