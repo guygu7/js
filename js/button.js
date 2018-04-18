@@ -104,6 +104,10 @@ LC.Components.ButtonFactory = {
 		//中间主要内容
 		var mainButton = LC.Components.ButtonFactory.createButton();
 		mainButton.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_middleContent);
+		all.setText=function(text){
+			mainButton.dom.text(text);
+			return all;
+		};
 		//中心圆样式
 		all.dom.append(mainButton.dom);
 		//添加修改菜单元素的方法

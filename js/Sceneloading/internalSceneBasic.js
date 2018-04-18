@@ -72,23 +72,17 @@ moveWest.dom.bind("click", function() {//点击进行位置移动
 /**
  * 场景交互对象角色组 
  */
-var roleGroup = LC.Components.PanelFactory.createPanelEmpty(null,"200px","200px");
+//创建table,并去掉小格子样式
+var roleGroup = LC.Components.TableFactory.createTable(1, 40,"90px"," ");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(roleGroup.dom);
-//添加定位
+//定位
 roleGroup.addCssClass(LC.CommonProperty.CSS_roleGroup);
-//交互角色的带环形菜单按钮
 role_1 = LC.Components.ButtonFactory.createButtonCircularMenu();
 role_2 = LC.Components.ButtonFactory.createButtonCircularMenu();
 role_3 = LC.Components.ButtonFactory.createButtonCircularMenu();
-role_1.addCssClass(LC.CommonProperty.CSS_roleGroup_role1);
-role_2.addCssClass(LC.CommonProperty.CSS_roleGroup_role2);
-role_3.addCssClass(LC.CommonProperty.CSS_roleGroup_role3);
-roleGroup.dom.append(role_1.dom).append(role_2.dom).append(role_3.dom);
-roleGroup.clearData = function(){
-	role_1.clearData();
-	role_2.clearData();
-	role_3.clearData();
-};
+roleGroup.setCell(1,1,role_1);
+roleGroup.setCell(1,2,role_2);
+roleGroup.setCell(1,3,role_3);
 
 /**
  * 坐标显示面板
@@ -118,14 +112,22 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 	LC.DefaultInternalScene.clearData();
 	//重新载入数据
 	//角色面板数据
-	roleGroup.clearData();
-	roleGroup.hide();
 	if (null!=plat.getRoleMap()&&0<plat.getRoleMap().size()){//判断有角色数据
 		roles = plat.getRoleMap().values();
-		for (var i=0; i < roles.length; i++) {
-			roles[i];
+		var rolesLength = roles.length;
+		if(rolesLength>3){
+			rolesLength=3;
+			LC.warning("角色数量超过最大显示3个");
+		}
+		for (var i=0; i < rolesLength; i++) {
+			//遍历载入角色数据
+			roleGroup.getCell(1,i+1).setText(roles[i].getName());
+			//载入交互菜单数据
+			roleActions = roleGroup.getCell(1,i+1).getActionMap();
+			for (var i=0; i < roleActions.size; i++) {
+			  roleActions[i]
+			};
 		};
-		roleGroup.show();
 	}
 	//方向箭头数据
 	switch(plat.getLink().get("top")){

@@ -23,7 +23,9 @@ LC.Components.Table.prototype.creatDOM = function(_line, _column, _width, _heigh
 	var tb;
 	var classname = LC.CommonProperty.CSS_PANEL_TABLE_TB;
 	if (cssclass) {
-		classname = " " + cssclass + " ";
+		classname = classname + cssclass ;
+	}else{
+		classname = classname+LC.CommonProperty.CSS_PANEL_TABLE_TB_basic;
 	}
 	//由于this会发生变化，暂存ID
 	var signId = this.getSignID();
@@ -77,7 +79,7 @@ LC.Components.Table.prototype.setCell = function(_line, _column, obj) {
 	//2.替换tb.dom中的子dom
 	tb.dom.empty().append(obj.dom);
 	//3.重新放入cellsMap，替换原tb对象
-	this.cellsMap.put((_column + "-" + _line).toString(), tb);
+	this.cellsMap.put((_column + "-" + _line).toString(), obj);
 	return this;
 };
 /**
@@ -93,7 +95,7 @@ LC.Components.TableFactory = {
 	 * @param {Number} _gridSize
 	 * @param {String} _id
 	 */
-	createTable : function(_line, _column, _gridSize, _id) {
+	createTable : function(_line, _column, _gridSize,cssClass) {
 		var gridWidth = "40px";
 		var gridHeight = "40px";
 		if (_gridSize) {
@@ -109,7 +111,8 @@ LC.Components.TableFactory = {
 			}
 		}
 		var table = new LC.Components.Table();
-		table.setSignID(_id).creatDOM(_line, _column, gridWidth, gridHeight);
+		table.cellsMap = new LC.Utils.Map();
+		table.creatDOM(_line, _column, gridWidth, gridHeight,cssClass);
 		return table;
 	},
 };

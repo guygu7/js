@@ -31,7 +31,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * @param {String} cssClass
 		 */
 		LC.Components.BasicComponent.prototype.addCssClass = function(cssClass) {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			if (null == cssClass || "" == cssClass.trim()) {//未传参数，则返回
 				return this;
 			};
@@ -51,7 +51,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * @param {String} cssClass
 		 */
 		LC.Components.BasicComponent.prototype.removeCssClass = function(cssClass) {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			if (null == cssClass || "" == cssClass.trim()) {//未传参数，则返回
 				return this;
 			};
@@ -69,7 +69,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * @param {String} hideType
 		 */
 		LC.Components.BasicComponent.prototype.hide = function(hideType) {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			if (null == hideType || "" == hideType.trim()) {//未传参数，则为默认隐藏样式
 				hideType = LC.CommonProperty.CSS_HIDE_SHRINK;
 			};
@@ -96,7 +96,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * 显示，自动去掉所有隐藏样式
 		 */
 		LC.Components.BasicComponent.prototype.show = function() {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			//去掉所有隐藏样式
 			var hideClass = LC.CommonProperty.CSS_HIDE_EXPAND.trim();
 			var hideClass2 = LC.CommonProperty.CSS_HIDE_SHRINK.trim();
@@ -117,7 +117,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * @param {String} positionType
 		 */
 		LC.Components.BasicComponent.prototype.addPosition = function(positionType) {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			if (null == positionType || "" == positionType.trim()) {//未传参数，则返回
 				return this;
 			};
@@ -149,7 +149,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * 参数：</br>
 		 */
 		LC.Components.BasicComponent.prototype.removePosition = function() {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			//去掉所有定位样式
 			var positionClass = LC.CommonProperty.CSS_POSITION_LOWERRIGHT.trim();
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_UPPERRIGHT.trim();
@@ -170,7 +170,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * @param {String} positionType
 		 */
 		LC.Components.BasicComponent.prototype.addPositionMode = function(positionType) {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			if (null == positionType || "" == positionType.trim()) {//未传参数，则返回
 				return this;
 			};
@@ -196,7 +196,7 @@ LC.Components.BasicComponent = function(basicComponentID) {
 		 * 参数：</br>
 		 */
 		LC.Components.BasicComponent.prototype.removePositionMode = function() {
-			var className = this.dom.attr("class");
+			var className = this.dom.attr("class")?this.dom.attr("class"):"";
 			//去掉所有定位样式
 			var positionClass = LC.CommonProperty.CSS_POSITION_RELATIVE.trim();
 			var positionClass2 = LC.CommonProperty.CSS_POSITION_ABSOLUTE.trim();

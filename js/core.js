@@ -62,9 +62,13 @@ LC.CommonProperty = {
 	 */
 	CSS_PANEL_TITTLE : " panel-title ",
 	/**
-	 * CSS class:表格单元格tb样式
+	 * CSS class:表格单元格tb格式
 	 */
 	CSS_PANEL_TABLE_TB : " panel-table-tb ",
+	/**
+	 * CSS class:表格单元格tb基本样式
+	 */
+	CSS_PANEL_TABLE_TB_basic : " panel-table-tb-basic ",
 	//====按钮====
 	/**
 	 * CSS class:右上角的关闭按钮
