@@ -113,7 +113,7 @@ LC.Components.ButtonFactory = {
 		//添加修改菜单元素的方法
 		all.add_update_Element = function(text,num) {
 			//判断是否存在菜单
-			if (0 == all.dom.children(LC.CommonProperty.CSS_BOTTON_circularMenu_menu).length) {
+			if (0 == all.dom.children("."+LC.CommonProperty.CSS_BOTTON_circularMenu_menu.trim()).length) {
 				//不存在，则创建菜单容器，并设为all的元素方便获取
 				all.menu = LC.Components.ButtonFactory.createButton();
 				all.menu.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menu);
@@ -123,22 +123,51 @@ LC.Components.ButtonFactory = {
 			//未传num序号，顺位添加
 			if(!num){
 				//判断菜单当前元素数量
-				switch(all.menu.dom.children(LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement1 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement2 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement3 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement4 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement5 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement6 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement7 + "," + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement8).length){
+				switch(all.menu.dom.children("."+LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement1.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement2.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement3.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement4.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement5.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement6.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement7.trim() + ",." + LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement8.trim()).length){
 					case 0 :
 						//加入菜单元素
 						all.menuElement1 = LC.Components.ButtonFactory.createButton();
 						all.menuElement1.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement1);
-						all.menu.dom.append(menulist1.dom);
+						all.menu.dom.append(all.menuElement1.dom);
 						//加入元素文本
 						all.menuElement1.text = LC.Components.ButtonFactory.createButton();
 						all.menuElement1.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement1.dom.append(all.menuElement1.text.dom);
 						all.menuElement1.setText=function(){
 							all.menuElement1.text.dom.text(text);
 						};
+						//执行一次
+						all.menuElement1.setText(text);
 						break;
 					case 1:
+						//加入菜单元素
+						all.menuElement2 = LC.Components.ButtonFactory.createButton();
+						all.menuElement2.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement2);
+						all.menu.dom.append(all.menuElement2.dom);
+						//加入元素文本
+						all.menuElement2.text = LC.Components.ButtonFactory.createButton();
+						all.menuElement2.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement2.dom.append(all.menuElement2.text.dom);
+						all.menuElement2.setText=function(){
+							all.menuElement2.text.dom.text(text);
+						};
+						//执行一次
+						all.menuElement2.setText(text);
 						break;
 					case 2 :
+						//加入菜单元素
+						all.menuElement3 = LC.Components.ButtonFactory.createButton();
+						all.menuElement3.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement3);
+						all.menu.dom.append(all.menuElement3.dom);
+						//加入元素文本
+						all.menuElement3.text = LC.Components.ButtonFactory.createButton();
+						all.menuElement3.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement3.dom.append(all.menuElement3.text.dom);
+						all.menuElement3.setText=function(){
+							all.menuElement3.text.dom.text(text);
+						};
+						//执行一次
+						all.menuElement3.setText(text);
 						break;
 					case 3:
 						break;

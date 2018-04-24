@@ -121,11 +121,13 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 		}
 		for (var i=0; i < rolesLength; i++) {
 			//遍历载入角色数据
-			roleGroup.getCell(1,i+1).setText(roles[i].getName());
+			roleCell = roleGroup.getCell(1,i+1);
+			roleCell.setText(roles[i].getName());
 			//载入交互菜单数据
-			roleActions = roleGroup.getCell(1,i+1).getActionMap();
-			for (var i=0; i < roleActions.size; i++) {
-			  roleActions[i]
+			roleActions = roles[i].getActionMap();
+			for (var i1=0; i1 < roleActions.size(); i1++) {
+				roleCell.add_update_Element(roleActions.values()[i1].getName());//第N个环形菜单
+				
 			};
 		};
 	}

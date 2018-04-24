@@ -510,6 +510,7 @@ LC.Data.ActionFactory = {
 		actionObj.getType = function() {
 			return _type;
 		};
+		
 		return actionObj;
 	},
 };

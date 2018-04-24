@@ -163,16 +163,25 @@
 			 */
 			LC.GlobalVar.CURRENT_LOCATION = map.get(initX + "," + initY);
 			//++++++++建立测试数据++++++++
+			//建立动作数据
+			var action1 = LC.Data.ActionFactory.createAction();
+			action1.setName("界面切换");
+			action1.setType("界面切换");
+			action1.setAct(function (){//设置具体动作，切换界面、变换当前界面等
+					
+				});
+			
+			var action2 = LC.Data.ActionFactory.createAction();
+			action2.setName("角色交互");
+			action2.setType("角色交互");
+			
 			//据点中添加交互对象,模拟随机生成的数据
 			var obj1 = new LC.Data.RoleFactory.createRole();
 			obj1.setName("实体角色1").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
-			obj1.addAction("交互1","交互1");
-			obj1.addAction("交互2","交互2");
+			obj1.addAction("1-1",action1);
+			obj1.addAction("1-2",action2);
 			var obj2 = new LC.Data.RoleFactory.createRole();
 			obj2.setName("实体角色2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
-			obj1.addAction("交互1","交互1");
-			obj1.addAction("交互2","交互2");
-			obj1.addAction("交互3","交互3");
 			var obj3 = new LC.Data.RoleFactory.createRole();
 			obj3.setName("实体角色3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
 			var obj4 = new LC.Data.RoleFactory.createRole();
