@@ -111,7 +111,12 @@ LC.Components.ButtonFactory = {
 		//中心圆样式
 		all.dom.append(mainButton.dom);
 		//添加修改菜单元素的方法
-		all.add_update_Element = function(text,num) {
+		/**
+		 * 必须传入Action类型，未传num则顺位添加，最多添加8个
+		 * @param {Object} actObj
+		 * @param {Object} num
+		 */
+		all.add_update_Element = function(actObj,num) {
 			//判断是否存在菜单
 			if (0 == all.dom.children("."+LC.CommonProperty.CSS_BOTTON_circularMenu_menu.trim()).length) {
 				//不存在，则创建菜单容器，并设为all的元素方便获取
@@ -133,11 +138,14 @@ LC.Components.ButtonFactory = {
 						all.menuElement1.text = LC.Components.ButtonFactory.createButton();
 						all.menuElement1.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
 						all.menuElement1.dom.append(all.menuElement1.text.dom);
-						all.menuElement1.setText=function(){
+						all.menuElement1.setText=function(text){
 							all.menuElement1.text.dom.text(text);
 						};
 						//执行一次
-						all.menuElement1.setText(text);
+						all.menuElement1.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement1.dom.bind("click", actfn);
 						break;
 					case 1:
 						//加入菜单元素
@@ -148,11 +156,14 @@ LC.Components.ButtonFactory = {
 						all.menuElement2.text = LC.Components.ButtonFactory.createButton();
 						all.menuElement2.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
 						all.menuElement2.dom.append(all.menuElement2.text.dom);
-						all.menuElement2.setText=function(){
+						all.menuElement2.setText=function(text){
 							all.menuElement2.text.dom.text(text);
 						};
 						//执行一次
-						all.menuElement2.setText(text);
+						all.menuElement2.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement2.dom.bind("click", actfn);
 						break;
 					case 2 :
 						//加入菜单元素
@@ -163,11 +174,14 @@ LC.Components.ButtonFactory = {
 						all.menuElement3.text = LC.Components.ButtonFactory.createButton();
 						all.menuElement3.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
 						all.menuElement3.dom.append(all.menuElement3.text.dom);
-						all.menuElement3.setText=function(){
+						all.menuElement3.setText=function(text){
 							all.menuElement3.text.dom.text(text);
 						};
 						//执行一次
-						all.menuElement3.setText(text);
+						all.menuElement3.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement3.dom.bind("click", actfn);
 						break;
 					case 3:
 						break;

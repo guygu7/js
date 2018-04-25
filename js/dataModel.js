@@ -510,7 +510,21 @@ LC.Data.ActionFactory = {
 		actionObj.getType = function() {
 			return _type;
 		};
-		
+		var _actFn;
+		/**
+		 * 设置具体交互动作（执行方法fn） 
+		 */
+		actionObj.setActFn = function(fn) {
+			_actFn = fn;
+			LC.Components.ComponentFunction.event.call(this,"setActFn",fn);
+			return this;
+		};
+		/**
+		 * 获取具体交互动作（执行方法fn） 
+		 */
+		actionObj.getActFn = function() {
+			return _actFn;
+		};
 		return actionObj;
 	},
 };

@@ -167,13 +167,23 @@
 			var action1 = LC.Data.ActionFactory.createAction();
 			action1.setName("界面切换");
 			action1.setType("界面切换");
-			action1.setAct(function (){//设置具体动作，切换界面、变换当前界面等
-					
+			action1.setActFn(function (){//设置具体动作，切换界面、变换当前界面等
+					alert("T");
 				});
 			
 			var action2 = LC.Data.ActionFactory.createAction();
 			action2.setName("角色交互");
 			action2.setType("角色交互");
+			action2.setActFn(function (){//设置具体动作，切换界面、变换当前界面等
+					alert("T1");
+				});
+				
+			var action3 = LC.Data.ActionFactory.createAction();
+			action3.setName("界面切换");
+			action3.setType("界面切换");
+			action3.setActFn(function (){//设置具体动作，切换界面、变换当前界面等
+					alert("T3");
+				});
 			
 			//据点中添加交互对象,模拟随机生成的数据
 			var obj1 = new LC.Data.RoleFactory.createRole();
@@ -182,6 +192,7 @@
 			obj1.addAction("1-2",action2);
 			var obj2 = new LC.Data.RoleFactory.createRole();
 			obj2.setName("实体角色2").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
+			obj2.addAction("1-2",action3);
 			var obj3 = new LC.Data.RoleFactory.createRole();
 			obj3.setName("实体角色3").setType(LC.Data.CommonProperty.ROLE.ROLE_TYPE.NPC);
 			var obj4 = new LC.Data.RoleFactory.createRole();
