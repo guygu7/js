@@ -167,10 +167,10 @@
 			var action1 = LC.Data.ActionFactory.createAction();
 			action1.setName("界面切换");
 			action1.setType("界面切换");
-			action1.setActFn(function (){//设置具体动作，切换界面、变换当前界面等
-					alert("T");
+			action1.setActFn(function (prama){//设置具体动作，切换界面、变换当前界面等
+					//prama.data获取到交互角色数据
+					console.log(prama.data.getName());
 				});
-			
 			var action2 = LC.Data.ActionFactory.createAction();
 			action2.setName("角色交互");
 			action2.setType("角色交互");

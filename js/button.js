@@ -114,9 +114,10 @@ LC.Components.ButtonFactory = {
 		/**
 		 * 必须传入Action类型，未传num则顺位添加，最多添加8个
 		 * @param {Object} actObj
+		 * @param {Object} roleObj
 		 * @param {Object} num
 		 */
-		all.add_update_Element = function(actObj,num) {
+		all.add_update_Element = function(actObj,roleObj,num) {
 			//判断是否存在菜单
 			if (0 == all.dom.children("."+LC.CommonProperty.CSS_BOTTON_circularMenu_menu.trim()).length) {
 				//不存在，则创建菜单容器，并设为all的元素方便获取
@@ -145,7 +146,7 @@ LC.Components.ButtonFactory = {
 						all.menuElement1.setText(actObj.getName());
 						//绑定事件（交互动作，点击效果）
 						var actfn = actObj.getActFn();
-						all.menuElement1.dom.bind("click", actfn);
+						all.menuElement1.dom.bind("click", roleObj ,actfn);
 						break;
 					case 1:
 						//加入菜单元素

@@ -126,7 +126,8 @@ LC.DefaultInternalScene.internalSceneBasic.loadData = function(plat) {
 			//载入交互菜单数据
 			roleActions = roles[i].getActionMap();
 			for (var i1=0; i1 < roleActions.size(); i1++) {
-				roleCell.add_update_Element(roleActions.values()[i1]);//第N个环形菜单
+				//传入动作、交互角色数据
+				roleCell.add_update_Element(roleActions.values()[i1],roles[i]);//第N个环形菜单
 			};
 		};
 	}
