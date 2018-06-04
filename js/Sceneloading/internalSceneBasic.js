@@ -73,7 +73,7 @@ moveWest.dom.bind("click", function() {//点击进行位置移动
  * 场景交互对象角色组 
  */
 //创建table,并去掉小格子样式
-var roleGroup = LC.Components.TableFactory.createTable(1, 40,"90px"," ");
+var roleGroup = LC.Components.TableFactory.createTable(1, 10,"90px"," ");
 LC.DefaultInternalScene.internalSceneBasic.dom.append(roleGroup.dom);
 //定位
 roleGroup.addCssClass(LC.CommonProperty.CSS_roleGroup);

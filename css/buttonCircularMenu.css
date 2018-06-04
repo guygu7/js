@@ -17,27 +17,36 @@
 	height: 50px;
 	background-color: #EBEBEB;
 	position: absolute;
-	border-radius: 3px;
+	border-radius: 300px;
 	z-index: 10;
 }
 
 /*圆形菜单容器*/
 .button-circularMenu-menu {
-	width: 50px;
-	height: 50px;
+	top:-50px;
+	left:-50px;
+	width: 150px;
+	height: 150px;
 	position: absolute;
 	border-radius: 100px;
-	/*transition: 0.4s;*/
-	/*transform: rotate(-180deg);*/
-	opacity: 0; 
+	background-color: #000000;
+	/*display:none;*/
+	opacity: 0.5; 
 }
-/*鼠标放上时自动展开样式*/
+/*鼠标放上中间元素时，显示圆形菜单容器，并移至圆形菜单容器上可以保持显示*/
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu, .button-circularMenu-menu:hover {
-	transform: /*rotate(0deg)*/ scale(3);
-	opacity: 1; 
+	display:inherit;
 }
 /*鼠标放上时自动显示菜单元素动画*/
+/*
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement1,
+.button-circularMenu-menu:hover > .button-circularMenu-menuElement1{
+	top: 0px;
+	left: 57px;
+	width: 36px;
+	height: 36px;
+	opacity: 1; 
+}
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement2,
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement3,
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement4,
@@ -45,75 +54,50 @@
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement6,
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement7,
 .button-circularMenu-middleContent:hover + .button-circularMenu-menu > .button-circularMenu-menuElement8{
-	transform: rotate(0deg);
 	opacity: 1; 
 }
-
+*/
 /*菜单元素8个*/
 .button-circularMenu-menuElement1 {
 	top: 0px;
-	left: 19px;/*25-6*/
-	transform-origin:50% 200%;
-	transition: 0.4s;
-	transition-delay:0s;
+	left: 50px;
 }
 .button-circularMenu-menuElement2 {
-	top: 6px;
-	right: 6px;
-	transition: 0.4s;
-	transition-delay:0.1s;
+	top: 15px;
+	right: 15px;
 }
 .button-circularMenu-menuElement3 {
-	top: 19px;
+	top: 50px;
 	right: 0px;
-	transition: 0.4s;
-	transition-delay:0.2s;
 }
 .button-circularMenu-menuElement4 {
-	bottom: 6px;
-	right: 6px;
-	transition: 0.4s;
-	transition-delay:0.3s;
 }
 .button-circularMenu-menuElement5 {
-	bottom: 0px;
-	left: 19px;
-	transition: 0.4s;
-	transition-delay:0.4s;
 }
 .button-circularMenu-menuElement6 {
-	bottom: 6px;
-	left: 6px;
-	transition: 0.4s;
-	transition-delay:0.5s;
 }
 .button-circularMenu-menuElement7 {
-	top: 19px;
-	left: 0px;
-	transition: 0.4s;
-	transition-delay:0.6s;
 }
 .button-circularMenu-menuElement8 {
-	top: 6px;
-	left: 6px;
 	transition: 0.4s;
 	transition-delay:0.7s;
 }
 .button-circularMenu-menuElement1, .button-circularMenu-menuElement2, .button-circularMenu-menuElement3, .button-circularMenu-menuElement4, .button-circularMenu-menuElement5, .button-circularMenu-menuElement6, .button-circularMenu-menuElement7, .button-circularMenu-menuElement8 {
-	width: 12px;
-	height: 12px;
+	width: 50px;
+	height: 50px;
 	background-color: #31B0D5;
 	position: absolute;
 	border-radius: 100px;
-	font-size: 5px;
-	transform: rotate(180deg);
-	opacity: 0; 
+	font-size: 0.5em;
+	opacity: 1; 
 }
+/*
 .button-circularMenu-menuElementText{
 	width: 10px;
 	height: 7px;
-	font-size:5px;
+	font-size: 0.5em;
 	top:2px;
 	left:1px;
 	position: absolute;
 }
+*/

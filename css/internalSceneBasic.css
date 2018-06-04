@@ -144,8 +144,8 @@
 }
 /*	交互对象，角色组面板定位	*/
 .roleGroup{
-	top:30px;
-	left:30px;
+	top:150px;
+	left:0px;
 	position:absolute;
 }
 
