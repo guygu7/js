@@ -137,7 +137,7 @@ LC.Components.ButtonFactory = {
 						all.menu.dom.append(all.menuElement1.dom);
 						//加入元素文本
 						all.menuElement1.text = LC.Components.ButtonFactory.createButton();
-						all.menuElement1.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement1.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText1);
 						all.menuElement1.dom.append(all.menuElement1.text.dom);
 						all.menuElement1.setText=function(text){
 							all.menuElement1.text.dom.text(text);
@@ -155,7 +155,7 @@ LC.Components.ButtonFactory = {
 						all.menu.dom.append(all.menuElement2.dom);
 						//加入元素文本
 						all.menuElement2.text = LC.Components.ButtonFactory.createButton();
-						all.menuElement2.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement2.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText2);
 						all.menuElement2.dom.append(all.menuElement2.text.dom);
 						all.menuElement2.setText=function(text){
 							all.menuElement2.text.dom.text(text);
@@ -173,7 +173,7 @@ LC.Components.ButtonFactory = {
 						all.menu.dom.append(all.menuElement3.dom);
 						//加入元素文本
 						all.menuElement3.text = LC.Components.ButtonFactory.createButton();
-						all.menuElement3.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText);
+						all.menuElement3.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText3);
 						all.menuElement3.dom.append(all.menuElement3.text.dom);
 						all.menuElement3.setText=function(text){
 							all.menuElement3.text.dom.text(text);
@@ -185,10 +185,58 @@ LC.Components.ButtonFactory = {
 						all.menuElement3.dom.bind("click", actfn);
 						break;
 					case 3:
+						//加入菜单元素
+						all.menuElement4 = LC.Components.ButtonFactory.createButton();
+						all.menuElement4.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement4);
+						all.menu.dom.append(all.menuElement4.dom);
+						//加入元素文本
+						all.menuElement4.text = LC.Components.ButtonFactory.createButton();
+						all.menuElement4.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText4);
+						all.menuElement4.dom.append(all.menuElement4.text.dom);
+						all.menuElement4.setText=function(text){
+							all.menuElement4.text.dom.text(text);
+						};
+						//执行一次
+						all.menuElement4.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement4.dom.bind("click", actfn);
 						break;
 					case 4 :
+						//加入菜单元素
+						all.menuElement5 = LC.Components.ButtonFactory.createButton();
+						all.menuElement5.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement5);
+						all.menu.dom.append(all.menuElement5.dom);
+						//加入元素文本
+						all.menuElement5.text = LC.Components.ButtonFactory.createButton();
+						all.menuElement5.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText5);
+						all.menuElement5.dom.append(all.menuElement5.text.dom);
+						all.menuElement5.setText=function(text){
+							all.menuElement5.text.dom.text(text);
+						};
+						//执行一次
+						all.menuElement5.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement5.dom.bind("click", actfn);
 						break;
 					case 5:
+						//加入菜单元素
+						all.menuElement6 = LC.Components.ButtonFactory.createButton();
+						all.menuElement6.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElement6);
+						all.menu.dom.append(all.menuElement6.dom);
+						//加入元素文本
+						all.menuElement6.text = LC.Components.ButtonFactory.createButton();
+						all.menuElement6.text.creatDOM("div", LC.CommonProperty.CSS_BOTTON_circularMenu_menuElementText6);
+						all.menuElement6.dom.append(all.menuElement6.text.dom);
+						all.menuElement6.setText=function(text){
+							all.menuElement6.text.dom.text(text);
+						};
+						//执行一次
+						all.menuElement6.setText(actObj.getName());
+						//绑定事件（交互动作，点击效果）
+						var actfn = actObj.getActFn();
+						all.menuElement6.dom.bind("click", actfn);
 						break;
 					case 6 :
 						break;

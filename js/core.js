@@ -219,41 +219,69 @@ LC.CommonProperty = {
 	 */
 	CSS_BOTTON_circularMenu_menu:" button-circularMenu-menu ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素1
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素1
 	 */
 	CSS_BOTTON_circularMenu_menuElement1:" button-circularMenu-menuElement1 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素2
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素2
 	 */
 	CSS_BOTTON_circularMenu_menuElement2:" button-circularMenu-menuElement2 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素3
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素3
 	 */
 	CSS_BOTTON_circularMenu_menuElement3:" button-circularMenu-menuElement3 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素4
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素4
 	 */
 	CSS_BOTTON_circularMenu_menuElement4:" button-circularMenu-menuElement4 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素5
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素5
 	 */
 	CSS_BOTTON_circularMenu_menuElement5:" button-circularMenu-menuElement5 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素6
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素6
 	 */
 	CSS_BOTTON_circularMenu_menuElement6:" button-circularMenu-menuElement6 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素7
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素7
 	 */
 	CSS_BOTTON_circularMenu_menuElement7:" button-circularMenu-menuElement7 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素8
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素8
 	 */
 	CSS_BOTTON_circularMenu_menuElement8:" button-circularMenu-menuElement8 ",
 	/**
-	 *  CSS class:带环形菜单按钮-菜单元素文本
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本1
 	 */
-	CSS_BOTTON_circularMenu_menuElementText:" button-circularMenu-menuElementText ",
+	CSS_BOTTON_circularMenu_menuElementText1:" button-circularMenu-menuElementText1 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本2
+	 */
+	CSS_BOTTON_circularMenu_menuElementText2:" button-circularMenu-menuElementText2 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本3
+	 */
+	CSS_BOTTON_circularMenu_menuElementText3:" button-circularMenu-menuElementText3 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本4
+	 */
+	CSS_BOTTON_circularMenu_menuElementText4:" button-circularMenu-menuElementText4 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本5
+	 */
+	CSS_BOTTON_circularMenu_menuElementText5:" button-circularMenu-menuElementText5 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本6
+	 */
+	CSS_BOTTON_circularMenu_menuElementText6:" button-circularMenu-menuElementText6 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本7
+	 */
+	CSS_BOTTON_circularMenu_menuElementText7:" button-circularMenu-menuElementText7 ",
+	/**
+	 *  CSS class:带环形菜单按钮（扇形）-菜单元素文本8
+	 */
+	CSS_BOTTON_circularMenu_menuElementText8:" button-circularMenu-menuElementText8 ",
 	//++++++++++++++
 	/**
 	 *  初始大地图界面	ps:值可以随意修改,不同即可
