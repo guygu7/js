@@ -1,0 +1,395 @@
+body {
+	background: rgb(230,230,180)/*rgb(255,225,135)*/;/*#bdc3c7;*/
+	margin: 0;
+	padding: 0;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+	font-family: YouYuan;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+	text-shadow: 1px 1px 1px rgb(100,100,100);
+	/*在所有浏览器中均有效的方案是为 body 元素（父元素）以百分比设置默认的 font-size 值,，可以显示相同的文本大小，并允许所有浏览器缩放文本的大小。*/
+}
+/**
+ * 	突起文字
+ */
+
+/**
+ * 	凹陷文字
+ */
+.panel-title, .botton-dropdown {
+	font-weight: 700;
+	color: rgb(60,60,15);
+	text-shadow: -1px 0 rgb(146,118,89), /*向左阴影*/
+	0 -1px rgb(225,213,193), /*向上阴影*/
+	1px 0 rgb(225,213,193), /*向右阴影*/
+	0 1px rgb(146,118,89); /*向下阴影*/
+}
+/**
+ * 	公共属性部分
+
+ .public {
+ transition: 0.5s;
+ display: inline-block;
+ position: absolute;
+ z-index: 1;
+ }
+ */
+/**
+ * 	隐藏特效（扩张消失）
+ */
+.hide-expand {
+	opacity: 0;
+	z-index: 0;
+	transform: scale(1.1);
+}
+/**
+ * 	隐藏特效（缩小消失）
+ */
+.hide-shrink {
+	opacity: 0;
+	z-index: 0;
+	transform: scale(0);
+}
+
+/** ========以上为通用公共属性==========*/
+/**=======场景桌面======*/
+/**
+ * 	背景桌布
+ */
+.main-desktop {
+	/*
+	background: rgb(139,139,114);
+	*/
+	background-color:rgb(204,199,175);
+    background-image:linear-gradient(90deg, rgb(198,193,170) 25%, transparent 25%, transparent),linear-gradient(rgb(198,193,170) 25%, transparent 25%, transparent),linear-gradient(90deg, transparent 75%, rgb(198,193,170) 75%),linear-gradient( transparent 75%, rgb(198,193,170) 75%);
+    background-size: 5px 5px;
+	width: 1100px;
+	height: 610px;
+	margin: 5px auto;
+	padding: 5px 50px 0px 50px;
+}
+/**
+ *  场景桌面
+ */
+.scene-desktop {
+	background-color:rgb(204,199,175);
+    background-image:linear-gradient(90deg, rgb(198,193,170) 25%, transparent 25%, transparent),linear-gradient(rgb(198,193,170) 25%, transparent 25%, transparent),linear-gradient(90deg, transparent 75%, rgb(198,193,170) 75%),linear-gradient( transparent 75%, rgb(198,193,170) 75%);
+    background-size: 5px 5px;
+	width: 1100px;
+	height: 600px;
+	position: absolute;
+	transition: 0.5s;
+	overflow: hidden;
+	z-index: 1;
+	display: inline-block;
+}
+/**
+ * 	=======面板======
+ */
+/**
+ * 	面板（不透明）
+ */
+.panel-basic {
+	/*border: 4px ridge rgb(240,240,190)*//*#474B64*/;
+	margin: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	/*
+	border-radius: 3px;
+	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 3px rgb(213,204,150) inset, 0px 0px 3px 3px rgb(100,100,100) inset, 0px 0px 27px 10px rgb(170,150,95) inset;
+	background-color: rgba(200,180,125,1);
+	*/
+	box-shadow: 2px 2px 0px 1px rgb(152,151,130)
+				,0px 8px 0px 0px rgba(235,230,205,0.4) inset
+				,0px 10px 0px 0px rgba(180,175,155,0.4) inset
+				,-10px 0px 0px 0px rgba(235,230,205,0.4) inset
+				,-12px 0px 0px 0px rgba(180,175,155,0.4) inset;
+	background-color:rgba(235,230,205,0.4);
+    background-size: 5px 5px;
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	text-align: center;
+	position: relative;
+}
+/**
+ * 	面板-突起面板（不透明）
+ */
+.panel-protruding {
+	/*border: 4px ridge rgb(240,240,190)*//*#474B64*/;
+	padding: 5px 5px 5px 5px;
+	border-radius: 3px;
+	box-shadow: 0 0 1px 1px rgb(90,90,90), -2px 0 rgb(186,168,139) inset, /*向左阴影*/
+	0 -2px rgb(215,203,183) inset, /*向上阴影*/
+	2px 0 rgb(225,213,193) inset, /*向右阴影*/
+	0 2px rgb(186,168,139) inset;/*向下阴影*/
+	background-color: rgb(85,85,85)/*rgb(210,200,150)*/;
+	color: rgb(235,235,235);
+	text-shadow: 0px 0px 1px rgb(255,255,255);
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	text-align: left;
+	position: relative;
+}
+/**
+ * 	面板-（备用）
+ */
+.panel-1 {
+	/*border: 4px ridge rgb(240,240,190)*//*#474B64*/;
+	padding: 5px 5px 5px 5px;
+	border-radius: 3px;
+	box-shadow: 0px 0px 1px 1px rgb(100,100,100), 0px 0px 0px 3px rgb(213,204,150) inset, 0px 0px 3px 3px rgb(100,100,100) inset, 0px 0px 27px 10px rgb(170,150,95) inset;
+	background-color: rgb(210,200,150)/*#BEBEBE*/;
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	text-align: center;
+	position: relative;
+}
+/**
+ * 	空气面板（用于布局）
+ */
+.panel-air {
+	margin: 0px;
+	text-align: center;
+	display: inline-block;
+	position: relative;
+}
+/**
+ * 	面板（外层，半透明，有边框和边距）
+ */
+.panel-transparent {
+	margin: 5px;
+	/*border: 5px solid  #BEBEBE;*//*#474B64*/
+	border-top-style: none;
+	border-right: 5px solid rgb(195,185,130);
+	border-bottom: 5px solid rgb(197,190,140);
+	border-left: 5px solid rgb(200,200,150);
+	background: -webkit-linear-gradient(-45deg,rgb(200,200,150) 1%,rgb(225,222,190) 35%,rgb(195,185,130) 60%);
+	z-index: 10;
+	position: absolute;
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	display: inline-block;
+	/*
+	 box-shadow: 0 0 0 5px rgb(240,240,190),
+	 0 0 2px 6px rgb(40,40,80);*/
+	box-shadow: 0px 0px 3px 1px rgb(100,100,100);
+}
+/**
+ * 	面板框标题栏
+ */
+.panel-title {
+	/*
+	 background: -webkit-linear-gradient(#BEBEBE 1%,#717171 100%);
+	 */
+	background: -webkit-linear-gradient(-45deg,rgb(200,200,150) 1%,rgb(225,222,190) 35%,rgb(195,185,130) 60%);
+	box-shadow: 0px 8px 8px -6px rgb(60,60,60);
+	/*#E4E6E5;*/
+	padding-left: 3px;
+	margin: 0px 0px 10px 0px;
+	text-align: center;
+	/*text-shadow: 0px 0px 5px  #E6E6E6;*/
+
+	font-size: 120%;
+	display: inline-block;
+	position: relative;
+}
+/**
+ * 	表格单元格tb样式
+ */
+.panel-table-tb {
+	position: relative;
+	text-align: center;
+	display: inline-block;
+}
+.panel-table-tb-basic {
+	/*border: 2px inset rgb(186,168,139);*/
+	box-shadow: -2px 0 rgb(186,168,139) inset, /*向左阴影*/
+	0 -2px rgb(235,223,203) inset, /*向上阴影*/
+	2px 0 rgb(235,223,203) inset, /*向右阴影*/
+	0 2px rgb(186,168,139) inset, /*向下阴影*/
+	0 0 15px 5px rgb(67,54,28) inset;
+	border-radius: 3px;
+	background-color: rgb(90,99,60);
+	border-radius: 3px;
+	transition: 0.1s;
+}
+/**
+ * 	=======按钮======
+ */
+/**
+ * 右上角的关闭按钮
+ */
+.botton-colse {
+	/*border: 5px solid rgb(195,185,130);*/
+	box-shadow: -1px 0 rgb(186,168,139), /*向左阴影*/
+	0 -1px rgb(235,223,203), /*向上阴影*/
+	1px 0 rgb(235,223,203), /*向右阴影*/
+	0 1px rgb(186,168,139), /*向下阴影*/
+	0 0 0 2px rgb(50,40,20), 0 0 0 5px rgb(195,185,130), 0px 0px 4px 4px rgb(100,100,100);
+	background-color: rgb(215,200,150);
+	border-radius: 55px;
+	/*background: -webkit-linear-gradient(#BEBEBE 1%,#717171 100%);*/
+	color: rgb(97,83,57);
+	position: absolute;
+	top: -2px;
+	right: -8px;
+	z-index: 99;
+	line-height: 18px;
+	text-align: center;
+	height: 20px;
+	width: 20px;
+	font-size: 10px;
+	text-shadow: /*1px 1px 1px #E6E6E6;*/
+	-1px 0 rgb(235,223,203), /*向左阴影*/
+	0 -1px rgb(186,168,139), /*向上阴影*/
+	1px 0 rgb(186,168,139), /*向右阴影*/
+	0 1px rgb(235,223,203); /*向下阴影*/
+}
+.botton-colse:before {
+	content: "\2716";
+}
+.botton-colse:hover {
+	cursor: pointer;
+}
+.botton-colse:active {
+	/*background: -webkit-linear-gradient(#717171 1%,#BEBEBE 100%);*/
+	background-color: rgb(195,180,130);
+}
+/**
+ * 	下拉菜单按钮
+ */
+.botton-dropdown {
+	width: 45px;
+	height: 45px;
+	border-radius: 300px;
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	line-height: 45px;
+	overflow: hidden;
+	white-space: nowrap;
+	box-shadow: 0 0 1px 1px rgb(90,90,90), 0 0 0px 2px rgb(186,168,139) inset, 0 0 0px 3px rgb(50,40,20) inset, -5px 0 rgb(186,168,139) inset, /*向左阴影*/
+	0 -5px rgb(235,223,203) inset, /*向上阴影*/
+	5px 0 rgb(235,223,203) inset, /*向右阴影*/
+	0 5px rgb(186,168,139) inset;/*向下阴影*/
+	background-color: rgb(215,200,150);
+	text-align: center;
+}
+/*
+ .botton-dropdown:hover {
+ transform: scaleX(1.1) scaleY(1.1);
+ cursor: pointer;
+ }
+ */
+.botton-dropdown:active {
+	transform: scale(0.8);
+	background-color: rgb(195,180,130);
+}
+/**
+ * 	=======角标======
+ */
+/**
+ * 	角标
+ */
+.cornersign {
+	height: 15px;
+	width: 15px;
+	background-color: #2AABD2;
+	border-radius: 8px;
+	position: absolute;
+	padding: 1px;
+	padding-left: 2px;
+	z-index: 99;
+	line-height: 14px;
+	text-align: center;
+	font-size: 10px;
+	font-weight: 600;
+}
+/**
+ * 	======菜单======
+ */
+/**
+ * 	下拉菜单
+ */
+.dropdown {
+	position: absolute;
+	/*
+	 margin: 5px;
+	 border: 3px ridge #474B64;
+	 border-radius: 100px;
+	 background-color: rgba(43,49,60,0.75);
+	 transition: 0.2s;
+	 */
+	text-align: center;
+}
+/*======进度条======*/
+.progress {
+	border: 0px ridge #767676;
+	border-radius: 200px;
+	width: 100px;
+	height: 10px;
+	background-color: #BEBEBE;
+	overflow: hidden;
+}
+.progress-bar {
+	height: 100%;
+	border-radius: 200px;
+	background-color: #2AABD2;
+	/*border-radius: progress;*/
+}
+.progress-shadow {
+	background-color: #474B64;
+}
+/*==定义鼠标事件穿透==*/
+.cornersign {
+	pointer-events: none;
+}
+/*=======遮罩层=======*/
+.masklayer {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 20;
+}
+/*=======定位======*/
+/**
+ * 	定位右下
+ */
+.lowerright {
+	bottom: 3px;
+	right: 3px;
+	position: absolute;
+}
+/**
+ * 	定位右上
+ */
+.upperright {
+	top: 3px;
+	right: 3px;
+	position: absolute;
+}
+/**
+ * 	定位左下
+ */
+.lowerleft {
+	bottom: 3px;
+	left: 3px;
+	position: absolute;
+}
+/**
+ * 	定位左上
+ */
+.upperleft {
+	top: 3px;
+	left: 3px;
+	position: absolute;
+}
+/**
+ * 	相对定位
+ */
+.position-relative {
+	position: relative;
+}
+/**
+ * 	绝对定位
+ */
+.position-absolute {
+	position: absolute;
+}
