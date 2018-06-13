@@ -1,0 +1,95 @@
+/*菜单*/
+.menu-background{
+	width: 280px;
+	height: 500px;
+	background-color:rgba(235,230,205,0.4);
+    box-shadow:2px 2px 0px 0px rgb(152,151,130);
+	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
+	position: absolute;
+}
+.menu{
+	width: 270px;
+	height: 475px;
+	box-shadow: 0px 2px 0px 0px rgba(180,175,155,0.6) inset
+				,0px -2px 0px 0px rgba(180,175,155,0.6) inset;
+	padding:3px 0px 3px 0px;
+	top:10px;
+	color:rgba(69,66,58,0.8);
+	overflow-y:scroll;
+	position: relative;
+}
+.menu-list{
+	width:200px;
+	height: 30px;
+	margin:10px 0px 10px 0px;
+	position: relative;
+}
+/*外框*/
+.menu-list-background{
+	width:209px;
+	height: 40px;
+	top:-5px;
+	margin:5px 0px 5px 0px;
+	box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
+				0px -2px 0px 0px rgba(69,66,58,0.9) inset;
+	opacity: 0;
+	transition:0.2s;
+	position: absolute;
+}
+/*背景*/
+.menu-list-background2{
+	width:0px;
+	height: 30px;
+	margin:5px 0px 5px 4px;
+	transition: 0.5s;
+	position: absolute;
+}
+.menu-list-content{
+	height: 30px;
+	line-height:30px;
+	box-shadow:2px 0px 0px 0px rgba(121,108,88,0.8) inset;
+	margin:5px 1px 5px 1px;
+	padding-left:20px;
+	transition: 0.3s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
+	position: absolute;
+}
+.menu-list:hover{
+	transition: 0.3s;
+	left:10px;
+	transform: scale(1.1);
+}
+.menu-list:hover > .menu-list-background{
+	opacity: 1;
+	animation:menu-list-background 2s infinite;
+	animation-delay: 1s ;
+}
+@keyframes menu-list-background
+{
+	0% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
+				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
+	10% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
+				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
+	50% {box-shadow: 0px 2px 0px 0px rgba(142,138,122,0.9) inset,
+				0px -2px 0px 0px rgba(142,138,122,0.9) inset;}
+	90% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
+				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
+	100% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
+				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
+}
+.menu-list:hover > .menu-list-background2{
+	width:205px;
+	background: rgba(69,66,58,0.8);
+	animation:menu-list-background2 2s infinite;
+	animation-delay: 1s ;
+}
+@keyframes menu-list-background2
+{
+	0% {background:rgba(69,66,58,0.8);}
+	10% {background:rgba(69,66,58,0.8);}
+	50% {background:rgba(142,138,122,0.8);}
+	90% {background:rgba(69,66,58,0.8);}
+	100% {background:rgba(69,66,58,0.8);}
+}
+.menu-list:hover > .menu-list-content{
+	color:rgba(235,230,205,0.8);
+}

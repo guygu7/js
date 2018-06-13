@@ -11,24 +11,36 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		
 		<link href="css/main.css" rel="stylesheet">
+		<link href="css/menu.css" rel="stylesheet">
+		<link href="css/panel.css" rel="stylesheet">
+		
 	</head>
 
 	<body>
 		<div class="main-desktop">
 			<div ng-app="myApp" ng-controller="main-scene" class="main-scene">
 				{{pram}}
+				<div class="menu-background" style="top:20px;left:20px;">
 				<div ng-controller="menu" class="menu">
 					<div class="menu-list">
-						<div class="menu-list-content">{{pram2}}</div>
 						<div class="menu-list-background"></div>
 						<div class="menu-list-background2"></div>
-					</div>
-					<div class="menu-list">
 						<div class="menu-list-content">{{pram2}}</div>
-						<div class="menu-list-background"></div>
-						<div class="menu-list-background2"></div>
 					</div>
-					
+				</div>
+				</div>
+				<div class="panel" style="bottom:20px;left:20px;">
+					<div>中文</div>
+					<div class="panel-lamp"></div>
+				</div>
+				<div class="panel2" style="top:20px;right:30px;">
+					<span>中文</span>
+					<span>中文</span>
+				</div>
+				<div class="panel3" style="top:80px;right:40px;">
+					<div class="panel3-tittle">
+						标题
+					</div>
 				</div>
 			</div>
 		</div>
