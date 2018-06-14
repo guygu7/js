@@ -13,24 +13,24 @@
 		<link href="css/main.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/panel.css" rel="stylesheet">
+		<link href="css/steeringWheel.css" rel="stylesheet">
 		
 	</head>
 
 	<body>
 		<div class="main-desktop">
 			<div ng-app="myApp" ng-controller="main-scene" class="main-scene">
-				{{pram}}
 				<div class="menu-background" style="top:20px;left:20px;">
-				<div ng-controller="menu" class="menu">
-					<div class="menu-list">
+				<div ng-controller="menu" class="menu">{{pram1}}
+					<div class="menu-list" ng-repeat="x in prams">
 						<div class="menu-list-background"></div>
 						<div class="menu-list-background2"></div>
-						<div class="menu-list-content">{{pram2}}</div>
+						<div class="menu-list-content">{{x}}</div>
 					</div>
 				</div>
 				</div>
 				<div class="panel" style="bottom:20px;left:20px;">
-					<div>中文</div>
+					<div>{{pram1}}</div>
 					<div class="panel-lamp"></div>
 				</div>
 				<div class="panel2" style="top:20px;right:30px;">
@@ -42,18 +42,37 @@
 						标题
 					</div>
 				</div>
+				<div class="steeringWheel">
+					<div class="steeringWheel-upper">
+						<div class="steeringWheel-upper1"></div>
+						<div class="steeringWheel-upper2"></div>
+						<div class="steeringWheel-upper3"></div>
+					</div>
+					<div class="steeringWheel-right"></div>
+					<div class="steeringWheel-lower"></div>
+					<div class="steeringWheel-left"></div>
+				</div>
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
 		<script src="js/main.js"></script>
 		<script>
+			
 			var app = angular.module('myApp', []);
-			app.controller('main-scene', function($scope) {
-			    $scope.pram = "John Dow";
+			var testObj = new Object();
+			app.controller('main-scene', function($scope, $rootScope) {
+			     $scope.pram = [testObj];
+			     $rootScope.pram1="测试1";
 			});
-			app.controller('menu', function($scope) {
-			    $scope.pram2 = "中文2";
+			app.controller('menu', function($scope, $rootScope) {
+			     $scope.prams = ["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10","选项11","选项12","选项13","选项14","选项15"];
+				 $scope.pram1="测试2";
 			});
+			testObj.name = "test Name";
+			
+			//定义数据层
+			//
+			
 		</script>
 		
 	</body>

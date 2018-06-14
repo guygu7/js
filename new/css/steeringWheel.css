@@ -1,0 +1,45 @@
+.steeringWheel{
+	width: 30px;
+	height: 30px;
+	bottom:200px;
+	right:400px;
+	background-color:rgba(150,150,150,0.8);
+	position: absolute;
+}
+.steeringWheel-upper{
+	top:-30px;
+	position: absolute;
+}
+.steeringWheel-upper1{
+	width: 30px;
+	height: 30px;
+	background: linear-gradient(135deg,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
+	transform: rotate(45deg) skew(30deg,30deg) ;
+	border-radius:1px;
+	position: absolute;
+}
+.steeringWheel-upper2{
+	width: 30px;
+	height: 30px;
+	background: linear-gradient(-45deg,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
+	transform: rotate(45deg)  scale(0.42);
+	border-radius:1px;
+	position: absolute;
+}
+.steeringWheel-upper3{
+	width: 30px;
+	height: 30px;
+	background-color: rgb(255,255,255);
+	border-radius:30px;
+	transform: scale(0.2);
+}
+
+.steeringWheel-right{
+	
+}
+.steeringWheel-lower{
+	
+}
+.steeringWheel-left{
+	
+}

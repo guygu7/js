@@ -30,7 +30,10 @@ html {
     height 3px;
     background-color: rgba(255,255,255,0);   
 }   
-     
+::-webkit-scrollbar:horizontal /*横向滚动条样式  */
+{  
+   height: 3px;  
+}  
 /*定义滚动条轨道 内阴影+圆角*/   
 ::-webkit-scrollbar-track   
 {   
@@ -103,5 +106,7 @@ html {
 	width: 1200px;
 	height: 600px;
 	border:1px solid #000000;
+	color:rgba(49,46,38);
 	position: absolute;
+	opacity: 0.6;
 }

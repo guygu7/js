@@ -2,7 +2,7 @@
 .menu-background{
 	width: 280px;
 	height: 500px;
-	background-color:rgba(235,230,205,0.4);
+	background-color:rgb(235,230,205);
     box-shadow:2px 2px 0px 0px rgb(152,151,130);
 	transition: 0.6s cubic-bezier(0.48, -0.68, 0.48, 1.3);
 	position: absolute;
@@ -10,11 +10,10 @@
 .menu{
 	width: 270px;
 	height: 475px;
-	box-shadow: 0px 2px 0px 0px rgba(180,175,155,0.6) inset
-				,0px -2px 0px 0px rgba(180,175,155,0.6) inset;
+	box-shadow: 0px 2px 0px 0px rgba(180,175,155) inset
+				,0px -2px 0px 0px rgba(180,175,155) inset;
 	padding:3px 0px 3px 0px;
 	top:10px;
-	color:rgba(69,66,58,0.8);
 	overflow-y:scroll;
 	position: relative;
 }
@@ -30,8 +29,8 @@
 	height: 40px;
 	top:-5px;
 	margin:5px 0px 5px 0px;
-	box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
-				0px -2px 0px 0px rgba(69,66,58,0.9) inset;
+	box-shadow: 0px 2px 0px 0px rgba(69,66,58) inset,
+				0px -2px 0px 0px rgba(69,66,58) inset;
 	opacity: 0;
 	transition:0.2s;
 	position: absolute;
@@ -41,20 +40,20 @@
 	width:0px;
 	height: 30px;
 	margin:5px 0px 5px 4px;
-	transition: 0.5s;
+	transition: 0.2s;
 	position: absolute;
 }
 .menu-list-content{
 	height: 30px;
 	line-height:30px;
-	box-shadow:2px 0px 0px 0px rgba(121,108,88,0.8) inset;
+	box-shadow:2px 0px 0px 0px rgba(121,108,88) inset;
 	margin:5px 1px 5px 1px;
 	padding-left:20px;
-	transition: 0.3s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
+	transition: 0.2s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
 	position: absolute;
 }
 .menu-list:hover{
-	transition: 0.3s;
+	transition: 0.2s;
 	left:10px;
 	transform: scale(1.1);
 }
@@ -91,5 +90,5 @@
 	100% {background:rgba(69,66,58,0.8);}
 }
 .menu-list:hover > .menu-list-content{
-	color:rgba(235,230,205,0.8);
+	color:rgba(235,230,205);
 }
