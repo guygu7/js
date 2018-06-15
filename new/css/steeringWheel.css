@@ -1,45 +1,82 @@
 .steeringWheel{
 	width: 30px;
 	height: 30px;
-	bottom:200px;
-	right:400px;
-	background-color:rgba(150,150,150,0.8);
+	border-radius:60px;
+	background-color:rgb(233,225,193);
+	box-shadow: 0px 0px 2px 0px rgb(80,80,80),0px 0px 3px 0px rgb(80,80,80) inset;
 	position: absolute;
 }
-.steeringWheel-upper{
+.steeringWheel-upperArrow{
 	top:-30px;
 	position: absolute;
 }
-.steeringWheel-upper1{
+.steeringWheel-upperArrow:hover
+,.steeringWheel-rightArrow:hover
+,.steeringWheel-lowerArrow:hover
+,.steeringWheel-leftArrow:hover{
+	animation: steeringWheel-upperArrow 1.5s infinite;
+}
+@keyframes steeringWheel-upperArrow{
+	0% {opacity: 1;}
+	50% {opacity: 0.7;}
+	100%{opacity: 1;}
+}
+.steeringWheel-arrow1{
 	width: 30px;
 	height: 30px;
 	background: linear-gradient(135deg,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
 	transform: rotate(45deg) skew(30deg,30deg) ;
-	border-radius:1px;
+	border-radius:2px;
 	position: absolute;
 }
-.steeringWheel-upper2{
+.steeringWheel-arrow2{
 	width: 30px;
 	height: 30px;
 	background: linear-gradient(-45deg,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
 	transform: rotate(45deg)  scale(0.42);
-	border-radius:1px;
+	border-radius:2px;
 	position: absolute;
 }
-.steeringWheel-upper3{
+.steeringWheel-arrow3{
 	width: 30px;
 	height: 30px;
-	background-color: rgb(255,255,255);
+	background-color: rgb(235,230,205);
 	border-radius:30px;
-	transform: scale(0.2);
+	transform: scale(0.15);
+	position: absolute;
 }
-
-.steeringWheel-right{
-	
+.steeringWheel-arrow4{
+	top:21px;
+	left:5px;
+	width: 4px;
+	height: 4px;
+	background-color: rgb(0,0,0);
+	border-radius:30px;
+	position: absolute;
 }
-.steeringWheel-lower{
-	
+.steeringWheel-arrow5{
+	top:21px;
+	left:21px;
+	width: 4px;
+	height: 4px;
+	background-color: rgb(0,0,0);
+	border-radius:30px;
+	position: absolute;
 }
-.steeringWheel-left{
-	
+.steeringWheel-rightArrow{
+	left:60px;
+	transform: rotateZ(90deg);
+	position: absolute;
+}
+.steeringWheel-lowerArrow{
+	top:60px;
+	left:30px;
+	transform: rotateZ(180deg);
+	position: absolute;
+}
+.steeringWheel-leftArrow{
+	top:30px;
+	left:-30px;
+	transform: rotateZ(270deg);
+	position: absolute;
 }

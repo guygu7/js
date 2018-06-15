@@ -10,8 +10,8 @@
 .menu{
 	width: 270px;
 	height: 475px;
-	box-shadow: 0px 2px 0px 0px rgba(180,175,155) inset
-				,0px -2px 0px 0px rgba(180,175,155) inset;
+	box-shadow: 0px 2px 0px 0px rgb(180,175,155) inset
+				,0px -2px 0px 0px rgb(180,175,155) inset;
 	padding:3px 0px 3px 0px;
 	top:10px;
 	overflow-y:scroll;
@@ -29,8 +29,8 @@
 	height: 40px;
 	top:-5px;
 	margin:5px 0px 5px 0px;
-	box-shadow: 0px 2px 0px 0px rgba(69,66,58) inset,
-				0px -2px 0px 0px rgba(69,66,58) inset;
+	box-shadow: 0px 2px 0px 0px rgb(69,66,58) inset,
+				0px -2px 0px 0px rgb(69,66,58) inset;
 	opacity: 0;
 	transition:0.2s;
 	position: absolute;
@@ -46,7 +46,7 @@
 .menu-list-content{
 	height: 30px;
 	line-height:30px;
-	box-shadow:2px 0px 0px 0px rgba(121,108,88) inset;
+	box-shadow:2px 0px 0px 0px rgb(121,108,88) inset;
 	margin:5px 1px 5px 1px;
 	padding-left:20px;
 	transition: 0.2s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
@@ -64,31 +64,31 @@
 }
 @keyframes menu-list-background
 {
-	0% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
-				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
-	10% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
-				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
-	50% {box-shadow: 0px 2px 0px 0px rgba(142,138,122,0.9) inset,
-				0px -2px 0px 0px rgba(142,138,122,0.9) inset;}
-	90% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
-				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
-	100% {box-shadow: 0px 2px 0px 0px rgba(69,66,58,0.9) inset,
-				0px -2px 0px 0px rgba(69,66,58,0.9) inset;}
+	0% {box-shadow: 0px 2px 0px 0px rgb(69,66,58) inset,
+				0px -2px 0px 0px rgb(69,66,58) inset;}
+	10% {box-shadow: 0px 2px 0px 0px rgb(69,66,58) inset,
+				0px -2px 0px 0px rgb(69,66,58) inset;}
+	50% {box-shadow: 0px 2px 0px 0px rgb(142,138,122) inset,
+				0px -2px 0px 0px rgb(142,138,122) inset;}
+	90% {box-shadow: 0px 2px 0px 0px rgb(69,66,58) inset,
+				0px -2px 0px 0px rgb(69,66,58) inset;}
+	100% {box-shadow: 0px 2px 0px 0px rgb(69,66,58) inset,
+				0px -2px 0px 0px rgb(69,66,58) inset;}
 }
 .menu-list:hover > .menu-list-background2{
 	width:205px;
-	background: rgba(69,66,58,0.8);
+	background: rgb(69,66,58);
 	animation:menu-list-background2 2s infinite;
 	animation-delay: 1s ;
 }
 @keyframes menu-list-background2
 {
-	0% {background:rgba(69,66,58,0.8);}
-	10% {background:rgba(69,66,58,0.8);}
-	50% {background:rgba(142,138,122,0.8);}
-	90% {background:rgba(69,66,58,0.8);}
-	100% {background:rgba(69,66,58,0.8);}
+	0% {background:rgb(69,66,58);}
+	10% {background:rgb(69,66,58);}
+	50% {background:rgb(142,138,122);}
+	90% {background:rgb(69,66,58);}
+	100% {background:rgb(69,66,58);}
 }
 .menu-list:hover > .menu-list-content{
-	color:rgba(235,230,205);
+	color:rgb(235,230,205);
 }
