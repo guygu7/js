@@ -42,23 +42,29 @@
 						标题
 					</div>
 				</div>
-				<div class="steeringWheel" style="bottom:55px;right:80px;">
-					<div class="steeringWheel-upperArrow" ng-click="upClick()">
-						<div class="steeringWheel-upperArrow-graphical">
-							<div class="steeringWheel-arrow1"></div>
-							<div class="steeringWheel-arrow2"></div>
-							<div class="steeringWheel-arrow3"></div>
-							<div class="steeringWheel-arrow4"></div>
-							<div class="steeringWheel-arrow5"></div>
-						</div>
-						<div class="steeringWheel-upperArrow-shadow">
-							<div class="steeringWheel-arrow1"></div>
-							<div class="steeringWheel-arrow2"></div>
-							<div class="steeringWheel-arrow3"></div>
-							<div class="steeringWheel-arrow4"></div>
-							<div class="steeringWheel-arrow5"></div>
+				<div ng-controller="steeringWheel" class="steeringWheel" style="bottom:55px;right:80px;">
+					<div ng-repeat="x in arrows">
+						<div ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}"><!--steeringWheel-upperArrow-->
+							<span style="display: none">{{$index+1}}</span>
+							<div ng-click="upClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
+								<div class="steeringWheel-arrow1"></div>
+								<div class="steeringWheel-arrow2"></div>
+								<div class="steeringWheel-arrow3"></div>
+								<div class="steeringWheel-arrow4"></div>
+								<div class="steeringWheel-arrow5"></div>
+							</div>
+							<!-- steeringWheel-upperArrow-shadow	-->
+							<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}==animation}">
+								<div class="steeringWheel-arrow1"></div>
+								<div class="steeringWheel-arrow2"></div>
+								<div class="steeringWheel-arrow3"></div>
+								<div class="steeringWheel-arrow4"></div>
+								<div class="steeringWheel-arrow5"></div>
+							</div>
+						
 						</div>
 					</div>
+					<!--
 					<div class="steeringWheel-rightArrow">
 						<div class="steeringWheel-arrow1"></div>
 						<div class="steeringWheel-arrow2"></div>
@@ -80,6 +86,7 @@
 						<div class="steeringWheel-arrow4"></div>
 						<div class="steeringWheel-arrow5"></div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div>
@@ -92,9 +99,6 @@
 			app.controller('main-scene', function($scope, $rootScope) {
 			     $scope.pram = [testObj];
 			     $rootScope.pram1="测试1";
-			     $scope.upClick = function(){
-			     	alert("upClick");
-			     };
 			});
 			app.controller('menu', function($scope, $rootScope) {
 			     $scope.prams = ["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10","选项11","选项12","选项13","选项14","选项15"];
@@ -102,6 +106,12 @@
 			});
 			testObj.name = "test Name";
 			
+			app.controller('steeringWheel',function($scope, $rootScope) { 
+				$scope.arrows=["1","2","3","4"];
+				$scope.upClick = function(i) {
+					$scope.animation = (i+1);
+				};
+			}); 
 			//定义数据层
 			//
 			

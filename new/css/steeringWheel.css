@@ -6,28 +6,69 @@
 	box-shadow: 0px 0px 2px 0px rgb(80,80,80),0px 0px 3px 0px rgb(80,80,80) inset;
 	position: absolute;
 }
-.steeringWheel-upperArrow-graphical,.steeringWheel-upperArrow-shadow{
+/*箭头定位&方向控制*/
+.steeringWheel-upperArrow{
 	top:-30px;
 	position: absolute;
 }
-.steeringWheel-upperArrow-graphical
+.steeringWheel-rightArrow{
+	left:60px;
+	transform: rotateZ(90deg);
+	position: absolute;
+}
+.steeringWheel-lowerArrow{
+	top:60px;
+	left:30px;
+	transform: rotateZ(180deg);
+	position: absolute;
+}
+.steeringWheel-leftArrow{
+	top:30px;
+	left:-30px;
+	transform: rotateZ(270deg);
+	position: absolute;
+}
+
+.steeringWheel-upperArrow
 ,.steeringWheel-rightArrow
 ,.steeringWheel-lowerArrow
 ,.steeringWheel-leftArrow{
-	transition:0.6s;
-	opacity:0.6;
+	position: absolute;
 }
+
+/*箭头主图形整体控制*/
+.steeringWheel-upperArrow-graphical
+,.steeringWheel-rightArrow-graphical
+,.steeringWheel-lowerArrow-graphical
+,.steeringWheel-leftArrow-graphical{
+	transition:0.6s;
+	opacity:0.8;
+}
+
 .steeringWheel-upperArrow:hover > .steeringWheel-upperArrow-graphical
-,.steeringWheel-rightArrow:hover
-,.steeringWheel-lowerArrow:hover
-,.steeringWheel-leftArrow:hover{
+,.steeringWheel-rightArrow:hover > .steeringWheel-rightArrow-graphical
+,.steeringWheel-lowerArrow:hover > .steeringWheel-lowerArrow-graphical
+,.steeringWheel-leftArrow:hover > .steeringWheel-leftArrow-graphical{
 	opacity:1;
+}
+
+/*阴影动画效果*/
+.steeringWheel-upperArrow-shadow
+,.steeringWheel-rightArrow-shadow
+,.steeringWheel-lowerArrow-shadow
+,.steeringWheel-leftArrow-shadow{
+	opacity:0.4;
+	pointer-events:none;
+	width: 30px;
+	height: 30px;
+	position: absolute;
 }
 .steeringWheel-upperArrow-shadow-jsAnimation{
 	transition:0.6s;
 	opacity:0;
 	transform: scale(2);
 }
+
 /*注释：为了产生预期的效果，在 CSS 定义中，a:active 必须位于 a:hover 之后！！*/
 /*
 .steeringWheel-upperArrow:active
@@ -38,6 +79,7 @@
 	opacity:0;
 }
 */
+/*箭头图形构成*/
 .steeringWheel-arrow1{
 	width: 30px;
 	height: 30px;
@@ -78,22 +120,5 @@
 	height: 4px;
 	background-color: rgb(0,0,0);
 	border-radius:30px;
-	position: absolute;
-}
-.steeringWheel-rightArrow{
-	left:60px;
-	transform: rotateZ(90deg);
-	position: absolute;
-}
-.steeringWheel-lowerArrow{
-	top:60px;
-	left:30px;
-	transform: rotateZ(180deg);
-	position: absolute;
-}
-.steeringWheel-leftArrow{
-	top:30px;
-	left:-30px;
-	transform: rotateZ(270deg);
 	position: absolute;
 }
