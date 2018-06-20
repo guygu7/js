@@ -1,0 +1,25 @@
+.button{
+	position: absolute;
+}
+/*外框*/
+.button-background{
+	width:200px;
+	height: 40px;
+	box-shadow:0px 2px 0px 0px rgb(69,66,58) ,
+				0px -2px 0px 0px rgb(69,66,58) ;
+	overflow:hidden;
+	position: absolute;
+}
+.button-background2{
+	width:200px;
+	height: 30px;
+	line-height:30px;
+	text-align:center;
+	margin:5px 0px 5px 0px;
+	transition: 0.3s;
+	background:  linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(69,66,58,1) 50%,rgba(0,0,0,0) 100%);
+	position: absolute;
+}
+.button:hover > .button-background> .button-background2{
+	transform: scalex(1.5);
+}

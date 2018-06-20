@@ -14,12 +14,21 @@
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/panel.css" rel="stylesheet">
 		<link href="css/steeringWheel.css" rel="stylesheet">
-		
+		<link href="css/button.css" rel="stylesheet">
 	</head>
 
 	<body>
-		<div class="main-desktop">
-			<div ng-app="myApp" ng-controller="main-scene" class="main-scene">
+		<div ng-app="myApp" ng-controller="myApp" class="main-desktop">
+			<!--起始场景-->
+			<div ng-controller="scene-start" ng-hide="sceneStartHide" ng-class="{'hide-animation':currentScene!='scene-start','show-animation':currentScene=='scene-start'}" class="scene">
+				<div ng-click="buttonstart()" class="button" style="top:200px;left:200px;">
+					<div class="button-background">
+						<div class="button-background2"></div>
+					</div>
+				</div>
+			</div>
+			<!--xx场景-->
+			<div ng-controller="scene-main" ng-hide="sceneMainHide" ng-class="{'hide-animation':currentScene!='scene-main','show-animation':currentScene=='scene-main'}" class="scene">
 				<div class="menu-background" style="top:20px;left:20px;">
 				<div ng-controller="menu" class="menu">{{pram1}}
 					<div class="menu-list" ng-repeat="x in prams">
@@ -46,7 +55,7 @@
 					<div ng-repeat="x in arrows">
 						<div ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}"><!--steeringWheel-upperArrow-->
 							<span style="display: none">{{$index+1}}</span>
-							<div ng-click="upClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
+							<div ng-click="arrowOnClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
 								<div class="steeringWheel-arrow1"></div>
 								<div class="steeringWheel-arrow2"></div>
 								<div class="steeringWheel-arrow3"></div>
@@ -77,34 +86,45 @@
 		<script src="js/main.js"></script>
 		<script>
 			
-			var app = angular.module('myApp', []);
+			var app = angular.module("myApp", []);
+			
 			var testObj = new Object();
-			app.controller('main-scene', function($scope, $rootScope) {
+			app.controller("scene-main", function($scope, $rootScope) {
 			     $scope.pram = [testObj];
 			     $rootScope.pram1="测试1";
 			});
-			app.controller('menu', function($scope, $rootScope) {
+			app.controller("menu", function($scope, $rootScope) {
 			     $scope.prams = ["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10","选项11","选项12","选项13","选项14","选项15"];
 				 $scope.pram1="测试2";
 			});
 			testObj.name = "test Name";
 			
-			app.controller('steeringWheel',function($scope, $rootScope) { 
-				$scope.arrows=["1","2","3","4"];
-				var sign = "-1";
-				$scope.upClick = function(i) {
-					if (sign=="-1"){
-						sign="-2";
-					}else{
-						sign="-1";
-					}
-					$scope.animation = (i+1) + sign;
+			//应用全局对场景的显示控制
+			app.controller("myApp",function($scope,$rootScope){
+				$rootScope.sceneStartHide = false;
+				$rootScope.sceneMainHide = true;
+				$rootScope.currentScene = "scene-start";
+			});
+			
+			//起始场景
+			app.controller("scene-start",function($scope,$rootScope,$timeout){
+				//开始按钮
+				$scope.buttonstart=function(){
+					$rootScope.sceneMainHide = false;
+					$timeout(function(){
+						$rootScope.currentScene = "scene-main";
+					},10);
+					$timeout(function(){
+						$rootScope.sceneStartHide = true;
+					},800);
 				};
-			}); 
+			});
+			
 			//定义数据层
 			//
 			
 		</script>
+		<script src="js/animation/steeringWheel.js"></script>
 		
 	</body>
 </html>
