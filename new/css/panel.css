@@ -52,3 +52,11 @@
 	color:rgb(235,230,205);
 	padding:0px 0px 0px 10px;
 }
+
+.panel4{
+	width:500px;
+	height: 400px;
+	background-color:rgb(235,230,205);
+	padding:10px 10px 10px 10px;
+	position: absolute;
+}
