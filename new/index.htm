@@ -31,38 +31,31 @@
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="sceneMainHide" ng-class="{'hide-animation':currentScene!='scene-main','show-animation':currentScene=='scene-main'}" class="scene">
 				
-				<div class="panel" style="bottom:20px;left:20px;">
-					<div>{{pram1}}</div>
+				<!--交流信息面板-->
+				<div ng-click="testclick()" class="panel" style="bottom:20px;left:10px;">
+					<div>{{pram1}}</div>{{pram.getName()}}
 					<div class="panel-lamp"></div>
 				</div>
-				<div class="panel2" style="top:10px;right:10px;">
+				<div class="panel2" style="top:10px;left:10px;">
 					<span>中文</span>
 					<span>中文</span>
 				</div>
-				<div class="panel3" style="top:60px;right:20px;">
+				<div class="panel3" style="top:60px;left:20px;">
 					<div class="panel3-tittle">
 						标题
 					</div>
 				</div>
-				<!--容纳面板-->
-				<div ng-controller="panel4" class="panel4" style="top:60px;left:300px;">
-					<div ng-repeat="x in prams" ng-click="onClick($index+1,$event)" class="button2">
+				
+				<!--人物交互面板-->
+				<div ng-controller="panel4" ng-hide="panel4Hide" class="panel4" style="top:60px;left:330px;">
+					<div ng-repeat="x in prams" ng-click="onClick($event)" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
 						<div class="button2-content">{{x}}</div>
 					</div>
 				</div>
-				<!--列表菜单-->
-				<div class="menu-background" ng-style="panel4Button">
-					<div ng-controller="menu" class="menu">{{pram1}}
-						<div class="menu-list" ng-repeat="y in prams">
-							<div class="menu-list-background"></div>
-							<div class="menu-list-background2"></div>
-							<div class="menu-list-content">{{y}}</div>
-						</div>
-					</div>
-				</div>
+				
 				<!--方向盘-->
 				<div ng-controller="steeringWheel" class="steeringWheel" style="bottom:55px;right:80px;">
 					<div ng-repeat="x in arrows">
@@ -74,7 +67,6 @@
 								<div class="steeringWheel-arrow4"></div>
 								<div class="steeringWheel-arrow5"></div>
 							</div>
-							<!-- steeringWheel-upperArrow-shadow	-->
 							<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}+'-1'==animation}">
 								<div class="steeringWheel-arrow1"></div>
 								<div class="steeringWheel-arrow2"></div>
@@ -92,30 +84,90 @@
 						</div>
 					</div>
 				</div>
+				
+				<!--遮罩层-->
+				<div ng-controller="maskLayer" ng-click="maskLayerClick($event)" ng-hide="maskLayerHide" class="maskLayer" ></div>
+				<!--列表菜单-->
+				<div ng-hide="menuHide"  class="menu-background" ng-style="panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}">
+					<div ng-controller="menu" class="menu">{{pram1}}
+						<div class="menu-list" ng-repeat="y in prams">
+							<div class="menu-list-background"></div>
+							<div class="menu-list-background2"></div>
+							<div class="menu-list-content">{{y}}</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
 		<script src="js/main.js"></script>
 		<script>
+			Data={};
+			
+			Data.DataModle = {
+				/**
+				 *	角色（可交互对象）
+				 */
+				Role : function() {
+					var name;
+					/**
+					 * 设置名称
+					 */
+					Data.DataModle.Role.prototype.setName = function(pram) {
+						this.name = pram;
+						return this;
+					};
+					/**
+					 * 获取名称
+					 */
+					Data.DataModle.Role.prototype.getName = function() {
+						return this.name;
+					};
+				},
+			};
+			var roleObj = new Data.DataModle.Role();
 			
 			var app = angular.module("myApp", []);
-			
 			var testObj = new Object();
-			app.controller("scene-main", function($scope, $rootScope) {
-			     $scope.pram = [testObj];
-			     $rootScope.pram1="测试1";
+			var appscope;
+			app.controller("scene-main", function($scope, $rootScope,$timeout) {
+			     //$scope.pram = testObj;
+			     appscope = $scope;
+			     $scope.pram=roleObj;
+			     $rootScope.testclick=function(){
+			     	str = "测试转换";
+			     	var i = 0;
+				   function typing(){
+				    if (i <= str.length) {
+				     roleObj.setName (str.slice(0, i++) + '_');
+				     $timeout(typing, 200);//递归调用
+				    }
+				    else{
+				     roleObj.setName(str);//结束打字,移除 _ 光标
+				    }
+				   }
+  					 typing();
+			     	//testObj.name= "pram.str1变换";
+			     };
 			});
+			testObj.name = "test Name";
+			roleObj.setName("roleObj  Name");
+			
+			
 			app.controller("menu", function($scope, $rootScope) {
 			     $scope.prams = ["菜单选项1","菜单选项2","菜单选项3","菜单选项4","菜单选项5","菜单选项6","菜单选项7"];
 				 $scope.pram1="测试2";
 			});
-			testObj.name = "test Name";
 			
+			var appRootScope;
 			//应用全局对场景的显示控制
 			app.controller("myApp",function($scope,$rootScope){
 				$rootScope.sceneStartHide = false;
 				$rootScope.sceneMainHide = true;
 				$rootScope.currentScene = "scene-start";
+				$rootScope.menuHide = true;
+				appRootScope = $rootScope;
 			});
 			
 			//起始场景
@@ -132,17 +184,48 @@
 				};
 			});
 			
-			app.controller("panel4",function($scope,$rootScope){
+			//人物交互面板
+			app.controller("panel4",function($scope,$rootScope,$timeout){
 				$scope.prams = ["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10"];
-				$scope.onClick=function(i,$event){
-					console.log(i);
+				$scope.onClick=function($event){
+					//弹出遮罩层
+					$rootScope.maskLayerHide=false;
+					//显示菜单
+					$rootScope.menuHide = false;
 					var t = $event.target;
-					$rootScope.panel4Button = {
-							"top":t.offsetTop+t.parentNode.offsetTop+"px",
-							"left":t.offsetLeft+t.parentNode.offsetLeft+t.offsetWidth+"px"
+					$rootScope.panel4_menu_Style = {
+							"top":30+"px",
+							"left":t.offsetLeft+t.parentNode.offsetLeft+t.offsetWidth+280+"px",
+							"opacity": 0
 						};
+					$timeout(function(){
+						$rootScope.panel4_menu_Style = {
+								"top":30+"px",
+								"left":t.offsetLeft+t.parentNode.offsetLeft+t.offsetWidth+340+"px",
+								"opacity": 1
+							};
+						},10);
 				};
 			});
+			
+			//遮罩层
+			app.controller("maskLayer",function($scope,$rootScope,$timeout){
+				//点击后隐藏
+				$scope.maskLayerClick = function($event){
+					var left = $rootScope.panel4_menu_Style.left;
+					//实现动画效果
+					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0,left.length-2))+50)+"px";
+					$rootScope.panel4_menu_Style.opacity = 0;
+					$timeout(function(){
+						$rootScope.maskLayerHide=true;
+						//同时隐藏其他
+						$rootScope.menuHide=true;
+					},500);
+				};
+				//初始默认为隐藏（不遮罩）
+				$rootScope.maskLayerHide = true;
+			});
+			
 			
 			//定义数据层
 			//

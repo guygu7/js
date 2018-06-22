@@ -120,3 +120,8 @@ html {
 	transition:1s 1s;
 	opacity: 0.65;
 }
+.maskLayer{
+	width: 1200px;
+	height: 600px;
+	position: absolute;
+}

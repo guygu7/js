@@ -1,6 +1,6 @@
 .panel{
 	width:900px;
-	height: 30px;
+	height: 60px;
 	line-height:30px;
 	background-color:rgb(235,230,205);
     box-shadow: 2px 2px 0px 0px rgb(152,151,130)
@@ -56,7 +56,6 @@
 .panel4{
 	width:500px;
 	height: 400px;
-	background-color:rgb(235,230,205);
 	padding:10px 10px 10px 10px;
 	position: absolute;
 }
