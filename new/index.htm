@@ -33,9 +33,10 @@
 				
 				<!--交流信息面板-->
 				<div ng-click="testclick()" class="panel" style="bottom:20px;left:10px;">
-					<div>{{pram1}}</div>{{pram.getName()}}
+					<div>{{pram.getName()}}</div>
 					<div class="panel-lamp"></div>
 				</div>
+				
 				<div class="panel2" style="top:10px;left:10px;">
 					<span>中文</span>
 					<span>中文</span>
@@ -103,9 +104,16 @@
 		<script src="js/angular.js"></script>
 		<script src="js/main.js"></script>
 		<script>
+			//定义数据层
+			
+			
+			/*----数据----*/
 			Data={};
 			
-			Data.DataModle = {
+			
+			/*----数据模型----*/
+			//
+			DataModle = {
 				/**
 				 *	角色（可交互对象）
 				 */
@@ -114,19 +122,19 @@
 					/**
 					 * 设置名称
 					 */
-					Data.DataModle.Role.prototype.setName = function(pram) {
+					DataModle.Role.prototype.setName = function(pram) {
 						this.name = pram;
 						return this;
 					};
 					/**
 					 * 获取名称
 					 */
-					Data.DataModle.Role.prototype.getName = function() {
+					DataModle.Role.prototype.getName = function() {
 						return this.name;
 					};
 				},
 			};
-			var roleObj = new Data.DataModle.Role();
+			var roleObj = new DataModle.Role();
 			
 			var app = angular.module("myApp", []);
 			var testObj = new Object();
@@ -141,7 +149,7 @@
 				   function typing(){
 				    if (i <= str.length) {
 				     roleObj.setName (str.slice(0, i++) + '_');
-				     $timeout(typing, 200);//递归调用
+				     $timeout(typing, 50);//递归调用
 				    }
 				    else{
 				     roleObj.setName(str);//结束打字,移除 _ 光标
@@ -184,9 +192,10 @@
 				};
 			});
 			
+			var testscope=["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10"];
 			//人物交互面板
 			app.controller("panel4",function($scope,$rootScope,$timeout){
-				$scope.prams = ["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10"];
+				$scope.prams = testscope;
 				$scope.onClick=function($event){
 					//弹出遮罩层
 					$rootScope.maskLayerHide=false;
@@ -227,8 +236,7 @@
 			});
 			
 			
-			//定义数据层
-			//
+			
 			
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
