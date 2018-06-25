@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		
+
 		<link href="css/main.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/panel.css" rel="stylesheet">
@@ -20,47 +20,53 @@
 	<body>
 		<div ng-app="myApp" ng-controller="myApp" class="main-desktop">
 			<!--起始场景-->
-			<div ng-controller="scene-start" ng-hide="sceneStartHide" ng-class="{'hide-animation':currentScene!='scene-start','show-animation':currentScene=='scene-start'}" class="scene">
+			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation':viewControl.currentScene!='scene-start','show-animation':viewControl.currentScene=='scene-start'}" class="scene">
 				<div ng-click="buttonstart()" class="button" style="top:200px;left:200px;">
 					<div class="button-background">
 						<div class="button-background2"></div>
 					</div>
-					<div class="button-content">start</div>
+					<div class="button-content">
+						start
+					</div>
 				</div>
 			</div>
 			<!--xx场景-->
-			<div ng-controller="scene-main" ng-hide="sceneMainHide" ng-class="{'hide-animation':currentScene!='scene-main','show-animation':currentScene=='scene-main'}" class="scene">
-				
+			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation':viewControl.currentScene!='scene-main','show-animation':viewControl.currentScene=='scene-main'}" class="scene">
+
 				<!--交流信息面板-->
 				<div ng-click="testclick()" class="panel" style="bottom:20px;left:10px;">
-					<div>{{pram1}}</div>{{viewDataModel.viewDataModelname}}
+					<div>
+						{{viewDataModel.panelText}}
+					</div>
 					<div class="panel-lamp"></div>
 				</div>
-				
+
 				<div class="panel2" style="top:10px;left:10px;">
-					<span>中文</span>
-					<span>中文</span>
+					<span>{{viewDataModel.panel2Text}}</span>
 				</div>
 				<div class="panel3" style="top:60px;left:20px;">
 					<div class="panel3-tittle">
-						标题
+						{{viewDataModel.panel3.tittleText}}
 					</div>
 				</div>
-				
-				<!--人物交互面板-->
+
+				<!--人物交互面板(按钮组)-->
 				<div ng-controller="panel4" ng-hide="panel4Hide" class="panel4" style="top:60px;left:330px;">
-					<div ng-repeat="x in prams" ng-click="onClick($event)" class="button2">
+					<div ng-repeat="x in viewDataModel.panel4.buttonElements" ng-click="onClick($event)" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
-						<div class="button2-content">{{x}}</div>
+						<div class="button2-content">
+							{{x}}
+						</div>
 					</div>
 				</div>
-				
+
 				<!--方向盘-->
 				<div ng-controller="steeringWheel" class="steeringWheel" style="bottom:55px;right:80px;">
 					<div ng-repeat="x in arrows">
-						<div ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}"><!--steeringWheel-upperArrow-->
+						<div ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}">
+							<!--steeringWheel-upperArrow-->
 							<div ng-click="arrowOnClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
 								<div class="steeringWheel-arrow1"></div>
 								<div class="steeringWheel-arrow2"></div>
@@ -85,32 +91,33 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<!--遮罩层-->
-				<div ng-controller="maskLayer" ng-click="maskLayerClick($event)" ng-hide="maskLayerHide" class="maskLayer" ></div>
+				<div ng-controller="maskLayer" ng-click="maskLayerClick($event)" ng-hide="viewControl.display.maskLayerHide" class="maskLayer" ></div>
 				<!--列表菜单-->
-				<div ng-hide="menuHide"  class="menu-background" ng-style="panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}">
-					<div ng-controller="menu" class="menu">{{pram1}}
-						<div class="menu-list" ng-repeat="y in prams">
+				<div ng-hide="viewControl.display.menuHide"  class="menu-background" ng-style="panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}">
+					<div ng-controller="menu" class="menu">
+						{{viewDataModel.menu.tittleText}}
+						<div class="menu-list" ng-repeat="y in viewDataModel.menu.buttonElements">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
-							<div class="menu-list-content">{{y}}</div>
+							<div class="menu-list-content">
+								{{y}}
+							</div>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
 		<script src="js/main.js"></script>
 		<script>
 			//定义数据层
-			
-			
+
 			/*----数据----*/
-			Data={};
-			
-			
+			Data = {};
+
 			/*----数据模型----*/
 			//
 			DataModle = {
@@ -135,146 +142,192 @@
 				},
 			};
 			var roleObj = new DataModle.Role();
-			
-			
+
 			/*
-			 * angularjs数据绑定示例（指对象绑定，非基本数据绑定）
-			 * ps：	1.任何绑定，绑定之后都不可在变更基本绑定对象，包括重新定义和数据覆盖，只能变更对象属性，否则将无法自动刷新数据
-			 * 		2.属性可以任意变更
-			 * 
-			 */
+			* angularjs数据绑定示例（指对象绑定，非基本数据绑定）
+			* ps：	1.任何绑定，绑定之后都不可在变更基本绑定对象，包括重新定义和数据覆盖，只能变更对象属性，否则将无法自动刷新数据
+			* 		2.属性可以任意变更
+			*
+			*/
 			/*
-			   绑定可以接受对象类型和数组类型
-			   定义
-			 var viewDataModel={"viewDataModelname":"viewDataModelnamedata"};
-			    或
-			 var viewDataModel={viewDataModelname:"viewDataModelnamedata"};
-			    绑定
-			 $rootScope.viewDataModel = viewDataModel;
-			     展示
-			 {{viewDataModel.viewDataModelname}}
-			 
-			   定义
-			 var viewDataModel=["viewDataModelnamedata"];
-			    绑定
-			 $rootScope.viewDataModel = viewDataModel;
-			     展示
-			 {{viewDataModel[0]}}
+			绑定可以接受对象类型和数组类型
+			定义
+			var viewDataModel={"viewDataModelname":"viewDataModelnamedata"};
+			或
+			var viewDataModel={viewDataModelname:"viewDataModelnamedata"};
+			绑定
+			$rootScope.viewDataModel = viewDataModel;
+			展示
+			{{viewDataModel.viewDataModelname}}
+
+			定义
+			var viewDataModel=["viewDataModelnamedata"];
+			绑定
+			$rootScope.viewDataModel = viewDataModel;
+			展示
+			{{viewDataModel[0]}}
+			*/
+
+			/**
+			 * 视图数据显示对象 
 			 */
-			 
-			//定义整体视图数据中间对象
-			var viewDataModel={};
+			var viewDataModel = {
+				/**
+				 * 交流信息面板文本
+				 */
+				panelText:"交流数据",
+				/**
+				 * XX面板文本 
+				 */
+				panel2Text:"中文",
+				/**
+				 * XX面板 
+				 */
+				panel3:{
+					/**
+					 * 标题文本 
+					 */
+					tittleText:"标题",
+				},
+				/**
+				 * 人物交互面板(按钮组)
+				 */
+				panel4:{
+					/**
+					 * 按钮元素集合（文本）
+					 */
+					buttonElements:{"pbe1":"选项1", "pbe2":"选项2", "pbe3":"选项3", "pbe4":"选项4", "pbe5":"选项5"},
+				},
+				/**
+				 * 菜单
+				 */
+				menu:{
+					/**
+					 * 菜单标题文本 
+					 */
+					tittleText:"菜单标题",
+					/**
+					 * 按钮元素集合（文本）
+					 */
+					buttonElements:{"mle1":"菜单选项1","mle2":"菜单选项2","mle3":"菜单选项3","mle4":"菜单选项4","mle5":"菜单选项5"},
+				},
+				
+				
+			};
+			/**
+			 * 视图控制对象（属性为对视图的控制属性）
+			 */
+			var viewControl = {
+				/**
+				 * 应用全局对显示的控制(初始值)
+				 */
+				display:{
+					/**
+					 * 开始界面场景隐藏
+					 */
+					sceneStartHide:false,
+					/**
+					 * xx场景隐藏
+					 */
+					sceneMainHide:true,
+					/**
+					 * 菜单隐藏 
+					 */
+					menuHide:true,
+					/**
+					 * 遮罩层隐藏 
+					 */
+					maskLayerHide:true,
+				},
+				/**
+				 * 当前所在场景（初始值） 
+				 */
+				currentScene : "scene-start",
+			};
 			//var viewDataModel=["viewDataModelnamedata"];
-			
-			
+
+
 			var app = angular.module("myApp", []);
-			var testObj = new Object();
-			var appscope;
-			app.controller("scene-main", function($scope, $rootScope,$timeout) {
-				$rootScope.viewDataModel = viewDataModel;
-			     //$scope.pram = testObj;
-			     appscope = $scope;
-			     $scope.pram=roleObj;
-			     $rootScope.testclick=function(){
-			     	str = "测试转换";
-			     	var i = 0;
-				   function typing(){
-				    if (i <= str.length) {
-				     //roleObj.setName (str.slice(0, i++) + '_');
-				     viewDataModel.viewDataModelname = str.slice(0, i++) + '_';
-				     $timeout(typing, 200);//递归调用
-				    }
-				    else{
-				     //roleObj.setName(str);//结束打字,移除 _ 光标
-				     viewDataModel.viewDataModelname=str;
-				    }
-				   }
-  					 typing();
-			     	//testObj.name= "pram.str1变换";
-			     };
-			});
-			testObj.name = "test Name";
-			roleObj.setName("roleObj  Name");
-			
-			
-			app.controller("menu", function($scope, $rootScope) {
-			     $scope.prams = ["菜单选项1","菜单选项2","菜单选项3","菜单选项4","菜单选项5","菜单选项6","菜单选项7"];
-				 $scope.pram1="测试2";
+			app.controller("myApp", function($scope, $rootScope) {
+				$scope.viewDataModel = viewDataModel;
+				$scope.viewControl = viewControl;
 			});
 			
-			var appRootScope;
-			//应用全局对场景的显示控制
-			app.controller("myApp",function($scope,$rootScope){
-				$rootScope.sceneStartHide = false;
-				$rootScope.sceneMainHide = true;
-				$rootScope.currentScene = "scene-start";
-				$rootScope.menuHide = true;
-				appRootScope = $rootScope;
-			});
-			
-			//起始场景
-			app.controller("scene-start",function($scope,$rootScope,$timeout){
-				//开始按钮
-				$scope.buttonstart=function(){
-					$rootScope.sceneMainHide = false;
-					$timeout(function(){
-						$rootScope.currentScene = "scene-main";
-					},10);
-					$timeout(function(){
-						$rootScope.sceneStartHide = true;
-					},800);
+			app.controller("scene-main", function($scope, $rootScope, $timeout) {
+				$rootScope.testclick = function() {
+					str = "测试转换";
+					var i = 0;
+					function typing() {
+						if (i <= str.length) {
+							viewDataModel.panelText = str.slice(0, i++) + '_';
+							$timeout(typing, 50);//递归调用
+						} else {
+							viewDataModel.panelText = str;//结束打字,移除 _ 光标
+						}
+					}
+					typing();
 				};
 			});
-			
-			var testscope=["选项1","选项2","选项3","选项4","选项5","选项6","选项7","选项8","选项9","选项10"];
+
+			app.controller("menu", function($scope, $rootScope) {
+			});
+
+			//起始场景
+			app.controller("scene-start", function($scope, $rootScope, $timeout) {
+				//开始按钮
+				$scope.buttonstart = function() {
+					viewControl.display.sceneMainHide = false;
+					$timeout(function() {
+						viewControl.currentScene = "scene-main";
+					}, 10);
+					$timeout(function() {
+						viewControl.display.sceneStartHide = true;
+					}, 800);
+				};
+			});
+
 			//人物交互面板
-			app.controller("panel4",function($scope,$rootScope,$timeout){
-				$scope.prams = testscope;
-				$scope.onClick=function($event){
+			app.controller("panel4", function($scope, $rootScope, $timeout) {
+				$scope.onClick = function($event) {
 					//弹出遮罩层
-					$rootScope.maskLayerHide=false;
+					viewControl.display.maskLayerHide = false;
 					//显示菜单
-					$rootScope.menuHide = false;
+					viewControl.display.menuHide = false;
 					var t = $event.target;
 					$rootScope.panel4_menu_Style = {
-							"top":30+"px",
-							"left":t.offsetLeft+t.parentNode.offsetLeft+t.offsetWidth+280+"px",
-							"opacity": 0
-						};
-					$timeout(function(){
+						"top" : 30 + "px",
+						"left" : t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px",
+						"opacity" : 0
+					};
+					$timeout(function() {
 						$rootScope.panel4_menu_Style = {
-								"top":30+"px",
-								"left":t.offsetLeft+t.parentNode.offsetLeft+t.offsetWidth+340+"px",
-								"opacity": 1
-							};
-						},10);
+							"top" : 30 + "px",
+							"left" : t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px",
+							"opacity" : 1
+						};
+					}, 10);
 				};
 			});
-			
+
 			//遮罩层
-			app.controller("maskLayer",function($scope,$rootScope,$timeout){
+			app.controller("maskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$scope.maskLayerClick = function($event){
+				$scope.maskLayerClick = function($event) {
 					var left = $rootScope.panel4_menu_Style.left;
 					//实现动画效果
-					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0,left.length-2))+50)+"px";
+					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
 					$rootScope.panel4_menu_Style.opacity = 0;
-					$timeout(function(){
-						$rootScope.maskLayerHide=true;
+					$timeout(function() {
+						viewControl.display.maskLayerHide = true;
 						//同时隐藏其他
-						$rootScope.menuHide=true;
-					},500);
+						viewControl.display.menuHide = true;
+					}, 500);
 				};
-				//初始默认为隐藏（不遮罩）
-				$rootScope.maskLayerHide = true;
 			});
-			
-			
-			
-			
+
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
-		
+
 	</body>
 </html>
 
