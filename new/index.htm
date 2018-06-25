@@ -33,7 +33,7 @@
 				
 				<!--交流信息面板-->
 				<div ng-click="testclick()" class="panel" style="bottom:20px;left:10px;">
-					<div>{{pram1}}</div>{{pram.getName()}}
+					<div>{{pram1}}</div>{{viewDataModel.viewDataModelname}}
 					<div class="panel-lamp"></div>
 				</div>
 				<div class="panel2" style="top:10px;left:10px;">
@@ -128,10 +128,42 @@
 			};
 			var roleObj = new Data.DataModle.Role();
 			
+			
+			/*
+			 * angularjs数据绑定示例（指对象绑定，非基本数据绑定）
+			 * ps：	1.任何绑定，绑定之后都不可在变更基本绑定对象，包括重新定义和数据覆盖，只能变更对象属性，否则将无法自动刷新数据
+			 * 		2.属性可以任意变更
+			 * 
+			 */
+			/*
+			   绑定可以接受对象类型和数组类型
+			   定义
+			 var viewDataModel={"viewDataModelname":"viewDataModelnamedata"};
+			    或
+			 var viewDataModel={viewDataModelname:"viewDataModelnamedata"};
+			    绑定
+			 $rootScope.viewDataModel = viewDataModel;
+			     展示
+			 {{viewDataModel.viewDataModelname}}
+			 
+			   定义
+			 var viewDataModel=["viewDataModelnamedata"];
+			    绑定
+			 $rootScope.viewDataModel = viewDataModel;
+			     展示
+			 {{viewDataModel[0]}}
+			 */
+			 
+			//定义整体视图数据中间对象
+			var viewDataModel={};
+			//var viewDataModel=["viewDataModelnamedata"];
+			
+			
 			var app = angular.module("myApp", []);
 			var testObj = new Object();
 			var appscope;
 			app.controller("scene-main", function($scope, $rootScope,$timeout) {
+				$rootScope.viewDataModel = viewDataModel;
 			     //$scope.pram = testObj;
 			     appscope = $scope;
 			     $scope.pram=roleObj;
@@ -140,11 +172,13 @@
 			     	var i = 0;
 				   function typing(){
 				    if (i <= str.length) {
-				     roleObj.setName (str.slice(0, i++) + '_');
+				     //roleObj.setName (str.slice(0, i++) + '_');
+				     viewDataModel.viewDataModelname = str.slice(0, i++) + '_';
 				     $timeout(typing, 200);//递归调用
 				    }
 				    else{
-				     roleObj.setName(str);//结束打字,移除 _ 光标
+				     //roleObj.setName(str);//结束打字,移除 _ 光标
+				     viewDataModel.viewDataModelname=str;
 				    }
 				   }
   					 typing();
