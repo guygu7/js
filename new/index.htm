@@ -52,7 +52,7 @@
 
 				<!--人物交互面板(按钮组)-->
 				<div ng-controller="panel4" ng-hide="panel4Hide" class="panel4" style="top:60px;left:330px;">
-					<div ng-repeat="x in viewDataModel.panel4.buttonElements" ng-click="onClick($event)" class="button2">
+					<div ng-repeat="x in viewDataModel.panel4.buttonElements" ng-click="onClick($event,$index)" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
@@ -114,31 +114,7 @@
 		<script src="js/main.js"></script>
 		<script>
 			//定义数据层
-
-			/*----数据----*/
-			Data = {
-				/**
-				 * 开始引导文本
-				 */
-				startText:"开始引导文本。。",
-				/**
-				 * 局部区域（小场景） 
-				 */
-				domain:{
-					object:{
-						name:"引导对象",
-						actions:{
-							"no1":{
-								name:"对话",
-								attribute:"",
-							},
-						}
-					},
-				},
-			};
-
 			/*----数据模型----*/
-			//
 			DataModle = {
 				/**
 				 * 当前场景地图
@@ -230,6 +206,17 @@
 						this.type = pram;
 						return this;
 					};
+					/**
+					 * 对话内容 
+					 */
+					var content;
+					DataModle.Action.prototype.getContent = function() {
+						return this.content;
+					};
+					DataModle.Action.prototype.setContent = function(pram) {
+						this.content = pram;
+						return this;
+					};
 				},
 				
 				/**
@@ -254,17 +241,39 @@
 			};
 			var roleObj = new DataModle.Role();
 			
+			/*----数据----*/
+			var data = {
+				/**
+				 * 开始引导文本
+				 */
+				startText:"开始引导文本。。",
+				/**
+				 * 开场局部区域（小场景） 
+				 */
+				startDomain:{
+					interactiveObject:{
+						name:"引导对象",
+						actions:[
+							{name:"对话",type:"talk",content:"对话内容"},
+						],
+					},
+				},
+			};
+
 			//当前场景地图
 			var currentDomain = new DataModle.Domain();
 				//初始化数据
 				var startInteractiveObject = new DataModle.InteractiveObject();
-				startInteractiveObject.setName("引导对象");
+				startInteractiveObject.setName(data.startDomain.interactiveObject.name);
 				var startAction = new DataModle.Action();
-				startAction.setName("对话").setType("talk");
+				startAction.setName(data.startDomain.interactiveObject.actions[0].name).setType(data.startDomain.interactiveObject.actions[0].type).setContent(data.startDomain.interactiveObject.actions[0].content);
 				
 				startInteractiveObject.addAction(startAction);
 				currentDomain.addButtonElement(startInteractiveObject);
-				
+			/**
+			 * 当前可交互对象 
+			 */
+			var currentInteractiveObject = new DataModle.InteractiveObject();
 				
 				
 			/*
@@ -407,7 +416,7 @@
 					}, 800);
 					//动态显示开始引导文本
 					$timeout(function() {
-						panelTyping(Data.startText);
+						panelTyping(data.startText);
 					}, 1500);
 					//人物交互面板(按钮组)初始数据加载
 					viewDataModel.panel4.buttonElements = currentDomain.getButtonElements();
@@ -418,11 +427,18 @@
 				$scope.panelOnClick = panelTyping;
 			});
 
+			//交互动作菜单
 			app.controller("menu", function($scope, $rootScope) {
+				//点击某个交互动作
 				$scope.menulistClick = function(index){
 					console.log(index);
 					//获取交互动作
-					console.info(currentDomain.getButtonElement(index));
+					console.info(currentInteractiveObject.getAction(index));
+					if(currentInteractiveObject.getAction(index).getType()=="talk"){
+						//判断为对话
+						viewDataModel.panelText = currentInteractiveObject.getAction(index).getContent();
+					}
+					
 				};
 			});
 
@@ -430,10 +446,13 @@
 
 			//人物交互面板
 			app.controller("panel4", function($scope, $rootScope, $timeout) {
-				//控制显示菜单的动画效果
-				$scope.onClick = function($event) {
+				//点击某个交互对象
+				$scope.onClick = function($event,index) {
+					//标记当前交互对象
+					currentInteractiveObject = currentDomain.getButtonElement(index);
 					//加载交互对象动作数据
-					viewDataModel.menu.buttonElements = currentDomain.getButtonElements();
+					viewDataModel.menu.buttonElements = currentInteractiveObject.getActions();
+					//控制显示菜单的动画效果
 					//弹出遮罩层
 					viewControl.display.maskLayerHide = false;
 					//显示菜单
