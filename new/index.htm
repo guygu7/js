@@ -57,7 +57,7 @@
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
 						<div class="button2-content">
-							{{x.name}}
+							{{x.getName()}}
 						</div>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
-								{{y.name}}
+								{{y.getName()}}
 							</div>
 						</div>
 					</div>
@@ -119,105 +119,15 @@
 				/**
 				 * 当前场景地图
 				 */
-				Domain : function () {
-					/**
-					 * Type Array [class InteractiveObject]
-					 * 人物交互面板(按钮组)
-					 */
-					var buttonElements;
-					DataModle.Domain.prototype.getButtonElement = function(num) {
-						return this.buttonElements[num];
-					};
-					DataModle.Domain.prototype.getButtonElements = function() {
-						return this.buttonElements;
-					};
-					DataModle.Domain.prototype.addButtonElement = function(pram){
-						if(!this.buttonElements){
-							this.buttonElements = new Array();
-						}
-						this.buttonElements.push(pram);
-						return this;						
-					};
-					DataModle.Domain.prototype.delButtonElements = function(num) {
-						this.buttonElements.splice(num,1);
-						return this;
-					};
-				},
+				Domain : function () {},
 				/**
 				 * 可交互对象
 				 */
-				InteractiveObject : function () {
-					/**
-					 * 显示名称 
-					 */
-					var name;
-					DataModle.InteractiveObject.prototype.getName = function() {
-						return this.name;
-					};
-					DataModle.InteractiveObject.prototype.setName = function(pram) {
-						this.name = pram;
-						return this;
-					};
-					/**
-					 * 交互动作
-					 */
-					var actions;
-					DataModle.InteractiveObject.prototype.getAction = function(num){
-						return this.actions[num];
-					};
-					DataModle.InteractiveObject.prototype.getActions = function(){
-						return this.actions;
-					};
-					DataModle.InteractiveObject.prototype.addAction = function(pram){
-						if(!this.actions){
-							this.actions = new Array();
-						}
-						this.actions.push(pram);
-						return this;						
-					};
-					DataModle.InteractiveObject.prototype.delAction = function(num) {
-						this.actions.splice(num,1);
-						return this;
-					};
-				},
+				InteractiveObject : function () {},
 				/**
 				 * 交互动作
 				 */
-				Action : function () {
-					/**
-					 * 显示名称 
-					 */
-					var name;
-					DataModle.Action.prototype.getName = function() {
-						return this.name;
-					};
-					DataModle.Action.prototype.setName = function(pram) {
-						this.name = pram;
-						return this;
-					};
-					/**
-					 * 动作类型 
-					 */
-					var type;
-					DataModle.Action.prototype.getType = function() {
-						return this.type;
-					};
-					DataModle.Action.prototype.setType = function(pram) {
-						this.type = pram;
-						return this;
-					};
-					/**
-					 * 对话内容 
-					 */
-					var content;
-					DataModle.Action.prototype.getContent = function() {
-						return this.content;
-					};
-					DataModle.Action.prototype.setContent = function(pram) {
-						this.content = pram;
-						return this;
-					};
-				},
+				Action : function () {},
 				
 				/**
 				 *	角色（可交互对象）
@@ -240,6 +150,148 @@
 				},
 			};
 			var roleObj = new DataModle.Role();
+			DataModleFactory = {
+				createDomain:function() {
+					var domain = new DataModle.Domain();
+					/**
+					 * 名称 
+					 */
+					var name;
+					domain.getName = function() {
+						return name;
+					};
+					domain.setName = function(pram) {
+						name = pram;
+						return this;
+					};
+					/**
+					 * 标识ID
+					 */
+					var signId;
+					domain.getSignId = function() {
+						return signId;
+					};
+					domain.setSignId = function(pram) {
+						signId = pram;
+						return this;
+					};
+					/**
+					 * Type Array [class InteractiveObject]
+					 * 人物交互面板(按钮组)
+					 */
+					var buttonElements;
+					domain.getButtonElement = function(num) {
+						return buttonElements[num];
+					};
+					domain.getButtonElements = function() {
+						return buttonElements;
+					};
+					domain.addButtonElement = function(pram){
+						if(!buttonElements){
+							buttonElements = new Array();
+						}
+						buttonElements.push(pram);
+						return this;						
+					};
+					domain.delButtonElements = function(num) {
+						buttonElements.splice(num,1);
+						return this;
+					};
+					/**
+					 * 清除当前对象全部数据 
+					 */
+					domain.clear = function(){
+						this.setName(null);
+						this.setSignId(null);
+						this.getButtonElements().splice(0,buttonElements.length);
+					};
+					return domain;
+				},
+				createInteractiveObject:function() {
+					var interactiveObject = new DataModle.InteractiveObject();
+					/**
+					 * 显示名称 
+					 */
+					var name;
+					interactiveObject.getName = function() {
+						return name;
+					};
+					interactiveObject.setName = function(pram) {
+						name = pram;
+						return this;
+					};
+					/**
+					 * 交互动作
+					 */
+					var actions;
+					interactiveObject.getAction = function(num){
+						return actions[num];
+					};
+					interactiveObject.getActions = function(){
+						return actions;
+					};
+					interactiveObject.addAction = function(pram){
+						if(!actions){
+							actions = new Array();
+						}
+						actions.push(pram);
+						return this;						
+					};
+					interactiveObject.delAction = function(num) {
+						actions.splice(num,1);
+						return this;
+					};
+					return interactiveObject;
+				},
+				createAction:function() {
+					var action = new DataModle.Action();
+					/**
+					 * 显示名称 
+					 */
+					var name;
+					action.getName = function() {
+						return name;
+					};
+					action.setName = function(pram) {
+						name = pram;
+						return this;
+					};
+					/**
+					 * 动作类型 
+					 */
+					var type;
+					action.getType = function() {
+						return type;
+					};
+					action.setType = function(pram) {
+						type = pram;
+						return this;
+					};
+					/**
+					 * 对话内容 
+					 */
+					var content;
+					action.getContent = function() {
+						return content;
+					};
+					action.setContent = function(pram) {
+						content = pram;
+						return this;
+					};
+					/**
+					 * 移动类型跳转目标 
+					 */
+					var target;
+					action.getTarget = function() {
+						return target;
+					};
+					action.setTarget = function(pram) {
+						target = pram;
+						return this;
+					};
+					return action;
+				},
+			};
 			
 			/*----数据----*/
 			var data = {
@@ -247,40 +299,45 @@
 				 * 开始引导文本
 				 */
 				startText:"开始引导文本。。",
-				/**
-				 * 开场局部区域（小场景） 
-				 */
-				startDomain:{
-					interactiveObject:{
-						name:"引导对象",
-						actions:[
-							{name:"对话",type:"talk",content:"对话内容"},
-						],
+				domains:[
+					/**
+					 * 开场局部区域（小场景） 
+					 */
+					{
+						name:"引导场景",
+						signId:"startDomain",
+						interactiveObject:{
+							name:"引导对象",
+							actions:[
+								{name:"对话",type:"talk",content:"对话内容"},
+								{name:"移动",type:"move",content:"移动到下一场景",target:"nextDomain"},
+							],
+						},
 					},
-				},
+					/**
+					 * 下一局部区域 
+					 */
+					{
+						name:"下一场景",
+						signId:"nextDomain",
+						interactiveObject:{
+							name:"下一场景对象",
+							actions:[
+								{name:"对话2",type:"talk",content:"对话内容2"},
+								{name:"移动2",type:"move",content:"移动到引导场景",target:"startDomain"},
+							],
+						},
+					},
+				],
 			};
 
-			//当前场景地图
-			var currentDomain = new DataModle.Domain();
-				//初始化数据
-				var startInteractiveObject = new DataModle.InteractiveObject();
-				startInteractiveObject.setName(data.startDomain.interactiveObject.name);
-				var startAction = new DataModle.Action();
-				startAction.setName(data.startDomain.interactiveObject.actions[0].name).setType(data.startDomain.interactiveObject.actions[0].type).setContent(data.startDomain.interactiveObject.actions[0].content);
-				
-				startInteractiveObject.addAction(startAction);
-				currentDomain.addButtonElement(startInteractiveObject);
-			/**
-			 * 当前可交互对象 
-			 */
-			var currentInteractiveObject = new DataModle.InteractiveObject();
+			
 				
 				
 			/*
 			* angularjs数据绑定示例（指对象绑定，非基本数据绑定）
 			* ps：	1.任何绑定，绑定之后都不可在变更基本绑定对象，包括重新定义和数据覆盖，只能变更对象属性，否则将无法自动刷新数据
 			* 		2.属性可以任意变更
-			*
 			*/
 			/*
 			绑定可以接受对象类型和数组类型
@@ -379,7 +436,12 @@
 			};
 			//var viewDataModel=["viewDataModelnamedata"];
 			
-			
+			//当前场景地图
+			var currentDomain = DataModleFactory.createDomain();
+			/**
+			 * 当前可交互对象 
+			 */
+			var currentInteractiveObject = DataModleFactory.createInteractiveObject();
 
 			var app = angular.module("myApp", []);
 			app.controller("myApp", function($scope,$rootScope,$timeout) {
@@ -400,7 +462,33 @@
 					}
 					typing();
 				};
-				
+				/**
+				 * 场景更新数据
+				 */
+				sceneMainDataLoad = function(domainData){
+					var startInteractiveObject = DataModleFactory.createInteractiveObject();
+					startInteractiveObject.setName(domainData.interactiveObject.name);
+					startActions = domainData.interactiveObject.actions;
+					for (var j=0; j < startActions.length; j++) {
+						var startAction = DataModleFactory.createAction();
+						startAction.setName(startActions[j].name).setType(startActions[j].type).setContent(startActions[j].content).setTarget(startActions[j].target);;
+						startInteractiveObject.addAction(startAction);
+					};
+					currentDomain.addButtonElement(startInteractiveObject);
+					currentDomain.setName(domainData.name);
+					currentDomain.setSignId(domainData.signId);
+				};
+				//初始化
+				(function () {
+					//修改该对象方法，使场景视图数据可以关联
+					var tempfn = currentDomain.setName;
+					currentDomain.setName=function(pram){
+						viewDataModel.panel2Text = pram;
+						return tempfn(pram);
+					};
+					//初始化数据
+					sceneMainDataLoad(data.domains[0]);
+				})();
 			});
 			
 			//起始场景
@@ -428,17 +516,34 @@
 			});
 
 			//交互动作菜单
-			app.controller("menu", function($scope, $rootScope) {
+			app.controller("menu", function($scope, $rootScope,$timeout) {
 				//点击某个交互动作
 				$scope.menulistClick = function(index){
-					console.log(index);
 					//获取交互动作
-					console.info(currentInteractiveObject.getAction(index));
-					if(currentInteractiveObject.getAction(index).getType()=="talk"){
+					var nowAction = currentInteractiveObject.getAction(index);
+					if(nowAction.getType()=="talk"){
 						//判断为对话
-						viewDataModel.panelText = currentInteractiveObject.getAction(index).getContent();
+						panelTyping(nowAction.getContent());
+					}else if(nowAction.getType()=="move"){
+						//判断为移动，场景切换
+						currentDomain.clear();
+						for (var i=0; i < data.domains.length; i++) {
+							if (nowAction.getTarget()==data.domains[i].signId) {
+								sceneMainDataLoad(data.domains[i]);
+								panelTyping(nowAction.getContent());
+								break;
+							};
+						};
 					}
-					
+					//实现隐藏菜单的动画效果
+					var left = $rootScope.panel4_menu_Style.left;
+					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					$rootScope.panel4_menu_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.display.maskLayerHide = true;
+						//同时隐藏其他
+						viewControl.display.menuHide = true;
+					}, 500);
 				};
 			});
 
