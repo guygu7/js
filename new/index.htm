@@ -57,7 +57,7 @@
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
 						<div class="button2-content">
-							{{x}}
+							{{x.name}}
 						</div>
 					</div>
 				</div>
@@ -98,11 +98,11 @@
 				<div ng-hide="viewControl.display.menuHide"  class="menu-background" ng-style="panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}">
 					<div ng-controller="menu" class="menu">
 						{{viewDataModel.menu.tittleText}}
-						<div class="menu-list" ng-repeat="y in viewDataModel.menu.buttonElements">
+						<div ng-click="menulistClick($index)" class="menu-list" ng-repeat="y in viewDataModel.menu.buttonElements">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
-								{{y}}
+								{{y.name}}
 							</div>
 						</div>
 					</div>
@@ -126,10 +126,13 @@
 				 */
 				domain:{
 					object:{
-						name:"交互对象名称",
-					},
-					object2:{
-						name:"交互对象2名称"
+						name:"引导对象",
+						actions:{
+							"no1":{
+								name:"对话",
+								attribute:"",
+							},
+						}
 					},
 				},
 			};
@@ -137,6 +140,98 @@
 			/*----数据模型----*/
 			//
 			DataModle = {
+				/**
+				 * 当前场景地图
+				 */
+				Domain : function () {
+					/**
+					 * Type Array [class InteractiveObject]
+					 * 人物交互面板(按钮组)
+					 */
+					var buttonElements;
+					DataModle.Domain.prototype.getButtonElement = function(num) {
+						return this.buttonElements[num];
+					};
+					DataModle.Domain.prototype.getButtonElements = function() {
+						return this.buttonElements;
+					};
+					DataModle.Domain.prototype.addButtonElement = function(pram){
+						if(!this.buttonElements){
+							this.buttonElements = new Array();
+						}
+						this.buttonElements.push(pram);
+						return this;						
+					};
+					DataModle.Domain.prototype.delButtonElements = function(num) {
+						this.buttonElements.splice(num,1);
+						return this;
+					};
+				},
+				/**
+				 * 可交互对象
+				 */
+				InteractiveObject : function () {
+					/**
+					 * 显示名称 
+					 */
+					var name;
+					DataModle.InteractiveObject.prototype.getName = function() {
+						return this.name;
+					};
+					DataModle.InteractiveObject.prototype.setName = function(pram) {
+						this.name = pram;
+						return this;
+					};
+					/**
+					 * 交互动作
+					 */
+					var actions;
+					DataModle.InteractiveObject.prototype.getAction = function(num){
+						return this.actions[num];
+					};
+					DataModle.InteractiveObject.prototype.getActions = function(){
+						return this.actions;
+					};
+					DataModle.InteractiveObject.prototype.addAction = function(pram){
+						if(!this.actions){
+							this.actions = new Array();
+						}
+						this.actions.push(pram);
+						return this;						
+					};
+					DataModle.InteractiveObject.prototype.delAction = function(num) {
+						this.actions.splice(num,1);
+						return this;
+					};
+				},
+				/**
+				 * 交互动作
+				 */
+				Action : function () {
+					/**
+					 * 显示名称 
+					 */
+					var name;
+					DataModle.Action.prototype.getName = function() {
+						return this.name;
+					};
+					DataModle.Action.prototype.setName = function(pram) {
+						this.name = pram;
+						return this;
+					};
+					/**
+					 * 动作类型 
+					 */
+					var type;
+					DataModle.Action.prototype.getType = function() {
+						return this.type;
+					};
+					DataModle.Action.prototype.setType = function(pram) {
+						this.type = pram;
+						return this;
+					};
+				},
+				
 				/**
 				 *	角色（可交互对象）
 				 */
@@ -158,7 +253,20 @@
 				},
 			};
 			var roleObj = new DataModle.Role();
-
+			
+			//当前场景地图
+			var currentDomain = new DataModle.Domain();
+				//初始化数据
+				var startInteractiveObject = new DataModle.InteractiveObject();
+				startInteractiveObject.setName("引导对象");
+				var startAction = new DataModle.Action();
+				startAction.setName("对话").setType("talk");
+				
+				startInteractiveObject.addAction(startAction);
+				currentDomain.addButtonElement(startInteractiveObject);
+				
+				
+				
 			/*
 			* angularjs数据绑定示例（指对象绑定，非基本数据绑定）
 			* ps：	1.任何绑定，绑定之后都不可在变更基本绑定对象，包括重新定义和数据覆盖，只能变更对象属性，否则将无法自动刷新数据
@@ -210,9 +318,9 @@
 				 */
 				panel4:{
 					/**
-					 * 按钮元素集合（文本）
+					 * 按钮元素集合
 					 */
-					buttonElements:{"pbe1":"选项1", "pbe2":"选项2", "pbe3":"选项3", "pbe4":"选项4", "pbe5":"选项5"},
+					buttonElements:{},
 				},
 				/**
 				 * 菜单
@@ -225,7 +333,7 @@
 					/**
 					 * 按钮元素集合（文本）
 					 */
-					buttonElements:{"mle1":"菜单选项1","mle2":"菜单选项2","mle3":"菜单选项3","mle4":"菜单选项4","mle5":"菜单选项5"},
+					buttonElements:{},
 				},
 				
 				
@@ -302,7 +410,7 @@
 						panelTyping(Data.startText);
 					}, 1500);
 					//人物交互面板(按钮组)初始数据加载
-					viewDataModel.panel4.buttonElements = Data.domain;
+					viewDataModel.panel4.buttonElements = currentDomain.getButtonElements();
 				};
 			});
 			
@@ -311,6 +419,11 @@
 			});
 
 			app.controller("menu", function($scope, $rootScope) {
+				$scope.menulistClick = function(index){
+					console.log(index);
+					//获取交互动作
+					console.info(currentDomain.getButtonElement(index));
+				};
 			});
 
 			
@@ -319,6 +432,8 @@
 			app.controller("panel4", function($scope, $rootScope, $timeout) {
 				//控制显示菜单的动画效果
 				$scope.onClick = function($event) {
+					//加载交互对象动作数据
+					viewDataModel.menu.buttonElements = currentDomain.getButtonElements();
 					//弹出遮罩层
 					viewControl.display.maskLayerHide = false;
 					//显示菜单
