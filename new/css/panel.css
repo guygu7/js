@@ -59,3 +59,33 @@
 	padding:10px 10px 10px 10px;
 	position: absolute;
 }
+
+.panel5{
+	width:500px;
+	height: 400px;
+	background-color:rgb(235,230,205);
+	box-shadow: 0px 0px 1px 0px rgb(80,80,80),0px 0px 2px 0px rgb(80,80,80) inset;
+	position: absolute;
+}
+.panel5-tittle{
+	width:490px;
+	height: 30px;
+	line-height:30px;
+	background-color: rgb(72,69,71);
+	color:rgb(235,230,205);
+	padding:0px 0px 0px 10px;
+}
+.grid{
+	width: 480px;
+	height: 345px;
+	box-shadow: 0px 2px 0px 0px rgb(180,175,155) inset
+				,0px -2px 0px 0px rgb(180,175,155) inset;
+	padding:3px 0px 3px 0px;
+	top:10px;
+	left:10px;
+	overflow-y:scroll;
+	position: relative;
+}
+.grid-list{
+	
+}

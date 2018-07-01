@@ -107,6 +107,19 @@
 						</div>
 					</div>
 				</div>
+				
+				<!--仓库-->
+				<div class="panel5" style="top:50px;left:420px;">
+					<div class="panel5-tittle">
+						{{viewDataModel.panel3.tittleText}}
+					</div>
+					<div ng-click="menulistClick($index)" class="menu-list">
+						<div class="menu-list-background"></div>
+						<div class="menu-list-background2"></div>
+						<div class="menu-list-content">
+						</div>
+					</div>
+				</div>
 
 			</div>
 		</div>
@@ -306,27 +319,61 @@
 					{
 						name:"引导场景",
 						signId:"startDomain",
-						interactiveObject:{
-							name:"引导对象",
-							actions:[
-								{name:"对话",type:"talk",content:"对话内容"},
-								{name:"移动",type:"move",content:"移动到下一场景",target:"nextDomain"},
-							],
-						},
+						interactiveObjects:[
+							{	
+								name:"引导对象",
+								actions:[
+									{name:"对话",type:"talk",content:"对话内容"},
+									{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
+								],
+							},
+						],
 					},
 					/**
-					 * 下一局部区域 
+					 * 公共场景
 					 */
 					{
-						name:"下一场景",
-						signId:"nextDomain",
-						interactiveObject:{
-							name:"下一场景对象",
-							actions:[
-								{name:"对话2",type:"talk",content:"对话内容2"},
-								{name:"移动2",type:"move",content:"移动到引导场景",target:"startDomain"},
-							],
-						},
+						name:"公共场景",
+						signId:"publicDomain",
+						interactiveObjects:[
+							{
+								name:"移动对象",
+								actions:[
+									{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
+									{name:"移动到私有据点场景",type:"move",content:"移动-私有据点场景",target:"homeDomain"},
+								],
+							},
+							{
+								name:"交流对象",
+								actions:[
+									{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
+									{name:"其他",type:"",content:""},
+								],
+							},
+						],
+					},
+					/**
+					 * 私有据点场景
+					 */
+					{
+						name:"私有据点场景",
+						signId:"homeDomain",
+						interactiveObjects:[
+							{
+								name:"移动对象",
+								actions:[
+									{name:"对话",type:"talk",content:"私有据点-移动对象-对话内容"},
+									{name:"移动到公共场景",type:"move",content:"移动-公共场景",target:"publicDomain"},
+								],
+							},
+							{
+								name:"私有建筑",
+								actions:[
+									{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
+									{name:"使用",type:"use",content:"私有据点-私有建筑-使用"},
+								],
+							},
+						],
 					},
 				],
 			};
@@ -466,17 +513,22 @@
 				 * 场景更新数据
 				 */
 				sceneMainDataLoad = function(domainData){
-					var startInteractiveObject = DataModleFactory.createInteractiveObject();
-					startInteractiveObject.setName(domainData.interactiveObject.name);
-					startActions = domainData.interactiveObject.actions;
-					for (var j=0; j < startActions.length; j++) {
-						var startAction = DataModleFactory.createAction();
-						startAction.setName(startActions[j].name).setType(startActions[j].type).setContent(startActions[j].content).setTarget(startActions[j].target);;
-						startInteractiveObject.addAction(startAction);
-					};
-					currentDomain.addButtonElement(startInteractiveObject);
+					//加载场景数据
 					currentDomain.setName(domainData.name);
 					currentDomain.setSignId(domainData.signId);
+					for (var i=0; i < domainData.interactiveObjects.length; i++) {
+						//加载可交互对象数据
+						var loadInteractiveObject = DataModleFactory.createInteractiveObject();
+						loadInteractiveObject.setName(domainData.interactiveObjects[i].name);
+						currentDomain.addButtonElement(loadInteractiveObject);
+						//加载交互动作数据
+						var loadActions = domainData.interactiveObjects[i].actions;
+						for (var j=0; j < loadActions.length; j++) {
+							var tempAction = DataModleFactory.createAction();
+							tempAction.setName(loadActions[j].name).setType(loadActions[j].type).setContent(loadActions[j].content).setTarget(loadActions[j].target);;
+							loadInteractiveObject.addAction(tempAction);
+						};
+					};
 				};
 				//初始化
 				(function () {
@@ -534,6 +586,9 @@
 								break;
 							};
 						};
+					}else if(nowAction.getType()=="use"){
+						//判断为使用建筑功能（仓库）
+						
 					}
 					//实现隐藏菜单的动画效果
 					var left = $rootScope.panel4_menu_Style.left;
@@ -557,6 +612,7 @@
 					currentInteractiveObject = currentDomain.getButtonElement(index);
 					//加载交互对象动作数据
 					viewDataModel.menu.buttonElements = currentInteractiveObject.getActions();
+					viewDataModel.menu.tittleText = currentInteractiveObject.getName();
 					//控制显示菜单的动画效果
 					//弹出遮罩层
 					viewControl.display.maskLayerHide = false;
