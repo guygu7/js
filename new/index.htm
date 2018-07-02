@@ -109,14 +109,30 @@
 				</div>
 				
 				<!--仓库-->
-				<div class="panel5" style="top:50px;left:420px;">
+				<div ng-controller="panel5" class="panel5" ng-hide="viewControl.display.panel5Hide" style="top:50px;left:420px;">
 					<div class="panel5-tittle">
 						{{viewDataModel.panel3.tittleText}}
 					</div>
-					<div ng-click="menulistClick($index)" class="menu-list">
-						<div class="menu-list-background"></div>
-						<div class="menu-list-background2"></div>
-						<div class="menu-list-content">
+					<div class="menu" style="width: 500px;height: 340px;left:10px;">
+						<div ng-click="" class="button2">
+							<div class="button2-background"></div>
+							<div class="button2-background2"></div>
+							<div class="button2-background3"></div>
+							<div class="button2-content">
+							</div>
+						</div>
+						<div ng-click="" class="button2">
+							<div class="button2-background"></div>
+							<div class="button2-background2"></div>
+							<div class="button2-background3"></div>
+							<div class="button2-content-position">
+								<div class="button2-content-scroll">
+									一二三四五六七八九十一
+								</div>
+							</div>
+							<div class="button2-content-suffix">
+								×99
+							</div>
 						</div>
 					</div>
 				</div>
@@ -125,186 +141,10 @@
 		</div>
 		<script src="js/angular.js"></script>
 		<script src="js/main.js"></script>
+		<script src="js/data/DataModle.js"></script>
 		<script>
 			//定义数据层
-			/*----数据模型----*/
-			DataModle = {
-				/**
-				 * 当前场景地图
-				 */
-				Domain : function () {},
-				/**
-				 * 可交互对象
-				 */
-				InteractiveObject : function () {},
-				/**
-				 * 交互动作
-				 */
-				Action : function () {},
-				
-				/**
-				 *	角色（可交互对象）
-				 */
-				Role : function() {
-					var name;
-					/**
-					 * 设置名称
-					 */
-					DataModle.Role.prototype.setName = function(pram) {
-						this.name = pram;
-						return this;
-					};
-					/**
-					 * 获取名称
-					 */
-					DataModle.Role.prototype.getName = function() {
-						return this.name;
-					};
-				},
-			};
-			var roleObj = new DataModle.Role();
-			DataModleFactory = {
-				createDomain:function() {
-					var domain = new DataModle.Domain();
-					/**
-					 * 名称 
-					 */
-					var name;
-					domain.getName = function() {
-						return name;
-					};
-					domain.setName = function(pram) {
-						name = pram;
-						return this;
-					};
-					/**
-					 * 标识ID
-					 */
-					var signId;
-					domain.getSignId = function() {
-						return signId;
-					};
-					domain.setSignId = function(pram) {
-						signId = pram;
-						return this;
-					};
-					/**
-					 * Type Array [class InteractiveObject]
-					 * 人物交互面板(按钮组)
-					 */
-					var buttonElements;
-					domain.getButtonElement = function(num) {
-						return buttonElements[num];
-					};
-					domain.getButtonElements = function() {
-						return buttonElements;
-					};
-					domain.addButtonElement = function(pram){
-						if(!buttonElements){
-							buttonElements = new Array();
-						}
-						buttonElements.push(pram);
-						return this;						
-					};
-					domain.delButtonElements = function(num) {
-						buttonElements.splice(num,1);
-						return this;
-					};
-					/**
-					 * 清除当前对象全部数据 
-					 */
-					domain.clear = function(){
-						this.setName(null);
-						this.setSignId(null);
-						this.getButtonElements().splice(0,buttonElements.length);
-					};
-					return domain;
-				},
-				createInteractiveObject:function() {
-					var interactiveObject = new DataModle.InteractiveObject();
-					/**
-					 * 显示名称 
-					 */
-					var name;
-					interactiveObject.getName = function() {
-						return name;
-					};
-					interactiveObject.setName = function(pram) {
-						name = pram;
-						return this;
-					};
-					/**
-					 * 交互动作
-					 */
-					var actions;
-					interactiveObject.getAction = function(num){
-						return actions[num];
-					};
-					interactiveObject.getActions = function(){
-						return actions;
-					};
-					interactiveObject.addAction = function(pram){
-						if(!actions){
-							actions = new Array();
-						}
-						actions.push(pram);
-						return this;						
-					};
-					interactiveObject.delAction = function(num) {
-						actions.splice(num,1);
-						return this;
-					};
-					return interactiveObject;
-				},
-				createAction:function() {
-					var action = new DataModle.Action();
-					/**
-					 * 显示名称 
-					 */
-					var name;
-					action.getName = function() {
-						return name;
-					};
-					action.setName = function(pram) {
-						name = pram;
-						return this;
-					};
-					/**
-					 * 动作类型 
-					 */
-					var type;
-					action.getType = function() {
-						return type;
-					};
-					action.setType = function(pram) {
-						type = pram;
-						return this;
-					};
-					/**
-					 * 对话内容 
-					 */
-					var content;
-					action.getContent = function() {
-						return content;
-					};
-					action.setContent = function(pram) {
-						content = pram;
-						return this;
-					};
-					/**
-					 * 移动类型跳转目标 
-					 */
-					var target;
-					action.getTarget = function() {
-						return target;
-					};
-					action.setTarget = function(pram) {
-						target = pram;
-						return this;
-					};
-					return action;
-				},
-			};
+			
 			
 			/*----数据----*/
 			var data = {
@@ -475,6 +315,10 @@
 					 * 遮罩层隐藏 
 					 */
 					maskLayerHide:true,
+					/**
+					 * 仓库组件隐藏
+					 */
+					panel5Hide:true,
 				},
 				/**
 				 * 当前所在场景（初始值） 
@@ -567,43 +411,6 @@
 				$scope.panelOnClick = panelTyping;
 			});
 
-			//交互动作菜单
-			app.controller("menu", function($scope, $rootScope,$timeout) {
-				//点击某个交互动作
-				$scope.menulistClick = function(index){
-					//获取交互动作
-					var nowAction = currentInteractiveObject.getAction(index);
-					if(nowAction.getType()=="talk"){
-						//判断为对话
-						panelTyping(nowAction.getContent());
-					}else if(nowAction.getType()=="move"){
-						//判断为移动，场景切换
-						currentDomain.clear();
-						for (var i=0; i < data.domains.length; i++) {
-							if (nowAction.getTarget()==data.domains[i].signId) {
-								sceneMainDataLoad(data.domains[i]);
-								panelTyping(nowAction.getContent());
-								break;
-							};
-						};
-					}else if(nowAction.getType()=="use"){
-						//判断为使用建筑功能（仓库）
-						
-					}
-					//实现隐藏菜单的动画效果
-					var left = $rootScope.panel4_menu_Style.left;
-					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
-					$rootScope.panel4_menu_Style.opacity = 0;
-					$timeout(function() {
-						viewControl.display.maskLayerHide = true;
-						//同时隐藏其他
-						viewControl.display.menuHide = true;
-					}, 500);
-				};
-			});
-
-			
-
 			//人物交互面板
 			app.controller("panel4", function($scope, $rootScope, $timeout) {
 				//点击某个交互对象
@@ -633,6 +440,52 @@
 					}, 10);
 				};
 			});
+			
+			//交互动作菜单
+			app.controller("menu", function($scope, $rootScope,$timeout) {
+				//点击某个交互动作
+				$scope.menulistClick = function(index){
+					//获取交互动作
+					var nowAction = currentInteractiveObject.getAction(index);
+					if(nowAction.getType()=="talk"){
+						//判断为对话
+						panelTyping(nowAction.getContent());
+					}else if(nowAction.getType()=="move"){
+						//判断为移动，场景切换
+						currentDomain.clear();
+						for (var i=0; i < data.domains.length; i++) {
+							if (nowAction.getTarget()==data.domains[i].signId) {
+								sceneMainDataLoad(data.domains[i]);
+								panelTyping(nowAction.getContent());
+								break;
+							};
+						};
+					}else if(nowAction.getType()=="use"){
+						//判断为使用建筑功能（仓库）
+						viewControl.display.panel5Hide = false;
+						
+					}
+					//实现隐藏菜单的动画效果
+					var left = $rootScope.panel4_menu_Style.left;
+					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					$rootScope.panel4_menu_Style.opacity = 0;
+					$timeout(function() {
+						if(nowAction.getType()=="use"){
+							console.info("use");
+						}else{
+							//隐藏遮罩层
+							viewControl.display.maskLayerHide = true;
+						}
+						//隐藏菜单
+						viewControl.display.menuHide = true;
+					}, 500);
+				};
+			});
+
+			//仓库组件
+			app.controller("panel5", function($scope, $rootScope,$timeout) {
+				
+			});
 
 			//遮罩层
 			app.controller("maskLayer", function($scope, $rootScope, $timeout) {
@@ -646,6 +499,7 @@
 						viewControl.display.maskLayerHide = true;
 						//同时隐藏其他
 						viewControl.display.menuHide = true;
+						viewControl.display.panel5Hide = true;
 					}, 500);
 				};
 			});
