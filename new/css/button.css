@@ -72,6 +72,15 @@
 	bottom:0px;
 	right:0px;
 }
+/*上下边框点击后变化*/
+.button2-background-click{
+	transition:0.2s;
+	top: 5px;
+}
+.button2-background2-click{
+	transition:0.2s; 
+	bottom:5px;
+}
 /*背景色*/
 .button2-background3{
 	width:150px;

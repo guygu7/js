@@ -53,9 +53,22 @@ var viewDataModel = {
 		buttonElements:{},
 	},
 	/**
-	 * 菜单
+	 * 列表菜单
 	 */
 	menu:{
+		/**
+		 * 菜单标题文本 
+		 */
+		tittleText:"菜单标题",
+		/**
+		 * 按钮元素集合（文本）
+		 */
+		buttonElements:{},
+	},
+	/**
+	 * 列表菜单（包裹组件）
+	 */
+	menuBag:{
 		/**
 		 * 菜单标题文本 
 		 */
@@ -93,9 +106,13 @@ var viewControl = {
 		 */
 		sceneMainHide:true,
 		/**
-		 * 菜单隐藏 
+		 * 列表菜单隐藏 
 		 */
 		menuHide:true,
+		/**
+		 * 列表菜单（包裹）组件隐藏 
+		 */
+		menuBagHide:true,
 		/**
 		 * 遮罩层隐藏 
 		 */
@@ -109,4 +126,28 @@ var viewControl = {
 	 * 当前所在场景（初始值） 
 	 */
 	currentScene : "scene-start",
+	/**
+	 * 列表菜单（初始值）
+	 */
+	panel4_menu_Style:{
+		"top" : 30 + "px",
+		"left" : 280 + "px",
+		"opacity" : 0,
+	},
+	/**
+	 * 列表菜单（包裹）组件（初始值）
+	 */
+	panel4_menu_bag_Style:{
+		"top" : 30 + "px",
+		"left" : 180 + "px",
+		"opacity" : 0,
+	},
+	/**
+	 * 仓库组件面板（初始值）
+	 */
+	panel5_Style : {
+		"top" : 50 + "px",
+		"left" : 650 + "px",
+		"opacity" : 0
+	},
 };

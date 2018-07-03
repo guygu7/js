@@ -20,7 +20,7 @@
 	<body>
 		<div ng-app="myApp" ng-controller="myApp" class="main-desktop">
 			<!--起始场景-->
-			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation':viewControl.currentScene!='scene-start','show-animation':viewControl.currentScene=='scene-start'}" class="scene">
+			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-start','show-animation-scene':viewControl.currentScene=='scene-start'}" class="scene">
 				<div ng-click="buttonstart()" class="button" style="top:200px;left:200px;">
 					<div class="button-background">
 						<div class="button-background2"></div>
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<!--xx场景-->
-			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation':viewControl.currentScene!='scene-main','show-animation':viewControl.currentScene=='scene-main'}" class="scene">
+			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
 
 				<!--交流信息面板-->
 				<div ng-click="panelOnClick(viewDataModel.panelText)" class="panel" style="bottom:20px;left:10px;">
@@ -52,7 +52,7 @@
 
 				<!--人物交互面板(按钮组)-->
 				<div ng-controller="panel4" ng-hide="panel4Hide" class="panel4" style="top:60px;left:330px;">
-					<div ng-repeat="x in viewDataModel.panel4.buttonElements" ng-click="onClick($event,$index)" class="button2">
+					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
@@ -93,12 +93,25 @@
 				</div>
 
 				<!--遮罩层-->
-				<div ng-controller="maskLayer" ng-click="maskLayerClick($event)" ng-hide="viewControl.display.maskLayerHide" class="maskLayer" ></div>
+				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单-->
-				<div ng-hide="viewControl.display.menuHide"  class="menu-background" ng-style="panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}">
+				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
 					<div ng-controller="menu" class="menu">
 						{{viewDataModel.menu.tittleText}}
-						<div ng-click="menulistClick($index)" class="menu-list" ng-repeat="y in viewDataModel.menu.buttonElements">
+						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menu-list">
+							<div class="menu-list-background"></div>
+							<div class="menu-list-background2"></div>
+							<div class="menu-list-content">
+								{{y.getName()}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--列表菜单:包裹-->
+				<div ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.panel4_menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
+					<div ng-controller="menu" class="menu">
+						{{viewDataModel.menu.tittleText}}
+						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menuBag.buttonElements" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -109,12 +122,12 @@
 				</div>
 				
 				<!--仓库-->
-				<div ng-controller="panel5" class="panel5" ng-hide="viewControl.display.panel5Hide" style="top:50px;left:420px;">
+				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-class="{'hide-animation':panel5Hide,'show-animation':!panel5Hide}" class="panel5">
 					<div class="panel5-tittle">
 						{{viewDataModel.panel3.tittleText}}
 					</div>
 					<div class="menu" style="width: 500px;height: 340px;left:10px;">
-						<div ng-click="" class="button2" ng-repeat="x in viewDataModel.panel5.buttonElements">
+						<div ng-click="" ng-repeat="x in viewDataModel.panel5.buttonElements" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -127,31 +140,24 @@
 								×{{x.getTotalNum()}}
 							</div>
 						</div>
-						<!--
-						<div ng-click="" class="button2">
-							<div class="button2-background"></div>
-							<div class="button2-background2"></div>
-							<div class="button2-background3"></div>
-							<div class="button2-content">
-							</div>
-						</div>
-						<div ng-click="" class="button2">
-							<div class="button2-background"></div>
-							<div class="button2-background2"></div>
-							<div class="button2-background3"></div>
-							<div class="button2-content-position">
-								<div class="button2-content-scroll">
-									一二三四五六七八九十一
-								</div>
-							</div>
-							<div class="button2-content-suffix">
-								×99
-							</div>
-						</div>
-						-->
 					</div>
 				</div>
-
+				
+				<!--遮罩层-->
+				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
+				<!---->
+				<div ng-hide="false" class="menuAuto-background">
+					<div class="menuAuto">
+						<div ng-click="menulistClick($index)" class="menuAuto-list">
+							<div class="menuAuto-list-background2"></div>
+							<div class="menuAuto-list-content">
+								中文
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
@@ -314,6 +320,9 @@
 			app.controller("scene-start", function($scope, $rootScope, $timeout) {
 				//开始按钮
 				$scope.buttonstart = function() {
+					//人物交互面板(按钮组)初始数据加载
+					viewDataModel.panel4.buttonElements = currentDomain.getButtonElements();
+					//动态效果
 					viewControl.display.sceneMainHide = false;
 					$timeout(function() {
 						viewControl.currentScene = "scene-main";
@@ -325,8 +334,6 @@
 					$timeout(function() {
 						panelTyping(data.startText);
 					}, 1500);
-					//人物交互面板(按钮组)初始数据加载
-					viewDataModel.panel4.buttonElements = currentDomain.getButtonElements();
 				};
 			});
 			
@@ -349,17 +356,11 @@
 					//显示菜单
 					viewControl.display.menuHide = false;
 					var t = $event.target;
-					$rootScope.panel4_menu_Style = {
-						"top" : 30 + "px",
-						"left" : t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px",
-						"opacity" : 0
-					};
+					viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
 					$timeout(function() {
-						$rootScope.panel4_menu_Style = {
-							"top" : 30 + "px",
-							"left" : t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px",
-							"opacity" : 1
-						};
+						viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px";
+						viewControl.panel4_menu_Style.opacity = 1;
 					}, 10);
 				};
 			});
@@ -388,11 +389,26 @@
 						viewControl.display.panel5Hide = false;
 						//加载数据
 						viewDataModel.panel5.buttonElements = currentInteractiveObject.getItems();
+						viewControl.panel5_Style.left = 650 + "px";
+						viewControl.panel5_Style.opacity = 0;
+						//同时打开包裹
+						viewControl.display.menuBagHide = false;
+						//加载数据
+						viewDataModel.menuBag.buttonElements = null;
+						viewDataModel.menuBag.tittleText = "数据";
+						viewControl.panel4_menu_bag_Style.left = 100 + "px";
+						viewControl.panel4_menu_bag_Style.opacity = 0;
+						$timeout(function() {
+							viewControl.panel5_Style.left =  600 + "px";
+							viewControl.panel5_Style.opacity = 1 + "px";
+							viewControl.panel4_menu_bag_Style.left = 200 + "px";
+							viewControl.panel4_menu_bag_Style.opacity = 1;
+						}, 100);
 					}
 					//实现隐藏菜单的动画效果
-					var left = $rootScope.panel4_menu_Style.left;
-					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
-					$rootScope.panel4_menu_Style.opacity = 0;
+					var left = viewControl.panel4_menu_Style.left;
+					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
 					$timeout(function() {
 						if(nowAction.getType()=="use"){
 							console.info("use");
@@ -416,15 +432,24 @@
 				//点击后隐藏
 				$scope.maskLayerClick = function($event) {
 					//实现隐藏菜单的动画效果
-					var left = $rootScope.panel4_menu_Style.left;
-					$rootScope.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
-					$rootScope.panel4_menu_Style.opacity = 0;
+					var left = viewControl.panel4_menu_Style.left;
+					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
+					//实现隐藏菜单（包裹）的动画效果
+					left = viewControl.panel4_menu_bag_Style.left;
+					viewControl.panel4_menu_bag_Style.left = (parseInt(left.substring(0, left.length - 2)) - 50) + "px";
+					viewControl.panel4_menu_bag_Style.opacity = 0;
+					//实现隐藏仓库组件的动画效果
+					left = viewControl.panel5_Style.left;
+					viewControl.panel5_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					viewControl.panel5_Style.opacity = 0;
 					$timeout(function() {
 						viewControl.display.maskLayerHide = true;
 						//同时隐藏其他
 						viewControl.display.menuHide = true;
+						viewControl.display.menuBagHide = true;
 						viewControl.display.panel5Hide = true;
-					}, 500);
+					}, 400);
 				};
 			});
 
