@@ -127,12 +127,19 @@ var viewControl = {
 	 */
 	currentScene : "scene-start",
 	/**
+	 * 层叠关系集合,固定模型:{name:index,name2:index}
+	 */
+	zIndexList : {
+		panel4 : 0
+	},
+	/**
 	 * 列表菜单（初始值）
 	 */
 	panel4_menu_Style:{
 		"top" : 30 + "px",
 		"left" : 280 + "px",
 		"opacity" : 0,
+		"z-index":0,
 	},
 	/**
 	 * 列表菜单（包裹）组件（初始值）

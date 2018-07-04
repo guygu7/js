@@ -40,6 +40,7 @@
 	overflow:hidden;
 	margin:0px 5px 0px 5px;
 	display: inline-block;
+	transition:0.6s;
 	position: relative;
 }
 .button2:hover > .button2-background3{
@@ -86,7 +87,7 @@
 	width:150px;
 	height: 32px;
 	top:4px;
-	transition:0.6s;
+	//transition:0.6s;
 	background:rgb(225,220,195);
 	position: absolute;
 }

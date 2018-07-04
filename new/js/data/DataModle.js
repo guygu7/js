@@ -245,6 +245,27 @@ DataModleFactory = {
 			totalNum = pram;
 			return this;
 		};
+		/**
+		 * 交互动作
+		 */
+		var actions;
+		item.getAction = function(num){
+			return actions[num];
+		};
+		item.getActions = function(){
+			return actions;
+		};
+		item.addAction = function(pram){
+			if(!actions){
+				actions = new Array();
+			}
+			actions.push(pram);
+			return this;						
+		};
+		item.delAction = function(num) {
+			actions.splice(num,1);
+			return this;
+		};
 		return item;
 	},
 };

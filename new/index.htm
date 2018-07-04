@@ -64,54 +64,58 @@
 
 				<!--方向盘-->
 				<div ng-controller="steeringWheel" class="steeringWheel" style="bottom:55px;right:80px;">
-					<div ng-repeat="x in arrows">
-						<div ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}">
-							<!--steeringWheel-upperArrow-->
-							<div ng-click="arrowOnClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
-								<div class="steeringWheel-arrow1"></div>
-								<div class="steeringWheel-arrow2"></div>
-								<div class="steeringWheel-arrow3"></div>
-								<div class="steeringWheel-arrow4"></div>
-								<div class="steeringWheel-arrow5"></div>
-							</div>
-							<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}+'-1'==animation}">
-								<div class="steeringWheel-arrow1"></div>
-								<div class="steeringWheel-arrow2"></div>
-								<div class="steeringWheel-arrow3"></div>
-								<div class="steeringWheel-arrow4"></div>
-								<div class="steeringWheel-arrow5"></div>
-							</div>
-							<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}+'-2'==animation}">
-								<div class="steeringWheel-arrow1"></div>
-								<div class="steeringWheel-arrow2"></div>
-								<div class="steeringWheel-arrow3"></div>
-								<div class="steeringWheel-arrow4"></div>
-								<div class="steeringWheel-arrow5"></div>
-							</div>
+					<div ng-repeat="x in arrows" ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}">
+						<!--steeringWheel-upperArrow-->
+						<div ng-click="arrowOnClick($index)" ng-class="{'steeringWheel-upperArrow-graphical':{{x}}=='1','steeringWheel-rightArrow-graphical':{{x}}=='2','steeringWheel-lowerArrow-graphical':{{x}}=='3','steeringWheel-leftArrow-graphical':{{x}}=='4'}">
+							<div class="steeringWheel-arrow1"></div>
+							<div class="steeringWheel-arrow2"></div>
+							<div class="steeringWheel-arrow3"></div>
+							<div class="steeringWheel-arrow4"></div>
+							<div class="steeringWheel-arrow5"></div>
+						</div>
+						<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}+'-1'==animation}">
+							<div class="steeringWheel-arrow1"></div>
+							<div class="steeringWheel-arrow2"></div>
+							<div class="steeringWheel-arrow3"></div>
+							<div class="steeringWheel-arrow4"></div>
+							<div class="steeringWheel-arrow5"></div>
+						</div>
+						<div ng-class="{'steeringWheel-upperArrow-shadow':{{x}}=='1','steeringWheel-rightArrow-shadow':{{x}}=='2','steeringWheel-lowerArrow-shadow':{{x}}=='3','steeringWheel-leftArrow-shadow':{{x}}=='4','steeringWheel-upperArrow-shadow-jsAnimation':{{x}}+'-2'==animation}">
+							<div class="steeringWheel-arrow1"></div>
+							<div class="steeringWheel-arrow2"></div>
+							<div class="steeringWheel-arrow3"></div>
+							<div class="steeringWheel-arrow4"></div>
+							<div class="steeringWheel-arrow5"></div>
 						</div>
 					</div>
 				</div>
 
 				<!--遮罩层-->
-				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
-				<!--列表菜单-->
-				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
-					<div ng-controller="menu" class="menu">
-						{{viewDataModel.menu.tittleText}}
-						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menu-list">
-							<div class="menu-list-background"></div>
-							<div class="menu-list-background2"></div>
-							<div class="menu-list-content">
+				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide"  ng-style="viewControl.maskLayer_Style" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
+				<!--列表菜单（自动大小_带箭头）-->
+				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menuAuto-background">
+					<div ng-controller="menu" class="menuAuto">
+						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menuAuto-list">
+							<div class="menuAuto-list-background2"></div>
+							<div class="menuAuto-list-content">
 								{{y.getName()}}
+							</div>
+							<div class="menuAuto-arrow">
+								<div class="menuAuto-arrow1"></div>
+								<div class="menuAuto-arrow2"></div>
+								<div class="menuAuto-arrow3"></div>
+								<div class="menuAuto-arrow4"></div>
+								<div class="menuAuto-arrow5"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 				<!--列表菜单:包裹-->
 				<div ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.panel4_menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
-					<div ng-controller="menu" class="menu">
+					<div  class="menu">
 						{{viewDataModel.menu.tittleText}}
-						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menuBag.buttonElements" class="menu-list">
+						<div ng-click="menulistClick()" ng-repeat="y in viewDataModel.menuBag.buttonElements" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -124,10 +128,10 @@
 				<!--仓库-->
 				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-class="{'hide-animation':panel5Hide,'show-animation':!panel5Hide}" class="panel5">
 					<div class="panel5-tittle">
-						{{viewDataModel.panel3.tittleText}}
+						{{viewDataModel.panel5.tittleText}}
 					</div>
 					<div class="menu" style="width: 500px;height: 340px;left:10px;">
-						<div ng-click="" ng-repeat="x in viewDataModel.panel5.buttonElements" class="button2">
+						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -142,10 +146,10 @@
 						</div>
 					</div>
 				</div>
-				
-				<!--遮罩层-->
+				<!--未实装组件-->
+				<!--遮罩层
 				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
-				<!---->
+				--><!--列表菜单（自动大小_带箭头）
 				<div ng-hide="false" class="menuAuto-background">
 					<div class="menuAuto">
 						<div ng-click="menulistClick($index)" class="menuAuto-list">
@@ -153,10 +157,31 @@
 							<div class="menuAuto-list-content">
 								中文
 							</div>
+							<div class="menuAuto-arrow">
+								<div class="menuAuto-arrow1"></div>
+								<div class="menuAuto-arrow2"></div>
+								<div class="menuAuto-arrow3"></div>
+								<div class="menuAuto-arrow4"></div>
+								<div class="menuAuto-arrow5"></div>
+							</div>
 						</div>
 					</div>
 				</div>
-				
+				-->
+				<!--列表菜单
+				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
+					<div ng-controller="menu" class="menu">
+						{{viewDataModel.menu.tittleText}}
+						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menu-list">
+							<div class="menu-list-background"></div>
+							<div class="menu-list-background2"></div>
+							<div class="menu-list-content">
+								{{y.getName()}}
+							</div>
+						</div>
+					</div>
+				</div>
+				-->
 				
 			</div>
 		</div>
@@ -233,7 +258,11 @@
 									{name:"使用",type:"use",content:"私有据点-私有建筑-使用"},
 								],
 								items:[
-									{name:"物体1",type:"",content:"物体1说明",totalNum:9},
+									{name:"物体1",type:"",content:"物体1说明",totalNum:9,
+										actions:[
+											{name:"对话"}
+										],
+									},
 									{name:"物体2超长物品名字",type:"",content:"物体2说明",totalNum:19},
 									{name:"物体3",type:"",content:"物体3说明",totalNum:11},
 									{name:"物体4",type:"",content:"物体4说明",totalNum:1},
@@ -251,6 +280,10 @@
 			 * 当前可交互对象 
 			 */
 			var currentInteractiveObject = DataModleFactory.createInteractiveObject();
+			/**
+			 * 当前的物品
+			 */
+			var currentItem = DataModleFactory.createItem();
 
 			var app = angular.module("myApp", []);
 			app.controller("myApp", function($scope,$rootScope,$timeout) {
@@ -299,6 +332,16 @@
 								var tempItem = DataModleFactory.createItem();
 								tempItem.setName(loadItems[j].name).setType(loadItems[j].type).setContent(loadItems[j].content).setTotalNum(loadItems[j].totalNum);
 								loadInteractiveObject.addItem(tempItem);
+								//加载物品的交互动作数据
+								var loadItemActions = loadItems[j].actions;
+								console.info(loadItemActions);
+								if (loadItemActions) {
+									for (var k=0; k < loadItemActions.length; k++) {
+										var tempAction2 = DataModleFactory.createAction();
+										tempAction2.setName(loadItemActions[k].name).setType(loadItemActions[k].type).setContent(loadItemActions[k].content).setTarget(loadItemActions[k].target);;
+										tempItem.addAction(tempAction2);
+									};
+								};
 							}
 						};
 					};
@@ -349,15 +392,27 @@
 					currentInteractiveObject = currentDomain.getButtonElement(index);
 					//加载交互对象动作数据
 					viewDataModel.menu.buttonElements = currentInteractiveObject.getActions();
-					viewDataModel.menu.tittleText = currentInteractiveObject.getName();
+					//viewDataModel.menu.tittleText = currentInteractiveObject.getName();
+					//检测层叠关系数组中最大值，并+1存入
+					var maxZIndex=100;
+					for (var i in viewControl.zIndexList) {
+						console.info(viewControl.zIndexList[i]);
+						if(viewControl.zIndexList[i]&&maxZIndex<viewControl.zIndexList[i]){
+							maxZIndex=viewControl.zIndexList[i];
+						}
+					};
+					viewControl.zIndexList["panel4"]=maxZIndex+1;
+					
 					//控制显示菜单的动画效果
 					//弹出遮罩层
 					viewControl.display.maskLayerHide = false;
 					//显示菜单
 					viewControl.display.menuHide = false;
 					var t = $event.target;
+					viewControl.panel4_menu_Style.top = t.offsetTop + t.parentNode.offsetTop + 50 + "px";
 					viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px";
 					viewControl.panel4_menu_Style.opacity = 0;
+					viewControl.panel4_menu_Style["z-index"] = viewControl.zIndexList["panel4"];
 					$timeout(function() {
 						viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px";
 						viewControl.panel4_menu_Style.opacity = 1;
@@ -367,6 +422,15 @@
 			
 			//交互动作菜单
 			app.controller("menu", function($scope, $rootScope,$timeout) {
+				//隐藏命令（包含动画效果和view数据清理）
+				$rootScope.menuHide = function(){
+					var left = viewControl.panel4_menu_Style.left;
+					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
+					$timeout(function() {
+						viewDataModel.menu.buttonElements = null;
+					},400);
+				};
 				//点击某个交互动作
 				$scope.menulistClick = function(index){
 					//获取交互动作
@@ -389,6 +453,7 @@
 						viewControl.display.panel5Hide = false;
 						//加载数据
 						viewDataModel.panel5.buttonElements = currentInteractiveObject.getItems();
+						viewDataModel.panel5.tittle = currentInteractiveObject.getName();
 						viewControl.panel5_Style.left = 650 + "px";
 						viewControl.panel5_Style.opacity = 0;
 						//同时打开包裹
@@ -406,9 +471,12 @@
 						}, 100);
 					}
 					//实现隐藏菜单的动画效果
+					/*
 					var left = viewControl.panel4_menu_Style.left;
 					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
 					viewControl.panel4_menu_Style.opacity = 0;
+					*/
+					$rootScope.menuHide(50);
 					$timeout(function() {
 						if(nowAction.getType()=="use"){
 							console.info("use");
@@ -424,25 +492,58 @@
 
 			//仓库组件
 			app.controller("panel5", function($scope, $rootScope,$timeout) {
-				
+				//点击某个交互对象
+				$scope.onClick = function($event,index) {
+					//标记当前交互对象
+					currentItem = currentInteractiveObject.getItem(index);
+					//加载交互对象动作数据
+					viewDataModel.menu.buttonElements = currentItem.getActions();
+					//viewDataModel.menu.tittleText = currentItem.getName();
+					//控制显示菜单的动画效果
+					//弹出遮罩层
+					viewControl.display.maskLayerHide = false;
+					//显示菜单
+					viewControl.display.menuHide = false;
+					var t = $event.target;
+					viewControl.panel4_menu_Style.top = t.offsetTop + t.parentNode.offsetTop + 50 + "px";
+					viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
+					console.info(t.zindex);
+					$timeout(function() {
+						viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px";
+						viewControl.panel4_menu_Style.opacity = 1;
+					}, 10);
+				};
 			});
 
 			//遮罩层
 			app.controller("maskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$scope.maskLayerClick = function($event) {
-					//实现隐藏菜单的动画效果
+					//实现隐藏列表菜单（自动大小_带箭头）的动画效果
+					/*
 					var left = viewControl.panel4_menu_Style.left;
 					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
 					viewControl.panel4_menu_Style.opacity = 0;
+					//数据清理
+					viewDataModel.menu.buttonElements = null;
+					*/
+					$rootScope.menuHide();
+					
 					//实现隐藏菜单（包裹）的动画效果
 					left = viewControl.panel4_menu_bag_Style.left;
 					viewControl.panel4_menu_bag_Style.left = (parseInt(left.substring(0, left.length - 2)) - 50) + "px";
 					viewControl.panel4_menu_bag_Style.opacity = 0;
+					//数据清理
+					
 					//实现隐藏仓库组件的动画效果
 					left = viewControl.panel5_Style.left;
 					viewControl.panel5_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
 					viewControl.panel5_Style.opacity = 0;
+					//数据清理
+					viewDataModel.panel5.buttonElements = null;
+					viewDataModel.panel5.tittle = null;
+					
 					$timeout(function() {
 						viewControl.display.maskLayerHide = true;
 						//同时隐藏其他
