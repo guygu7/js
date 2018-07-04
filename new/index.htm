@@ -93,8 +93,8 @@
 				<!--遮罩层-->
 				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide"  ng-style="viewControl.maskLayer_Style" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单（自动大小_带箭头）-->
-				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menuAuto-background">
-					<div ng-controller="menu" class="menuAuto">
+				<div id="menu" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.panel4_menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menuAuto-background">
+					<div class="menuAuto">
 						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menuAuto-list">
 							<div class="menuAuto-list-background2"></div>
 							<div class="menuAuto-list-content">
@@ -113,7 +113,7 @@
 				
 				<!--列表菜单:包裹-->
 				<div ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.panel4_menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
-					<div  class="menu">
+					<div class="menu">
 						{{viewDataModel.menu.tittleText}}
 						<div ng-click="menulistClick()" ng-repeat="y in viewDataModel.menuBag.buttonElements" class="menu-list">
 							<div class="menu-list-background"></div>
@@ -378,6 +378,45 @@
 						panelTyping(data.startText);
 					}, 1500);
 				};
+				//列表菜单（自动大小_带箭头）显示命令
+				menuShow = function(target){
+					console.info(target);
+					//检测层叠关系数组中最大值，并+1存入
+					var maxZIndex=100;
+					for (var i in viewControl.zIndexList) {
+						console.info(viewControl.zIndexList[i]);
+						if(viewControl.zIndexList[i]&&maxZIndex<viewControl.zIndexList[i]){
+							maxZIndex=viewControl.zIndexList[i];
+						}
+					};
+					viewControl.zIndexList["panel4"]=maxZIndex+1;
+					//控制显示菜单的动画效果
+					//弹出遮罩层
+					viewControl.display.maskLayerHide = false;
+					//显示菜单
+					viewControl.display.menuHide = false;
+					var tempa = document.getElementById("menu").parentNode;
+					var tempb = target;
+					判断 class= button2
+					while(tempb!=document.getElementsByClassName("menu")[0]){
+						tempb = tempb.parentNode;
+					}
+					var totalTop = 0;
+					var totalLeft = tempb.offsetWidth;
+					while (tempa!=tempb){
+						totalTop += tempb.offsetTop;
+						totalLeft += tempb.offsetLeft;
+						tempb = tempb.parentNode;
+					};
+					viewControl.panel4_menu_Style.top = totalTop + "px";
+					viewControl.panel4_menu_Style.left = totalLeft-50 + "px";
+					viewControl.panel4_menu_Style.opacity = 0;
+					viewControl.panel4_menu_Style["z-index"] = viewControl.zIndexList["panel4"];
+					$timeout(function() {
+						viewControl.panel4_menu_Style.left = totalLeft + "px";
+						viewControl.panel4_menu_Style.opacity = 1;
+					}, 10);
+				};
 			});
 			
 			app.controller("scene-main", function($scope, $rootScope, $timeout) {
@@ -429,6 +468,7 @@
 					viewControl.panel4_menu_Style.opacity = 0;
 					$timeout(function() {
 						viewDataModel.menu.buttonElements = null;
+						viewControl.panel4_menu_Style["z-index"] = 0;
 					},400);
 				};
 				//点击某个交互动作
@@ -476,7 +516,7 @@
 					viewControl.panel4_menu_Style.left = (parseInt(left.substring(0, left.length - 2)) + 50) + "px";
 					viewControl.panel4_menu_Style.opacity = 0;
 					*/
-					$rootScope.menuHide(50);
+					$rootScope.menuHide();
 					$timeout(function() {
 						if(nowAction.getType()=="use"){
 							console.info("use");
@@ -494,6 +534,7 @@
 			app.controller("panel5", function($scope, $rootScope,$timeout) {
 				//点击某个交互对象
 				$scope.onClick = function($event,index) {
+					menuShow($event.target);
 					//标记当前交互对象
 					currentItem = currentInteractiveObject.getItem(index);
 					//加载交互对象动作数据
@@ -508,7 +549,6 @@
 					viewControl.panel4_menu_Style.top = t.offsetTop + t.parentNode.offsetTop + 50 + "px";
 					viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 280 + "px";
 					viewControl.panel4_menu_Style.opacity = 0;
-					console.info(t.zindex);
 					$timeout(function() {
 						viewControl.panel4_menu_Style.left = t.offsetLeft + t.parentNode.offsetLeft + t.offsetWidth + 340 + "px";
 						viewControl.panel4_menu_Style.opacity = 1;
