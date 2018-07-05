@@ -53,7 +53,7 @@ var viewDataModel = {
 		buttonElements:{},
 	},
 	/**
-	 * 列表菜单
+	 * 列表菜单（自动大小_带箭头）
 	 */
 	menu:{
 		/**
@@ -106,7 +106,15 @@ var viewControl = {
 		 */
 		sceneMainHide:true,
 		/**
-		 * 列表菜单隐藏 
+		 * 方向盘组件隐藏
+		 */
+		steeringWheelHide:true,
+		/**
+		 * 列表菜单（自动大小_带箭头）专用遮罩层隐藏 
+		 */
+		menuAutoMaskLayerHide:true,
+		/**
+		 * 列表菜单（自动大小_带箭头）隐藏 
 		 */
 		menuHide:true,
 		/**
@@ -114,9 +122,9 @@ var viewControl = {
 		 */
 		menuBagHide:true,
 		/**
-		 * 遮罩层隐藏 
+		 * 仓库组件 专用遮罩层隐藏 
 		 */
-		maskLayerHide:true,
+		panel5MaskLayerHide:true,
 		/**
 		 * 仓库组件隐藏
 		 */
@@ -129,13 +137,22 @@ var viewControl = {
 	/**
 	 * 层叠关系集合,固定模型:{name:index,name2:index}
 	 */
-	zIndexList : {
-		panel4 : 0
+	zIndexList : {},
+	/**
+	 * 方向盘组件（初始值）
+	 */
+	steeringWheel_Style:{
+		"bottom":55 + "px",
+		"right":80 + "px",
 	},
 	/**
-	 * 列表菜单（初始值）
+	 * 列表菜单（自动大小_带箭头）专用遮罩层（初始值）
 	 */
-	panel4_menu_Style:{
+	menuAutoMaskLayer_Style:{},
+	/**
+	 * 列表菜单（自动大小_带箭头）（初始值）
+	 */
+	menu_Style:{
 		"top" : 30 + "px",
 		"left" : 280 + "px",
 		"opacity" : 0,
@@ -144,11 +161,15 @@ var viewControl = {
 	/**
 	 * 列表菜单（包裹）组件（初始值）
 	 */
-	panel4_menu_bag_Style:{
+	menu_bag_Style:{
 		"top" : 30 + "px",
 		"left" : 180 + "px",
 		"opacity" : 0,
 	},
+	/**
+	 * 仓库组件面板 专用遮罩层（初始值）
+	 */
+	panel5MaskLayer_Style:{},
 	/**
 	 * 仓库组件面板（初始值）
 	 */
