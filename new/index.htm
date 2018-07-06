@@ -93,11 +93,11 @@
 				</div>
 
 				<!--列表菜单-遮罩层-->
-				<div ng-controller="menuAutoMaskLayer" ng-hide="viewControl.display.menuAutoMaskLayerHide"  ng-style="viewControl.menuAutoMaskLayer_Style" ng-click="menuAutoMaskLayerClick($event)" class="maskLayer" ></div>
+				<div ng-controller="menuAutoMaskLayer" ng-hide="viewControl.display.menuAutoMaskLayerHide"  ng-style="viewControl.menuAutoMaskLayer_Style" ng-mousedown="menuAutoMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单（自动大小_带箭头）-->
 				<div id="menuAuto" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menuAuto-background">
 					<div class="menuAuto">
-						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menuAuto-list">
+						<div ng-click="menulistClick($index,$event)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menuAuto-list">
 							<div class="menuAuto-list-background2"></div>
 							<div class="menuAuto-list-content">
 								{{y.getName()}}
@@ -128,7 +128,7 @@
 				</div>
 				
 				<!--仓库-遮罩层-->
-				<div ng-controller="panel5MaskLayer" ng-hide="viewControl.display.panel5MaskLayerHide"  ng-style="viewControl.panel5MaskLayer_Style" ng-click="panel5MaskLayerClick($event)" class="maskLayer" ></div>
+				<div ng-controller="panel5MaskLayer" ng-hide="viewControl.display.panel5MaskLayerHide"  ng-style="viewControl.panel5MaskLayer_Style" ng-mousedown="panel5MaskLayerClick($event)" class="maskLayer" ></div>
 				<!--仓库-->
 				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-class="{'hide-animation':panel5Hide,'show-animation':!panel5Hide}" class="panel5">
 					<div class="panel5-tittle">
@@ -151,7 +151,10 @@
 					</div>
 				</div>
 				
-				<div class="numberPicker-background">
+				<!--数字选择器-遮罩层-->
+				<div ng-controller="numberPickerMaskLayer" ng-hide="viewControl.display.numberPickerMaskLayerHide"  ng-style="viewControl.numberPickerMaskLayer_Style" ng-mousedown="numberPickerMaskLayerClick($event)" class="maskLayer" ></div>
+				<!--数字选择器-->
+				<div ng-controller="numberPicker"  ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-class="{'hide-animation':numberPickerHide,'show-animation':!numberPickerHide}" class="numberPicker-background">
 					<div class="numberPicker">
 						<div class="numberPicker-tittle">文本文本</div>
 						<div class="numberPicker-upperArrow">
@@ -160,7 +163,6 @@
 							<div class="numberPicker-arrow3"></div>
 						</div>
 						<div class="numberPicker-numberBox">999
-							<!--<div class="numberPicker-numberText"></div>-->
 						</div>
 						<div class="numberPicker-lowerArrow">
 							<div class="numberPicker-arrow1"></div>
@@ -285,7 +287,7 @@
 								items:[
 									{name:"物体1",type:"",content:"物体1说明",totalNum:9,
 										actions:[
-											{name:"对话"}
+											{name:"堆叠",type:"transaction"}
 										],
 									},
 									{name:"物体2超长物品名字",type:"",content:"物体2说明",totalNum:19},
@@ -314,6 +316,7 @@
 			var app = angular.module("myApp", []);
 			app.directive('ngRightclick', function($parse) {
 			    return function(scope, element, attrs) {
+			    	console.info(attrs);
 			        var fn = $parse(attrs.ngRightclick);
 			        element.bind('contextmenu', function(event) {
 			            scope.$apply(function() {
@@ -535,7 +538,6 @@
 				panel5Show = function(){
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
-					console.info(maxZIndex);
 					viewControl.zIndexList["panel5"] = maxZIndex+2;
 					viewControl.zIndexList["menuBag"] = maxZIndex+2;
 					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
@@ -555,7 +557,7 @@
 					viewControl.menu_bag_Style.opacity = 0;
 					$timeout(function() {
 						viewControl.panel5_Style.left =  600 + "px";
-						viewControl.panel5_Style.opacity = 1 + "px";
+						viewControl.panel5_Style.opacity = 1;
 						viewControl.menu_bag_Style.left = 200 + "px";
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
@@ -590,6 +592,46 @@
 						viewControl.display.menuBagHide = true;
 					}, 200);
 				};
+				
+				/**
+				 * 数字选择器  显示命令（需传入top left）
+				 */
+				numberPickerShow = function(top,left){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["numberPicker"] = maxZIndex+2;
+					viewControl.zIndexList["numberPickerMaskLayer"] = maxZIndex+1;
+					
+					viewControl.numberPicker_Style["z-index"] = viewControl.zIndexList["numberPicker"];
+					viewControl.numberPickerMaskLayer_Style["z-index"] = viewControl.zIndexList["numberPickerMaskLayer"];
+					//弹出遮罩层
+					viewControl.display.numberPickerMaskLayerHide = false;
+					
+					viewControl.display.numberPickerHide = false;
+					viewControl.numberPicker_Style.top = top + "px";
+					viewControl.numberPicker_Style.left = left + "px";
+					viewControl.numberPicker_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.numberPicker_Style.opacity = 1;
+					}, 100);
+				};
+				/**
+				 * 数字选择器 隐藏命令（包含动画效果和view数据清理） 
+				 */
+				numberPickerHide = function(){
+					viewControl.numberPicker_Style.opacity = 0;
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["numberPicker"] = 0;
+						viewControl.zIndexList["numberPickerMaskLayer"] = 0;
+						viewControl.numberPicker_Style["z-index"] = 0;
+						viewControl.numberPickerMaskLayer_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.numberPickerMaskLayerHide = true;
+						viewControl.display.numberPickerHide = true;
+					}, 100);
+				};
+				
 			});
 
 			//人物交互面板
@@ -601,6 +643,8 @@
 					while("button2 ng-scope"!=tempt.className){
 						tempt = tempt.parentNode;
 					}
+					//标记交互类型为交互对象
+					viewControl.currentInteractiveType = "interactiveObject";
 					//传入点击目标（用于定位），显示列表菜单
 					menuShow(tempt);
 					//标记当前交互对象
@@ -614,9 +658,15 @@
 			//交互动作菜单
 			app.controller("menu", function($scope, $rootScope,$timeout) {
 				//点击某个交互动作
-				$scope.menulistClick = function(index){
+				$scope.menulistClick = function(index,$event){
 					//获取交互动作
-					var nowAction = currentInteractiveObject.getAction(index);
+					if ("interactiveObject"==viewControl.currentInteractiveType){
+						var nowAction = currentInteractiveObject.getAction(index);
+					}else if("item"==viewControl.currentInteractiveType){
+						var nowAction = currentItem.getAction(index);
+					}else{
+						return;
+					}
 					if(nowAction.getType()=="talk"){
 						//判断为对话
 						panelTyping(nowAction.getContent());
@@ -639,6 +689,10 @@
 						viewDataModel.menuBag.buttonElements = null;
 						viewDataModel.menuBag.tittleText = "数据";
 						panel5Show();
+					}else if(nowAction.getType()=="transaction"){
+						//判断为交易
+						//打开数字选择器
+						numberPickerShow(document.getElementById("menuAuto").offsetTop,document.getElementById("menuAuto").offsetLeft);
 					}
 					//隐藏菜单
 					menuHide();
@@ -654,6 +708,8 @@
 					while("button2 ng-scope"!=tempt.className){
 						tempt = tempt.parentNode;
 					}
+					//标记交互类型为物品
+					viewControl.currentInteractiveType = "item";
 					//传入点击目标（用于定位），显示列表菜单
 					menuShow(tempt);
 					//标记当前交互（物品）对象
@@ -663,6 +719,9 @@
 					//viewDataModel.menu.tittleText = currentItem.getName();
 				};
 			});
+			
+			//数字选择器
+			app.controller("numberPicker", function($scope, $rootScope,$timeout) {});
 
 			//列表菜单（自动大小_带箭头）专用遮罩层
 			app.controller("menuAutoMaskLayer", function($scope, $rootScope, $timeout) {
@@ -678,6 +737,15 @@
 					panel5Hide();
 				};
 			});
+			//数字选择器专用遮罩层
+			app.controller("numberPickerMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$scope.numberPickerMaskLayerClick = function($event) {
+					numberPickerHide();
+				};
+			});
+			
+			
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
 

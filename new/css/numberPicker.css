@@ -3,7 +3,7 @@
 	height: 180px;
 	background-color:rgb(235,230,205);
 	box-shadow: 0px 0px 1px 0px rgb(80,80,80),0px 0px 2px 0px rgb(80,80,80) inset;
-	transition:0.6s;
+	transition:0.2s;
 	position: absolute;
 }
 .numberPicker{
@@ -41,7 +41,7 @@
 	width: 12px;
 	height: 12px;
 	border-radius:2px;
-	background: linear-gradient(-45deg,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
+	background: linear-gradient(-45deg,rgba(72,69,71,1) 0%,rgba(72,69,71,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
 	transform: rotate(0deg) skew(-10deg,-10deg) ;
 	position: absolute;
 }
@@ -60,7 +60,7 @@
 	left:1px;
 	width: 3px;
 	height: 3px;
-	background:rgb(0,0,0);
+	background:rgb(72,69,71);
 	transform: rotate(45deg);
 	position: absolute;
 }
@@ -70,7 +70,7 @@
 	width: 60px;
 	height: 25px;
 	line-height:25px;
-	background:rgb(0,0,0);
+	background:rgb(72,69,71);
 	color:rgb(235,230,205);
 	position: absolute;
 }

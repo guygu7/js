@@ -129,11 +129,23 @@ var viewControl = {
 		 * 仓库组件隐藏
 		 */
 		panel5Hide:true,
+		/**
+		 * 数字选择器 专用遮罩层隐藏 
+		 */
+		numberPickerMaskLayerHide:true,
+		/**
+		 * 数字选择器隐藏 
+		 */
+		numberPickerHide:true,
 	},
 	/**
 	 * 当前所在场景（初始值） 
 	 */
 	currentScene : "scene-start",
+	/**
+	 * 当前交互对象类型
+	 */
+	currentInteractiveType : "",
 	/**
 	 * 层叠关系集合,固定模型:{name:index,name2:index}
 	 */
@@ -176,6 +188,14 @@ var viewControl = {
 	panel5_Style : {
 		"top" : 50 + "px",
 		"left" : 650 + "px",
-		"opacity" : 0
+		"opacity" : 0,
 	},
+	/**
+	 * 数字选择器 专用遮罩层（初始值）
+	 */
+	numberPickerMaskLayer_Style:{},
+	/**
+	 * 数字选择器（初始值）
+	 */
+	numberPicker_Style:{},
 };
