@@ -87,7 +87,11 @@ var viewDataModel = {
 		 */
 		buttonElements:{},
 	},
-	
+	numberPicker:{
+		tittleText:"数字选择器文本",
+		number : 1,
+		confirmButton:"确认按钮",
+	},
 };
 /**
  * 视图控制对象（属性为对视图的控制属性）

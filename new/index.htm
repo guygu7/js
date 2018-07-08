@@ -156,45 +156,24 @@
 				<!--数字选择器-->
 				<div ng-controller="numberPicker"  ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-class="{'hide-animation':numberPickerHide,'show-animation':!numberPickerHide}" class="numberPicker-background">
 					<div class="numberPicker">
-						<div class="numberPicker-tittle">文本文本</div>
-						<div class="numberPicker-upperArrow">
+						<div class="numberPicker-tittle">{{viewDataModel.numberPicker.tittleText}}</div>
+						<div ng-mousedown="numberUp()" ng-mouseup="numberUpStop()" ng-mouseleave="numberUpStop()" class="numberPicker-upperArrow">
 							<div class="numberPicker-arrow1"></div>
 							<div class="numberPicker-arrow2"></div>
 							<div class="numberPicker-arrow3"></div>
 						</div>
-						<div class="numberPicker-numberBox">999
+						<div class="numberPicker-numberBox">{{viewDataModel.numberPicker.number}}
 						</div>
-						<div class="numberPicker-lowerArrow">
+						<div ng-mousedown="numberDown()" ng-mouseup="numberDownStop()" ng-mouseleave="numberDownStop()" class="numberPicker-lowerArrow">
 							<div class="numberPicker-arrow1"></div>
 							<div class="numberPicker-arrow2"></div>
 							<div class="numberPicker-arrow3"></div>
 						</div>
-						<div class="numberPicker-button">确定按钮</div>
+						<div ng-click="onClick()" class="numberPicker-button">{{viewDataModel.numberPicker.confirmButton}}</div>
 					</div>
 				</div>
 				
 				<!--未实装组件-->
-				<!--遮罩层
-				<div ng-controller="maskLayer" ng-hide="viewControl.display.maskLayerHide" ng-click="maskLayerClick($event)" class="maskLayer" ></div>
-				--><!--列表菜单（自动大小_带箭头）
-				<div ng-hide="false" class="menuAuto-background">
-					<div class="menuAuto">
-						<div ng-click="menulistClick($index)" class="menuAuto-list">
-							<div class="menuAuto-list-background2"></div>
-							<div class="menuAuto-list-content">
-								中文
-							</div>
-							<div class="menuAuto-arrow">
-								<div class="menuAuto-arrow1"></div>
-								<div class="menuAuto-arrow2"></div>
-								<div class="menuAuto-arrow3"></div>
-								<div class="menuAuto-arrow4"></div>
-								<div class="menuAuto-arrow5"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				-->
 				<!--列表菜单
 				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
 					<div ng-controller="menu" class="menu">
@@ -219,6 +198,9 @@
 		<script>
 			//定义数据层
 			/*----数据----*/
+			/**
+			 * 初始数据 
+			 */
 			var data = {
 				/**
 				 * 开始引导文本
@@ -300,6 +282,69 @@
 					},
 				],
 			};
+			/**
+			 * 数据封装到对象 
+			 */
+			function loadData (data){
+				//将data数据封装对象
+				var data_Obj = [];
+				//暂存domain数据
+				var tempDomains = data.domains;
+				for (var i=0; i < tempDomains.length; i++) {
+					//创建domain对象
+					var domain_Obj = DataModleFactory.createDomain();
+					domain_Obj.setName(tempDomains[i].name).setSignId(tempDomains[i].signId);
+					//暂存interactiveObject可交互对象数据
+					var tempInteractiveObjects = tempDomains[i].interactiveObjects;
+					if (tempInteractiveObjects) {
+						for (var j=0; j < tempInteractiveObjects.length; j++) {
+							//创建interactiveObject可交互对象的对象
+							var interactiveObject_Obj =  DataModleFactory.createInteractiveObject();
+							interactiveObject_Obj.setName(tempInteractiveObjects[j].name);
+							//.setType().setContent().setTarget();
+							//暂存action交互动作数据
+							var tempActions = tempInteractiveObjects[j].actions;
+							if(tempActions){
+								for (var k=0; k < tempActions.length; k++) {
+									//创建action对象
+									var action_Obj =  DataModleFactory.createAction();
+									action_Obj.setName(tempActions[k].name).setType(tempActions[k].type).setContent(tempActions[k].content).setTarget(tempActions[k].target);
+									//action对象 存入 interactiveObject_Obj
+									interactiveObject_Obj.push(action_Obj);
+								};
+							};
+							//暂存item物品数据
+							var tempItems = tempInteractiveObjects[j].items;
+							if (tempItems) {
+								for (var k=0; k < tempItems.length; k++) {
+									//创建item物品对象
+									var item_Obj =  DataModleFactory.createItem();
+									item_Obj.setName(tempItems[k].name).setType(tempItems[k].type).setContent(tempItems[k].content).setTotalNum(tempItems[k].totalNum);
+									//暂存action交互动作数据
+									var tempItemActions = tempItems[k].actions;
+									if(tempItemActions){
+										for (var l=0; l < tempItemActions.length; l++) {
+											//创建action对象
+											var action_Obj =  DataModleFactory.createAction();
+											action_Obj.setName(tempItemActions[l].name).setType(tempItemActions[l].type).setContent(tempItemActions[l].content).setTarget(tempItemActions[l].target);
+											//action对象存入item_Obj
+											item_Obj.push(action_Obj);
+										};
+									};
+									//item物品对象 存入 interactiveObject_Obj
+									interactiveObject_Obj.push(item_Obj);
+								};
+							};
+							//interactiveObject可交互对象的对象 存入 domain_Obj
+							domain_Obj.push(interactiveObject_Obj);
+						};
+					}
+					//domain对象 存入 data_Obj
+					data_Obj.push(domain_Obj);
+				}
+				return data_Obj;
+			};
+			var dataObj = loadData(data);
 			
 			//当前场景地图
 			var currentDomain = DataModleFactory.createDomain();
@@ -316,7 +361,6 @@
 			var app = angular.module("myApp", []);
 			app.directive('ngRightclick', function($parse) {
 			    return function(scope, element, attrs) {
-			    	console.info(attrs);
 			        var fn = $parse(attrs.ngRightclick);
 			        element.bind('contextmenu', function(event) {
 			            scope.$apply(function() {
@@ -392,7 +436,6 @@
 								loadInteractiveObject.addItem(tempItem);
 								//加载物品的交互动作数据
 								var loadItemActions = loadItems[j].actions;
-								console.info(loadItemActions);
 								if (loadItemActions) {
 									for (var k=0; k < loadItemActions.length; k++) {
 										var tempAction2 = DataModleFactory.createAction();
@@ -446,7 +489,6 @@
 				getMaxZIndex = function(num){
 					var maxZIndex=num?num:0;
 					for (var i in viewControl.zIndexList) {
-						console.info(viewControl.zIndexList[i]);
 						if(viewControl.zIndexList[i]&&maxZIndex<viewControl.zIndexList[i]){
 							maxZIndex=viewControl.zIndexList[i];
 						}
@@ -691,6 +733,7 @@
 						panel5Show();
 					}else if(nowAction.getType()=="transaction"){
 						//判断为交易
+						viewDataModel.numberPicker.number = currentItem.getTotalNum();
 						//打开数字选择器
 						numberPickerShow(document.getElementById("menuAuto").offsetTop,document.getElementById("menuAuto").offsetLeft);
 					}
@@ -721,7 +764,44 @@
 			});
 			
 			//数字选择器
-			app.controller("numberPicker", function($scope, $rootScope,$timeout) {});
+			app.controller("numberPicker", function($scope, $rootScope,$timeout,$interval) {
+				//按住数字增加
+				$scope.numberUp = function() {
+					numberUp_Interval = $interval(function() {
+						if(viewDataModel.numberPicker.number<currentItem.getTotalNum()&&viewDataModel.numberPicker.number<99){
+							viewDataModel.numberPicker.number++;
+						}else{
+							viewDataModel.numberPicker.number = 1;
+						}
+					}, 70);
+				};
+				//停止数字增加
+				$scope.numberUpStop = function() {
+					$interval.cancel(numberUp_Interval);
+				};
+				//按住数字减少
+				$scope.numberDown = function() {
+					numberDown_Interval = $interval(function() {
+						if(viewDataModel.numberPicker.number>1){
+							viewDataModel.numberPicker.number--;
+						}else{
+							viewDataModel.numberPicker.number = currentItem.getTotalNum();
+						}
+					}, 70);
+				};
+				//停止数字增加
+				$scope.numberDownStop = function() {
+					$interval.cancel(numberDown_Interval);
+				};
+				//点击确认
+				$scope.onClick = function() {
+					//校验
+					if(viewDataModel.numberPicker.number>currentItem.getTotalNum()){
+						viewDataModel.numberPicker.number=currentItem.getTotalNum();
+					}
+					//修改数据
+				};
+			});
 
 			//列表菜单（自动大小_带箭头）专用遮罩层
 			app.controller("menuAutoMaskLayer", function($scope, $rootScope, $timeout) {
