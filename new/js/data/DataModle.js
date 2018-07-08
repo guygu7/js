@@ -66,6 +66,7 @@ DataModleFactory = {
 		 * Type Array [class InteractiveObject]
 		 * 人物交互面板(按钮组)
 		 */
+		/*
 		var buttonElements;
 		domain.getButtonElement = function(num) {
 			return buttonElements[num];
@@ -84,13 +85,37 @@ DataModleFactory = {
 			buttonElements.splice(num,1);
 			return this;
 		};
+		*/
+		/**
+		 * Type Array [class InteractiveObject]
+		 * 可交互对象
+		 */
+		var interactiveObjects;
+		domain.getInteractiveObject = function(num) {
+			return interactiveObjects[num];
+		};
+		domain.getInteractiveObjects = function() {
+			return interactiveObjects;
+		};
+		domain.addInteractiveObject = function(pram){
+			if(!interactiveObjects){
+				interactiveObjects = new Array();
+			}
+			interactiveObjects.push(pram);
+			return this;						
+		};
+		domain.delInteractiveObjects = function(num) {
+			interactiveObjects.splice(num,1);
+			return this;
+		};
 		/**
 		 * 清除当前对象全部数据 
 		 */
 		domain.clear = function(){
 			this.setName(null);
 			this.setSignId(null);
-			this.getButtonElements().splice(0,buttonElements.length);
+			//this.getButtonElements().splice(0,buttonElements.length);
+			this.getInteractiveObjects().splice(0,interactiveObjects.length);
 		};
 		return domain;
 	},

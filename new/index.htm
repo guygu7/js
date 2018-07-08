@@ -54,7 +54,7 @@
 
 				<!--人物交互面板(按钮组)-->
 				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" class="panel4" style="top:60px;left:330px;">
-					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements" class="button2">
+					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements()" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
 						<div class="button2-background3"></div>
@@ -286,7 +286,7 @@
 			 * 数据封装到对象 
 			 */
 			function loadData (data){
-				//将data数据封装对象
+				//将data数据封装对象，暂时仅为一个domain数组 
 				var data_Obj = [];
 				//暂存domain数据
 				var tempDomains = data.domains;
@@ -310,7 +310,7 @@
 									var action_Obj =  DataModleFactory.createAction();
 									action_Obj.setName(tempActions[k].name).setType(tempActions[k].type).setContent(tempActions[k].content).setTarget(tempActions[k].target);
 									//action对象 存入 interactiveObject_Obj
-									interactiveObject_Obj.push(action_Obj);
+									interactiveObject_Obj.addAction(action_Obj);
 								};
 							};
 							//暂存item物品数据
@@ -328,15 +328,15 @@
 											var action_Obj =  DataModleFactory.createAction();
 											action_Obj.setName(tempItemActions[l].name).setType(tempItemActions[l].type).setContent(tempItemActions[l].content).setTarget(tempItemActions[l].target);
 											//action对象存入item_Obj
-											item_Obj.push(action_Obj);
+											item_Obj.addAction(action_Obj);
 										};
 									};
 									//item物品对象 存入 interactiveObject_Obj
-									interactiveObject_Obj.push(item_Obj);
+									interactiveObject_Obj.addItem(item_Obj);
 								};
 							};
 							//interactiveObject可交互对象的对象 存入 domain_Obj
-							domain_Obj.push(interactiveObject_Obj);
+							domain_Obj.addInteractiveObject(interactiveObject_Obj);
 						};
 					}
 					//domain对象 存入 data_Obj
@@ -344,7 +344,10 @@
 				}
 				return data_Obj;
 			};
-			var dataObj = loadData(data);
+			/**
+			 * 暂时仅为一个domain数组 
+			 */
+			var dataDomainsObj = loadData(data);
 			
 			//当前场景地图
 			var currentDomain = DataModleFactory.createDomain();
@@ -411,41 +414,44 @@
 				 */
 				sceneMainDataLoad = function(domainData){
 					//加载场景数据
-					currentDomain.setName(domainData.name);
-					currentDomain.setSignId(domainData.signId);
-					for (var i=0; i < domainData.interactiveObjects.length; i++) {
+					currentDomain = domainData;
+					/*
+					currentDomain.setName(domainData.getName());
+					currentDomain.setSignId(domainData.getSignId());
+					for (var i=0; i < domainData.getInteractiveObjects().length; i++) {
 						//加载可交互对象数据
 						var loadInteractiveObject = DataModleFactory.createInteractiveObject();
-						loadInteractiveObject.setName(domainData.interactiveObjects[i].name);
-						currentDomain.addButtonElement(loadInteractiveObject);
+						loadInteractiveObject.setName(domainData.getInteractiveObjects()[i].getName());
+						currentDomain.addInteractiveObject(loadInteractiveObject);
 						//加载交互动作数据
-						var loadActions = domainData.interactiveObjects[i].actions;
+						var loadActions = domainData.getInteractiveObjects()[i].getActions();
 						if (loadActions) {
 							for (var j=0; j < loadActions.length; j++) {
 								var tempAction = DataModleFactory.createAction();
-								tempAction.setName(loadActions[j].name).setType(loadActions[j].type).setContent(loadActions[j].content).setTarget(loadActions[j].target);;
+								tempAction.setName(loadActions[j].getName()).setType(loadActions[j].getType()).setContent(loadActions[j].getContent()).setTarget(loadActions[j].getTarget());
 								loadInteractiveObject.addAction(tempAction);
 							};
 						};
 						//加载交互对象所有物品数据
-						var loadItems = domainData.interactiveObjects[i].items;
+						var loadItems = domainData.getInteractiveObjects()[i].getItems();
 						if (loadItems) {
 							for (var j=0; j < loadItems.length; j++) {
 								var tempItem = DataModleFactory.createItem();
-								tempItem.setName(loadItems[j].name).setType(loadItems[j].type).setContent(loadItems[j].content).setTotalNum(loadItems[j].totalNum);
+								tempItem.setName(loadItems[j].getName()).setType(loadItems[j].getType()).setContent(loadItems[j].getContent()).setTotalNum(loadItems[j].getTotalNum());
 								loadInteractiveObject.addItem(tempItem);
 								//加载物品的交互动作数据
-								var loadItemActions = loadItems[j].actions;
+								var loadItemActions = loadItems[j].getActions();
 								if (loadItemActions) {
 									for (var k=0; k < loadItemActions.length; k++) {
 										var tempAction2 = DataModleFactory.createAction();
-										tempAction2.setName(loadItemActions[k].name).setType(loadItemActions[k].type).setContent(loadItemActions[k].content).setTarget(loadItemActions[k].target);;
+										tempAction2.setName(loadItemActions[k].getName()).setType(loadItemActions[k].getType()).setContent(loadItemActions[k].getContent()).setTarget(loadItemActions[k].getTarget());
 										tempItem.addAction(tempAction2);
 									};
 								};
 							}
 						};
 					};
+					*/
 				};
 				//初始化
 				(function () {
@@ -456,7 +462,7 @@
 						return tempfn(pram);
 					};
 					//初始化数据
-					sceneMainDataLoad(data.domains[0]);
+					sceneMainDataLoad(dataDomainsObj[0]);
 				})();
 			});
 			
@@ -465,7 +471,9 @@
 				//开始按钮
 				$scope.buttonstart = function() {
 					//人物交互面板(按钮组)初始数据加载
-					viewDataModel.panel4.buttonElements = currentDomain.getButtonElements();
+					viewDataModel.panel4.buttonElements = function fn (){
+						return currentDomain.getInteractiveObjects();
+					};
 					//动态效果
 					viewControl.display.sceneMainHide = false;
 					$timeout(function() {
@@ -690,7 +698,7 @@
 					//传入点击目标（用于定位），显示列表菜单
 					menuShow(tempt);
 					//标记当前交互对象
-					currentInteractiveObject = currentDomain.getButtonElement(index);
+					currentInteractiveObject = currentDomain.getInteractiveObject(index);
 					//加载交互对象动作数据
 					viewDataModel.menu.buttonElements = currentInteractiveObject.getActions();
 					//viewDataModel.menu.tittleText = currentInteractiveObject.getName();
@@ -715,9 +723,9 @@
 					}else if(nowAction.getType()=="move"){
 						//判断为移动，场景切换
 						currentDomain.clear();
-						for (var i=0; i < data.domains.length; i++) {
-							if (nowAction.getTarget()==data.domains[i].signId) {
-								sceneMainDataLoad(data.domains[i]);
+						for (var i=0; i < dataDomainsObj.length; i++) {
+							if (nowAction.getTarget()==dataDomainsObj[i].getSignId()) {
+								sceneMainDataLoad(dataDomainsObj[i]);
 								panelTyping(nowAction.getContent());
 								break;
 							};
@@ -800,6 +808,7 @@
 						viewDataModel.numberPicker.number=currentItem.getTotalNum();
 					}
 					//修改数据
+					
 				};
 			});
 
