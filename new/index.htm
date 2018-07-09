@@ -121,7 +121,7 @@
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
-								{{y.getName()}}
+								{{y.getName()}}×{{y.getTotalNum()}}
 							</div>
 						</div>
 					</div>
@@ -881,26 +881,65 @@
 						viewDataModel.numberPicker.number=currentItem.getTotalNum();
 					}
 					//修改数据
-					currentItem.setTotalNum(currentItem.getTotalNum()-viewDataModel.numberPicker.number);
+					currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
 					if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
 						currentInteractiveObject.delItem(currentItem);
 					}
 					var roleItems = dataRoleObj[0].getItems();
+					var flag = false;
 					for (var i=0; i < roleItems.length; i++) {
 						if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
-							//判断是同一物品,叠加数量
-							roleItems[i].setTotalNum(roleItems[i].getTotalNum()+currentItem.getTotalNum());
-						} else {
-							//不是同一物品,新增
-							//dataRoleObj[0].
-							dataRoleObj[0].addItem(currentItem);
+							//遍历后发现同一物品,叠加数量
+							roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
+							flag = true;
 						}
 					};
+					if(!flag){
+						in
+						function copyBean (beanObj,copyObj){
+							//获取copyObj对象所有set方法
+							 var arr = Object.keys(copyObj);
+						     console.info(arr); 
+						 		 // 获取对象方法
+							     for (var i1 in beanObj) {
+							         if (beanObj.hasOwnProperty(i1) && typeof beanObj[i1] == "function") {
+							             console.info(i1,beanObj[i1]);
+							         }
+							     }
+						     // 返回的数组的所有属性(可枚举或不可枚举)直接找到给定对象。
+						     console.info(Object.getOwnPropertyNames(copyObj)); // 输出 attr ["name", "attr", "sayHi"]
+							//遍历beanObj对象所有get方法,并将值set至copyObj
+							//判断是否包含其他对象，需要递归
+							return copyObj;
+						};
+						
+						//遍历完成，未发现同一物品，新增
+						var item_Obj = DataModleFactory.createItem();
+						copyBean(currentItem,item_Obj);
+						item_Obj.setName(currentItem.getName()).setType(currentItem.getType()).setContent(currentItem.getContent()).setTotalNum(Number(viewDataModel.numberPicker.number));
+						//暂存action交互动作数据
+						var tempItemActions = currentItem.getActions;
+						if(tempItemActions){
+							for (var l=0; l < tempItemActions.length; l++) {
+								//action对象存入item_Obj
+								item_Obj.addAction(tempItemActions.getAction(i));
+							};
+						};
+						//copyTest.setTotalNum(Number(viewDataModel.numberPicker.number));
+						dataRoleObj[0].addItem(item_Obj);
+					}
 					//隐藏
 					numberPickerHide();
 				};
 			});
-
+			/*
+			function copyBean (beanObj,copyObj){
+				//获取copyObj对象所有set方法
+				//遍历beanObj对象所有get方法,并将值set至copyObj
+				//判断是否包含其他对象，需要递归
+				return copyObj;
+			};
+			*/
 			//列表菜单（自动大小_带箭头）专用遮罩层
 			app.controller("menuAutoMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
