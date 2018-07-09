@@ -29,11 +29,11 @@ var viewDataModel = {
 	/**
 	 * 交流信息面板文本
 	 */
-	panelText:"",
+	panelText:function(){return "";},
 	/**
 	 * XX面板文本 
 	 */
-	panel2Text:"中文",
+	panel2Text:function(){return "中文";},
 	/**
 	 * XX面板 
 	 */
@@ -41,7 +41,7 @@ var viewDataModel = {
 		/**
 		 * 标题文本 
 		 */
-		tittleText:"标题",
+		tittleText:function(){return "标题";},
 	},
 	/**
 	 * 人物交互面板(按钮组)
@@ -50,7 +50,7 @@ var viewDataModel = {
 		/**
 		 * 按钮元素集合
 		 */
-		buttonElements:{},
+		buttonElements: function(){return {};},
 	},
 	/**
 	 * 列表菜单（自动大小_带箭头）
@@ -59,11 +59,11 @@ var viewDataModel = {
 		/**
 		 * 菜单标题文本 
 		 */
-		tittleText:"菜单标题",
+		tittleText:function(){return "菜单标题";},
 		/**
 		 * 按钮元素集合（文本）
 		 */
-		buttonElements:{},
+		buttonElements:function(){return {};},
 	},
 	/**
 	 * 列表菜单（包裹组件）
@@ -72,11 +72,11 @@ var viewDataModel = {
 		/**
 		 * 菜单标题文本 
 		 */
-		tittleText:"菜单标题",
+		tittleText:function(){return "菜单标题";},
 		/**
 		 * 按钮元素集合（文本）
 		 */
-		buttonElements:{},
+		buttonElements:function(){return {};},
 	},
 	/**
 	 * 仓库面板 
@@ -85,7 +85,7 @@ var viewDataModel = {
 		/**
 		 * 按钮元素集合（文本）
 		 */
-		buttonElements:{},
+		buttonElements:function(){return {};},
 	},
 	numberPicker:{
 		tittleText:"数字选择器文本",

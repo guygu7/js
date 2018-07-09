@@ -17,27 +17,59 @@ DataModle = {
 	 */
 	Item : function () {},
 	/**
-	 *	角色（可交互对象）
+	 * 角色
 	 */
-	Role : function() {
-		var name;
-		/**
-		 * 设置名称
-		 */
-		DataModle.Role.prototype.setName = function(pram) {
-			this.name = pram;
-			return this;
-		};
-		/**
-		 * 获取名称
-		 */
-		DataModle.Role.prototype.getName = function() {
-			return this.name;
-		};
-	},
+	Role : function() {},
 };
 var roleObj = new DataModle.Role();
 DataModleFactory = {
+	createRole:function() {
+		var role = new DataModle.Role();
+		/**
+		 * 名称
+		 */
+		var name;
+		role.getName = function() {
+			return name;
+		};
+		role.setName = function(pram) {
+			name = pram;
+			return this;
+		};
+		/**
+		 * 所有物品
+		 */
+		var items;
+		role.getItem = function(num){
+			return items[num];
+		};
+		role.getItems = function(){
+			return items;
+		};
+		role.addItem = function(pram){
+			if(!items){
+				items = new Array();
+			}
+			items.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		role.delItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				items.splice(pram,1);
+			} else {
+				for (var i=0; i < items.length; i++) {
+					if(items[i] === pram){
+						items.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		return role;
+	},
 	createDomain:function() {
 		var domain = new DataModle.Domain();
 		/**
@@ -104,10 +136,27 @@ DataModleFactory = {
 			interactiveObjects.push(pram);
 			return this;						
 		};
+		/**
+		 * 传参：Number 或   interactiveObject对象
+		 */
+		domain.delInteractiveObject = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				interactiveObjects.splice(pram,1);
+			} else {
+				for (var i=0; i < interactiveObjects.length; i++) {
+					if(interactiveObjects[i] === pram){
+						interactiveObjects.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/*
 		domain.delInteractiveObjects = function(num) {
 			interactiveObjects.splice(num,1);
 			return this;
 		};
+		*/
 		/**
 		 * 清除当前对象全部数据 
 		 */
@@ -149,10 +198,27 @@ DataModleFactory = {
 			actions.push(pram);
 			return this;						
 		};
+		/**
+		 * 传参：Number 或   Action对象
+		 */
+		interactiveObject.delAction = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				actions.splice(pram,1);
+			} else {
+				for (var i=0; i < actions.length; i++) {
+					if(actions[i] === pram){
+						actions.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/*
 		interactiveObject.delAction = function(num) {
 			actions.splice(num,1);
 			return this;
 		};
+		*/
 		/**
 		 * 所有物品
 		 */
@@ -170,8 +236,19 @@ DataModleFactory = {
 			items.push(pram);
 			return this;						
 		};
-		interactiveObject.delItem = function(num) {
-			items.splice(num,1);
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		interactiveObject.delItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				items.splice(pram,1);
+			} else {
+				for (var i=0; i < items.length; i++) {
+					if(items[i] === pram){
+						items.splice(i,1);
+					};
+				};
+			};
 			return this;
 		};
 		return interactiveObject;
@@ -287,10 +364,27 @@ DataModleFactory = {
 			actions.push(pram);
 			return this;						
 		};
+		/**
+		 * 传参：Number 或   Action对象
+		 */
+		item.delAction = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				actions.splice(pram,1);
+			} else {
+				for (var i=0; i < actions.length; i++) {
+					if(actions[i] === pram){
+						actions.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/*
 		item.delAction = function(num) {
 			actions.splice(num,1);
 			return this;
 		};
+		*/
 		return item;
 	},
 };
