@@ -3,23 +3,23 @@ DataModle = {
 	/**
 	 * 当前场景地图
 	 */
-	Domain : function () {},
+	Domain : function domain () {},
 	/**
 	 * 可交互对象
 	 */
-	InteractiveObject : function () {},
+	InteractiveObject : function interactiveObject () {},
 	/**
 	 * 交互动作
 	 */
-	Action : function () {},
+	Action : function action () {},
 	/**
 	 * 物品 
 	 */
-	Item : function () {},
+	Item : function item () {},
 	/**
 	 * 角色
 	 */
-	Role : function() {},
+	Role : function role () {},
 };
 var roleObj = new DataModle.Role();
 DataModleFactory = {
@@ -50,6 +50,16 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
+			if (pram) {//如果有传参Item,修改Item中某些值为默认值
+				var itemActions = pram.getActions();
+				if (itemActions) {
+					for (var i=0; i < itemActions.length; i++) {
+						if(itemActions[i].getType()=="split"){//修改 split 分割移动 的交互动作目标 为 默认值（至交互对象）
+							itemActions[i].setTarget("toInteractiveObject");
+						}
+					};
+				};
+			};
 			items.push(pram);
 			return this;						
 		};
@@ -233,6 +243,16 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
+			if (pram) {//如果有传参Item,修改Item中某些值为默认值
+				var itemActions = pram.getActions();
+				if(itemActions){
+					for (var i=0; i < itemActions.length; i++) {
+						if(itemActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
+							itemActions[i].setTarget("toRoleBag");
+						}
+					};
+				}
+			};
 			items.push(pram);
 			return this;						
 		};
@@ -379,12 +399,6 @@ DataModleFactory = {
 			};
 			return this;
 		};
-		/*
-		item.delAction = function(num) {
-			actions.splice(num,1);
-			return this;
-		};
-		*/
 		return item;
 	},
 };

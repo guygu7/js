@@ -87,6 +87,9 @@ var viewDataModel = {
 		 */
 		buttonElements:function(){return {};},
 	},
+	/**
+	 * 数字选择器 
+	 */
 	numberPicker:{
 		tittleText:"数字选择器文本",
 		number : 1,
@@ -141,6 +144,10 @@ var viewControl = {
 		 * 数字选择器隐藏 
 		 */
 		numberPickerHide:true,
+		/**
+		 * 交易面板 
+		 */
+		transactionPanelHide:true,
 	},
 	/**
 	 * 当前所在场景（初始值） 

@@ -114,10 +114,10 @@
 				</div>
 				
 				<!--列表菜单:包裹-->
-				<div ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
+				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
 					<div class="menu">
 						{{viewDataModel.menuBag.tittleText()}}
-						<div ng-click="menulistClick()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+						<div ng-click="menulistClick($event,$index)" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -134,7 +134,7 @@
 					<div class="panel5-tittle">
 						{{viewDataModel.panel5.tittleText()}}
 					</div>
-					<div class="menu" style="width: 500px;height: 340px;left:10px;">
+					<div class="menu" style="width: 485px;height: 340px;left:10px;">
 						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
@@ -170,6 +170,47 @@
 							<div class="numberPicker-arrow3"></div>
 						</div>
 						<div ng-click="confirm()" class="numberPicker-button">{{viewDataModel.numberPicker.confirmButton}}</div>
+					</div>
+				</div>
+				
+				<!--交易面板-->
+				<div ng-hide="viewControl.display.transactionPanelHide"  ng-class="{'hide-animation':transactionPanelHide,'show-animation':!transactionPanelHide}" class="panel5">
+					<div class="menu" style="width: 485px;height: 170px;left:10px;">
+						<!--
+						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
+							<div class="button2-background"></div>
+							<div class="button2-background2"></div>
+							<div class="button2-background3"></div>
+							<div class="button2-content-position">
+								<div ng-class="{'button2-content2':{{x.getName().length}}<6,'button2-content-scroll':{{x.getName().length}}>5}">
+									{{x.getName()}}
+								</div>
+							</div>
+							<div class="button2-content-suffix">
+								×{{x.getTotalNum()}}
+							</div>
+						</div>
+						-->
+					</div>
+					<div style="width: 500px;height: 30px;left:10px;">
+						
+					</div>
+					<div class="menu" style="width: 485px;height: 170px;left:10px;">
+						<!--
+						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
+							<div class="button2-background"></div>
+							<div class="button2-background2"></div>
+							<div class="button2-background3"></div>
+							<div class="button2-content-position">
+								<div ng-class="{'button2-content2':{{x.getName().length}}<6,'button2-content-scroll':{{x.getName().length}}>5}">
+									{{x.getName()}}
+								</div>
+							</div>
+							<div class="button2-content-suffix">
+								×{{x.getTotalNum()}}
+							</div>
+						</div>
+						-->
 					</div>
 				</div>
 				
@@ -214,7 +255,7 @@
 					items:[
 						{name:"角色所属物体",type:"",content:"角色所属物体说明",totalNum:9,
 							actions:[
-								{name:"堆叠",type:"transaction"}
+								{name:"堆叠",type:"split",target:"toInteractiveObject"}
 							],
 						},
 					],
@@ -247,17 +288,24 @@
 						signId:"publicDomain",
 						interactiveObjects:[
 							{
-								name:"移动对象",
+								name:"移动-私有据点场景",
 								actions:[
 									{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
-									{name:"移动到私有据点场景",type:"move",content:"移动-私有据点场景",target:"homeDomain"},
+									{name:"移动",type:"move",content:"移动-私有据点场景",target:"homeDomain"},
 								],
 							},
 							{
 								name:"交流对象",
+								items:[
+									{name:"交流对象的物体",type:"",content:"物体1说明",totalNum:9,
+										actions:[
+											{name:"堆叠",type:"split",target:"toRoleBag"}
+										],
+									},
+								],
 								actions:[
 									{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
-									{name:"其他",type:"",content:""},
+									{name:"交互",type:"transaction",content:""},
 								],
 							},
 						],
@@ -270,27 +318,27 @@
 						signId:"homeDomain",
 						interactiveObjects:[
 							{
-								name:"移动对象",
+								name:"移动-公共场景",
 								actions:[
 									{name:"对话",type:"talk",content:"私有据点-移动对象-对话内容"},
-									{name:"移动到公共场景",type:"move",content:"移动-公共场景",target:"publicDomain"},
+									{name:"移动",type:"move",content:"移动-公共场景",target:"publicDomain"},
 								],
 							},
 							{
 								name:"私有建筑",
 								actions:[
 									{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
-									{name:"使用",type:"use",content:"私有据点-私有建筑-使用"},
+									{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
 								],
 								items:[
 									{name:"物体1",type:"",content:"物体1说明",totalNum:9,
 										actions:[
-											{name:"堆叠",type:"transaction"}
+											{name:"堆叠",type:"split",target:"toRoleBag"}
 										],
 									},
 									{name:"物体2超长物品名字",type:"",content:"物体2说明",totalNum:19,
 										actions:[
-												{name:"堆叠",type:"transaction"}
+											{name:"堆叠",type:"split",target:"toRoleBag"}
 										],
 									},
 									{name:"物体3",type:"",content:"物体3说明",totalNum:11},
@@ -301,6 +349,83 @@
 						],
 					},
 				],
+			};
+			/**
+			 * 伪完全复制对象，需传入创建的新对象
+			 * 传参： beanObj 原始被复制对象,copyObj 复制对象
+			 */
+			function copyBean (beanObj,copyObj){
+				/*仅复制基本类型属性
+				for (var i in copyObj) {
+					if (copyObj.hasOwnProperty(i) && typeof copyObj[i] == "function") {
+						if ("set"==i.substring(0,3)){
+							//遍历beanObj对象所有get方法,并将值set至copyObj
+							for (var j in beanObj) {
+								if (beanObj.hasOwnProperty(j) && typeof beanObj[j] == "function") {
+									if("get"==j.substring(0,3) && i.substring(3)==j.substring(3)){
+										//copyObj.set(beanObj.get())
+										copyObj[i](beanObj[j]());
+									}
+								}
+							}
+						};
+					}
+				}
+				*/
+				//复制基本类型属性  和  包含对象的数组属性（由于依赖于工厂创建对象，仅适用于本项目）
+				//遍历beanObj对象所有get方法
+				for (var beanObjFn in beanObj) {
+					if (beanObj.hasOwnProperty(beanObjFn) && typeof beanObj[beanObjFn] == "function") {
+						if("get"==beanObjFn.substring(0,3)){
+							//判断beanObj.get后是否包含其他对象，需要递归
+							var tempVal = beanObj[beanObjFn](0);
+							//判断，为数组，且数组内有至少一个元素
+							if(null != tempVal && Object.prototype.toString.call(tempVal)=="[object Array]" && tempVal.length>0){
+								for (var j=0; j < tempVal.length; j++) {
+									//判断数组内元素为对象
+									if(Object.prototype.toString.call(tempVal[j])=="[object Object]"){
+										var tempObj;
+										//获取数组元素对象构造函数名，并根据名称创建新的对象
+										if("domain"==tempVal[j].constructor.name){
+											tempObj = DataModleFactory.createDomain();
+										} else if("interactiveObject"==tempVal[j].constructor.name){
+											tempObj = DataModleFactory.createInteractiveObject();
+										} else if("action"==tempVal[j].constructor.name){
+											tempObj = DataModleFactory.createAction();
+										} else if("item"==tempVal[j].constructor.name){
+											tempObj = DataModleFactory.createItem();
+										} else if("role"==tempVal[j].constructor.name){
+											tempObj = DataModleFactory.createRole();
+										}
+										//递归，复制数组内元素对象数据，获取返回复制对象
+										var returnTempObj = copyBean(tempVal[j],tempObj);
+										//遍历出copyObj的对应add方法调用存入
+										for (var copyObjFn in copyObj) {
+											if (copyObj.hasOwnProperty(copyObjFn) && typeof copyObj[copyObjFn] == "function") {
+												if ("add"==copyObjFn.substring(0,3) && beanObjFn.substring(0,beanObjFn.length-1)){
+													copyObj[copyObjFn](returnTempObj);
+												}
+											}
+										}
+									}else{
+										//不是对象则直接存入copy对象（暂时没有这种情况）
+									};
+								};
+							}else if(typeof tempVal=="number" || typeof tempVal=="string" || typeof tempVal=="boolean"){
+								//判断为Number String Boolean
+								//直接遍历出copyObj的对应set方法调用存入
+								for (var copyObjFn in copyObj) {
+									if (copyObj.hasOwnProperty(copyObjFn) && typeof copyObj[copyObjFn] == "function") {
+										if ("set"==copyObjFn.substring(0,3) && copyObjFn.substring(3)==beanObjFn.substring(3)){
+											copyObj[copyObjFn](tempVal);
+										}
+									}
+								}
+							};
+						}
+					}
+				}
+				return copyObj;
 			};
 			/**
 			 * 场景数据封装到对象 
@@ -321,7 +446,6 @@
 							//创建interactiveObject可交互对象的对象
 							var interactiveObject_Obj =  DataModleFactory.createInteractiveObject();
 							interactiveObject_Obj.setName(tempInteractiveObjects[j].name);
-							//.setType().setContent().setTarget();
 							//暂存action交互动作数据
 							var tempActions = tempInteractiveObjects[j].actions;
 							if(tempActions){
@@ -411,7 +535,9 @@
 			 */
 			var dataRoleObj = loadRolesData(data);
 			
-			//当前场景地图
+			/**
+			 * 当前场景地图
+			 */
 			var currentDomain = DataModleFactory.createDomain();
 			/**
 			 * 当前可交互对象 
@@ -421,7 +547,10 @@
 			 * 当前的物品
 			 */
 			var currentItem = DataModleFactory.createItem();
-			
+			/**
+			 * 当前的交互动作
+			 */
+			var currentAction = DataModleFactory.createAction();
 			
 			var app = angular.module("myApp", []);
 			app.directive('ngRightclick', function($parse) {
@@ -477,43 +606,6 @@
 				sceneMainDataLoad = function(domainData){
 					//加载场景数据
 					currentDomain = domainData;
-					/*
-					currentDomain.setName(domainData.getName());
-					currentDomain.setSignId(domainData.getSignId());
-					for (var i=0; i < domainData.getInteractiveObjects().length; i++) {
-						//加载可交互对象数据
-						var loadInteractiveObject = DataModleFactory.createInteractiveObject();
-						loadInteractiveObject.setName(domainData.getInteractiveObjects()[i].getName());
-						currentDomain.addInteractiveObject(loadInteractiveObject);
-						//加载交互动作数据
-						var loadActions = domainData.getInteractiveObjects()[i].getActions();
-						if (loadActions) {
-							for (var j=0; j < loadActions.length; j++) {
-								var tempAction = DataModleFactory.createAction();
-								tempAction.setName(loadActions[j].getName()).setType(loadActions[j].getType()).setContent(loadActions[j].getContent()).setTarget(loadActions[j].getTarget());
-								loadInteractiveObject.addAction(tempAction);
-							};
-						};
-						//加载交互对象所有物品数据
-						var loadItems = domainData.getInteractiveObjects()[i].getItems();
-						if (loadItems) {
-							for (var j=0; j < loadItems.length; j++) {
-								var tempItem = DataModleFactory.createItem();
-								tempItem.setName(loadItems[j].getName()).setType(loadItems[j].getType()).setContent(loadItems[j].getContent()).setTotalNum(loadItems[j].getTotalNum());
-								loadInteractiveObject.addItem(tempItem);
-								//加载物品的交互动作数据
-								var loadItemActions = loadItems[j].getActions();
-								if (loadItemActions) {
-									for (var k=0; k < loadItemActions.length; k++) {
-										var tempAction2 = DataModleFactory.createAction();
-										tempAction2.setName(loadItemActions[k].getName()).setType(loadItemActions[k].getType()).setContent(loadItemActions[k].getContent()).setTarget(loadItemActions[k].getTarget());
-										tempItem.addAction(tempAction2);
-									};
-								};
-							}
-						};
-					};
-					*/
 				};
 				//初始化
 				(function () {
@@ -645,7 +737,13 @@
 				/**
 				 * 仓库组件 显示命令(同时打开包裹组件)
 				 */
-				panel5Show = function(){
+				panel5Show = function(model){
+					var panel5Left=0;
+					var menuBagLeft=0;
+					if(model&&model=="transaction"){
+						panel5Left+=80;
+						menuBagLeft-=200;
+					}
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["panel5"] = maxZIndex+2;
@@ -659,17 +757,17 @@
 					viewControl.display.panel5MaskLayerHide = false;
 					
 					viewControl.display.panel5Hide = false;
-					viewControl.panel5_Style.left = 650 + "px";
+					viewControl.panel5_Style.left = 650 +panel5Left+ "px";
 					viewControl.panel5_Style.opacity = 0;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 100 + "px";
+					viewControl.menu_bag_Style.left = 100 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
 					$timeout(function() {
-						viewControl.panel5_Style.left =  600 + "px";
+						viewControl.panel5_Style.left =  600 +panel5Left+ "px";
 						viewControl.panel5_Style.opacity = 1;
 						//包
-						viewControl.menu_bag_Style.left = 200 + "px";
+						viewControl.menu_bag_Style.left = 200 +menuBagLeft+ "px";
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
 				};
@@ -776,27 +874,31 @@
 				$scope.menulistClick = function(index,$event){
 					//获取交互动作
 					if ("interactiveObject"==viewControl.currentInteractiveType){
-						var nowAction = currentInteractiveObject.getAction(index);
+						currentAction = currentInteractiveObject.getAction(index);
 					}else if("item"==viewControl.currentInteractiveType){
-						var nowAction = currentItem.getAction(index);
+						currentAction = currentItem.getAction(index);
 					}else{
 						return;
 					}
-					if(nowAction.getType()=="talk"){
+					if(currentAction.getType()=="talk"){
 						//判断为对话
-						panelTyping(nowAction.getContent());
-					}else if(nowAction.getType()=="move"){
+						panelTyping(currentAction.getContent());
+						//对话动作完成，清空当前交互动作
+						currentAction = null;
+					}else if(currentAction.getType()=="move"){
 						//判断为移动，场景切换
 						//currentDomain.clear();
 						for (var i=0; i < dataDomainsObj.length; i++) {
-							if (nowAction.getTarget()==dataDomainsObj[i].getSignId()) {
+							if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
 								sceneMainDataLoad(dataDomainsObj[i]);
-								panelTyping(nowAction.getContent());
+								panelTyping(currentAction.getContent());
 								break;
 							};
 						};
-					}else if(nowAction.getType()=="use"){
-						//判断为使用建筑功能（仓库）
+						//移动动作完成，清空当前交互动作
+						currentAction = null;
+					}else if(currentAction.getType()=="useWarehouse"){
+						//判断为（与仓库）交易
 						//加载仓库数据
 						viewDataModel.panel5.buttonElements = function () {
 							return currentInteractiveObject.getItems();
@@ -808,19 +910,59 @@
 						viewDataModel.menuBag.buttonElements = function () {
 							return dataRoleObj[0].getItems();
 						};
-						viewDataModel.menuBag.tittleText = "数据";
 						panel5Show();
-					}else if(nowAction.getType()=="transaction"){
+						//使用建筑功能（仓库）动作完成，清空当前交互动作
+						currentAction = null;
+					}else if(currentAction.getType()=="split"){
 						//判断为交易,重新定位视图数据指针
 						viewDataModel.numberPicker.number = currentItem.getTotalNum();
 						//打开数字选择器
 						numberPickerShow(document.getElementById("menuAuto").offsetTop,document.getElementById("menuAuto").offsetLeft);
+						//动作继续，不清空当前交互动作
+						currentAction;
+					}else if(currentAction.getType()=="transaction"){
+						//判断为交易
+						//加载当前交互对象的物品数据
+						viewDataModel.panel5.buttonElements = function () {
+							return currentInteractiveObject.getItems();
+						};
+						viewDataModel.panel5.tittleText =  function () {
+							return currentInteractiveObject.getName();
+						};
+						//加载包裹数据,重新定位视图数据指针
+						viewDataModel.menuBag.buttonElements = function () {
+							return dataRoleObj[0].getItems();
+						};
+						panel5Show("transaction");
+						//交易动作完成，清空当前交互动作
+						currentAction = null;
 					}
 					//隐藏菜单
 					menuHide();
 				};
 			});
 
+			//列表菜单:包裹 组件
+			app.controller("menuBag", function($scope, $rootScope,$timeout) {
+				$scope.menulistClick = function($event,index) {
+					//处理传入对象
+					var tempt = $event.target.parentNode;
+					while("menu-list ng-scope"!=tempt.className){
+						tempt = tempt.parentNode;
+					}
+					//标记交互类型为物品
+					viewControl.currentInteractiveType = "item";
+					//传入点击目标（用于定位），显示列表菜单
+					menuShow(tempt);
+					//标记当前交互（物品）对象
+					currentItem = dataRoleObj[0].getItem(index);
+					//加载交互对象动作数据（同步至视图）
+					viewDataModel.menu.buttonElements = function () {
+						return currentItem.getActions();
+					};
+				};
+			});
+			
 			//仓库组件
 			app.controller("panel5", function($scope, $rootScope,$timeout) {
 				//点击某个交互对象
@@ -880,66 +1022,77 @@
 					if(viewDataModel.numberPicker.number>currentItem.getTotalNum()){
 						viewDataModel.numberPicker.number=currentItem.getTotalNum();
 					}
-					//修改数据
-					currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
-					if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
-						currentInteractiveObject.delItem(currentItem);
-					}
-					var roleItems = dataRoleObj[0].getItems();
-					var flag = false;
-					for (var i=0; i < roleItems.length; i++) {
-						if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
-							//遍历后发现同一物品,叠加数量
-							roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
-							flag = true;
+					//从当前交互动作，判断是移动至角色包裹
+					if("split"==currentAction.getType() && "toRoleBag"==currentAction.getTarget()){
+						//修改数据
+						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
+						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
+							currentInteractiveObject.delItem(currentItem);
 						}
-					};
-					if(!flag){
-						in
-						function copyBean (beanObj,copyObj){
-							//获取copyObj对象所有set方法
-							 var arr = Object.keys(copyObj);
-						     console.info(arr); 
-						 		 // 获取对象方法
-							     for (var i1 in beanObj) {
-							         if (beanObj.hasOwnProperty(i1) && typeof beanObj[i1] == "function") {
-							             console.info(i1,beanObj[i1]);
-							         }
-							     }
-						     // 返回的数组的所有属性(可枚举或不可枚举)直接找到给定对象。
-						     console.info(Object.getOwnPropertyNames(copyObj)); // 输出 attr ["name", "attr", "sayHi"]
-							//遍历beanObj对象所有get方法,并将值set至copyObj
-							//判断是否包含其他对象，需要递归
-							return copyObj;
+						var roleItems = dataRoleObj[0].getItems();
+						var flag = false;
+						for (var i=0; i < roleItems.length; i++) {
+							if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
+								//遍历后发现同一物品,叠加数量
+								roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
+								flag = true;
+							}
 						};
-						
-						//遍历完成，未发现同一物品，新增
-						var item_Obj = DataModleFactory.createItem();
-						copyBean(currentItem,item_Obj);
-						item_Obj.setName(currentItem.getName()).setType(currentItem.getType()).setContent(currentItem.getContent()).setTotalNum(Number(viewDataModel.numberPicker.number));
-						//暂存action交互动作数据
-						var tempItemActions = currentItem.getActions;
-						if(tempItemActions){
-							for (var l=0; l < tempItemActions.length; l++) {
-								//action对象存入item_Obj
-								item_Obj.addAction(tempItemActions.getAction(i));
+						if(!flag){
+							//遍历完成，未发现同一物品，复制出一个物品对象
+							var item_Obj = DataModleFactory.createItem();
+							copyBean(currentItem,item_Obj);
+							item_Obj.setName(currentItem.getName()).setType(currentItem.getType()).setContent(currentItem.getContent()).setTotalNum(Number(viewDataModel.numberPicker.number));
+							//暂存action交互动作数据
+							var tempItemActions = currentItem.getActions;
+							if(tempItemActions){
+								for (var l=0; l < tempItemActions.length; l++) {
+									//action对象存入item_Obj
+									item_Obj.addAction(tempItemActions.getAction(i));
+								};
 							};
+							dataRoleObj[0].addItem(item_Obj);
+						}
+						//隐藏
+						numberPickerHide();
+					} else if("split"==currentAction.getType() && "toInteractiveObject"==currentAction.getTarget()){
+						//判断是从角色包裹移动至当前交互对象
+						//修改数据
+						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
+						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
+							dataRoleObj[0].delItem(currentItem);
+						}
+						var roleItems = currentInteractiveObject.getItems();
+						var flag = false;
+						for (var i=0; i < roleItems.length; i++) {
+							if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
+								//遍历后发现同一物品,叠加数量
+								roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
+								flag = true;
+							}
 						};
-						//copyTest.setTotalNum(Number(viewDataModel.numberPicker.number));
-						dataRoleObj[0].addItem(item_Obj);
-					}
-					//隐藏
-					numberPickerHide();
+						if(!flag){
+							//遍历完成，未发现同一物品，复制出一个物品对象
+							var item_Obj = DataModleFactory.createItem();
+							copyBean(currentItem,item_Obj);
+							item_Obj.setName(currentItem.getName()).setType(currentItem.getType()).setContent(currentItem.getContent()).setTotalNum(Number(viewDataModel.numberPicker.number));
+							//暂存action交互动作数据
+							var tempItemActions = currentItem.getActions;
+							if(tempItemActions){
+								for (var l=0; l < tempItemActions.length; l++) {
+									//action对象存入item_Obj
+									item_Obj.addAction(tempItemActions.getAction(i));
+								};
+							};
+							currentInteractiveObject.addItem(item_Obj);
+						}
+						//隐藏
+						numberPickerHide();
+					};
+					
 				};
 			});
-			/*
-			function copyBean (beanObj,copyObj){
-				//获取copyObj对象所有set方法
-				//遍历beanObj对象所有get方法,并将值set至copyObj
-				//判断是否包含其他对象，需要递归
-				return copyObj;
-			};
-			*/
+			
 			//列表菜单（自动大小_带箭头）专用遮罩层
 			app.controller("menuAutoMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
