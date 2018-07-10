@@ -154,7 +154,7 @@
 				<!--数字选择器-遮罩层-->
 				<div ng-controller="numberPickerMaskLayer" ng-hide="viewControl.display.numberPickerMaskLayerHide"  ng-style="viewControl.numberPickerMaskLayer_Style" ng-mousedown="numberPickerMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--数字选择器-->
-				<div ng-controller="numberPicker"  ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-class="{'hide-animation':numberPickerHide,'show-animation':!numberPickerHide}" class="numberPicker-background">
+				<div ng-controller="numberPicker" ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-class="{'hide-animation':numberPickerHide,'show-animation':!numberPickerHide}" class="numberPicker-background">
 					<div class="numberPicker">
 						<div class="numberPicker-tittle">{{viewDataModel.numberPicker.tittleText}}</div>
 						<div ng-mousedown="numberUp()" ng-mouseup="numberUpStop()" ng-mouseleave="numberUpStop()" class="numberPicker-upperArrow">
@@ -174,10 +174,9 @@
 				</div>
 				
 				<!--交易面板-->
-				<div ng-hide="viewControl.display.transactionPanelHide"  ng-class="{'hide-animation':transactionPanelHide,'show-animation':!transactionPanelHide}" class="panel5">
-					<div class="menu" style="width: 485px;height: 170px;left:10px;">
-						<!--
-						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
+				<div ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" ng-class="{'hide-animation':transactionPanelHide,'show-animation':!transactionPanelHide}" class="panel5">
+					<div class="menu" style="width: 380px;height: 170px;left:10px;">
+						<div ng-repeat="x in viewDataModel.transactionPanel.sellButtonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -190,14 +189,12 @@
 								×{{x.getTotalNum()}}
 							</div>
 						</div>
-						-->
 					</div>
 					<div style="width: 500px;height: 30px;left:10px;">
 						
 					</div>
-					<div class="menu" style="width: 485px;height: 170px;left:10px;">
-						<!--
-						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
+					<div class="menu" style="width: 380px;height: 170px;left:10px;">
+						<div ng-repeat="x in viewDataModel.transactionPanel.buyButtonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -210,7 +207,6 @@
 								×{{x.getTotalNum()}}
 							</div>
 						</div>
-						-->
 					</div>
 				</div>
 				
@@ -740,10 +736,6 @@
 				panel5Show = function(model){
 					var panel5Left=0;
 					var menuBagLeft=0;
-					if(model&&model=="transaction"){
-						panel5Left+=80;
-						menuBagLeft-=200;
-					}
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["panel5"] = maxZIndex+2;
@@ -753,6 +745,15 @@
 					viewControl.panel5_Style["z-index"] = viewControl.zIndexList["panel5"];
 					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
 					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
+					
+					if(model&&model=="transaction"){
+						panel5Left+=100;
+						menuBagLeft-=200;
+						viewControl.zIndexList["transactionPanel"] = maxZIndex+1;
+						viewControl.transactionPanel_Style["z-index"] = viewControl.zIndexList["transactionPanel"];
+						viewControl.display.transactionPanelHide = false;
+						viewControl.transactionPanel_Style.opacity = 0;
+					}
 					//弹出遮罩层
 					viewControl.display.panel5MaskLayerHide = false;
 					
@@ -764,6 +765,9 @@
 					viewControl.menu_bag_Style.left = 100 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
 					$timeout(function() {
+						if(model&&model=="transaction"){
+							viewControl.transactionPanel_Style.opacity = 1;
+						}
 						viewControl.panel5_Style.left =  600 +panel5Left+ "px";
 						viewControl.panel5_Style.opacity = 1;
 						//包
@@ -933,8 +937,13 @@
 						viewDataModel.menuBag.buttonElements = function () {
 							return dataRoleObj[0].getItems();
 						};
+						//加载交易面板数据，初始为空
+						viewDataModel.transactionPanel.sellButtonElements = function(){return {};},
+						viewDataModel.transactionPanel.buyButtonElements = function(){return {};},
 						panel5Show("transaction");
-						//交易动作完成，清空当前交互动作
+						//标记角色状态为交易状态
+						dataRoleObj[0].setStatus("transaction");
+						//打开交易动作完成，清空当前交互动作
 						currentAction = null;
 					}
 					//隐藏菜单
@@ -1024,6 +1033,11 @@
 					}
 					//从当前交互动作，判断是移动至角色包裹
 					if("split"==currentAction.getType() && "toRoleBag"==currentAction.getTarget()){
+						//判断是角色否交易状态
+						if(dataRoleObj[0].getStatus=="transaction"){
+							//交易状态，将物品数据暂存至。。
+							
+						}
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
 						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象

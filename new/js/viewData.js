@@ -95,6 +95,19 @@ var viewDataModel = {
 		number : 1,
 		confirmButton:"确认按钮",
 	},
+	/**
+	 * 交易面板
+	 */
+	transactionPanel:{
+		/**
+		 * 出售的按钮元素集合（文本）
+		 */
+		sellButtonElements:function(){return {};},
+		/**
+		 * 购买的按钮元素集合（文本）
+		 */
+		buyButtonElements:function(){return {};},
+	},
 };
 /**
  * 视图控制对象（属性为对视图的控制属性）
@@ -209,4 +222,13 @@ var viewControl = {
 	 * 数字选择器（初始值）
 	 */
 	numberPicker_Style:{},
+	/**
+	 * 交易面板（初始值）
+	 */
+	transactionPanel_Style:{
+		"width": 400+"px",
+		"top" : 50 + "px",
+		"left" : 290 + "px",
+		"opacity" : 0,
+	},
 };

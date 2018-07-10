@@ -37,6 +37,17 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 状态
+		 */
+		var status;
+		role.getStatus = function() {
+			return status;
+		};
+		role.setStatus = function(pram) {
+			status = pram;
+			return this;
+		};
+		/**
 		 * 所有物品
 		 */
 		var items;
