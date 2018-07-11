@@ -102,11 +102,11 @@ var viewDataModel = {
 		/**
 		 * 出售的按钮元素集合（文本）
 		 */
-		sellButtonElements:function(){return {};},
+		sellButtonElements:function(){return transactionItems.sellItems;},
 		/**
 		 * 购买的按钮元素集合（文本）
 		 */
-		buyButtonElements:function(){return {};},
+		buyButtonElements:function(){return transactionItems.buyItems;},
 	},
 };
 /**
@@ -226,9 +226,9 @@ var viewControl = {
 	 * 交易面板（初始值）
 	 */
 	transactionPanel_Style:{
-		"width": 400+"px",
+		"width": 500+"px",
 		"top" : 50 + "px",
-		"left" : 290 + "px",
+		"left" : 260 + "px",
 		"opacity" : 0,
 	},
 };
