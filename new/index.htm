@@ -35,7 +35,7 @@
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
 
 				<!--交流信息面板-->
-				<div ng-click="panelOnClick(viewDataModel.panelText)" class="panel" style="bottom:20px;left:10px;">
+				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-style="viewControl.panel_Style" class="panel" style="bottom:5px;left:10px;">
 					<div>
 						{{viewDataModel.panelText}}
 					</div>
@@ -176,7 +176,7 @@
 				<!--交易面板-->
 				<div ng-controller="transactionPanel" ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" ng-class="{'hide-animation':transactionPanelHide,'show-animation':!transactionPanelHide}" class="panel5">
 					<div class="menu" style="width: 485px;height: 170px;left:10px;">
-						<div ng-repeat="x in viewDataModel.transactionPanel.sellButtonElements()" class="button2">
+						<div ng-click="sellsClick($event,$index)" ng-repeat="x in viewDataModel.transactionPanel.sellButtonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -194,7 +194,7 @@
 						<div ng-click="confirm()">确定</div>
 					</div>
 					<div class="menu" style="width: 485px;height: 170px;left:10px;">
-						<div ng-repeat="x in viewDataModel.transactionPanel.buyButtonElements()" class="button2">
+						<div ng-click="buysClick($event,$index)" ng-repeat="x in viewDataModel.transactionPanel.buyButtonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -232,151 +232,11 @@
 		<script src="js/main.js"></script>
 		<script src="js/data/DataModle.js"></script>
 		<script src="js/viewData.js"></script>
+		<script src="js/data/data.js"></script>
+		<script src="js/initFunction.js"></script>
+		
+		
 		<script>
-			//定义数据层
-			/*----数据----*/
-			/**
-			 * 基础字典数据 
-			 */
-			var dictionaryData = {};
-			dictionaryData.action={
-				action1:{name:"堆叠",type:"split",target:""},
-			};
-			/**
-			 * 物品字典 
-			 */
-			dictionaryData.item={
-				item1:{name:"角色所属物体",type:"",content:"角色所属物体说明",totalNum:9,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item2:{name:"角色所属物体2",type:"",content:"角色所属物体说明",totalNum:9,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item3:{name:"角色所属物体3",type:"",content:"角色所属物体说明",totalNum:9,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item4:{name:"交流对象的物体",type:"",content:"物体1说明",totalNum:9,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item5:{name:"物体1",type:"",content:"物体1说明",totalNum:9,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item6:{name:"物体2超长物品名字",type:"",content:"物体2说明",totalNum:19,
-					actions:[
-						dictionaryData.action.action1,
-					],
-				},
-				item7:{name:"物体3",type:"",content:"物体3说明",totalNum:11},
-				item8:{name:"物体4",type:"",content:"物体4说明",totalNum:1},
-				item9:{name:"物体5",type:"",content:"物体5说明",totalNum:9},
-			};
-			/**
-			 * 初始数据 
-			 */
-			var data = {
-				/**
-				 * 开始引导文本
-				 */
-				startText:"开始引导文本。。",
-				/**
-				 * 角色数据 
-				 */
-				role:{
-					name:"角色",
-					items:[
-						dictionaryData.item.item1,
-						dictionaryData.item.item2,
-						dictionaryData.item.item3,
-					],
-				},
-				/**
-				 * 场景数据 
-				 */
-				domains:[
-					/**
-					 * 开场局部区域（小场景） 
-					 */
-					{
-						name:"引导场景",
-						signId:"startDomain",
-						interactiveObjects:[
-							{	
-								name:"引导对象",
-								actions:[
-									{name:"对话",type:"talk",content:"对话内容"},
-									{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
-								],
-							},
-						],
-					},
-					/**
-					 * 公共场景
-					 */
-					{
-						name:"公共场景",
-						signId:"publicDomain",
-						interactiveObjects:[
-							{
-								name:"移动-私有据点场景",
-								actions:[
-									{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
-									{name:"移动",type:"move",content:"移动-私有据点场景",target:"homeDomain"},
-								],
-							},
-							{
-								name:"交流对象",
-								items:[
-									dictionaryData.item.item4,
-								],
-								actions:[
-									{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
-									{name:"交互",type:"transaction",content:""},
-								],
-							},
-						],
-					},
-					/**
-					 * 私有据点场景
-					 */
-					{
-						name:"私有据点场景",
-						signId:"homeDomain",
-						interactiveObjects:[
-							{
-								name:"移动-公共场景",
-								actions:[
-									{name:"对话",type:"talk",content:"私有据点-移动对象-对话内容"},
-									{name:"移动",type:"move",content:"移动-公共场景",target:"publicDomain"},
-								],
-							},
-							{
-								name:"私有建筑",
-								actions:[
-									{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
-									{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
-								],
-								items:[
-									dictionaryData.item.item5,
-									dictionaryData.item.item6,
-									dictionaryData.item.item7,
-									dictionaryData.item.item8,
-									dictionaryData.item.item9,
-								],
-							},
-						],
-					},
-				],
-			};
 			/**
 			 * 伪完全复制对象，需传入创建的新对象
 			 * 传参： beanObj 原始被复制对象,copyObj 复制对象
@@ -455,102 +315,10 @@
 				return copyObj;
 			};
 			/**
-			 * 场景数据封装到对象 
+			 * 对比两个Item物品对象是否为同一种物品
 			 */
-			function loadDomainsData (data){
-				//将data数据封装对象，暂时仅为一个domain数组 
-				var data_Obj = [];
-				//暂存domain数据
-				var tempDomains = data.domains;
-				for (var i=0; i < tempDomains.length; i++) {
-					//创建domain对象
-					var domain_Obj = DataModleFactory.createDomain();
-					domain_Obj.setName(tempDomains[i].name).setSignId(tempDomains[i].signId);
-					//暂存interactiveObject可交互对象数据
-					var tempInteractiveObjects = tempDomains[i].interactiveObjects;
-					if (tempInteractiveObjects) {
-						for (var j=0; j < tempInteractiveObjects.length; j++) {
-							//创建interactiveObject可交互对象的对象
-							var interactiveObject_Obj =  DataModleFactory.createInteractiveObject();
-							interactiveObject_Obj.setName(tempInteractiveObjects[j].name);
-							//暂存action交互动作数据
-							var tempActions = tempInteractiveObjects[j].actions;
-							if(tempActions){
-								for (var k=0; k < tempActions.length; k++) {
-									//创建action对象
-									var action_Obj =  DataModleFactory.createAction();
-									action_Obj.setName(tempActions[k].name).setType(tempActions[k].type).setContent(tempActions[k].content).setTarget(tempActions[k].target);
-									//action对象 存入 interactiveObject_Obj
-									interactiveObject_Obj.addAction(action_Obj);
-								};
-							};
-							//暂存item物品数据
-							var tempItems = tempInteractiveObjects[j].items;
-							if (tempItems) {
-								for (var k=0; k < tempItems.length; k++) {
-									//创建item物品对象
-									var item_Obj =  DataModleFactory.createItem();
-									item_Obj.setName(tempItems[k].name).setType(tempItems[k].type).setContent(tempItems[k].content).setTotalNum(tempItems[k].totalNum);
-									//暂存action交互动作数据
-									var tempItemActions = tempItems[k].actions;
-									if(tempItemActions){
-										for (var l=0; l < tempItemActions.length; l++) {
-											//创建action对象
-											var action_Obj =  DataModleFactory.createAction();
-											action_Obj.setName(tempItemActions[l].name).setType(tempItemActions[l].type).setContent(tempItemActions[l].content).setTarget(tempItemActions[l].target);
-											//action对象存入item_Obj
-											item_Obj.addAction(action_Obj);
-										};
-									};
-									//item物品对象 存入 interactiveObject_Obj
-									interactiveObject_Obj.addItem(item_Obj);
-								};
-							};
-							//interactiveObject可交互对象的对象 存入 domain_Obj
-							domain_Obj.addInteractiveObject(interactiveObject_Obj);
-						};
-					}
-					//domain对象 存入 data_Obj
-					data_Obj.push(domain_Obj);
-				}
-				return data_Obj;
-			};
-			/**
-			 * 角色数据封装到对象 
-			 */
-			function loadRolesData(data){
-				//将data数据封装对象，暂时仅为一个Role数组 
-				var data_Obj = [];
-				//暂存role数据
-				var tempRole = data.role;
-				//创建role对象
-				var role_Obj = DataModleFactory.createRole();
-				role_Obj.setName(tempRole.name);
-				//暂存item物品数据
-				var tempItems = tempRole.items;
-				if (tempItems) {
-					for (var i=0; i < tempItems.length; i++) {
-						//创建item物品对象
-						var item_Obj =  DataModleFactory.createItem();
-						item_Obj.setName(tempItems[i].name).setType(tempItems[i].type).setContent(tempItems[i].content).setTotalNum(tempItems[i].totalNum);
-						//暂存action交互动作数据
-						var tempItemActions = tempItems[i].actions;
-						if(tempItemActions){
-							for (var l=0; l < tempItemActions.length; l++) {
-								//创建action对象
-								var action_Obj =  DataModleFactory.createAction();
-								action_Obj.setName(tempItemActions[l].name).setType(tempItemActions[l].type).setContent(tempItemActions[l].content).setTarget(tempItemActions[l].target);
-								//action对象存入item_Obj
-								item_Obj.addAction(action_Obj);
-							};
-						};
-						//item物品对象 存入 role_Obj
-						role_Obj.addItem(item_Obj);
-					};
-				};
-				//role对象 存入 data_Obj
-				data_Obj.push(role_Obj);
-				return data_Obj;
+			function compareItem(item1,item2){
+				return (item1.getName()==item2.getName()&&item1.getType()==item2.getType()&&item1.getContent()==item2.getContent());
 			};
 			
 			/**
@@ -578,6 +346,14 @@
 			 * 当前的交互动作
 			 */
 			var currentAction = DataModleFactory.createAction();
+			/**
+			 * （全局级）物品信息集合（字典）[item数组]
+			 */
+			var publicItemInfo = loadItemsData(dictionaryData.itemInfo);
+			/**
+			 * 当前交易物品信息数据（价格）[item数组]
+			 */
+			var currentItemInfo = [];
 			/**
 			 * 交易暂存物品集合
 			 */
@@ -736,6 +512,7 @@
 						totalLeft += tempb.offsetLeft;
 						tempb = tempb.parentNode;
 					};
+					if(totalLeft>1150){totalLeft=1150;};
 					viewControl.menu_Style.top = totalTop + "px";
 					viewControl.menu_Style.left = totalLeft-20 + "px";
 					viewControl.menu_Style.opacity = 0;
@@ -779,10 +556,12 @@
 					viewControl.zIndexList["panel5"] = maxZIndex+2;
 					viewControl.zIndexList["menuBag"] = maxZIndex+2;
 					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
+					viewControl.zIndexList["panel"] = maxZIndex+2;
 					
 					viewControl.panel5_Style["z-index"] = viewControl.zIndexList["panel5"];
 					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
 					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
+					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
 					//判断为交易状态，增加交易面板显示
 					if(model&&model=="transaction"){
 						panel5Left+=170;
@@ -841,9 +620,11 @@
 						viewControl.zIndexList["panel5"] = 0;
 						viewControl.zIndexList["menuBag"] = 0;
 						viewControl.zIndexList["panel5MaskLayer"] = 0;
+						viewControl.zIndexList["panel"] = 0;
 						viewControl.panel5_Style["z-index"] = 0;
 						viewControl.menu_bag_Style["z-index"] = 0;
 						viewControl.panel5MaskLayer_Style["z-index"] = 0;
+						viewControl.panel_Style["z-index"] = 0;
 						//隐藏组件
 						viewControl.display.panel5MaskLayerHide = true;
 						viewControl.display.panel5Hide = true;
@@ -1032,6 +813,39 @@
 						currentInteractiveObject;
 					}else if(currentAction.getType()=="transaction"){
 						//判断为打开交易动作
+						//加载物品信息数据（交易价格）
+						currentItemInfo = (function (){
+							var itemInfo_Arr = [];
+							//读取全局级基本数据
+							for (var i=0; i < publicItemInfo.length; i++) {
+								var tempItem = DataModleFactory.createItem();
+								copyBean(publicItemInfo[i],tempItem);
+								itemInfo_Arr.push(tempItem);
+							};
+							//读取当前地图级基本数据,覆盖全局级数据
+							var tempItemInfo = currentDomain.getItemInfos();
+							if(tempItemInfo){
+								for (var i=0; i < itemInfo_Arr.length; i++) {
+									for (var j=0; j < tempItemInfo.length; j++) {
+										if(compareItem(itemInfo_Arr[i],tempItemInfo[j])){
+											copyBean(tempItemInfo[j],itemInfo_Arr[i]);
+										}
+									};
+								};
+							};
+							//读取交互对象级基本数据,覆盖地图级数据
+							tempItemInfo = currentInteractiveObject.getItemInfos();
+							if(tempItemInfo){
+								for (var i=0; i < itemInfo_Arr.length; i++) {
+									for (var j=0; j < tempItemInfo.length; j++) {
+										if(compareItem(itemInfo_Arr[i],tempItemInfo[j])){
+											copyBean(tempItemInfo[j],itemInfo_Arr[i]);
+										}
+									};
+								};
+							};
+							return itemInfo_Arr;
+						})();
 						//加载当前交互对象的物品数据
 						viewDataModel.panel5.buttonElements = function () {
 							return currentInteractiveObject.getItems();
@@ -1105,17 +919,61 @@
 			
 			//交易面板组件
 			app.controller("transactionPanel", function($scope, $rootScope,$timeout) {
+				$scope.sellsClick = function($event,index) {
+					//处理传入对象
+					var tempt = $event.target.parentNode;
+					while("button2 ng-scope"!=tempt.className){
+						tempt = tempt.parentNode;
+					}
+					//标记交互类型为物品
+					viewControl.currentInteractiveType = "item";
+					//传入点击目标（用于定位），显示列表菜单
+					menuShow(tempt);
+					//标记当前交互（物品）对象
+					currentItem = transactionItems.sellItems[index];
+					//加载交互对象动作数据（同步至视图）
+					viewDataModel.menu.buttonElements = function () {
+						return currentItem.getActions();
+					};
+				};
+				$scope.buysClick = function() {
+					
+				};
 				//点击确认
 				$scope.confirm = function() {
-					//校验是否可执行（未完成）
-					
+					//校验是否可执行
+					//遍历出售物品，计算价值
+					var sellCostTotal = 0;
+					for (var i=0; i < transactionItems.sellItems.length; i++) {
+						var sellItem = transactionItems.sellItems[i];
+						for (var j=0; j < currentItemInfo.length; j++) {
+							if(compareItem(currentItemInfo[j],sellItem)){
+								sellCostTotal+=(sellItem.getTotalNum()*currentItemInfo[j].getSellCost());
+							}
+						};
+					};
+					//遍历购入物品，计算价值
+					var buyCostTotal = 0;
+					for (var i=0; i < transactionItems.buyItems.length; i++) {
+						var buyItem = transactionItems.buyItems[i];
+						for (var j=0; j < currentItemInfo.length; j++) {
+							if(compareItem(currentItemInfo[j],buyItem)){
+								buyCostTotal+=(buyItem.getTotalNum()*currentItemInfo[j].getBuyCost());
+							}
+						};
+					};
+					//对比价值
+					if(sellCostTotal<buyCostTotal){
+						panelTyping("价格不足");
+						return;
+					}
 					//待售出存入交互对象
 					var interactiveObjectItems = currentInteractiveObject.getItems();
 					var flag = false;
 					for (var j=0; j < transactionItems.sellItems.length;j) {
 						var sellItem = transactionItems.sellItems[j];
 						for (var i=0; i < interactiveObjectItems.length; i++) {
-							if(interactiveObjectItems[i].getName()==sellItem.getName()&&interactiveObjectItems[i].getType()==sellItem.getType()&&interactiveObjectItems[i].getContent()==sellItem.getContent()){
+							if(compareItem(interactiveObjectItems[i],sellItem)){
 								//遍历后发现同一物品,叠加数量
 								interactiveObjectItems[i].setTotalNum(interactiveObjectItems[i].getTotalNum()+sellItem.getTotalNum());
 								flag = true;
@@ -1138,7 +996,7 @@
 					for (var j=0; j < transactionItems.buyItems.length;j) {
 						var buyItem = transactionItems.buyItems[j];
 						for (var i=0; i < roleItems.length; i++) {
-							if(roleItems[i].getName()==buyItem.getName()&&roleItems[i].getType()==buyItem.getType()&&roleItems[i].getContent()==buyItem.getContent()){
+							if(compareItem(roleItems[i],buyItem)){
 								//遍历后发现同一物品,叠加数量
 								roleItems[i].setTotalNum(roleItems[i].getTotalNum()+buyItem.getTotalNum());
 								flag = true;
@@ -1157,7 +1015,7 @@
 					}
 					panel5Hide();
 					//交易流程完成，清空当前交互对象
-					currentInteractiveObject = null;
+					//currentInteractiveObject = null;
 				};
 			});
 			

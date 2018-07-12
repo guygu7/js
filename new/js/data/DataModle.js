@@ -61,6 +61,7 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
+			in//需修改，根据role中itemInfos的Actions修改，修改为角色对物品的专用动作
 			if (pram) {//如果有传参Item,修改Item中某些值为默认值
 				var itemActions = pram.getActions();
 				if (itemActions) {
@@ -84,6 +85,53 @@ DataModleFactory = {
 				for (var i=0; i < items.length; i++) {
 					if(items[i] === pram){
 						items.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 所有物品数据（价格）
+		 */
+		var itemInfos;
+		role.getItemInfo = function(num){
+			return itemInfos[num];
+		};
+		role.getItemInfos = function(){
+			return itemInfos;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		role.addItemInfo = function(pram){
+			if(!itemInfos){
+				itemInfos = new Array();
+			}
+			/*暂时仅用于记录价格无需修改数据
+			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
+				var itemInfoActions = pram.getActions();
+				if(itemInfoActions){
+					for (var i=0; i < itemInfoActions.length; i++) {
+						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
+							itemInfoActions[i].setTarget("toRoleBag");
+						}
+					};
+				}
+			};
+			*/
+			itemInfos.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		role.delItemInfo = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				itemInfos.splice(pram,1);
+			} else {
+				for (var i=0; i < itemInfos.length; i++) {
+					if(itemInfos[i] === pram){
+						itemInfos.splice(i,1);
 					};
 				};
 			};
@@ -172,12 +220,53 @@ DataModleFactory = {
 			};
 			return this;
 		};
-		/*
-		domain.delInteractiveObjects = function(num) {
-			interactiveObjects.splice(num,1);
+		/**
+		 * 所有物品数据（价格）
+		 */
+		var itemInfos;
+		domain.getItemInfo = function(num){
+			return itemInfos[num];
+		};
+		domain.getItemInfos = function(){
+			return itemInfos;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		domain.addItemInfo = function(pram){
+			if(!itemInfos){
+				itemInfos = new Array();
+			}
+			/*暂时仅用于记录价格无需修改数据
+			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
+				var itemInfoActions = pram.getActions();
+				if(itemInfoActions){
+					for (var i=0; i < itemInfoActions.length; i++) {
+						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
+							itemInfoActions[i].setTarget("toRoleBag");
+						}
+					};
+				}
+			};
+			*/
+			itemInfos.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		domain.delItemInfo = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				itemInfos.splice(pram,1);
+			} else {
+				for (var i=0; i < itemInfos.length; i++) {
+					if(itemInfos[i] === pram){
+						itemInfos.splice(i,1);
+					};
+				};
+			};
 			return this;
 		};
-		*/
 		/**
 		 * 清除当前对象全部数据 
 		 */
@@ -186,6 +275,7 @@ DataModleFactory = {
 			this.setSignId(null);
 			//this.getButtonElements().splice(0,buttonElements.length);
 			this.getInteractiveObjects().splice(0,interactiveObjects.length);
+			this.getItemInfos.splice(0,itemInfo.length);
 		};
 		return domain;
 	},
@@ -277,6 +367,53 @@ DataModleFactory = {
 				for (var i=0; i < items.length; i++) {
 					if(items[i] === pram){
 						items.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 所有物品数据（价格）
+		 */
+		var itemInfos;
+		interactiveObject.getItemInfo = function(num){
+			return itemInfos[num];
+		};
+		interactiveObject.getItemInfos = function(){
+			return itemInfos;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		interactiveObject.addItemInfo = function(pram){
+			if(!itemInfos){
+				itemInfos = new Array();
+			}
+			/*暂时仅用于记录价格无需修改数据
+			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
+				var itemInfoActions = pram.getActions();
+				if(itemInfoActions){
+					for (var i=0; i < itemInfoActions.length; i++) {
+						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
+							itemInfoActions[i].setTarget("toRoleBag");
+						}
+					};
+				}
+			};
+			*/
+			itemInfos.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		interactiveObject.delItemInfo = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				itemInfos.splice(pram,1);
+			} else {
+				for (var i=0; i < itemInfos.length; i++) {
+					if(itemInfos[i] === pram){
+						itemInfos.splice(i,1);
 					};
 				};
 			};
@@ -376,6 +513,28 @@ DataModleFactory = {
 		};
 		item.setTotalNum = function(pram) {
 			totalNum = pram;
+			return this;
+		};
+		/**
+		 * 卖出价 
+		 */
+		var sellCost;
+		item.getSellCost = function() {
+			return sellCost;
+		};
+		item.setSellCost = function(pram) {
+			sellCost = pram;
+			return this;
+		};
+		/**
+		 * 购入价
+		 */
+		var buyCost;
+		item.getBuyCost = function() {
+			return buyCost;
+		};
+		item.setBuyCost = function(pram) {
+			buyCost = pram;
 			return this;
 		};
 		/**

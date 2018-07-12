@@ -175,6 +175,10 @@ var viewControl = {
 	 */
 	zIndexList : {},
 	/**
+	 * 交流信息面板 （初始值）
+	 */
+	panel_Style:{},
+	/**
 	 * 方向盘组件（初始值）
 	 */
 	steeringWheel_Style:{

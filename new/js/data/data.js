@@ -1,0 +1,146 @@
+//定义数据层
+/*----数据----*/
+/**
+ * 基础字典数据 
+ */
+var dictionaryData = {};
+dictionaryData.action={
+	action1:{name:"堆叠",type:"split",target:""},
+	action2:{name:"使用",type:"use",target:""},
+};
+/**
+ * 物品字典 
+ */
+dictionaryData.item={
+	item1:{name:"物体1",type:"",content:"角色所属物体说明",totalNum:9,sellCost:1,buyCost:2,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+	item2:{name:"物体2",type:"",content:"角色所属物体说明",totalNum:9,sellCost:1,buyCost:2,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+	item3:{name:"物体3",type:"",content:"角色所属物体说明",totalNum:9,sellCost:5,buyCost:10,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+	item4:{name:"物体4",type:"",content:"物体1说明",totalNum:9,sellCost:5,buyCost:10,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+	item5:{name:"物体5",type:"",content:"物体1说明",totalNum:9,sellCost:5,buyCost:10,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+	item6:{name:"物体6超长物品名字",type:"",content:"物体2说明",totalNum:19,sellCost:5,buyCost:10,
+		actions:[
+			dictionaryData.action.action1,
+		],
+	},
+};
+dictionaryData.itemInfo = [dictionaryData.item.item1,dictionaryData.item.item2,dictionaryData.item.item3,dictionaryData.item.item4,dictionaryData.item.item5,dictionaryData.item.item6];
+/**
+ * 初始数据 
+ */
+var data = {
+	/**
+	 * 开始引导文本
+	 */
+	startText:"开始引导文本。。",
+	/**
+	 * 角色数据 
+	 */
+	role:{
+		name:"角色",
+		items:[
+			dictionaryData.item.item1,
+			dictionaryData.item.item2,
+			dictionaryData.item.item3,
+		],
+		itemInfo:dictionaryData.itemInfo,
+	},
+	/**
+	 * 场景数据 
+	 */
+	domains:[
+		/**
+		 * 开场局部区域（小场景） 
+		 */
+		{
+			name:"引导场景",
+			signId:"startDomain",
+			interactiveObjects:[
+				{	
+					name:"引导对象",
+					actions:[
+						{name:"对话",type:"talk",content:"对话内容"},
+						{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
+					],
+				},
+			],
+			
+		},
+		/**
+		 * 公共场景
+		 */
+		{
+			name:"公共场景",
+			signId:"publicDomain",
+			interactiveObjects:[
+				{
+					name:"移动-私有据点场景",
+					actions:[
+						{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
+						{name:"移动",type:"move",content:"移动-私有据点场景",target:"homeDomain"},
+					],
+				},
+				{
+					name:"交流对象",
+					items:[
+						dictionaryData.item.item3,
+						dictionaryData.item.item4,
+					],
+					actions:[
+						{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
+						{name:"交互",type:"transaction",content:""},
+					],
+					//itemInfo:[],
+				},
+			],
+			//itemInfo:[],
+		},
+		/**
+		 * 私有据点场景
+		 */
+		{
+			name:"私有据点场景",
+			signId:"homeDomain",
+			interactiveObjects:[
+				{
+					name:"移动-公共场景",
+					actions:[
+						{name:"对话",type:"talk",content:"私有据点-移动对象-对话内容"},
+						{name:"移动",type:"move",content:"移动-公共场景",target:"publicDomain"},
+					],
+				},
+				{
+					name:"私有建筑",
+					actions:[
+						{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
+						{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
+					],
+					items:[
+						dictionaryData.item.item5,
+						dictionaryData.item.item6,
+					],
+				},
+			],
+		},
+	],
+};
+data.role.itemInfo[0].actions.push(dictionaryData.action.action2);
