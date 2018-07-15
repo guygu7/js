@@ -320,15 +320,19 @@
 			function compareItem(item1,item2){
 				return (item1.getName()==item2.getName()&&item1.getType()==item2.getType()&&item1.getContent()==item2.getContent());
 			};
-			
+			/**
+			 * （全局级）物品信息集合（字典）[item数组]
+			 * //需在其他对象之前构建
+			 */
+			var publicItemInfo = loadData(dictionaryData.itemInfo,"item");
 			/**
 			 * 暂时仅为一个domain数组 
 			 */
-			var dataDomainsObj = loadDomainsData(data);
+			var dataDomainsObj = loadData(data.domains,"domain");
 			/**
-			 * 暂时仅为单个role对象
+			 * 暂时仅为只有一个role对象的数组
 			 */
-			var dataRoleObj = loadRolesData(data);
+			var dataRoleObj = loadData(data.roles,"role");
 			
 			/**
 			 * 当前场景地图
@@ -346,10 +350,6 @@
 			 * 当前的交互动作
 			 */
 			var currentAction = DataModleFactory.createAction();
-			/**
-			 * （全局级）物品信息集合（字典）[item数组]
-			 */
-			var publicItemInfo = loadItemsData(dictionaryData.itemInfo);
 			/**
 			 * 当前交易物品信息数据（价格）[item数组]
 			 */
@@ -1071,30 +1071,35 @@
 							roleItems = dataRoleObj[0].getItems();
 						}
 						var flag = false;
-						for (var i=0; i < roleItems.length; i++) {
-							if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
-								//遍历后发现同一物品,叠加数量
-								roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
-								flag = true;
-							}
-						};
+						if(roleItems){
+							for (var i=0; i < roleItems.length; i++) {
+								if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
+									//遍历后发现同一物品,叠加数量
+									roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
+									flag = true;
+								}
+							};
+						}
 						if(!flag){
 							//遍历完成，未发现同一物品，复制出一个物品对象
 							var item_Obj = DataModleFactory.createItem();
 							copyBean(currentItem,item_Obj);
-							//item_Obj.setName(currentItem.getName()).setType(currentItem.getType()).setContent(currentItem.getContent()).setTotalNum(Number(viewDataModel.numberPicker.number));
 							item_Obj.setTotalNum(Number(viewDataModel.numberPicker.number));
+							/*obj所拥有item中action已改为自动读取itemInfo
 							//暂存action交互动作数据
-							var tempItemActions = currentItem.getActions;
+							var tempItemActions = currentItem.getActions();
 							if(tempItemActions){
 								for (var l=0; l < tempItemActions.length; l++) {
 									//action对象存入item_Obj
 									item_Obj.addAction(tempItemActions.getAction(i));
 								};
 							};
+							*/
 							//判断是角色否交易状态
 							if(dataRoleObj[0].getStatus()=="transaction"){
-								//交易状态，将物品数据暂存至。。
+								//交易状态，修改action
+								
+								//将物品数据暂存至。。
 								roleItems.push(item_Obj);
 							}else{//非交易状态，物品数据存至角色包
 								dataRoleObj[0].addItem(item_Obj);
@@ -1118,26 +1123,30 @@
 							roleItems = currentInteractiveObject.getItems();
 						}
 						var flag = false;
-						for (var i=0; i < roleItems.length; i++) {
-							if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
-								//遍历后发现同一物品,叠加数量
-								roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
-								flag = true;
-							}
-						};
+						if(roleItems){
+							for (var i=0; i < roleItems.length; i++) {
+								if(roleItems[i].getName()==currentItem.getName()&&roleItems[i].getType()==currentItem.getType()&&roleItems[i].getContent()==currentItem.getContent()){
+									//遍历后发现同一物品,叠加数量
+									roleItems[i].setTotalNum(roleItems[i].getTotalNum()+Number(viewDataModel.numberPicker.number));
+									flag = true;
+								}
+							};
+						}
 						if(!flag){
 							//遍历完成，未发现同一物品，复制出一个物品对象
 							var item_Obj = DataModleFactory.createItem();
 							copyBean(currentItem,item_Obj);
 							item_Obj.setTotalNum(Number(viewDataModel.numberPicker.number));
+							/*role所拥有item中action已改为自动读取itemInfo
 							//暂存action交互动作数据
-							var tempItemActions = currentItem.getActions;
+							var tempItemActions = currentItem.getActions();
 							if(tempItemActions){
 								for (var l=0; l < tempItemActions.length; l++) {
 									//action对象存入item_Obj
 									item_Obj.addAction(tempItemActions.getAction(i));
 								};
 							};
+							*/
 							//判断是角色否交易状态
 							if(dataRoleObj[0].getStatus()=="transaction"){
 								//交易状态，将物品数据暂存至。。

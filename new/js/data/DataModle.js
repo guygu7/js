@@ -21,7 +21,6 @@ DataModle = {
 	 */
 	Role : function role () {},
 };
-var roleObj = new DataModle.Role();
 DataModleFactory = {
 	createRole:function() {
 		var role = new DataModle.Role();
@@ -48,6 +47,41 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 所有物品数据（价格）
+		 */
+		var itemInfos;
+		role.getItemInfo = function(num){
+			return itemInfos[num];
+		};
+		role.getItemInfos = function(){
+			return itemInfos;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		role.addItemInfo = function(pram){
+			if(!itemInfos){
+				itemInfos = new Array();
+			}
+			itemInfos.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		role.delItemInfo = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				itemInfos.splice(pram,1);
+			} else {
+				for (var i=0; i < itemInfos.length; i++) {
+					if(itemInfos[i] === pram){
+						itemInfos.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
 		 * 所有物品
 		 */
 		var items;
@@ -61,14 +95,19 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
-			in//需修改，根据role中itemInfos的Actions修改，修改为角色对物品的专用动作
 			if (pram) {//如果有传参Item,修改Item中某些值为默认值
-				var itemActions = pram.getActions();
-				if (itemActions) {
-					for (var i=0; i < itemActions.length; i++) {
-						if(itemActions[i].getType()=="split"){//修改 split 分割移动 的交互动作目标 为 默认值（至交互对象）
-							itemActions[i].setTarget("toInteractiveObject");
-						}
+				//遍历对比传入的item和itemInfos中的Item，遍历出对应的Item信息
+				var tempItemInfos = this.getItemInfos();
+				for (var i=0; i < tempItemInfos.length; i++) {
+					if (compareItem(pram,tempItemInfos[i])) {
+						//清除原有Actions
+						pram.clearActions();
+						//将角色Item信息中的Actions存入传参物品
+						var tempActions = tempItemInfos[i].getActions();
+						for (var k=0; k < tempActions.length; k++) {
+							pram.addAction(tempActions[k]);
+						};
+						break;
 					};
 				};
 			};
@@ -90,53 +129,7 @@ DataModleFactory = {
 			};
 			return this;
 		};
-		/**
-		 * 所有物品数据（价格）
-		 */
-		var itemInfos;
-		role.getItemInfo = function(num){
-			return itemInfos[num];
-		};
-		role.getItemInfos = function(){
-			return itemInfos;
-		};
-		/**
-		 * 传参：Item对象
-		 */
-		role.addItemInfo = function(pram){
-			if(!itemInfos){
-				itemInfos = new Array();
-			}
-			/*暂时仅用于记录价格无需修改数据
-			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
-				var itemInfoActions = pram.getActions();
-				if(itemInfoActions){
-					for (var i=0; i < itemInfoActions.length; i++) {
-						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
-							itemInfoActions[i].setTarget("toRoleBag");
-						}
-					};
-				}
-			};
-			*/
-			itemInfos.push(pram);
-			return this;						
-		};
-		/**
-		 * 传参：Number 或   Item对象
-		 */
-		role.delItemInfo = function(pram) {
-			if (Object.prototype.toString.call(pram)==="[object Number]") {
-				itemInfos.splice(pram,1);
-			} else {
-				for (var i=0; i < itemInfos.length; i++) {
-					if(itemInfos[i] === pram){
-						itemInfos.splice(i,1);
-					};
-				};
-			};
-			return this;
-		};
+		
 		return role;
 	},
 	createDomain:function() {
@@ -165,30 +158,6 @@ DataModleFactory = {
 		};
 		/**
 		 * Type Array [class InteractiveObject]
-		 * 人物交互面板(按钮组)
-		 */
-		/*
-		var buttonElements;
-		domain.getButtonElement = function(num) {
-			return buttonElements[num];
-		};
-		domain.getButtonElements = function() {
-			return buttonElements;
-		};
-		domain.addButtonElement = function(pram){
-			if(!buttonElements){
-				buttonElements = new Array();
-			}
-			buttonElements.push(pram);
-			return this;						
-		};
-		domain.delButtonElements = function(num) {
-			buttonElements.splice(num,1);
-			return this;
-		};
-		*/
-		/**
-		 * Type Array [class InteractiveObject]
 		 * 可交互对象
 		 */
 		var interactiveObjects;
@@ -202,8 +171,9 @@ DataModleFactory = {
 			if(!interactiveObjects){
 				interactiveObjects = new Array();
 			}
+			pram.supper = this;
 			interactiveObjects.push(pram);
-			return this;						
+			return this;
 		};
 		/**
 		 * 传参：Number 或   interactiveObject对象
@@ -237,18 +207,6 @@ DataModleFactory = {
 			if(!itemInfos){
 				itemInfos = new Array();
 			}
-			/*暂时仅用于记录价格无需修改数据
-			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
-				var itemInfoActions = pram.getActions();
-				if(itemInfoActions){
-					for (var i=0; i < itemInfoActions.length; i++) {
-						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
-							itemInfoActions[i].setTarget("toRoleBag");
-						}
-					};
-				}
-			};
-			*/
 			itemInfos.push(pram);
 			return this;						
 		};
@@ -273,7 +231,6 @@ DataModleFactory = {
 		domain.clear = function(){
 			this.setName(null);
 			this.setSignId(null);
-			//this.getButtonElements().splice(0,buttonElements.length);
 			this.getInteractiveObjects().splice(0,interactiveObjects.length);
 			this.getItemInfos.splice(0,itemInfo.length);
 		};
@@ -324,54 +281,6 @@ DataModleFactory = {
 			};
 			return this;
 		};
-		/*
-		interactiveObject.delAction = function(num) {
-			actions.splice(num,1);
-			return this;
-		};
-		*/
-		/**
-		 * 所有物品
-		 */
-		var items;
-		interactiveObject.getItem = function(num){
-			return items[num];
-		};
-		interactiveObject.getItems = function(){
-			return items;
-		};
-		interactiveObject.addItem = function(pram){
-			if(!items){
-				items = new Array();
-			}
-			if (pram) {//如果有传参Item,修改Item中某些值为默认值
-				var itemActions = pram.getActions();
-				if(itemActions){
-					for (var i=0; i < itemActions.length; i++) {
-						if(itemActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
-							itemActions[i].setTarget("toRoleBag");
-						}
-					};
-				}
-			};
-			items.push(pram);
-			return this;						
-		};
-		/**
-		 * 传参：Number 或   Item对象
-		 */
-		interactiveObject.delItem = function(pram) {
-			if (Object.prototype.toString.call(pram)==="[object Number]") {
-				items.splice(pram,1);
-			} else {
-				for (var i=0; i < items.length; i++) {
-					if(items[i] === pram){
-						items.splice(i,1);
-					};
-				};
-			};
-			return this;
-		};
 		/**
 		 * 所有物品数据（价格）
 		 */
@@ -389,18 +298,6 @@ DataModleFactory = {
 			if(!itemInfos){
 				itemInfos = new Array();
 			}
-			/*暂时仅用于记录价格无需修改数据
-			if (pram) {//如果有传参ItemInfo,修改ItemInfo中某些值为默认值
-				var itemInfoActions = pram.getActions();
-				if(itemInfoActions){
-					for (var i=0; i < itemInfoActions.length; i++) {
-						if(itemInfoActions[i].getType()=="split"){//修改 split 分割移动  的交互动作目标 为 默认值（至角色包）
-							itemInfoActions[i].setTarget("toRoleBag");
-						}
-					};
-				}
-			};
-			*/
 			itemInfos.push(pram);
 			return this;						
 		};
@@ -414,6 +311,97 @@ DataModleFactory = {
 				for (var i=0; i < itemInfos.length; i++) {
 					if(itemInfos[i] === pram){
 						itemInfos.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 所有物品
+		 */
+		var items;
+		interactiveObject.getItem = function(num){
+			return items[num];
+		};
+		interactiveObject.getItems = function(){
+			return items;
+		};
+		interactiveObject.addItem = function(pram){
+			if(!items){
+				items = new Array();
+			}
+			if (pram) {//如果有传参Item,修改Item中某些值为默认值
+				//依次读取itemInfos，优先级：自身>domain>全局
+				var flag = false;
+				function fn1 (obj){
+					itemInfos = obj.getItemInfos();
+					//判断itemInfo存在且不为空数组
+					if(itemInfos&&itemInfos.lenght>0){
+						//遍历出和传入Item对应的数据
+						for (var i=0; i < itemInfos.length; i++) {
+							if(compareItem(pram,itemInfos[i])){
+								//从中读取到对应数据，对传入的item处理
+								//清除原有Actions
+								pram.clearActions();
+								//将角色Item信息中的Actions存入传参物品
+								var tempActions = itemInfos[i].getActions();
+								if (tempActions) {
+									for (var k=0; k < itemInfos.length; k++) {
+										if (tempActions[k]) {
+											pram.addAction(tempActions[k]);
+										}
+									};
+								};
+								flag=true;//标记为已处理
+								break;
+							}
+						};
+					}
+					if(!flag){
+						if(obj.supper!=null&&obj.supper!=undefined){
+							fn1(obj.supper);
+						}else{
+							itemInfos = publicItemInfo;
+							//if(itemInfos&&itemInfos.lenght>0){
+								//遍历出和传入Item对应的数据
+								for (var i=0; i < itemInfos.length; i++) {
+									if(compareItem(pram,itemInfos[i])){
+										//从中读取到对应数据，对传入的item处理
+										//清除原有Actions
+										pram.clearActions();
+										//将角色Item信息中的Actions存入传参物品
+										var tempActions = itemInfos[i].getActions();
+										if (tempActions) {
+											for (var k=0; k < itemInfos.length; k++) {
+												if (tempActions[k]) {
+													pram.addAction(tempActions[k]);
+												};
+											};
+										};
+										flag=true;//标记为已处理
+										break;
+									}
+								};
+							//}
+						}
+					}
+				}
+				fn1(this);
+			};
+			pram.supper = this;
+			items.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Item对象
+		 */
+		interactiveObject.delItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				items.splice(pram,1);
+			} else {
+				for (var i=0; i < items.length; i++) {
+					if(items[i] === pram){
+						items.splice(i,1);
 					};
 				};
 			};
@@ -569,6 +557,14 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		/**
+		 * 清空交互动作
+		 */
+		item.clearActions = function() {
+			actions = [];
+			return this;
+		};
 		return item;
 	},
 };
+DataModleFactory.createItemInfo = DataModleFactory.createItem;
