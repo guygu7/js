@@ -8,6 +8,8 @@ dictionaryData.action={
 	action1:{name:"移动至包",type:"split",target:"toRoleBag",belong:"notRole"},
 	roleAction1:{name:"移动至对象",type:"split",target:"toInteractiveObject",belong:"role"},
 	action2:{name:"使用",type:"use",target:""},
+	sellback:{name:"撤回至包",type:"split",target:"sellback"},
+	buyback:{name:"撤回至对象",type:"split",target:"buyback"},
 };
 /**
  * 物品字典 
@@ -99,6 +101,7 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
+		hp:100,
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,
@@ -150,7 +153,7 @@ var data = {
 					],
 					actions:[
 						{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
-						{name:"交互",type:"transaction",content:""},
+						{name:"交互",type:"transaction",content:"打开交易面板"},
 					],
 					//itemInfo:[],
 				},

@@ -2,6 +2,7 @@
 /**
  * 场景数据封装到对象 
  */
+/*
 function loadDomainsData (data){
 	//将data数据封装对象，暂时仅为一个domain数组 
 	var data_Obj = [];
@@ -63,6 +64,7 @@ function loadDomainsData (data){
 /**
  * 角色数据封装到对象 
  */
+/*
 function loadRolesData(data){
 	//将data数据封装对象，暂时仅为一个Role数组 
 	var data_Obj = [];
@@ -101,6 +103,7 @@ function loadRolesData(data){
  * 将物品数据封装成对象数组返回 
  * 传参：item数组
  */
+/*
 function loadItemsData (data){
 	//将data数据封装对象，暂时仅为一个Item数组 
 	var data_Obj = [];
@@ -128,6 +131,7 @@ function loadItemsData (data){
 	};
 	return data_Obj;
 }
+*/
 /**
  * 将数据封装成对象,传入对象数据则返回对象，传入对象数组数据则返回对象数组
  * data:数据json对象,dataName:数据变量名
