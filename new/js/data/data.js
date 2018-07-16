@@ -101,7 +101,9 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
-		hp:100,
+		HP:100,
+		ATT:10,
+		DEF:1,
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,
