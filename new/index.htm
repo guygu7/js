@@ -16,12 +16,15 @@
 		<link href="css/steeringWheel.css" rel="stylesheet">
 		<link href="css/button.css" rel="stylesheet">
 		<link href="css/numberPicker.css" rel="stylesheet">
+		<link href="css/top.css" rel="stylesheet">
+		
 	</head>
 
 	<body>
 		<div ng-app="myApp" ng-controller="myApp" class="main-desktop">
 			<!--起始场景-->
 			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-start','show-animation-scene':viewControl.currentScene=='scene-start'}" class="scene">
+				<input type="BUTTON" name="FullScreen" value="全屏显示" onClick="window.open(document.location, 'big', 'fullscreen=yes')">
 				<div ng-click="buttonstart()" class="button" style="top:200px;left:200px;">
 					<div class="button-background">
 						<div class="button-background2"></div>
@@ -33,7 +36,35 @@
 			</div>
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
-
+				
+				<!--顶部菜单-->
+				<div ng-controller="topFrame" class="top-frame">
+					<div class="top">
+						<div ng-click="clickButton1()" class="top-button" style="right:170px;">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">背包</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
+						<div class="top-button">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">文字</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<!--交流信息面板-->
 				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-style="viewControl.panel_Style" class="panel" style="bottom:5px;left:10px;">
 					<div>
@@ -43,7 +74,7 @@
 				</div>
 				
 				<!--场景名称展示-->
-				<div class="panel2" style="top:10px;left:10px;">
+				<div class="panel2" style="top:20px;left:10px;">
 					<span>{{viewDataModel.panel2Text()}}</span>
 				</div>
 				
@@ -52,7 +83,7 @@
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
-					{{viewDataModel.panel3.text1}}
+					{{viewDataModel.panel3.text1()}}/{{viewDataModel.panel3.text2()}}
 				</div>
 
 				<!--人物交互面板(按钮组)-->
@@ -324,6 +355,12 @@
 				return (item1.getName()==item2.getName()&&item1.getType()==item2.getType()&&item1.getContent()==item2.getContent());
 			};
 			/**
+			 * 对比两个Action动作选项是否为同一种
+			 */
+			function compareAction(action1,action2){
+				return (action1.getName()==action2.getName()&&action1.getType()==action2.getType()&&action1.getContent()==action2.getContent()&&action1.getTarget()&&action2.getTarget());
+			};
+			/**
 			 * （全局级）物品信息集合（字典）[item数组]
 			 * //需在其他对象之前构建
 			 */
@@ -336,7 +373,10 @@
 			 * 暂时仅为只有一个role对象的数组
 			 */
 			var dataRoleObj = loadData(data.roles,"role");
-			
+			/**
+			 *  角色的物品操作动作对象（用于打开背包后使用）
+			 */
+			var dataRoleItemActionObj = loadData(dictionaryData.action.roleAction1,"action");
 			/**
 			 * 当前场景地图
 			 */
@@ -891,6 +931,12 @@
 						currentAction = null;
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
+					}else if(currentAction.getType()=="use"){
+						//判断为使用(物品)
+						currentItem.setTotalNum(currentItem.getTotalNum()-1);
+						if(currentItem.getTotalNum()<1){
+							dataRoleObj[0].delItem(currentItem);
+						}
 					}
 					//隐藏菜单
 					menuHide();
@@ -913,6 +959,24 @@
 					currentItem = dataRoleObj[0].getItem(index);
 					//加载交互对象动作数据（同步至视图）
 					viewDataModel.menu.buttonElements = function () {
+						//判断是状态为打开背包，去掉堆叠选项显示
+						if("useRoleBag"==dataRoleObj[0].getStatus()){
+							var returnActions=[];
+							//重新复制一个currentItem
+							var tempItem = DataModleFactory.createItem();
+							copyBean(dataRoleObj[0].getItem(index),tempItem);
+							currentItem = tempItem;
+							currentItem.delAction(dataRoleItemActionObj);
+							in
+							/*
+							var tempActions = currentItem.getActions();
+							for (var i=0; i < tempActions.length; i++) {
+								if(!compareAction(tempActions[i],dataRoleItemActionObj)){
+									returnActions.push(tempActions[i]);
+								};
+							};
+							*/
+						}
 						return currentItem.getActions();
 					};
 				};
@@ -1299,9 +1363,44 @@
 			app.controller("panel3", function($scope, $rootScope, $timeout) {
 				//角色暂时只有一个，直接与角色数据绑定
 				viewDataModel.panel3.tittleText=dataRoleObj[0].getName;
-				viewDataModel.panel3.text1=dataRoleObj[0];
+				viewDataModel.panel3.text1=dataRoleObj[0].getHp;
+				viewDataModel.panel3.text2=dataRoleObj[0].getMaxHp;
 			});
 			
+			//顶部菜单
+			app.controller("topFrame", function($scope, $rootScope, $timeout) {
+				$scope.clickButton1 = function(){
+					//设置当前状态为使用背包
+					dataRoleObj[0].setStatus("useRoleBag");
+					//清空当前对象
+					currentInteractiveObject=null;
+					currentItem=null;
+					currentAction=null;
+					//打开背包功能
+					//加载包裹数据,重新定位视图数据指针
+					viewDataModel.menuBag.buttonElements = function () {
+						return dataRoleObj[0].getItems();
+					};
+					var menuBagLeft=0;
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
+					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
+					//弹出遮罩层
+					viewControl.display.panel5MaskLayerHide = false;
+					//同时打开包
+					viewControl.display.menuBagHide = false;
+					viewControl.menu_bag_Style.left = 150 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					$timeout(function() {
+						//包
+						viewControl.menu_bag_Style.left = 250 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.opacity = 1;
+					}, 100);
+				};
+			});
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
 

@@ -42,6 +42,7 @@ var viewDataModel = {
 		 * 标题文本 
 		 */
 		tittleText:function(){return "标题";},
+		text1:0,
 	},
 	/**
 	 * 人物交互面板(按钮组)

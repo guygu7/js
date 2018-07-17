@@ -7,7 +7,7 @@ var dictionaryData = {};
 dictionaryData.action={
 	action1:{name:"移动至包",type:"split",target:"toRoleBag",belong:"notRole"},
 	roleAction1:{name:"移动至对象",type:"split",target:"toInteractiveObject",belong:"role"},
-	action2:{name:"使用",type:"use",target:""},
+	roleAction2:{name:"使用",type:"use",target:""},
 	sellback:{name:"撤回至包",type:"split",target:"sellback"},
 	buyback:{name:"撤回至对象",type:"split",target:"buyback"},
 };
@@ -19,6 +19,7 @@ dictionaryData.item={
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
+			dictionaryData.action.roleAction2,
 		],
 	},
 	item2:{name:"消耗品2",type:"",content:"消耗品2说明",totalNum:1,sellCost:1,buyCost:2,
@@ -101,9 +102,10 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
-		HP:100,
-		ATT:10,
-		DEF:1,
+		hp:100,
+		maxHp:100,
+		att:10,
+		def:1,
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,

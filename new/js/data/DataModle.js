@@ -46,6 +46,38 @@ DataModleFactory = {
 			status = pram;
 			return this;
 		};
+		var Hp;
+		role.getHp  = function() {
+			return Hp;
+		};
+		role.setHp = function(pram) {
+			Hp = pram;
+			return this;
+		};
+		var MaxHp;
+		role.getMaxHp  = function() {
+			return MaxHp;
+		};
+		role.setMaxHp = function(pram) {
+			MaxHp = pram;
+			return this;
+		};
+		var Att;
+		role.getAtt  = function() {
+			return Att;
+		};
+		role.setAtt = function(pram) {
+			Att = pram;
+			return this;
+		};
+		var Def;
+		role.getDef  = function() {
+			return Def;
+		};
+		role.setDef = function(pram) {
+			Def = pram;
+			return this;
+		};
 		/**
 		 * 所有物品数据（价格）
 		 */
@@ -247,6 +279,38 @@ DataModleFactory = {
 		};
 		interactiveObject.setName = function(pram) {
 			name = pram;
+			return this;
+		};
+		var Hp;
+		interactiveObject.getHp  = function() {
+			return Hp;
+		};
+		interactiveObject.setHp = function(pram) {
+			Hp = pram;
+			return this;
+		};
+		var MaxHp;
+		interactiveObject.getMaxHp  = function() {
+			return MaxHp;
+		};
+		interactiveObject.setMaxHp = function(pram) {
+			MaxHp = pram;
+			return this;
+		};
+		var Att;
+		interactiveObject.getAtt  = function() {
+			return Att;
+		};
+		interactiveObject.setAtt = function(pram) {
+			Att = pram;
+			return this;
+		};
+		var Def;
+		interactiveObject.getDef  = function() {
+			return Def;
+		};
+		interactiveObject.setDef = function(pram) {
+			Def = pram;
 			return this;
 		};
 		/**
