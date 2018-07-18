@@ -358,7 +358,7 @@
 			 * 对比两个Action动作选项是否为同一种
 			 */
 			function compareAction(action1,action2){
-				return (action1.getName()==action2.getName()&&action1.getType()==action2.getType()&&action1.getContent()==action2.getContent()&&action1.getTarget()&&action2.getTarget());
+				return (action1.getName()==action2.getName()&&action1.getType()==action2.getType()&&action1.getContent()==action2.getContent()&&action1.getTarget()==action2.getTarget());
 			};
 			/**
 			 * （全局级）物品信息集合（字典）[item数组]
@@ -942,6 +942,8 @@
 					}else if(currentAction.getType()=="useUnConsumable"){
 					}else if(currentAction.getType()=="putOn"){
 						currentItem.setIsPutOn(true);
+					}else if(currentAction.getType()=="takeOff"){
+						currentItem.setIsPutOn(false);
 					}
 					//隐藏菜单
 					menuHide();

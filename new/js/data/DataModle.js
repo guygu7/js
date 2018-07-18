@@ -616,25 +616,57 @@ DataModleFactory = {
 			if(this.supper&&this.supper.constructor==DataModle.Role){
 				if ("useRoleBag"==pram) {//判断是使用包裹，过滤掉堆叠的动作
 					tempActions = actions.slice(0);
+					//用于对比的堆叠动作
 					var action = loadData(dictionaryData.action.roleAction1,"action");
+					//用于对比的穿上装备选项
+					var action4 = loadData(dictionaryData.action.roleAction4,"action");
+					//用于对比的卸下装备选项
+					var action5 = loadData(dictionaryData.action.roleAction5,"action");
+					//用于对比的显示已装备选项
+					var action6 = loadData(dictionaryData.action.roleAction6,"action");
 					for (var i=0; i < tempActions.length; i++) {
+						//对比出堆叠动作，去掉
 						if(compareAction(tempActions[i],action)){
 							tempActions.splice(i,1);
-						};
+							i--;
+						}else if(compareAction(tempActions[i],action6)) {
+							//对比去掉显示已装备选项
+							tempActions.splice(i,1);
+							i--;
+						}else{
+							//判断是否有装备属性
+							if(isPutOn==null||isPutOn==undefined){
+							}else if(isPutOn==true){
+								//判断为已装备，去掉穿上装备选项
+								if(compareAction(tempActions[i],action4)){
+									tempActions.splice(i,1);
+									i--;
+								}
+							}else if(isPutOn==false){
+								//判断为已装备，去掉卸下装备选项
+								if(compareAction(tempActions[i],action5)){
+									tempActions.splice(i,1);
+									i--;
+								}
+							}
+						}
 					};
 					return tempActions;
 				}else if("transaction"==pram){//判断是交易，只取出堆叠动作
-					//判断是否装备
-					if(isPutOn){
-						/*
-						var action = loadData(dictionaryData.action.roleAction5,"action");
-						var tempActions = [];
-						tempActions.push(action);
-						*/
-						in
-					}else{
+					//判断是否有装备属性
+					if(isPutOn==null||isPutOn==undefined||isPutOn==false){
+						//未装备，没有该属性，则不为装备，只取出堆叠动作
 						tempActions = actions.slice(0);
 						var action = loadData(dictionaryData.action.roleAction1,"action");
+						for (var i=0; i < tempActions.length; i++) {
+							if(compareAction(tempActions[i],action)){
+								tempActions = [tempActions[i]];
+							};
+						};
+					}else if(isPutOn==true){
+						//已装备，不可交易，只取出显示已装备选项
+						tempActions = actions.slice(0);
+						var action = loadData(dictionaryData.action.roleAction6,"action");
 						for (var i=0; i < tempActions.length; i++) {
 							if(compareAction(tempActions[i],action)){
 								tempActions = [tempActions[i]];

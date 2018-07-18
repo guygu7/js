@@ -10,7 +10,9 @@ dictionaryData.action={
 	roleAction2:{name:"使用消耗",type:"useConsumable",target:""},
 	roleAction3:{name:"使用非消耗",type:"useUnConsumable",target:""},
 	roleAction4:{name:"实装",type:"putOn",target:""},
-	roleAction5:{name:"已实装",type:"NaN",target:""},
+	roleAction5:{name:"卸下实装",type:"takeOff",target:""},
+	
+	roleAction6:{name:"已实装",type:"NaN",target:""},
 	sellback:{name:"撤回至包",type:"split",target:"sellback"},
 	buyback:{name:"撤回至对象",type:"split",target:"buyback"},
 };
@@ -43,6 +45,8 @@ dictionaryData.item={
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
 			dictionaryData.action.roleAction4,
+			dictionaryData.action.roleAction5,
+			dictionaryData.action.roleAction6,
 		],
 	},
 	item5:{name:"实装物体2",type:"",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
@@ -50,6 +54,8 @@ dictionaryData.item={
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
 			dictionaryData.action.roleAction4,
+			dictionaryData.action.roleAction5,
+			dictionaryData.action.roleAction6,
 		],
 	},
 	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
