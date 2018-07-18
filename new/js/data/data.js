@@ -40,7 +40,7 @@ dictionaryData.item={
 			dictionaryData.action.roleAction1,
 		],
 	},
-	item4:{name:"实装物体1",type:"",content:"物体1说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
+	item4:{name:"实装物体1",type:"head",content:"物体1说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
@@ -49,7 +49,7 @@ dictionaryData.item={
 			dictionaryData.action.roleAction6,
 		],
 	},
-	item5:{name:"实装物体2",type:"",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
+	item5:{name:"实装物体2",type:"head",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,

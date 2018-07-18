@@ -941,8 +941,17 @@
 						//执行使用效果
 					}else if(currentAction.getType()=="useUnConsumable"){
 					}else if(currentAction.getType()=="putOn"){
+						//判断为穿上实装
+						var tempItems = dataRoleObj[0].getItems();
+						for (var i=0; i < tempItems.length; i++) {
+							//遍历所有相同部位实装，并标记为卸下
+							if(tempItems[i].getType()==currentItem.getType()){
+								tempItems[i].setIsPutOn(false);
+							}
+						};
 						currentItem.setIsPutOn(true);
 					}else if(currentAction.getType()=="takeOff"){
+						//判断为卸下实装
 						currentItem.setIsPutOn(false);
 					}
 					//隐藏菜单
