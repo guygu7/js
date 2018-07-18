@@ -143,6 +143,7 @@ DataModleFactory = {
 					};
 				};
 			};
+			pram.supper = this;
 			items.push(pram);
 			return this;						
 		};
@@ -590,13 +591,59 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 是否已装备
+		 */
+		var isPutOn;
+		item.getIsPutOn = function() {
+			return isPutOn;
+		};
+		item.setIsPutOn = function(pram) {
+			isPutOn = pram;
+			return this;
+		};
+		/**
 		 * 交互动作
 		 */
 		var actions;
 		item.getAction = function(num){
 			return actions[num];
 		};
-		item.getActions = function(){
+		/**
+		 * 根据传参过滤 
+		 */
+		item.getActions = function(pram){
+			//判断父对象是role
+			if(this.supper&&this.supper.constructor==DataModle.Role){
+				if ("useRoleBag"==pram) {//判断是使用包裹，过滤掉堆叠的动作
+					tempActions = actions.slice(0);
+					var action = loadData(dictionaryData.action.roleAction1,"action");
+					for (var i=0; i < tempActions.length; i++) {
+						if(compareAction(tempActions[i],action)){
+							tempActions.splice(i,1);
+						};
+					};
+					return tempActions;
+				}else if("transaction"==pram){//判断是交易，只取出堆叠动作
+					//判断是否装备
+					if(isPutOn){
+						/*
+						var action = loadData(dictionaryData.action.roleAction5,"action");
+						var tempActions = [];
+						tempActions.push(action);
+						*/
+						in
+					}else{
+						tempActions = actions.slice(0);
+						var action = loadData(dictionaryData.action.roleAction1,"action");
+						for (var i=0; i < tempActions.length; i++) {
+							if(compareAction(tempActions[i],action)){
+								tempActions = [tempActions[i]];
+							};
+						};
+					}
+					return tempActions;
+				};
+			}
 			return actions;
 		};
 		item.addAction = function(pram){

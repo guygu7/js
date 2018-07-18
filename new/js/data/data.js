@@ -7,7 +7,10 @@ var dictionaryData = {};
 dictionaryData.action={
 	action1:{name:"移动至包",type:"split",target:"toRoleBag",belong:"notRole"},
 	roleAction1:{name:"移动至对象",type:"split",target:"toInteractiveObject",belong:"role"},
-	roleAction2:{name:"使用",type:"use",target:""},
+	roleAction2:{name:"使用消耗",type:"useConsumable",target:""},
+	roleAction3:{name:"使用非消耗",type:"useUnConsumable",target:""},
+	roleAction4:{name:"实装",type:"putOn",target:""},
+	roleAction5:{name:"已实装",type:"NaN",target:""},
 	sellback:{name:"撤回至包",type:"split",target:"sellback"},
 	buyback:{name:"撤回至对象",type:"split",target:"buyback"},
 };
@@ -26,6 +29,7 @@ dictionaryData.item={
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
+			dictionaryData.action.roleAction3,
 		],
 	},
 	item3:{name:"消耗品3",type:"",content:"消耗品3说明",totalNum:1,sellCost:5,buyCost:10,
@@ -34,16 +38,18 @@ dictionaryData.item={
 			dictionaryData.action.roleAction1,
 		],
 	},
-	item4:{name:"物体1",type:"",content:"物体1说明",totalNum:1,sellCost:5,buyCost:10,
+	item4:{name:"实装物体1",type:"",content:"物体1说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
+			dictionaryData.action.roleAction4,
 		],
 	},
-	item5:{name:"物体2",type:"",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,
+	item5:{name:"实装物体2",type:"",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
 		actions:[
 			dictionaryData.action.action1,
 			dictionaryData.action.roleAction1,
+			dictionaryData.action.roleAction4,
 		],
 	},
 	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
@@ -109,8 +115,9 @@ var data = {
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,
-			//dictionaryData.item.item2,
-			//dictionaryData.item.item3,
+			dictionaryData.item.item2,
+			dictionaryData.item.item4,
+			dictionaryData.item.item5,
 		],
 	},],
 	/**
@@ -194,3 +201,6 @@ var data = {
 	],
 };
 data.roles[0].items[0].totalNum=99;
+data.roles[0].items[1].totalNum=1;
+data.roles[0].items[2].totalNum=1;
+data.roles[0].items[3].totalNum=1;

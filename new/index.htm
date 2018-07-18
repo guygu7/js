@@ -376,7 +376,7 @@
 			/**
 			 *  角色的物品操作动作对象（用于打开背包后使用）
 			 */
-			var dataRoleItemActionObj = loadData(dictionaryData.action.roleAction1,"action");
+			//var dataRoleItemActionObj = loadData(dictionaryData.action.roleAction1,"action");
 			/**
 			 * 当前场景地图
 			 */
@@ -800,9 +800,9 @@
 				$scope.menulistClick = function(index,$event){
 					//获取交互动作
 					if ("interactiveObject"==viewControl.currentInteractiveType){
-						currentAction = currentInteractiveObject.getAction(index);
+						currentAction = currentInteractiveObject.getActions()[index];
 					}else if("item"==viewControl.currentInteractiveType){
-						currentAction = currentItem.getAction(index);
+						currentAction = currentItem.getActions(dataRoleObj[0].getStatus())[index];
 					}else{
 						return;
 					}
@@ -828,7 +828,7 @@
 						//移动动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="useWarehouse"){
-						//判断为（与仓库）交易
+						//判断为打开仓库动作
 						panelTyping(currentAction.getContent());
 						//加载仓库数据
 						viewDataModel.panel5.buttonElements = function () {
@@ -931,12 +931,17 @@
 						currentAction = null;
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
-					}else if(currentAction.getType()=="use"){
-						//判断为使用(物品)
+					}else if(currentAction.getType()=="useConsumable"){
+						//判断为使用(物品/消耗品)
+						//数量-1
 						currentItem.setTotalNum(currentItem.getTotalNum()-1);
 						if(currentItem.getTotalNum()<1){
 							dataRoleObj[0].delItem(currentItem);
 						}
+						//执行使用效果
+					}else if(currentAction.getType()=="useUnConsumable"){
+					}else if(currentAction.getType()=="putOn"){
+						currentItem.setIsPutOn(true);
 					}
 					//隐藏菜单
 					menuHide();
@@ -959,23 +964,12 @@
 					currentItem = dataRoleObj[0].getItem(index);
 					//加载交互对象动作数据（同步至视图）
 					viewDataModel.menu.buttonElements = function () {
-						//判断是状态为打开背包，去掉堆叠选项显示
 						if("useRoleBag"==dataRoleObj[0].getStatus()){
-							var returnActions=[];
-							//重新复制一个currentItem
-							var tempItem = DataModleFactory.createItem();
-							copyBean(dataRoleObj[0].getItem(index),tempItem);
-							currentItem = tempItem;
-							currentItem.delAction(dataRoleItemActionObj);
-							in
-							/*
-							var tempActions = currentItem.getActions();
-							for (var i=0; i < tempActions.length; i++) {
-								if(!compareAction(tempActions[i],dataRoleItemActionObj)){
-									returnActions.push(tempActions[i]);
-								};
-							};
-							*/
+							//判断是状态为打开背包，去掉堆叠选项显示
+							return currentItem.getActions("useRoleBag");
+						}else if("transaction"==dataRoleObj[0].getStatus()){
+							//判断是状态为交易，仅堆叠选项显示
+							return currentItem.getActions("transaction");
 						}
 						return currentItem.getActions();
 					};
