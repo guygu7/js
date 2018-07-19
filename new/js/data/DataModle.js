@@ -120,7 +120,33 @@ DataModleFactory = {
 		role.getItem = function(num){
 			return items[num];
 		};
-		role.getItems = function(){
+		/**
+		 * 传参："useRoleBag-Consumable":过滤出消耗品 ; "useRoleBag-Equip":过滤出装备
+		 */
+		role.getItems = function(pram){
+			if(pram&&items&&items.length>0){
+				var tempItems = items.slice(0);
+				if(pram=="useRoleBag-Consumable"){
+					//判断是只显示消耗品
+					for (var i=0; i < tempItems.length; i++) {
+						if(tempItems[i].getType()!=ITEM.TYPE.consumable){
+							//遍历到非消耗品类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}
+					};
+				}else if(pram=="useRoleBag-Equip"){
+					//判断是只显示装备
+					for (var i=0; i < tempItems.length; i++) {
+						if(tempItems[i].getType()!=ITEM.TYPE.equip){
+							//遍历到非消耗品类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}
+					};
+				}
+				return tempItems;
+			}
 			return items;
 		};
 		role.addItem = function(pram){
@@ -547,6 +573,17 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 类型2
+		 */
+		var type2;
+		item.getType2 = function() {
+			return type2;
+		};
+		item.setType2 = function(pram) {
+			type2 = pram;
+			return this;
+		};
+		/**
 		 * 说明内容
 		 */
 		var content;
@@ -617,13 +654,13 @@ DataModleFactory = {
 				if ("useRoleBag"==pram) {//判断是使用包裹，过滤掉堆叠的动作
 					tempActions = actions.slice(0);
 					//用于对比的堆叠动作
-					var action = loadData(dictionaryData.action.roleAction1,"action");
+					var action = loadData(dictionaryData.action.role_itemToInteractiveObject,"action");
 					//用于对比的穿上装备选项
-					var action4 = loadData(dictionaryData.action.roleAction4,"action");
+					var action4 = loadData(dictionaryData.action.role_putOn,"action");
 					//用于对比的卸下装备选项
-					var action5 = loadData(dictionaryData.action.roleAction5,"action");
+					var action5 = loadData(dictionaryData.action.role_takeOff,"action");
 					//用于对比的显示已装备选项
-					var action6 = loadData(dictionaryData.action.roleAction6,"action");
+					var action6 = loadData(dictionaryData.action.role_alreadyEquipped,"action");
 					for (var i=0; i < tempActions.length; i++) {
 						//对比出堆叠动作，去掉
 						if(compareAction(tempActions[i],action)){
@@ -652,12 +689,12 @@ DataModleFactory = {
 						}
 					};
 					return tempActions;
-				}else if("transaction"==pram){//判断是交易，只取出堆叠动作
+				}else if("transaction"==pram||"useWarehouse"==pram){//判断是交易或使用仓库，只取出堆叠动作
 					//判断是否有装备属性
 					if(isPutOn==null||isPutOn==undefined||isPutOn==false){
 						//未装备，没有该属性，则不为装备，只取出堆叠动作
 						tempActions = actions.slice(0);
-						var action = loadData(dictionaryData.action.roleAction1,"action");
+						var action = loadData(dictionaryData.action.role_itemToInteractiveObject,"action");
 						for (var i=0; i < tempActions.length; i++) {
 							if(compareAction(tempActions[i],action)){
 								tempActions = [tempActions[i]];
@@ -666,7 +703,7 @@ DataModleFactory = {
 					}else if(isPutOn==true){
 						//已装备，不可交易，只取出显示已装备选项
 						tempActions = actions.slice(0);
-						var action = loadData(dictionaryData.action.roleAction6,"action");
+						var action = loadData(dictionaryData.action.role_alreadyEquipped,"action");
 						for (var i=0; i < tempActions.length; i++) {
 							if(compareAction(tempActions[i],action)){
 								tempActions = [tempActions[i]];

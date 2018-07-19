@@ -40,9 +40,31 @@
 				<!--顶部菜单-->
 				<div ng-controller="topFrame" class="top-frame">
 					<div class="top">
-						<div ng-click="clickButton1()" class="top-button" style="right:170px;">
+						<div ng-click="clickButton1('useRoleBag')" class="top-button" style="right:510px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">背包</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
+						<div ng-click="clickButton1('useRoleBag','useRoleBag-Consumable')" class="top-button" style="right:340px;">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">消耗</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
+						<div ng-click="clickButton1('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:170px;">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">实装</div>
 							<div class="top-button-arrow">
 								<div class="top-button-arrow1"></div>
 								<div class="top-button-arrow2"></div>
@@ -159,6 +181,14 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				
+				<!--物品信息面板-->
+				<div ng-controller="panel3ItemInfo" ng-rightclick="testright()"  class="panel3" style="top:60px;right:50px;">
+					<div class="panel3-tittle">
+						{{viewDataModel.panel3ItemInfo.name()}}
+					</div>
+					
 				</div>
 				
 				<!--仓库-遮罩层-->
@@ -373,10 +403,6 @@
 			 * 暂时仅为只有一个role对象的数组
 			 */
 			var dataRoleObj = loadData(data.roles,"role");
-			/**
-			 *  角色的物品操作动作对象（用于打开背包后使用）
-			 */
-			//var dataRoleItemActionObj = loadData(dictionaryData.action.roleAction1,"action");
 			/**
 			 * 当前场景地图
 			 */
@@ -842,11 +868,13 @@
 							return dataRoleObj[0].getItems();
 						};
 						panel5Show();
+						//标记角色状态为使用仓库状态
+						dataRoleObj[0].setStatus("useWarehouse");
 						//使用建筑功能（仓库）动作完成，清空当前交互动作
 						currentAction = null;
 						//使用流程继续，保留当前交互对象
 						currentInteractiveObject;
-					}else if(currentAction.getType()=="split"){
+					}else if(currentAction.getType()==ACTION.TYPE.split){
 						//判断为交易,重新定位视图数据指针
 						viewDataModel.numberPicker.number = currentItem.getTotalNum();
 						//打开数字选择器
@@ -931,7 +959,7 @@
 						currentAction = null;
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
-					}else if(currentAction.getType()=="useConsumable"){
+					}else if(currentAction.getType()==ACTION.TYPE.useConsumable){
 						//判断为使用(物品/消耗品)
 						//数量-1
 						currentItem.setTotalNum(currentItem.getTotalNum()-1);
@@ -939,18 +967,18 @@
 							dataRoleObj[0].delItem(currentItem);
 						}
 						//执行使用效果
-					}else if(currentAction.getType()=="useUnConsumable"){
-					}else if(currentAction.getType()=="putOn"){
+					}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
+					}else if(currentAction.getType()==ACTION.TYPE.putOn){
 						//判断为穿上实装
 						var tempItems = dataRoleObj[0].getItems();
 						for (var i=0; i < tempItems.length; i++) {
 							//遍历所有相同部位实装，并标记为卸下
-							if(tempItems[i].getType()==currentItem.getType()){
+							if(tempItems[i].getType2()==currentItem.getType2()){
 								tempItems[i].setIsPutOn(false);
 							}
 						};
 						currentItem.setIsPutOn(true);
-					}else if(currentAction.getType()=="takeOff"){
+					}else if(currentAction.getType()==ACTION.TYPE.takeOff){
 						//判断为卸下实装
 						currentItem.setIsPutOn(false);
 					}
@@ -981,6 +1009,9 @@
 						}else if("transaction"==dataRoleObj[0].getStatus()){
 							//判断是状态为交易，仅堆叠选项显示
 							return currentItem.getActions("transaction");
+						}else if("useWarehouse"==dataRoleObj[0].getStatus()){
+							//判断是状态为使用仓库，仅堆叠选项显示
+							return currentItem.getActions("useWarehouse");
 						}
 						return currentItem.getActions();
 					};
@@ -1164,7 +1195,7 @@
 						viewDataModel.numberPicker.number=currentItem.getTotalNum();
 					}
 					//从当前交互动作，判断是移动至角色包裹
-					if("split"==currentAction.getType() && "toRoleBag"==currentAction.getTarget()){
+					if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.toRoleBag==currentAction.getTarget()){
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
 						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
@@ -1217,7 +1248,7 @@
 						}
 						//隐藏
 						numberPickerHide();
-					} else if("split"==currentAction.getType() && "toInteractiveObject"==currentAction.getTarget()){
+					} else if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.toInteractiveObject==currentAction.getTarget()){
 						//判断是从角色包裹移动至当前交互对象
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
@@ -1271,7 +1302,7 @@
 						}
 						//隐藏
 						numberPickerHide();
-					} else if("split"==currentAction.getType() && "sellback"==currentAction.getTarget()){
+					} else if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.sellback==currentAction.getTarget()){
 						//判断是卖出撤回至包
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
@@ -1304,7 +1335,7 @@
 						}
 						//隐藏
 						numberPickerHide();
-					} else if("split"==currentAction.getType() && "buyback"==currentAction.getTarget()){
+					} else if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.buyback==currentAction.getTarget()){
 						//判断是撤回至交互对象
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
@@ -1372,11 +1403,17 @@
 				viewDataModel.panel3.text2=dataRoleObj[0].getMaxHp;
 			});
 			
+			app.controller("panel3ItemInfo", function($scope, $rootScope, $timeout) {
+				viewDataModel.panel3ItemInfo.name = function () {
+					return currentItem.getName();
+				};
+			});
+			
 			//顶部菜单
 			app.controller("topFrame", function($scope, $rootScope, $timeout) {
-				$scope.clickButton1 = function(){
+				$scope.clickButton1 = function(pram,pram2){
 					//设置当前状态为使用背包
-					dataRoleObj[0].setStatus("useRoleBag");
+					dataRoleObj[0].setStatus(pram);
 					//清空当前对象
 					currentInteractiveObject=null;
 					currentItem=null;
@@ -1384,7 +1421,7 @@
 					//打开背包功能
 					//加载包裹数据,重新定位视图数据指针
 					viewDataModel.menuBag.buttonElements = function () {
-						return dataRoleObj[0].getItems();
+						return dataRoleObj[0].getItems(pram2);
 					};
 					var menuBagLeft=0;
 					//获取层叠关系数组中最大值，并+1存入
@@ -1405,6 +1442,7 @@
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
 				};
+				
 			});
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>

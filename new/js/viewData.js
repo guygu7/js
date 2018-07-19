@@ -44,6 +44,9 @@ var viewDataModel = {
 		tittleText:function(){return "标题";},
 		text1:0,
 	},
+	panel3ItemInfo:{
+		name:"",
+	},
 	/**
 	 * 人物交互面板(按钮组)
 	 */

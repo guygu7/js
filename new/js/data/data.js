@@ -4,64 +4,257 @@
  * 基础字典数据 
  */
 var dictionaryData = {};
-dictionaryData.action={
-	action1:{name:"移动至包",type:"split",target:"toRoleBag",belong:"notRole"},
-	roleAction1:{name:"移动至对象",type:"split",target:"toInteractiveObject",belong:"role"},
-	roleAction2:{name:"使用消耗",type:"useConsumable",target:""},
-	roleAction3:{name:"使用非消耗",type:"useUnConsumable",target:""},
-	roleAction4:{name:"实装",type:"putOn",target:""},
-	roleAction5:{name:"卸下实装",type:"takeOff",target:""},
-	
-	roleAction6:{name:"已实装",type:"NaN",target:""},
-	sellback:{name:"撤回至包",type:"split",target:"sellback"},
-	buyback:{name:"撤回至对象",type:"split",target:"buyback"},
+/**
+ * 交互动作常量数据 
+ */
+var ACTION={
+	/**
+	 * 交互动作.类型
+	 */
+	TYPE:{
+		/**
+		 * 分割、堆叠（用于唤出数字选择器） 
+		 */
+		split:"split",
+		/**
+		 * 使用消耗品 
+		 */
+		useConsumable:"useConsumable",
+		/**
+		 * 使用非消耗品 
+		 */
+		useUnConsumable:"useUnConsumable",
+		/**
+		 * 穿上（装备）
+		 */
+		putOn:"putOn",
+		/**
+		 * 卸下（装备）
+		 */
+		takeOff:"takeOff",
+		/**
+		 * 显示已装备按钮选项（点击无效果，或不可点击）
+		 */
+		alreadyEquipped:"alreadyEquipped",
+	},
+	/**
+	 * 交互动作.目标
+	 */
+	TARGET:{
+		/**
+		 * 标识为：移动至角色包裹
+		 */
+		toRoleBag:"toRoleBag",
+		/**
+		 * 标识为：移动至交互对象（所属）
+		 */
+		toInteractiveObject:"toInteractiveObject",
+		/**
+		 * 标识为：售出返回
+		 */
+		sellback:"sellback",
+		/**
+		 * 标识为：购入返回
+		 */
+		buyback:"buyback",
+	},
+	/**
+	 * 交互动作.所属归属
+	 */
+	BELONG:{
+		/**
+		 * 角色
+		 */
+		role:"role",
+		/**
+		 * 非角色
+		 */
+		notRole:"notRole",
+	},
 };
 /**
- * 物品字典 
+ * 基础交互动作
+ */
+dictionaryData.action={
+	/**
+	 * 物品（从交互对象）移动至角色包中
+	 */
+	itemToRoleBag:{
+				name:"移动至包",
+				type:ACTION.TYPE.split,
+				target:ACTION.TARGET.toRoleBag,
+				belong:ACTION.BELONG.notRole,
+			},
+	/**
+	 * 物品（从角色包中）移动至交互对象
+	 */
+	role_itemToInteractiveObject:{
+					name:"移动至对象",
+					type:ACTION.TYPE.split,
+					target:ACTION.TARGET.toInteractiveObject,
+					belong:ACTION.BELONG.role,
+				},
+	/**
+	 * （物品）使用消耗品
+	 */
+	role_useConsumable:{
+					name:"使用消耗",
+					type:ACTION.TYPE.useConsumable,
+					target:"",
+				},
+	/**
+	 * （物品）使用非消耗品
+	 */
+	role_useUnConsumable:{
+					name:"使用非消耗",
+					type:ACTION.TYPE.useUnConsumable,
+					target:"",
+				},
+	/**
+	 * （物品）穿上装备
+	 */
+	role_putOn:{
+					name:"实装",
+					type:ACTION.TYPE.putOn,
+					target:"",
+				},
+	/**
+	 * （物品）卸下装备
+	 */
+	role_takeOff:{
+					name:"卸下实装",
+					type:ACTION.TYPE.takeOff,
+					target:"",
+				},
+	/**
+	 * （物品） 显示已装备按钮选项（点击无效果，或不可点击）
+	 */
+	role_alreadyEquipped:{
+					name:"已实装",
+					type:ACTION.TYPE.alreadyEquipped,
+					target:"",
+				},
+	/**
+	 * （物品）售出返回：从交易暂存面板中撤回至角色包
+	 */
+	sellback:{
+				name:"撤回至包",
+				type:ACTION.TYPE.split,
+				target:ACTION.TARGET.sellback,
+			},
+	/**
+	 * （物品）购入返回：从交易暂存面板中撤回至交互对象
+	 */
+	buyback:{
+				name:"撤回至对象",
+				type:ACTION.TYPE.split,
+				target:ACTION.TARGET.buyback,
+			},
+};
+/**
+ * 物品常量数据 
+ */
+var ITEM={
+	/**
+	 * 类型（大类）
+	 */
+	TYPE:{
+		/**
+		 * 消耗品
+		 */
+		consumable:"consumable",
+		/**
+		 * 装备
+		 */
+		equip:"equip",
+	},
+	/**
+	 * 类型（小类、第二分类） 
+	 */
+	TYPE2:{
+		equipHead:"head",
+	},
+};
+/**
+ * 物品字典
  */
 dictionaryData.item={
-	item1:{name:"消耗品1",type:"",content:"消耗品1说明",totalNum:1,sellCost:1,buyCost:2,
+	item1:{
+		name:"消耗品1",
+		type:ITEM.TYPE.consumable,
+		content:"消耗品1说明",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
-			dictionaryData.action.roleAction2,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_useConsumable,
 		],
 	},
-	item2:{name:"消耗品2",type:"",content:"消耗品2说明",totalNum:1,sellCost:1,buyCost:2,
+	item2:{
+		name:"消耗品2",
+		type:ITEM.TYPE.consumable,
+		content:"消耗品2说明",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
-			dictionaryData.action.roleAction3,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_useUnConsumable,
 		],
 	},
-	item3:{name:"消耗品3",type:"",content:"消耗品3说明",totalNum:1,sellCost:5,buyCost:10,
+	item3:{
+		name:"消耗品3",
+		type:ITEM.TYPE.consumable,
+		content:"消耗品3说明",
+		totalNum:1,
+		sellCost:5,
+		buyCost:10,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
 		],
 	},
-	item4:{name:"实装物体1",type:"head",content:"物体1说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
+	item4:{
+		name:"实装物体1",
+		type:ITEM.TYPE.equip,
+		type2:ITEM.TYPE2.equipHead,
+		content:"物体1说明",
+		totalNum:1,
+		sellCost:5,
+		buyCost:10,
+		isPutOn:false,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
-			dictionaryData.action.roleAction4,
-			dictionaryData.action.roleAction5,
-			dictionaryData.action.roleAction6,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_putOn,
+			dictionaryData.action.role_takeOff,
+			dictionaryData.action.role_alreadyEquipped,
 		],
 	},
-	item5:{name:"实装物体2",type:"head",content:"物体2说明",totalNum:1,sellCost:5,buyCost:10,isPutOn:false,
+	item5:{
+		name:"实装物体2",
+		type:ITEM.TYPE.equip,
+		type2:ITEM.TYPE2.equipHead,
+		content:"物体2说明",
+		totalNum:1,
+		sellCost:5,
+		buyCost:10,
+		isPutOn:false,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
-			dictionaryData.action.roleAction4,
-			dictionaryData.action.roleAction5,
-			dictionaryData.action.roleAction6,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_putOn,
+			dictionaryData.action.role_takeOff,
+			dictionaryData.action.role_alreadyEquipped,
 		],
 	},
 	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
 		actions:[
-			dictionaryData.action.action1,
-			dictionaryData.action.roleAction1,
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
 		],
 	},
 };
