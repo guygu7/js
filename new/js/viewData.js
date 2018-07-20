@@ -46,6 +46,7 @@ var viewDataModel = {
 	},
 	panel3ItemInfo:{
 		name:"",
+		content:"",
 	},
 	/**
 	 * 人物交互面板(按钮组)
@@ -146,6 +147,22 @@ var viewControl = {
 		 */
 		menuBagHide:true,
 		/**
+		 * 物品信息面板  组件隐藏
+		 */
+		panel3ItemInfoHide:true,
+		/**
+		 * 物品信息面板  - name属性显示隐藏
+		 */
+		panel3ItemInfoNameHide:true,
+		/**
+		 * 物品信息面板  - name属性显示隐藏
+		 */
+		panel3ItemInfoContentHide:true,
+		/**
+		 * 对比角色物品（装备）信息面板  组件隐藏
+		 */
+		panel3RoleItemInfoHide:true,
+		/**
 		 * 仓库组件 专用遮罩层隐藏 
 		 */
 		panel5MaskLayerHide:true,
@@ -208,6 +225,22 @@ var viewControl = {
 	menu_bag_Style:{
 		"top" : 30 + "px",
 		"left" : 180 + "px",
+		"opacity" : 0,
+	},
+	/**
+	 * 物品信息面板组件（初始值）
+	 */
+	panel3ItemInfo_Style:{
+		"top" : 20 + "px",
+		"right" : 50 + "px",
+		"opacity" : 0,
+	},
+	/**
+	 * 对比物品（装备）信息面板组件（初始值）
+	 */
+	panel3RoleItemInfo_Style:{
+		"top" : 400 + "px",
+		"right" : 50 + "px",
 		"opacity" : 0,
 	},
 	/**

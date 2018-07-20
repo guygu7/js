@@ -173,7 +173,7 @@
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
 					<div class="menu">
 						{{viewDataModel.menuBag.tittleText()}}
-						<div ng-click="menulistClick($event,$index)" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+						<div ng-click="menulistClick($event,$index)"  ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -184,11 +184,35 @@
 				</div>
 				
 				<!--物品信息面板-->
-				<div ng-controller="panel3ItemInfo" ng-rightclick="testright()"  class="panel3" style="top:60px;right:50px;">
+				<div ng-controller="panel3ItemInfo" ng-hide="viewControl.display.panel3ItemInfoHide" ng-style="viewControl.panel3ItemInfo_Style" class="panel3" >
 					<div class="panel3-tittle">
-						{{viewDataModel.panel3ItemInfo.name()}}
 					</div>
-					
+					<div class="panel3-lattice" style="width:270px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoNameHide" style="height:20px;width: 270px;margin: 5px;">
+							<div style="height: 20px;left: 10px;position: absolute;">
+								名称：
+							</div>
+							<div style="height: 20px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.name()}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoContentHide" style="height:20px;width: 270px;margin: 5px;">
+							<div style="height: 20px;left: 10px;position: absolute;">
+								说明：
+							</div>
+							<div style="height: 20px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.content()}}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--对比角色物品信息面板-->
+				<div ng-controller="panel3RoleItemInfo" ng-hide="viewControl.display.panel3RoleItemInfoHide" ng-style="viewControl.panel3RoleItemInfo_Style" class="panel3" >
+					<div class="panel3-tittle">
+					</div>
+					<div class="panel3-lattice" style="width:270px;">
+					</div>
 				</div>
 				
 				<!--仓库-遮罩层-->
@@ -614,6 +638,75 @@
 						viewControl.display.menuHide = true;
 					},200);
 				};
+				
+				/**
+				 * 物品信息面板组件 显示命令
+				 */
+				panel3ItemInfoShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["panel3ItemInfo"] = maxZIndex+1;
+					viewControl.panel3ItemInfo_Style["z-index"] = viewControl.zIndexList["panel3ItemInfo"];
+					viewControl.display.panel3ItemInfoHide = false;
+					viewControl.panel3ItemInfo_Style.top = 25 + "px";
+					viewControl.panel3ItemInfo_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.panel3ItemInfo_Style.top = 30 + "px";
+						viewControl.panel3ItemInfo_Style.opacity = 1;
+					}, 100);
+				};
+				/**
+				 * 物品信息面板组件 隐藏命令
+				 */
+				panel3ItemInfoHide = function(){
+					//实现隐藏的动画效果
+					var top = viewControl.panel3ItemInfo_Style.top;
+					viewControl.panel3ItemInfo_Style.top = (Number(top.substring(0, top.length - 2)) - 5) + "px";
+					$timeout(function() {
+						//数据清理
+						//viewDataModel.panel3ItemInfo.name = null;
+						//viewDataModel.panel3ItemInfo.content = null;
+						//重置层叠
+						viewControl.zIndexList["panel3ItemInfo"] = 0;
+						viewControl.panel3ItemInfo_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.panel3ItemInfoHide = true;
+					}, 150);
+				};
+				
+				/**
+				 * 对比角色物品（装备）信息面板组件 显示命令
+				 */
+				panel3RoleItemInfoShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["panel3RoleItemInfo"] = maxZIndex+1;
+					viewControl.panel3ItemInfo_Style["z-index"] = viewControl.zIndexList["panel3RoleItemInfo"];
+					viewControl.display.panel3RoleItemInfoHide = false;
+					viewControl.panel3RoleItemInfo_Style.top = 405 + "px";
+					viewControl.panel3RoleItemInfo_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.panel3RoleItemInfo_Style.top = 410 + "px";
+						viewControl.panel3RoleItemInfo_Style.opacity = 1;
+					}, 100);
+				};
+				/**
+				 * 对比角色物品（装备）信息面板组件 隐藏命令
+				 */
+				panel3RoleItemInfoHide = function(){
+					//实现隐藏的动画效果
+					var top = viewControl.panel3RoleItemInfo_Style.top;
+					viewControl.panel3RoleItemInfo_Style.top = (Number(top.substring(0, top.length - 2)) - 5) + "px";
+					$timeout(function() {
+						//数据清理
+						//重置层叠
+						viewControl.zIndexList["panel3RoleItemInfo"] = 0;
+						viewControl.panel3RoleItemInfo_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.panel3RoleItemInfoHide = true;
+					}, 150);
+				};
+				
 				/**
 				 * 仓库组件 显示命令(同时打开包裹组件)
 				 */
@@ -726,28 +819,30 @@
 							transactionItems.sellItems.shift();
 							flag = false;
 						}
-						//待购入退回至交互对象
-						var interactiveObjectItems = currentInteractiveObject.getItems();
-						var flag = false;
-						for (var j=0; j < transactionItems.buyItems.length;j) {
-							var buyItem = transactionItems.buyItems[j];
-							for (var i=0; i < interactiveObjectItems.length; i++) {
-								if(interactiveObjectItems[i].getName()==buyItem.getName()&&interactiveObjectItems[i].getType()==buyItem.getType()&&interactiveObjectItems[i].getContent()==buyItem.getContent()){
-									//遍历后发现同一物品,叠加数量
-									interactiveObjectItems[i].setTotalNum(interactiveObjectItems[i].getTotalNum()+buyItem.getTotalNum());
-									flag = true;
+						//待购入退回至交互对象(判断存在当前交互对象)
+						if(currentInteractiveObject&&currentInteractiveObject.getItems){
+							var interactiveObjectItems = currentInteractiveObject.getItems();
+							var flag = false;
+							for (var j=0; j < transactionItems.buyItems.length;j) {
+								var buyItem = transactionItems.buyItems[j];
+								for (var i=0; i < interactiveObjectItems.length; i++) {
+									if(interactiveObjectItems[i].getName()==buyItem.getName()&&interactiveObjectItems[i].getType()==buyItem.getType()&&interactiveObjectItems[i].getContent()==buyItem.getContent()){
+										//遍历后发现同一物品,叠加数量
+										interactiveObjectItems[i].setTotalNum(interactiveObjectItems[i].getTotalNum()+buyItem.getTotalNum());
+										flag = true;
+									}
+								};
+								if(!flag){
+									//遍历完成，未发现同一物品，复制出一个物品对象
+									var item_Obj = DataModleFactory.createItem();
+									copyBean(buyItem,item_Obj);
+									//存入交互对象
+									currentInteractiveObject.addItem(item_Obj);
 								}
-							};
-							if(!flag){
-								//遍历完成，未发现同一物品，复制出一个物品对象
-								var item_Obj = DataModleFactory.createItem();
-								copyBean(buyItem,item_Obj);
-								//存入交互对象
-								currentInteractiveObject.addItem(item_Obj);
+								//从交易面板数据中移除
+								transactionItems.buyItems.shift();
+								flag = false;
 							}
-							//从交易面板数据中移除
-							transactionItems.buyItems.shift();
-							flag = false;
 						}
 						//交易流程完成，清空当前交互对象
 						currentInteractiveObject = null;
@@ -989,6 +1084,18 @@
 
 			//列表菜单:包裹 组件
 			app.controller("menuBag", function($scope, $rootScope,$timeout) {
+				$scope.menulistHover = function(index) {
+					$timeout(function() {
+						//标记当前交互（物品）对象
+						currentItem = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2())[index];
+						//显示物品信息面板
+						panel3ItemInfoShow();
+					},200);
+				};
+				$scope.menulistUnHover = function() {
+					//隐藏物品信息面板
+					panel3ItemInfoHide();
+				};
 				$scope.menulistClick = function($event,index) {
 					//处理传入对象
 					var tempt = $event.target.parentNode;
@@ -1000,7 +1107,7 @@
 					//传入点击目标（用于定位），显示列表菜单
 					menuShow(tempt);
 					//标记当前交互（物品）对象
-					currentItem = dataRoleObj[0].getItem(index);
+					currentItem = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2())[index];
 					//加载交互对象动作数据（同步至视图）
 					viewDataModel.menu.buttonElements = function () {
 						if("useRoleBag"==dataRoleObj[0].getStatus()){
@@ -1403,9 +1510,27 @@
 				viewDataModel.panel3.text2=dataRoleObj[0].getMaxHp;
 			});
 			
+			//物品信息面板
 			app.controller("panel3ItemInfo", function($scope, $rootScope, $timeout) {
 				viewDataModel.panel3ItemInfo.name = function () {
-					return currentItem.getName();
+					if(currentItem&&currentItem.getName){
+						if(currentItem.getName()||currentItem.getName()==""){
+							viewControl.display.panel3ItemInfoNameHide=false;
+						}else{
+							viewControl.display.panel3ItemInfoNameHide=true;
+						}
+						return currentItem.getName();
+					}
+				};
+				viewDataModel.panel3ItemInfo.content = function () {
+					if(currentItem&&currentItem.getContent){
+						if(currentItem.getContent()||currentItem.getContent()==""){
+							viewControl.display.panel3ItemInfoContentHide=false;
+						}else{
+							viewControl.display.panel3ItemInfoContentHide=true;
+						}
+						return currentItem.getContent();
+					}
 				};
 			});
 			
@@ -1414,6 +1539,8 @@
 				$scope.clickButton1 = function(pram,pram2){
 					//设置当前状态为使用背包
 					dataRoleObj[0].setStatus(pram);
+					//设置第二状态（过滤条件）
+					dataRoleObj[0].setStatus2(pram2);
 					//清空当前对象
 					currentInteractiveObject=null;
 					currentItem=null;
@@ -1442,8 +1569,8 @@
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
 				};
-				
 			});
+			
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
 

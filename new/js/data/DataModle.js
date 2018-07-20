@@ -46,6 +46,17 @@ DataModleFactory = {
 			status = pram;
 			return this;
 		};
+		/**
+		 * 第二状态
+		 */
+		var status2;
+		role.getStatus2 = function() {
+			return status2;
+		};
+		role.setStatus2 = function(pram) {
+			status2 = pram;
+			return this;
+		};
 		var Hp;
 		role.getHp  = function() {
 			return Hp;
@@ -116,7 +127,7 @@ DataModleFactory = {
 		/**
 		 * 所有物品
 		 */
-		var items;
+		var items=[];
 		role.getItem = function(num){
 			return items[num];
 		};
@@ -219,7 +230,7 @@ DataModleFactory = {
 		 * Type Array [class InteractiveObject]
 		 * 可交互对象
 		 */
-		var interactiveObjects;
+		var interactiveObjects=[];
 		domain.getInteractiveObject = function(num) {
 			return interactiveObjects[num];
 		};
@@ -252,7 +263,7 @@ DataModleFactory = {
 		/**
 		 * 所有物品数据（价格）
 		 */
-		var itemInfos;
+		var itemInfos=[];
 		domain.getItemInfo = function(num){
 			return itemInfos[num];
 		};
@@ -343,7 +354,7 @@ DataModleFactory = {
 		/**
 		 * 交互动作
 		 */
-		var actions;
+		var actions=[];
 		interactiveObject.getAction = function(num){
 			return actions[num];
 		};
@@ -375,7 +386,7 @@ DataModleFactory = {
 		/**
 		 * 所有物品数据（价格）
 		 */
-		var itemInfos;
+		var itemInfos=[];
 		interactiveObject.getItemInfo = function(num){
 			return itemInfos[num];
 		};
@@ -410,7 +421,7 @@ DataModleFactory = {
 		/**
 		 * 所有物品
 		 */
-		var items;
+		var items=[];
 		interactiveObject.getItem = function(num){
 			return items[num];
 		};
@@ -641,7 +652,7 @@ DataModleFactory = {
 		/**
 		 * 交互动作
 		 */
-		var actions;
+		var actions=[];
 		item.getAction = function(num){
 			return actions[num];
 		};
