@@ -177,7 +177,13 @@
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
-								{{y.getName()}}×{{y.getTotalNum()}}
+								{{y.getName()}}
+							</div>
+							<div class="menu-list-content-suffix" ng-hide="y.getIsPutOn()">
+								×{{y.getTotalNum()}}
+							</div>
+							<div class="menu-list-content-suffix2" ng-hide="!y.getIsPutOn()">
+								已装备
 							</div>
 						</div>
 					</div>
@@ -210,8 +216,11 @@
 				<!--对比角色物品信息面板-->
 				<div ng-controller="panel3RoleItemInfo" ng-hide="viewControl.display.panel3RoleItemInfoHide" ng-style="viewControl.panel3RoleItemInfo_Style" class="panel3" >
 					<div class="panel3-tittle">
+						当前
 					</div>
 					<div class="panel3-lattice" style="width:270px;">
+						{{viewDataModel.panel3RoleItemInfo.name()}}
+						{{viewDataModel.panel3RoleItemInfo.content()}}
 					</div>
 				</div>
 				
@@ -223,7 +232,7 @@
 						{{viewDataModel.panel5.tittleText()}}
 					</div>
 					<div class="menu" style="width: 485px;height: 340px;left:10px;">
-						<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
+						<div ng-click="onClick($event,$index)" ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
@@ -643,15 +652,45 @@
 				 * 物品信息面板组件 显示命令
 				 */
 				panel3ItemInfoShow = function(){
+					if(dataRoleObj[0].getStatus()=="transaction"){
+						//判断为交易状态，变更显示位置
+						viewControl.panel3ItemInfo_Style.top = 405 + "px";
+						viewControl.panel3ItemInfo_Style.left = 465 + "px";
+					}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
+						//判断为使用仓库，变更显示位置
+						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.left = 970 + "px";
+					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+						//判断为使用背包，变更显示位置
+						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.left = 570 + "px";
+					}else {
+						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.left = 970 + "px";
+					}
+					viewControl.panel3ItemInfo_Style.opacity = 0;
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["panel3ItemInfo"] = maxZIndex+1;
 					viewControl.panel3ItemInfo_Style["z-index"] = viewControl.zIndexList["panel3ItemInfo"];
 					viewControl.display.panel3ItemInfoHide = false;
-					viewControl.panel3ItemInfo_Style.top = 25 + "px";
-					viewControl.panel3ItemInfo_Style.opacity = 0;
 					$timeout(function() {
-						viewControl.panel3ItemInfo_Style.top = 30 + "px";
+						if(dataRoleObj[0].getStatus()=="transaction"){
+							//判断为交易状态，变更显示位置
+							viewControl.panel3ItemInfo_Style.top = 410 + "px";
+							viewControl.panel3ItemInfo_Style.left = 465 + "px";
+						}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
+							//判断为使用仓库，变更显示位置
+							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.left = 970 + "px";
+						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+							//判断为使用背包，变更显示位置
+							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.left = 570 + "px";
+						}else{
+							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.left = 970 + "px";
+						}
 						viewControl.panel3ItemInfo_Style.opacity = 1;
 					}, 100);
 				};
@@ -671,22 +710,52 @@
 						viewControl.panel3ItemInfo_Style["z-index"] = 0;
 						//隐藏组件
 						viewControl.display.panel3ItemInfoHide = true;
-					}, 150);
+					}, 200);
 				};
 				
 				/**
 				 * 对比角色物品（装备）信息面板组件 显示命令
 				 */
 				panel3RoleItemInfoShow = function(){
+					if(dataRoleObj[0].getStatus()=="transaction"){
+						//判断为交易状态，变更显示位置
+						viewControl.panel3RoleItemInfo_Style.top = 405 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 950 + "px";
+					}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
+						//判断为使用仓库，变更显示位置
+						viewControl.panel3RoleItemInfo_Style.top = 295 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 970 + "px";
+					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+						//判断为使用背包，变更显示位置
+						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+					}else {
+						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+					}
+					viewControl.panel3RoleItemInfo_Style.opacity = 0;
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["panel3RoleItemInfo"] = maxZIndex+1;
-					viewControl.panel3ItemInfo_Style["z-index"] = viewControl.zIndexList["panel3RoleItemInfo"];
+					viewControl.panel3RoleItemInfo_Style["z-index"] = viewControl.zIndexList["panel3RoleItemInfo"];
 					viewControl.display.panel3RoleItemInfoHide = false;
-					viewControl.panel3RoleItemInfo_Style.top = 405 + "px";
-					viewControl.panel3RoleItemInfo_Style.opacity = 0;
 					$timeout(function() {
-						viewControl.panel3RoleItemInfo_Style.top = 410 + "px";
+						if(dataRoleObj[0].getStatus()=="transaction"){
+							//判断为交易状态，变更显示位置
+							viewControl.panel3RoleItemInfo_Style.top = 410 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 950 + "px";
+						}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
+							//判断为使用仓库，变更显示位置
+							viewControl.panel3RoleItemInfo_Style.top = 300 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 970 + "px";
+						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+							//判断为使用背包，变更显示位置
+							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+						}else {
+							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+						}
 						viewControl.panel3RoleItemInfo_Style.opacity = 1;
 					}, 100);
 				};
@@ -704,7 +773,7 @@
 						viewControl.panel3RoleItemInfo_Style["z-index"] = 0;
 						//隐藏组件
 						viewControl.display.panel3RoleItemInfoHide = true;
-					}, 150);
+					}, 200);
 				};
 				
 				/**
@@ -726,19 +795,19 @@
 					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
 					//判断为交易状态，增加交易面板显示
 					if(model&&model=="transaction"){
-						panel5Left+=170;
-						menuBagLeft-=230;
+						panel5Left+=320;
+						menuBagLeft-=180;
 						viewControl.zIndexList["transactionPanel"] = maxZIndex+1;
 						viewControl.transactionPanel_Style["z-index"] = viewControl.zIndexList["transactionPanel"];
 						viewControl.display.transactionPanelHide = false;
-						viewControl.transactionPanel_Style.top = 20 + "px";
+						viewControl.transactionPanel_Style.top = 5 + "px";
 						viewControl.transactionPanel_Style.opacity = 0;
 					}
 					//弹出遮罩层
 					viewControl.display.panel5MaskLayerHide = false;
 					
 					viewControl.display.panel5Hide = false;
-					viewControl.panel5_Style.left = 650 +panel5Left+ "px";
+					viewControl.panel5_Style.left = 500 +panel5Left+ "px";
 					viewControl.panel5_Style.opacity = 0;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
@@ -747,13 +816,13 @@
 					$timeout(function() {
 						//判断为交易状态，增加交易面板显示
 						if(model&&model=="transaction"){
-							viewControl.transactionPanel_Style.top = 50 + "px";
+							viewControl.transactionPanel_Style.top = 10 + "px";
 							viewControl.transactionPanel_Style.opacity = 1;
 						}
-						viewControl.panel5_Style.left =  600 +panel5Left+ "px";
+						viewControl.panel5_Style.left = 450 +panel5Left+ "px";
 						viewControl.panel5_Style.opacity = 1;
 						//包
-						viewControl.menu_bag_Style.left = 200 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.left = 150 +menuBagLeft+ "px";
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
 				};
@@ -772,8 +841,12 @@
 					//无论是否为交易状态，一并增加隐藏交易面板动画效果，重置角色状态
 					viewControl.transactionPanel_Style.opacity = 0;
 					dataRoleObj[0].setStatus("");
-					
+					dataRoleObj[0].setStatus2("");
 					$timeout(function() {
+						//避免操作过快，信息面板未隐藏
+						panel3ItemInfoHide();
+						panel3RoleItemInfoHide();
+						
 						//仓库组件 数据清理
 						viewDataModel.panel5.buttonElements = null;
 						viewDataModel.panel5.tittleText = null;
@@ -981,6 +1054,8 @@
 					}else if(currentAction.getType()=="transaction"){
 						//判断为打开交易动作
 						panelTyping(currentAction.getContent());
+						//标记角色状态为交易状态
+						dataRoleObj[0].setStatus("transaction");
 						//加载物品信息数据（交易价格）
 						currentItemInfo = (function (){
 							var tempItemInfos = [];
@@ -1086,13 +1161,36 @@
 			app.controller("menuBag", function($scope, $rootScope,$timeout) {
 				$scope.menulistHover = function(index) {
 					$timeout(function() {
+						//角色物品数组集合
+						var roleItems = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2());
 						//标记当前交互（物品）对象
-						currentItem = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2())[index];
+						currentItem = roleItems[index];
 						//显示物品信息面板
 						panel3ItemInfoShow();
+						//判断为装备,增加对比信息面板显示
+						if(currentItem.getType()==ITEM.TYPE.equip){
+							//遍历角色物品集合
+							for (var i=0; i < roleItems.length; i++) {
+								//判断：1.已装备;2.和当前交互物品为同一类型装备
+								if (roleItems[i].getIsPutOn() && roleItems[i].getType2()==currentItem.getType2()){
+									//将数据写入视图
+									viewDataModel.panel3RoleItemInfo.name = function(){
+										return roleItems[i].getName();
+									};
+									viewDataModel.panel3RoleItemInfo.content = function(){
+										return roleItems[i].getContent();
+									};
+									//显示装备对比信息面板
+									panel3RoleItemInfoShow();
+									break;
+								}
+							};
+						}
 					},200);
 				};
 				$scope.menulistUnHover = function() {
+					//隐藏装备对比信息面板
+					panel3RoleItemInfoHide();
 					//隐藏物品信息面板
 					panel3ItemInfoHide();
 				};
@@ -1127,6 +1225,41 @@
 			
 			//仓库组件
 			app.controller("panel5", function($scope, $rootScope,$timeout) {
+				$scope.menulistHover = function(index) {
+					$timeout(function() {
+						//角色物品数组集合
+						var roleItems = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2());
+						//标记当前交互（物品）对象
+						currentItem = currentInteractiveObject.getItem(index);
+						//显示物品信息面板
+						panel3ItemInfoShow();
+						//判断为装备,增加对比信息面板显示
+						if(currentItem.getType()==ITEM.TYPE.equip){
+							//遍历角色物品集合
+							for (var i=0; i < roleItems.length; i++) {
+								//判断：1.已装备;2.和当前交互物品为同一类型装备
+								if (roleItems[i].getIsPutOn() && roleItems[i].getType2()==currentItem.getType2()){
+									//将数据写入视图
+									viewDataModel.panel3RoleItemInfo.name = function(){
+										return roleItems[i].getName();
+									};
+									viewDataModel.panel3RoleItemInfo.content = function(){
+										return roleItems[i].getContent();
+									};
+									//显示装备对比信息面板
+									panel3RoleItemInfoShow();
+									break;
+								}
+							};
+						}
+					},200);
+				};
+				$scope.menulistUnHover = function() {
+					//隐藏装备对比信息面板
+					panel3RoleItemInfoHide();
+					//隐藏物品信息面板
+					panel3ItemInfoHide();
+				};
 				//点击某个交互对象
 				$scope.onClick = function($event,index) {
 					//处理传入对象，判断 class= button2
@@ -1532,6 +1665,13 @@
 						return currentItem.getContent();
 					}
 				};
+			});
+			
+			//对比角色装备物品信息
+			app.controller("panel3RoleItemInfo", function($scope, $rootScope, $timeout) {
+				//视图在对比时实时写入
+				viewDataModel.panel3RoleItemInfo.name = null;
+				viewDataModel.panel3RoleItemInfo.content = null;
 			});
 			
 			//顶部菜单

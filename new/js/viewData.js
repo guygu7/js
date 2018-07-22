@@ -44,7 +44,17 @@ var viewDataModel = {
 		tittleText:function(){return "标题";},
 		text1:0,
 	},
+	/**
+	 * 物品信息面板
+	 */
 	panel3ItemInfo:{
+		name:"",
+		content:"",
+	},
+	/**
+	 * 对比角色（装备）物品信息面板
+	 */
+	panel3RoleItemInfo:{
 		name:"",
 		content:"",
 	},
@@ -251,7 +261,7 @@ var viewControl = {
 	 * 仓库组件面板（初始值）
 	 */
 	panel5_Style : {
-		"top" : 50 + "px",
+		"top" : 10 + "px",
 		"left" : 650 + "px",
 		"opacity" : 0,
 	},

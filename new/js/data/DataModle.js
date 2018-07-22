@@ -438,7 +438,7 @@ DataModleFactory = {
 				function fn1 (obj){
 					itemInfos = obj.getItemInfos();
 					//判断itemInfo存在且不为空数组
-					if(itemInfos&&itemInfos.lenght>0){
+					if(itemInfos!=null&&itemInfos!=undefined&&itemInfos.lenght>0){
 						//遍历出和传入Item对应的数据
 						for (var i=0; i < itemInfos.length; i++) {
 							if(compareItem(pram,itemInfos[i])){

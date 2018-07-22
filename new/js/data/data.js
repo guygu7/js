@@ -101,6 +101,7 @@ dictionaryData.action={
 					name:"使用消耗",
 					type:ACTION.TYPE.useConsumable,
 					target:"",
+					belong:ACTION.BELONG.role,
 				},
 	/**
 	 * （物品）使用非消耗品
@@ -109,6 +110,7 @@ dictionaryData.action={
 					name:"使用非消耗",
 					type:ACTION.TYPE.useUnConsumable,
 					target:"",
+					belong:ACTION.BELONG.role,
 				},
 	/**
 	 * （物品）穿上装备
@@ -117,6 +119,7 @@ dictionaryData.action={
 					name:"实装",
 					type:ACTION.TYPE.putOn,
 					target:"",
+					belong:ACTION.BELONG.role,
 				},
 	/**
 	 * （物品）卸下装备
@@ -125,6 +128,7 @@ dictionaryData.action={
 					name:"卸下实装",
 					type:ACTION.TYPE.takeOff,
 					target:"",
+					belong:ACTION.BELONG.role,
 				},
 	/**
 	 * （物品） 显示已装备按钮选项（点击无效果，或不可点击）
@@ -133,6 +137,7 @@ dictionaryData.action={
 					name:"已实装",
 					type:ACTION.TYPE.alreadyEquipped,
 					target:"",
+					belong:ACTION.BELONG.role,
 				},
 	/**
 	 * （物品）售出返回：从交易暂存面板中撤回至角色包
@@ -173,6 +178,7 @@ var ITEM={
 	 */
 	TYPE2:{
 		equipHead:"head",
+		equip2:"2"
 	},
 };
 /**
@@ -251,6 +257,23 @@ dictionaryData.item={
 			dictionaryData.action.role_alreadyEquipped,
 		],
 	},
+	item7:{
+		name:"实装物体3",
+		type:ITEM.TYPE.equip,
+		type2:ITEM.TYPE2.equip2,
+		content:"物体3说明",
+		totalNum:1,
+		sellCost:5,
+		buyCost:10,
+		isPutOn:false,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_putOn,
+			dictionaryData.action.role_takeOff,
+			dictionaryData.action.role_alreadyEquipped,
+		],
+	},
 	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
 		actions:[
 			dictionaryData.action.itemToRoleBag,
@@ -317,6 +340,7 @@ var data = {
 			dictionaryData.item.item2,
 			dictionaryData.item.item4,
 			dictionaryData.item.item5,
+			dictionaryData.item.item7,
 		],
 	},],
 	/**
