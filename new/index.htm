@@ -17,6 +17,7 @@
 		<link href="css/button.css" rel="stylesheet">
 		<link href="css/numberPicker.css" rel="stylesheet">
 		<link href="css/top.css" rel="stylesheet">
+		<link href="css/fight.css" rel="stylesheet">
 		
 	</head>
 
@@ -38,7 +39,7 @@
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
 				
 				<!--顶部菜单-->
-				<div ng-controller="topFrame" class="top-frame">
+				<div ng-controller="topFrame" ng-hide="viewControl.display.topFrameHide" ng-class="{'hide-animation':viewControl.topFrameHide,'show-animation':!(viewControl.topFrameHide)}" class="top-frame">
 					<div class="top">
 						<div ng-click="clickButton1('useRoleBag')" class="top-button" style="right:510px;">
 							<div class="top-button-background"></div>
@@ -73,7 +74,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div class="top-button">
+						<div ng-hide="viewControl.display.top-button4" class="top-button">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">文字</div>
 							<div class="top-button-arrow">
@@ -88,20 +89,20 @@
 				</div>
 				
 				<!--交流信息面板-->
-				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-style="viewControl.panel_Style" class="panel" style="bottom:5px;left:10px;">
+				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-hide="viewControl.display.panelHide" ng-style="viewControl.panel_Style" class="panel">
 					<div>
 						{{viewDataModel.panelText}}
 					</div>
 					<div class="panel-lamp"></div>
 				</div>
 				
-				<!--场景名称展示-->
-				<div class="panel2" style="top:20px;left:10px;">
+				<!--场景名称展示条-->
+				<div class="panel2" ng-hide="viewControl.display.panel2Hide" ng-style="viewControl.panel2_Style">
 					<span>{{viewDataModel.panel2Text()}}</span>
 				</div>
 				
 				<!--角色信息面板-->
-				<div ng-controller="panel3" ng-rightclick="testright()"  class="panel3" style="top:60px;left:20px;">
+				<div ng-controller="panel3" ng-rightclick="testright()" ng-hide="viewControl.display.panel3Hide" ng-style="viewControl.panel3_Style" class="panel3">
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
@@ -109,7 +110,7 @@
 				</div>
 
 				<!--人物交互面板(按钮组)-->
-				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" class="panel4" style="top:60px;left:330px;">
+				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4">
 					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements()" class="button2">
 						<div class="button2-background"></div>
 						<div class="button2-background2"></div>
@@ -151,7 +152,7 @@
 				<!--列表菜单-遮罩层-->
 				<div ng-controller="menuAutoMaskLayer" ng-hide="viewControl.display.menuAutoMaskLayerHide"  ng-style="viewControl.menuAutoMaskLayer_Style" ng-mousedown="menuAutoMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单（自动大小_带箭头）-->
-				<div id="menuAuto" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menuAuto-background">
+				<div id="menuAuto" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" class="menuAuto-background">
 					<div class="menuAuto">
 						<div ng-click="menulistClick($index,$event)" ng-repeat="y in viewDataModel.menu.buttonElements()" class="menuAuto-list">
 							<div class="menuAuto-list-background2"></div>
@@ -193,20 +194,20 @@
 				<div ng-controller="panel3ItemInfo" ng-hide="viewControl.display.panel3ItemInfoHide" ng-style="viewControl.panel3ItemInfo_Style" class="panel3" >
 					<div class="panel3-tittle">
 					</div>
-					<div class="panel3-lattice" style="width:270px;">
-						<div ng-hide="viewControl.display.panel3ItemInfoNameHide" style="height:20px;width: 270px;margin: 5px;">
-							<div style="height: 20px;left: 10px;position: absolute;">
+					<div class="panel3-lattice" style="width:250px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoNameHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
 								名称：
 							</div>
-							<div style="height: 20px;right: 10px;position: absolute;">
+							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.name()}}
 							</div>
 						</div>
-						<div ng-hide="viewControl.display.panel3ItemInfoContentHide" style="height:20px;width: 270px;margin: 5px;">
-							<div style="height: 20px;left: 10px;position: absolute;">
+						<div ng-hide="viewControl.display.panel3ItemInfoContentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
 								说明：
 							</div>
-							<div style="height: 20px;right: 10px;position: absolute;">
+							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.content()}}
 							</div>
 						</div>
@@ -218,16 +219,17 @@
 					<div class="panel3-tittle">
 						当前
 					</div>
-					<div class="panel3-lattice" style="width:270px;">
+					<div class="panel3-lattice" style="width:250px;">
 						{{viewDataModel.panel3RoleItemInfo.name()}}
 						{{viewDataModel.panel3RoleItemInfo.content()}}
 					</div>
+					
 				</div>
 				
 				<!--仓库-遮罩层-->
 				<div ng-controller="panel5MaskLayer" ng-hide="viewControl.display.panel5MaskLayerHide"  ng-style="viewControl.panel5MaskLayer_Style" ng-mousedown="panel5MaskLayerClick($event)" class="maskLayer" ></div>
 				<!--仓库-->
-				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-class="{'hide-animation':panel5Hide,'show-animation':!panel5Hide}" class="panel5">
+				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" class="panel5">
 					<div class="panel5-tittle">
 						{{viewDataModel.panel5.tittleText()}}
 					</div>
@@ -251,7 +253,7 @@
 				<!--数字选择器-遮罩层-->
 				<div ng-controller="numberPickerMaskLayer" ng-hide="viewControl.display.numberPickerMaskLayerHide"  ng-style="viewControl.numberPickerMaskLayer_Style" ng-mousedown="numberPickerMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--数字选择器-->
-				<div ng-controller="numberPicker" ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-class="{'hide-animation':numberPickerHide,'show-animation':!numberPickerHide}" class="numberPicker-background">
+				<div ng-controller="numberPicker" ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" class="numberPicker-background">
 					<div class="numberPicker">
 						<div class="numberPicker-tittle">{{viewDataModel.numberPicker.tittleText}}</div>
 						<div ng-mousedown="numberUp()" ng-mouseup="numberUpStop()" ng-mouseleave="numberUpStop()" class="numberPicker-upperArrow">
@@ -271,7 +273,7 @@
 				</div>
 				
 				<!--交易面板-->
-				<div ng-controller="transactionPanel" ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" ng-class="{'hide-animation':transactionPanelHide,'show-animation':!transactionPanelHide}" class="panel5">
+				<div ng-controller="transactionPanel" ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" class="panel5">
 					<div class="menu" style="width: 485px;height: 170px;left:10px;">
 						<div ng-click="sellsClick($event,$index)" ng-repeat="x in viewDataModel.transactionPanel.sellButtonElements()" class="button2">
 							<div class="button2-background"></div>
@@ -304,6 +306,19 @@
 								×{{x.getTotalNum()}}
 							</div>
 						</div>
+					</div>
+				</div>
+				
+				<!--战斗组件-->
+				<div class="panelFight">
+					<!--对象信息组件-->
+					<div class="panelFight-objInfo">
+						
+					</div>
+					<div></div>
+					<!--角色信息组件-->
+					<div class="panelFight-roleInfo">
+						<div class="panelFight-HP"></div>
 					</div>
 				</div>
 				
@@ -545,11 +560,12 @@
 					}, 10);
 					$timeout(function() {
 						viewControl.display.sceneStartHide = true;
+						mainShow();
+						panelTyping(data.startText);
 					}, 800);
 					//动态显示开始引导文本
-					$timeout(function() {
-						panelTyping(data.startText);
-					}, 1000);
+					//$timeout(function() {
+					//}, 1000);
 				};
 			});
 			
@@ -566,6 +582,61 @@
 						}
 					};
 					return maxZIndex;
+				};
+				/**
+				 * 主场景所有组件显示
+				 */
+				mainShow = function(){
+					//无需控制层叠关系
+					//场景名称展示条
+					viewControl.display.panel2Hide = false;
+					viewControl.panel2_Style.top = 20 + "px";
+					viewControl.panel2_Style.left =  5 + "px";
+					viewControl.panel2_Style.opacity = 0;
+					//角色信息面板
+					viewControl.display.panel3Hide = false;
+					viewControl.panel3_Style.top = 60 + "px";
+					viewControl.panel3_Style.left =  15 + "px";
+					viewControl.panel3_Style.opacity = 0;
+					//人物交互面板(按钮组)
+					viewControl.display.panel4Hide = false;
+					viewControl.panel4_Style.opacity = 0;
+					//交流信息面板(基本会一直显示)
+					viewControl.display.panelHide = false;
+					$timeout(function() {
+						//场景名称展示条
+						viewControl.panel2_Style.left =  10 + "px";
+						viewControl.panel2_Style.opacity = 1;
+						//角色信息面板
+						viewControl.panel3_Style.left =  20 + "px";
+						viewControl.panel3_Style.opacity = 1;
+						//人物交互面板(按钮组)
+						viewControl.panel4_Style.opacity = 1;
+					}, 50);
+				};
+				/**
+				 * 主场景所有组件隐藏
+				 */
+				mainHide = function(){
+					//场景名称展示条
+					var panel2Left = viewControl.panel2_Style.left;
+					viewControl.panel2_Style.left = Number(panel2Left.substr(0,panel2Left.length-2))-5 + "px";
+					viewControl.panel2_Style.opacity = 0;
+					//角色信息面板
+					var panel3Left = viewControl.panel3_Style.left;
+					viewControl.panel3_Style.left = Number(panel3Left.substr(0,panel3Left.length-2))-5 + "px";
+					viewControl.panel3_Style.opacity = 0;
+					//人物交互面板(按钮组)
+					viewControl.panel4_Style.opacity = 0;
+					//交流信息面板(基本会一直显示)
+					$timeout(function() {
+						//场景名称展示条
+						viewControl.display.panel2Hide = true;
+						//角色信息面板
+						viewControl.display.panel3Hide = true;
+						//人物交互面板(按钮组)
+						viewControl.display.panel4Hide = true;
+					}, 200);
 				};
 				/**
 				 * 方向盘组件 显示命令
@@ -655,7 +726,7 @@
 					if(dataRoleObj[0].getStatus()=="transaction"){
 						//判断为交易状态，变更显示位置
 						viewControl.panel3ItemInfo_Style.top = 405 + "px";
-						viewControl.panel3ItemInfo_Style.left = 465 + "px";
+						viewControl.panel3ItemInfo_Style.left = 475 + "px";
 					}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 						//判断为使用仓库，变更显示位置
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
@@ -663,7 +734,7 @@
 					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 						//判断为使用背包，变更显示位置
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
-						viewControl.panel3ItemInfo_Style.left = 570 + "px";
+						viewControl.panel3ItemInfo_Style.left = 600 + "px";
 					}else {
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
 						viewControl.panel3ItemInfo_Style.left = 970 + "px";
@@ -678,7 +749,7 @@
 						if(dataRoleObj[0].getStatus()=="transaction"){
 							//判断为交易状态，变更显示位置
 							viewControl.panel3ItemInfo_Style.top = 410 + "px";
-							viewControl.panel3ItemInfo_Style.left = 465 + "px";
+							viewControl.panel3ItemInfo_Style.left = 475 + "px";
 						}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 							//判断为使用仓库，变更显示位置
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
@@ -686,7 +757,7 @@
 						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 							//判断为使用背包，变更显示位置
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
-							viewControl.panel3ItemInfo_Style.left = 570 + "px";
+							viewControl.panel3ItemInfo_Style.left = 600 + "px";
 						}else{
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
 							viewControl.panel3ItemInfo_Style.left = 970 + "px";
@@ -780,6 +851,8 @@
 				 * 仓库组件 显示命令(同时打开包裹组件)
 				 */
 				panel5Show = function(model){
+					//隐藏主场景
+					mainHide();
 					var panel5Left=0;
 					var menuBagLeft=0;
 					//获取层叠关系数组中最大值，并+1存入
@@ -919,6 +992,7 @@
 						}
 						//交易流程完成，清空当前交互对象
 						currentInteractiveObject = null;
+						mainShow();
 					}, 200);
 				};
 				
@@ -963,6 +1037,21 @@
 					}, 100);
 				};
 				
+				/**
+				 * 展示战斗界面
+				 */
+				fightShow = function(){
+					//标记角色状态为战斗状态
+					dataRoleObj[0].setStatus("fight");
+					viewControl.display.topFrameHide = true;
+					//
+				};
+				/**
+				 * 隐藏战斗界面
+				 */
+				fightHide = function(){
+					
+				};
 			});
 
 			//人物交互面板
@@ -1000,6 +1089,7 @@
 					}else{
 						return;
 					}
+					/*---------交互对象操作动作--------*/
 					if(currentAction.getType()=="talk"){
 						//判断为对话
 						panelTyping(currentAction.getContent());
@@ -1041,15 +1131,6 @@
 						//使用建筑功能（仓库）动作完成，清空当前交互动作
 						currentAction = null;
 						//使用流程继续，保留当前交互对象
-						currentInteractiveObject;
-					}else if(currentAction.getType()==ACTION.TYPE.split){
-						//判断为交易,重新定位视图数据指针
-						viewDataModel.numberPicker.number = currentItem.getTotalNum();
-						//打开数字选择器
-						numberPickerShow(document.getElementById("menuAuto").offsetTop,document.getElementById("menuAuto").offsetLeft);
-						//动作继续，不清空当前交互动作
-						currentAction;
-						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
 					}else if(currentAction.getType()=="transaction"){
 						//判断为打开交易动作
@@ -1129,6 +1210,22 @@
 						currentAction = null;
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
+					}else if(currentAction.getType()==ACTION.TYPE.fight){
+						//判断为开始战斗
+						mainHide();
+						//
+						fightShow();
+					}
+					/*---------物品操作动作--------*/
+					else if(currentAction.getType()==ACTION.TYPE.split){
+						//判断为交易,重新定位视图数据指针
+						viewDataModel.numberPicker.number = currentItem.getTotalNum();
+						//打开数字选择器
+						numberPickerShow(document.getElementById("menuAuto").offsetTop,document.getElementById("menuAuto").offsetLeft);
+						//动作继续，不清空当前交互动作
+						currentAction;
+						//交易流程继续，保留当前交互对象
+						currentInteractiveObject;
 					}else if(currentAction.getType()==ACTION.TYPE.useConsumable){
 						//判断为使用(物品/消耗品)
 						//数量-1
@@ -1138,18 +1235,20 @@
 						}
 						//执行使用效果
 					}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
+						//判断为使用(物品/非消耗品)
+						//执行使用效果
 					}else if(currentAction.getType()==ACTION.TYPE.putOn){
-						//判断为穿上实装
+						//判断为穿上装备
 						var tempItems = dataRoleObj[0].getItems();
 						for (var i=0; i < tempItems.length; i++) {
-							//遍历所有相同部位实装，并标记为卸下
+							//遍历所有相同部位装备，并标记为卸下
 							if(tempItems[i].getType2()==currentItem.getType2()){
 								tempItems[i].setIsPutOn(false);
 							}
 						};
 						currentItem.setIsPutOn(true);
 					}else if(currentAction.getType()==ACTION.TYPE.takeOff){
-						//判断为卸下实装
+						//判断为卸下装备
 						currentItem.setIsPutOn(false);
 					}
 					//隐藏菜单
@@ -1677,6 +1776,11 @@
 			//顶部菜单
 			app.controller("topFrame", function($scope, $rootScope, $timeout) {
 				$scope.clickButton1 = function(pram,pram2){
+					mainHide();
+					if(dataRoleObj[0].getStatus()=="fight"){
+						//判断为战斗状态，不可操作
+						return;
+					}
 					//设置当前状态为使用背包
 					dataRoleObj[0].setStatus(pram);
 					//设置第二状态（过滤条件）
@@ -1694,20 +1798,32 @@
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.zIndexList["panel"] = maxZIndex+2;
+					viewControl.zIndexList["panel3"] = maxZIndex+2;
 					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
 					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
+					viewControl.panel3_Style["z-index"] = viewControl.zIndexList["panel3"];
 					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
 					//弹出遮罩层
 					viewControl.display.panel5MaskLayerHide = false;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 150 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.left = 295 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
+					//显示角色信息面板
+					viewControl.panel3_Style.top = 60 + "px";
+					viewControl.panel3_Style.left =  0 + "px";
+					viewControl.panel3_Style.opacity = 0;
 					$timeout(function() {
 						//包
-						viewControl.menu_bag_Style.left = 250 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.left = 300 +menuBagLeft+ "px";
 						viewControl.menu_bag_Style.opacity = 1;
-					}, 100);
+						//角色信息面板
+						viewControl.display.panel3Hide = false;
+						viewControl.panel3_Style.left =  5 + "px";
+						viewControl.panel3_Style.opacity = 1;
+					}, 200);
 				};
 			});
 			

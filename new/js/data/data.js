@@ -36,6 +36,10 @@ var ACTION={
 		 * 显示已装备按钮选项（点击无效果，或不可点击）
 		 */
 		alreadyEquipped:"alreadyEquipped",
+		/**
+		 * 进入战斗界面
+		 */
+		fight:"fight",
 	},
 	/**
 	 * 交互动作.目标
@@ -70,12 +74,17 @@ var ACTION={
 		 * 非角色
 		 */
 		notRole:"notRole",
+		/**
+		 * 交互对象
+		 */
+		interactiveObject:"interactiveObject",
 	},
 };
 /**
  * 基础交互动作
  */
 dictionaryData.action={
+	/*---------对物品动作---------*/
 	/**
 	 * 物品（从交互对象）移动至角色包中
 	 */
@@ -155,6 +164,15 @@ dictionaryData.action={
 				type:ACTION.TYPE.split,
 				target:ACTION.TARGET.buyback,
 			},
+	/*--------对交互对象动作------*/
+	/**
+	 * 攻击动作，进入战斗界面
+	 */
+	fight:{
+				name:"跳转界面",
+				type:ACTION.TYPE.fight,
+				target:ACTION.TARGET.interactiveObject
+	}
 };
 /**
  * 物品常量数据 
@@ -388,6 +406,16 @@ var data = {
 					actions:[
 						{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
 						{name:"交互",type:"transaction",content:"打开交易面板"},
+					],
+					//itemInfo:[],
+				},
+				{
+					name:"交流对象2",
+					items:[
+						dictionaryData.item.item1,
+					],
+					actions:[
+						dictionaryData.action.fight,
 					],
 					//itemInfo:[],
 				},

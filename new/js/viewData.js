@@ -141,6 +141,22 @@ var viewControl = {
 		 */
 		sceneMainHide:true,
 		/**
+		 * 交流信息面板隐藏
+		 */
+		panelHide:true,
+		/**
+		 * 场景名称展示条隐藏
+		 */
+		panel2Hide:true,
+		/**
+		 * 角色信息面板隐藏
+		 */
+		panel3Hide:true,
+		/**
+		 * 人物交互面板(按钮组)隐藏
+		 */
+		panel4Hide:true,
+		/**
 		 * 方向盘组件隐藏
 		 */
 		steeringWheelHide:true,
@@ -206,15 +222,39 @@ var viewControl = {
 	 */
 	zIndexList : {},
 	/**
+	 * 场景名称展示条
+	 */
+	panel2_Style:{
+		"top" : 20 + "px",
+		"left" : 10 + "px",
+	},
+	/**
+	 * 角色信息面板
+	 */
+	panel3_Style:{
+		"top" : 60 + "px",
+		"left" : 20 + "px",
+	},
+	/**
+	 * 人物交互面板(按钮组)
+	 */
+	panel4_Style:{
+		"top" : 60 + "px",
+		"left" : 330 + "px",
+	},
+	/**
 	 * 交流信息面板 （初始值）
 	 */
-	panel_Style:{},
+	panel_Style:{
+		"bottom" : 5 + "px",
+		"left" : 10 + "px",
+	},
 	/**
 	 * 方向盘组件（初始值）
 	 */
 	steeringWheel_Style:{
-		"bottom":55 + "px",
-		"right":80 + "px",
+		"bottom" : 55 + "px",
+		"right" : 80 + "px",
 	},
 	/**
 	 * 列表菜单（自动大小_带箭头）专用遮罩层（初始值）

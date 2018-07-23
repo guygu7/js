@@ -39,13 +39,13 @@
 
 
 .panel3{
-	width:300px;
+	width:280px;
 	background-color:rgb(235,230,205);
 	transition:0.6s;
 	position: absolute;
 }
 .panel3-tittle{
-	width:290px;
+	width:270px;
 	height: 30px;
 	line-height:30px;
 	background-color: rgb(72,69,71);
@@ -55,6 +55,7 @@
 .panel3-lattice{
 	box-shadow: 0px -2px 0px 0px rgb(180,175,155) inset;
 	font-weight: 400;
+	font-size:small;
 	margin: 3px 8px 3px 8px;
 	padding: 5px;
 }
@@ -64,6 +65,7 @@
 	width:500px;
 	height: 400px;
 	padding:10px 10px 10px 10px;
+	transition:0.6s;
 	position: absolute;
 }
 
@@ -83,3 +85,4 @@
 	color:rgb(235,230,205);
 	padding:0px 0px 0px 10px;
 }
+
