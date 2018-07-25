@@ -309,33 +309,6 @@
 					</div>
 				</div>
 				
-				<!--战斗组件-->
-				<div class="panelFight">
-					<!--对象信息组件-->
-					<div class="panelFight-objInfo">
-						
-					</div>
-					<div></div>
-					<!--角色信息组件-->
-					<div class="panelFight-roleInfo">
-						<div class="panelFight-lattice">
-							<div class="panelFight-lattice-prefix">HP:</div>
-							<div class="panelFight-lattice-value">XXX/XXX</div>
-						</div>
-						<div class="panelFight-lattice" style="height: 10px;">
-							<div class="panelFight-bar-grey"></div>
-						</div>
-						<div class="panelFight-lattice">
-							<div class="panelFight-lattice-prefix">XP:</div>
-							<div class="panelFight-lattice-value">XXX/XXX</div>
-						</div>
-						<div class="panelFight-lattice" style="height: 10px;">
-							<div class="panelFight-bar-red"></div>
-						</div>
-					</div>
-						
-				</div>
-				
 				<!--未实装组件-->
 				<!--列表菜单
 				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
@@ -352,6 +325,44 @@
 				</div>
 				-->
 				
+			</div>
+		
+			<!--战斗场景-->
+			<div ng-controller="scene-battle" ng-hide="viewControl.display.sceneBattleHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-battle','show-animation-scene':viewControl.currentScene=='scene-battle'}" class="scene">
+				<div class="panelFight">
+					<!--对象信息组件-->
+					<div class="panelFight-objInfo">
+						
+					</div>
+					<!--角色信息组件-->
+					<div class="panelFight-roleInfo">
+						<div class="panelFight-lattice">
+							<div class="panelFight-lattice-buffimg">
+							</div>
+							<div class="panelFight-lattice-buffimg">
+							</div>
+							<div class="panelFight-lattice-buffimg">
+							</div>
+						</div>
+						<div class="panelFight-lattice">
+							<div class="panelFight-lattice-prefix">HP:</div>
+							<div class="panelFight-lattice-value">XXX/XXX</div>
+						</div>
+						<div class="panelFight-lattice" style="height: 10px;">
+							<div class="panelFight-bar-grey"></div>
+						</div>
+						<div class="panelFight-lattice">
+							<div class="panelFight-lattice-prefix">XP:</div>
+							<div class="panelFight-lattice-value">XXX/XXX</div>
+						</div>
+						<div class="panelFight-lattice" style="height: 10px;">
+							<div class="panelFight-bar-red"></div>
+						</div>
+						<div class="panelFight-lattice" style="height: 10px;">
+							<div class="panelFight-bar-block"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
@@ -567,12 +578,15 @@
 					viewDataModel.panel2Text = function (){
 						return currentDomain.getName();
 					};
+					in
 					//动态效果
 					viewControl.display.sceneMainHide = false;
 					$timeout(function() {
 						viewControl.currentScene = "scene-main";
 					}, 10);
 					$timeout(function() {
+						//隐藏其他场景
+						viewControl.display.sceneBattleHide = true;
 						viewControl.display.sceneStartHide = true;
 						mainShow();
 						panelTyping(data.startText);
@@ -1054,11 +1068,25 @@
 				/**
 				 * 展示战斗界面
 				 */
-				fightShow = function(){
+				sceneFightShow = function(){
 					//标记角色状态为战斗状态
 					dataRoleObj[0].setStatus("fight");
-					viewControl.display.topFrameHide = true;
-					//
+					//视图数据清空
+					in
+					//场景切换,动态效果
+					viewControl.display.sceneMainHide = false;
+					$timeout(function() {
+						viewControl.currentScene = "scene-main";
+					}, 10);
+					$timeout(function() {
+						//隐藏其他场景
+						viewControl.display.sceneBattleHide = true;
+						viewControl.display.sceneStartHide = true;
+						mainShow();
+						panelTyping(data.startText);
+					}, 800);
+					//显示角色战斗状态信息面板
+					
 				};
 				/**
 				 * 隐藏战斗界面
@@ -1228,7 +1256,7 @@
 						//判断为开始战斗
 						mainHide();
 						//
-						fightShow();
+						sceneFightShow();
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
@@ -1841,6 +1869,10 @@
 				};
 			});
 			
+			
+			//战斗场景
+			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
+			});
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
 

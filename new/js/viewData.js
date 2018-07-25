@@ -208,6 +208,14 @@ var viewControl = {
 		 * 交易面板 
 		 */
 		transactionPanelHide:true,
+		/**
+		 * 顶部菜单
+		 */
+		topFrameHide:false,
+		/**
+		 * 战斗场景
+		 */
+		sceneBattleHide:true,
 	},
 	/**
 	 * 当前所在场景（初始值） 
