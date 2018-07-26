@@ -358,7 +358,7 @@
 							<div class="panelFight-lattice-value">{{viewDataModel.battle.roleHP()}}/{{viewDataModel.battle.roleMaxHP()}}</div>
 						</div>
 						<div class="panelFight-lattice" style="height: 10px;">
-							<div class="panelFight-bar-grey" ng-style="viewControl.panelFightBar_Style"></div>
+							<div ng-class="{'panelFight-bar-grey':viewControl.panelFightBarColour()!='red','panelFight-bar-red':viewControl.panelFightBarColour()=='red'}" ng-style="viewControl.panelFightBar_StyleFn()"></div>
 						</div>
 						<div class="panelFight-lattice">
 							<div class="panelFight-lattice-prefix">XP:</div>
@@ -1903,19 +1903,7 @@
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
 				$scope.TestClick=function(){
-					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-5);
-					/*
-						viewControl.panelFightBar_Style.width = function(){
-							sumHp=dataRoleObj[0].getHp();
-							if(sumHp<100){
-								return 100+"px";
-							}else if(sumHp<400){
-								return sumHp+"px";
-							}else{
-								return 400+"px";
-							}
-						};
-					*/
+					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-50);
 				};
 			});
 		</script>
