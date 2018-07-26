@@ -123,6 +123,14 @@ var viewDataModel = {
 		 */
 		buyButtonElements:function(){return transactionItems.buyItems;},
 	},
+	/*------------------战斗场景组件视图数据------------------*/
+	/**
+	 * 战斗面板
+	 */
+	battle:{
+		roleHP:function(){return dataRoleObj[0].getHp();},
+		roleMaxHP:function(){return dataRoleObj[0].getMaxHp();},
+	},
 };
 /**
  * 视图控制对象（属性为对视图的控制属性）
@@ -330,4 +338,8 @@ var viewControl = {
 		"left" : 260 + "px",
 		"opacity" : 0,
 	},
+	/*----------战斗场景面板组件----------*/
+	panelFightBar_Style:{
+		"width": 400+"px",
+	}
 };

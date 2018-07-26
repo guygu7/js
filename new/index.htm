@@ -26,7 +26,7 @@
 			<!--起始场景-->
 			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-start','show-animation-scene':viewControl.currentScene=='scene-start'}" class="scene">
 				<input type="BUTTON" name="FullScreen" value="全屏显示" onClick="window.open(document.location, 'big', 'fullscreen=yes')">
-				<div ng-click="buttonstart()" class="button" style="top:200px;left:200px;">
+				<div ng-click="buttonStart()" class="button" style="top:200px;left:200px;">
 					<div class="button-background">
 						<div class="button-background2"></div>
 					</div>
@@ -329,10 +329,19 @@
 		
 			<!--战斗场景-->
 			<div ng-controller="scene-battle" ng-hide="viewControl.display.sceneBattleHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-battle','show-animation-scene':viewControl.currentScene=='scene-battle'}" class="scene">
+				
+				<!--交流信息面板-->
+				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-hide="viewControl.display.panelHide" ng-style="viewControl.panel_Style" class="panel">
+					<div>
+						{{viewDataModel.panelText}}
+					</div>
+					<div class="panel-lamp"></div>
+				</div>
+				
 				<div class="panelFight">
 					<!--对象信息组件-->
 					<div class="panelFight-objInfo">
-						
+						<button ng-click="TestClick()">HP-1</button>
 					</div>
 					<!--角色信息组件-->
 					<div class="panelFight-roleInfo">
@@ -346,10 +355,10 @@
 						</div>
 						<div class="panelFight-lattice">
 							<div class="panelFight-lattice-prefix">HP:</div>
-							<div class="panelFight-lattice-value">XXX/XXX</div>
+							<div class="panelFight-lattice-value">{{viewDataModel.battle.roleHP()}}/{{viewDataModel.battle.roleMaxHP()}}</div>
 						</div>
 						<div class="panelFight-lattice" style="height: 10px;">
-							<div class="panelFight-bar-grey"></div>
+							<div class="panelFight-bar-grey" ng-style="viewControl.panelFightBar_Style"></div>
 						</div>
 						<div class="panelFight-lattice">
 							<div class="panelFight-lattice-prefix">XP:</div>
@@ -569,7 +578,13 @@
 			//起始场景
 			app.controller("scene-start", function($scope, $rootScope, $timeout) {
 				//开始按钮
-				$scope.buttonstart = function() {
+				$scope.buttonStart = function(){
+					sceneMainShow(data.startText);
+				};
+				/**
+				 * 主场景显示&数据加载
+				 */
+				sceneMainShow = function(str) {
 					//人物交互面板(按钮组)初始数据加载
 					viewDataModel.panel4.buttonElements = function (){
 						return currentDomain.getInteractiveObjects();
@@ -578,7 +593,7 @@
 					viewDataModel.panel2Text = function (){
 						return currentDomain.getName();
 					};
-					in
+					//in
 					//动态效果
 					viewControl.display.sceneMainHide = false;
 					$timeout(function() {
@@ -589,11 +604,24 @@
 						viewControl.display.sceneBattleHide = true;
 						viewControl.display.sceneStartHide = true;
 						mainShow();
-						panelTyping(data.startText);
-					}, 800);
+						panelTyping(str);
+					}, 200);
 					//动态显示开始引导文本
 					//$timeout(function() {
 					//}, 1000);
+				};
+				/**
+				 * 主场景视图数据清除
+				 */
+				sceneMainViewDataClear = function() {
+					//人物交互面板(按钮组)初始数据加载
+					viewDataModel.panel4.buttonElements = function (){
+						return currentDomain.getInteractiveObjects();
+					};
+					//场景名称数据加载
+					viewDataModel.panel2Text = function (){
+						return currentDomain.getName();
+					};
 				};
 			});
 			
@@ -1071,20 +1099,21 @@
 				sceneFightShow = function(){
 					//标记角色状态为战斗状态
 					dataRoleObj[0].setStatus("fight");
-					//视图数据清空
-					in
+					//in
+					//加载角色数据
+					
 					//场景切换,动态效果
-					viewControl.display.sceneMainHide = false;
+					viewControl.display.sceneBattleHide = false;
 					$timeout(function() {
-						viewControl.currentScene = "scene-main";
+						viewControl.currentScene = "scene-battle";
 					}, 10);
 					$timeout(function() {
 						//隐藏其他场景
-						viewControl.display.sceneBattleHide = true;
+						viewControl.display.sceneMainHide = true;
 						viewControl.display.sceneStartHide = true;
 						mainShow();
-						panelTyping(data.startText);
-					}, 800);
+						//panelTyping(data.startText);
+					}, 200);
 					//显示角色战斗状态信息面板
 					
 				};
@@ -1255,7 +1284,8 @@
 					}else if(currentAction.getType()==ACTION.TYPE.fight){
 						//判断为开始战斗
 						mainHide();
-						//
+						sceneMainViewDataClear();
+						//in
 						sceneFightShow();
 					}
 					/*---------物品操作动作--------*/
@@ -1872,6 +1902,21 @@
 			
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
+				$scope.TestClick=function(){
+					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-5);
+					/*
+						viewControl.panelFightBar_Style.width = function(){
+							sumHp=dataRoleObj[0].getHp();
+							if(sumHp<100){
+								return 100+"px";
+							}else if(sumHp<400){
+								return sumHp+"px";
+							}else{
+								return 400+"px";
+							}
+						};
+					*/
+				};
 			});
 		</script>
 		<script src="js/animation/steeringWheel.js"></script>
