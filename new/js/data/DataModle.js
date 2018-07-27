@@ -57,22 +57,42 @@ DataModleFactory = {
 			status2 = pram;
 			return this;
 		};
+		/**
+		 * 角色基础HP
+		 */
+		var baseHp;
+		role.getBaseHp  = function() {
+			return baseHp;
+		};
+		role.setBaseHp = function(pram) {
+			baseHp = pram;
+			return this;
+		};
+		/**
+		 * 角色当前HP
+		 */
 		var Hp;
 		role.getHp  = function() {
 			return Hp;
 		};
 		role.setHp = function(pram) {
 			Hp = pram;
+			if(Hp<0){Hp=0;}
 			return this;
 		};
-		var MaxHp;
+		/**
+		 * 角色最大HP（包含计算加成）
+		 */
 		role.getMaxHp  = function() {
-			return MaxHp;
+			return baseHp;
 		};
+		/*
+		var MaxHp;
 		role.setMaxHp = function(pram) {
 			MaxHp = pram;
 			return this;
 		};
+		*/
 		var Att;
 		role.getAtt  = function() {
 			return Att;

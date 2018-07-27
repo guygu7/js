@@ -343,18 +343,20 @@ var viewControl = {
 		sumMaxHp=dataRoleObj[0].getMaxHp();
 		sumHp=dataRoleObj[0].getHp();
 		percent = (sumHp/sumMaxHp);
-		if(percent>0.3){
+		if(percent>0.25){
 			return "grey";
 		}else{
 			return "red";
 		}
 	},
 	panelFightBar_StyleFn:function(){
+		sumMaxHp=dataRoleObj[0].getMaxHp();
 		sumHp=dataRoleObj[0].getHp();
-		if(sumHp<400){
+		if(sumHp<0){sumHp=0;}
+		if(sumMaxHp<400){
 			return {"width":sumHp+"px"};
-		}else if(sumHp>=400){
-			return {"width":400+"px"};
+		}else if(sumMaxHp>=400){
+			return {"width":(sumHp/sumMaxHp)*400+"px"};
 		}else{
 			return {"width":0+"px"};
 		}

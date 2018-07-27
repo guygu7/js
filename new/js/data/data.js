@@ -349,7 +349,7 @@ var data = {
 	roles:[{
 		name:"角色",
 		hp:500,
-		maxHp:500,
+		baseHp:500,
 		att:10,
 		def:1,
 		itemInfos:dictionaryData.roleItemInfo,

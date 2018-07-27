@@ -58,7 +58,7 @@
 }
 /*上边框*/
 .button2-background,.button2-background2{
-	width:30px;
+	width:0px;
 	height: 2px;
 	background:rgb(69,66,58);
 	transition:0.2s;

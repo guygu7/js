@@ -341,8 +341,24 @@
 				<div class="panelFight">
 					<!--对象信息组件-->
 					<div class="panelFight-objInfo">
-						<button ng-click="TestClick()">HP-1</button>
+						<div class="panelFight-lattice">
+							<div class="panelFight-lattice-enemyValue">{{viewDataModel.battle.roleHP()}}/{{viewDataModel.battle.roleMaxHP()}}</div>
+							<div class="panelFight-lattice-enemyPrefix">:HP</div>
+						</div>
+						<div class="panelFight-lattice" style="height: 10px;left:10px;">
+							<div ng-class="{'panelFight-bar-enemy-grey':viewControl.panelFightBarColour()!='red','panelFight-bar-enemy-red':viewControl.panelFightBarColour()=='red'}" ng-style="viewControl.panelFightBar_StyleFn()"></div>
+						</div>
+						<div class="panelFight-lattice">
+							<div class="panelFight-lattice-buffimg">
+							</div>
+							<div class="panelFight-lattice-buffimg">
+							</div>
+							<div class="panelFight-lattice-buffimg">
+							</div>
+						</div>
 					</div>
+					<!--测试按钮-->
+					<button ng-click="TestClick()">HP-1</button>
 					<!--角色信息组件-->
 					<div class="panelFight-roleInfo">
 						<div class="panelFight-lattice">
@@ -360,6 +376,7 @@
 						<div class="panelFight-lattice" style="height: 10px;">
 							<div ng-class="{'panelFight-bar-grey':viewControl.panelFightBarColour()!='red','panelFight-bar-red':viewControl.panelFightBarColour()=='red'}" ng-style="viewControl.panelFightBar_StyleFn()"></div>
 						</div>
+						<!--
 						<div class="panelFight-lattice">
 							<div class="panelFight-lattice-prefix">XP:</div>
 							<div class="panelFight-lattice-value">XXX/XXX</div>
@@ -370,6 +387,7 @@
 						<div class="panelFight-lattice" style="height: 10px;">
 							<div class="panelFight-bar-block"></div>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>

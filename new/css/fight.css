@@ -28,34 +28,57 @@
 	//border: 1px solid rgb(154,150,132);
 	position: relative;
 }
-.panelFight-lattice-prefix {
+
+.panelFight-lattice-prefix
+,.panelFight-lattice-enemyPrefix{
 	width: 50px;
 	height: 20px;
 	line-height: 20px;
-	left: 5px;
-	text-align: right;
 	position: absolute;
 }
-.panelFight-lattice-value {
+.panelFight-lattice-prefix{
+	text-align: right;
+	left: 5px;
+}
+.panelFight-lattice-enemyPrefix{
+	text-align: left;
+	right:5px;
+}
+
+.panelFight-lattice-value 
+,.panelFight-lattice-enemyValue{
 	width: 150px;
 	height: 20px;
-	left: 70px;
 	line-height: 20px;
 	position: absolute;
 }
-.panelFight-bar-grey, .panelFight-bar-red {
+.panelFight-lattice-value{
+	left: 70px;
+}
+.panelFight-lattice-enemyValue{
+	text-align: right;
+	right: 70px;
+}
+
+.panelFight-bar-grey, .panelFight-bar-red 
+,.panelFight-bar-enemy-grey,.panelFight-bar-enemy-red {
 	width: 400px;
 	height: 5px;
 	border: 1px solid rgb(154,150,132);
 	bottom: 5px;
-	left: 65px;
 	transition: 0.4s;
 	position: absolute;
 }
-.panelFight-bar-grey {
+.panelFight-bar-grey, .panelFight-bar-red {
+	left: 65px;
+}
+,.panelFight-bar-enemy-grey,.panelFight-bar-enemy-red {
+	right: 65px;
+}
+.panelFight-bar-grey,.panelFight-bar-enemy-grey{
 	background-color: rgb(172,167,146);
 }
-.panelFight-bar-red {
+.panelFight-bar-red,.panelFight-bar-enemy-red{
 	background-color: rgb(187,93,80);
 }
 .panelFight-bar-block {
