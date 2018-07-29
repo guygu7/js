@@ -106,7 +106,9 @@
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
-					{{viewDataModel.panel3.text1()}}/{{viewDataModel.panel3.text2()}}
+					{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}</br>
+					{{viewDataModel.panel3.roleAtt()}}</br>
+					{{viewDataModel.panel3.roleDef()}}</br>
 				</div>
 
 				<!--人物交互面板(按钮组)-->
@@ -1329,6 +1331,9 @@
 						//执行使用效果
 					}else if(currentAction.getType()==ACTION.TYPE.putOn){
 						//判断为穿上装备
+						//获取当前hp的百分比
+						var hpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
+						
 						var tempItems = dataRoleObj[0].getItems();
 						for (var i=0; i < tempItems.length; i++) {
 							//遍历所有相同部位装备，并标记为卸下
@@ -1337,9 +1342,15 @@
 							}
 						};
 						currentItem.setIsPutOn(true);
+						//按百分比重新计算当前hp
+						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
 					}else if(currentAction.getType()==ACTION.TYPE.takeOff){
+						//获取当前hp的百分比
+						var hpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
 						//判断为卸下装备
 						currentItem.setIsPutOn(false);
+						//按百分比重新计算当前hp
+						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
 					}
 					//隐藏菜单
 					menuHide();
@@ -1828,8 +1839,10 @@
 			app.controller("panel3", function($scope, $rootScope, $timeout) {
 				//角色暂时只有一个，直接与角色数据绑定
 				viewDataModel.panel3.tittleText=dataRoleObj[0].getName;
-				viewDataModel.panel3.text1=dataRoleObj[0].getHp;
-				viewDataModel.panel3.text2=dataRoleObj[0].getMaxHp;
+				viewDataModel.panel3.roleHp=dataRoleObj[0].getHp;
+				viewDataModel.panel3.roleMaxHp=dataRoleObj[0].getMaxHp;
+				viewDataModel.panel3.roleAtt=dataRoleObj[0].getAtt;
+				viewDataModel.panel3.roleDef=dataRoleObj[0].getDef;
 			});
 			
 			//物品信息面板

@@ -76,7 +76,7 @@ DataModleFactory = {
 			return Hp;
 		};
 		role.setHp = function(pram) {
-			Hp = pram;
+			Hp = parseInt(pram);//舍去小数
 			if(Hp<0){Hp=0;}
 			return this;
 		};
@@ -84,30 +84,74 @@ DataModleFactory = {
 		 * 角色最大HP（包含计算加成）
 		 */
 		role.getMaxHp  = function() {
-			return baseHp;
+			var maxHp = baseHp;
+			//遍历所有已装备物品
+			for (var i=0; i < items.length; i++) {
+				//判断是装备，且已装备上
+				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
+					//判断获取到的hp属性为数字
+					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"hp" in items[i].getAttr()&&items[i].getAttr().hp!=undefined&&items[i].getAttr().hp!=null&&typeof Number(items[i].getAttr().hp) == "number"){
+						maxHp+=Number(items[i].getAttr().hp);
+					}
+				}
+			};
+			return maxHp;
 		};
-		/*
-		var MaxHp;
-		role.setMaxHp = function(pram) {
-			MaxHp = pram;
+		/**
+		 * 角色基础Att
+		 */
+		var baseAtt;
+		role.getBaseAtt  = function() {
+			return baseAtt;
+		};
+		role.setBaseAtt = function(pram) {
+			baseAtt = pram;
 			return this;
 		};
-		*/
-		var Att;
+		/**
+		 * 角色当前Att
+		 */
 		role.getAtt  = function() {
-			return Att;
+			nowAtt = baseAtt;
+			//遍历所有已装备物品
+			for (var i=0; i < items.length; i++) {
+				//判断是装备，且已装备上
+				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
+					//判断获取到的att属性为数字
+					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"att" in items[i].getAttr()&&items[i].getAttr().att!=undefined&&items[i].getAttr().att!=null&&typeof Number(items[i].getAttr().att) == "number"){
+						nowAtt+=Number(items[i].getAttr().att);
+					}
+				}
+			};
+			return parseInt(nowAtt);
 		};
-		role.setAtt = function(pram) {
-			Att = pram;
+		/**
+		 * 角色基础Def
+		 */
+		var baseDef;
+		role.getBaseDef  = function() {
+			return baseDef;
+		};
+		role.setBaseDef = function(pram) {
+			baseDef = pram;
 			return this;
 		};
-		var Def;
+		/**
+		 * 角色当前Def
+		 */
 		role.getDef  = function() {
-			return Def;
-		};
-		role.setDef = function(pram) {
-			Def = pram;
-			return this;
+			nowDef = baseDef;
+			//遍历所有已装备物品
+			for (var i=0; i < items.length; i++) {
+				//判断是装备，且已装备上
+				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
+					//判断获取到的def属性为数字
+					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"def" in items[i].getAttr()&&items[i].getAttr().def!=undefined&&items[i].getAttr().def!=null&&typeof Number(items[i].getAttr().def) == "number"){
+						nowDef+=Number(items[i].getAttr().def);
+					}
+				}
+			};
+			return parseInt(nowDef);
 		};
 		/**
 		 * 所有物品数据（价格）
@@ -612,6 +656,17 @@ DataModleFactory = {
 		};
 		item.setType2 = function(pram) {
 			type2 = pram;
+			return this;
+		};
+		/**
+		 * 属性
+		 */
+		var attr;
+		item.getAttr = function() {
+			return attr;
+		};
+		item.setAttr = function(pram) {
+			attr = pram;
 			return this;
 		};
 		/**

@@ -245,6 +245,11 @@ dictionaryData.item={
 		name:"实装物体1",
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equipHead,
+		attr:{
+				hp:100,
+				def:1,
+		},
+		//skill:
 		content:"物体1说明",
 		totalNum:1,
 		sellCost:5,
@@ -279,6 +284,11 @@ dictionaryData.item={
 		name:"实装物体3",
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equip2,
+		attr:{
+				hp:20,
+				att:10,
+				def:3,
+		},
 		content:"物体3说明",
 		totalNum:1,
 		sellCost:5,
@@ -348,10 +358,10 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
-		hp:500,
+		hp:400,
 		baseHp:500,
-		att:10,
-		def:1,
+		baseAtt:10,
+		baseDef:1,
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,

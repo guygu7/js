@@ -17,7 +17,11 @@ function loadData(data,dataName){
 				//判断为set方法
 				if ("set"==objAttr.substring(0,3)){
 					//执行生成对象的set方法(获取set方法的名称，处理，去掉set首字母小写，获取到属性名;并将data对应属性set进去)
-					obj[objAttr](data[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)]);
+					var tempData = data[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)];
+					if(tempData!=undefined&&tempData!=null){
+						tempData=JSON.parse(JSON.stringify(tempData));
+					}
+					obj[objAttr](tempData);
 				}else if("add"==objAttr.substring(0,3)){//判断为add方法，需要递归
 					//获取到data中对应的数组
 					var dataArr = data[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)+"s"];

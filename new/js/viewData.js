@@ -42,7 +42,10 @@ var viewDataModel = {
 		 * 标题文本 
 		 */
 		tittleText:function(){return "标题";},
-		text1:0,
+		roleHp:0,
+		roleMaxHp:0,
+		roleAtt:0,
+		roleDef:0,
 	},
 	/**
 	 * 物品信息面板
@@ -354,11 +357,11 @@ var viewControl = {
 		sumHp=dataRoleObj[0].getHp();
 		if(sumHp<0){sumHp=0;}
 		if(sumMaxHp<400){
-			return {"width":sumHp+"px"};
+			return {"width":sumHp+"px","right":70+"px"};
 		}else if(sumMaxHp>=400){
-			return {"width":(sumHp/sumMaxHp)*400+"px"};
+			return {"width":(sumHp/sumMaxHp)*400+"px","right":70+"px"};
 		}else{
-			return {"width":0+"px"};
+			return {"width":0+"px","right":70+"px"};
 		}
 	},
 	/*{
