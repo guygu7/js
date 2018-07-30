@@ -174,6 +174,99 @@ dictionaryData.action={
 				target:ACTION.TARGET.interactiveObject
 	}
 };
+
+
+/**
+ * 技能常量数据
+ */
+var SKILL={
+	/**
+	 * 类型
+	 */
+	TYPE:{
+		/**
+		 * 主动技能
+		 */
+		active:"active",
+		/**
+		 * 被动技能
+		 */
+		passive:"passive",
+		/**
+		 * 属性技能
+		 */
+		attribute:"attribute",
+	},
+	/**
+	 * 效果
+	 */
+	EFFECT:{
+		/*------属性-----*/
+		hp:"hp",
+		att:"att",
+		def:"def",
+		hpPercent:"hpPercent",
+		attPercent:"attPercent",
+		defPercent:"defPercent",
+		/*------主动------*/
+		
+	},
+};
+/**
+ * 技能字典
+ */
+dictionaryData.skill={
+	skill1:{
+		name:"属性hpPercent:10",
+		type:SKILL.TYPE.attribute,
+		effect:{
+			hpPercent:0.1,
+		},
+	},
+};
+
+
+/**
+ * 增益减益常量数据
+ */
+var BUFF={
+	/**
+	 * 类型
+	 */
+	TYPE:{
+		/**
+		 * 战斗增益（战斗后消失）
+		 */
+		battleBuff:"battleBuff",
+		/**
+		 * 长期增益
+		 */
+		buff:"buff",
+		
+	},
+	/**
+	 * 效果
+	 */
+	EFFECT:{
+		hpPercent:1,
+	},
+};
+/**
+ * 增益减益字典
+ */
+dictionaryData.buff={
+	BUFF1:{
+		name:"增益",
+		type:BUFF.TYPE.battleBuff,
+		effect:{
+			hpPercent:1,
+		},
+		round:3,
+		superposition:1,
+	},
+};
+
+
 /**
  * 物品常量数据 
  */
@@ -204,8 +297,11 @@ var ITEM={
  */
 dictionaryData.item={
 	item1:{
-		name:"消耗品1",
+		name:"消耗品+hp",
 		type:ITEM.TYPE.consumable,
+		attr:{
+			hp:50,
+		},
 		content:"消耗品1说明",
 		totalNum:1,
 		sellCost:1,
@@ -217,9 +313,12 @@ dictionaryData.item={
 		],
 	},
 	item2:{
-		name:"消耗品2",
+		name:"消耗品+battleBuff:hp",
 		type:ITEM.TYPE.consumable,
 		content:"消耗品2说明",
+		buffs:[
+			dictionaryData.buff.BUFF1,
+		],
 		totalNum:1,
 		sellCost:1,
 		buyCost:2,
@@ -246,8 +345,8 @@ dictionaryData.item={
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equipHead,
 		attr:{
-				hp:100,
-				def:1,
+			hp:100,
+			def:1,
 		},
 		//skill:
 		content:"物体1说明",
@@ -362,6 +461,9 @@ var data = {
 		baseHp:500,
 		baseAtt:10,
 		baseDef:1,
+		skills:[
+			dictionaryData.skill.skill1,
+		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,

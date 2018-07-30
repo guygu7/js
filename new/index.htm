@@ -484,14 +484,30 @@
 			 * 对比两个Item物品对象是否为同一种物品
 			 */
 			function compareItem(item1,item2){
-				return (item1.getName()==item2.getName()&&item1.getType()==item2.getType()&&item1.getContent()==item2.getContent());
+				return (item1.getName()==item2.getName()
+						&&item1.getType()==item2.getType()
+						&&item1.getType2()==item2.getType2()
+						&&item1.getContent()==item2.getContent());
 			};
 			/**
 			 * 对比两个Action动作选项是否为同一种
 			 */
 			function compareAction(action1,action2){
-				return (action1.getName()==action2.getName()&&action1.getType()==action2.getType()&&action1.getContent()==action2.getContent()&&action1.getTarget()==action2.getTarget());
+				return (action1.getName()==action2.getName()
+						&&action1.getType()==action2.getType()
+						&&action1.getContent()==action2.getContent()
+						&&action1.getTarget()==action2.getTarget());
 			};
+			/**
+			 * 对比两个Buff是否为同一种
+			 */
+			function compareBuff(buff1,buff2){
+				return (buff1.getName()==buff2.getName()
+						&&buff1.getType()==buff2.getType()
+						&&buff1.getContent()==buff2.getContent()
+						&&buff1.getRound()==buff2.getRound()
+						&&buff1.getSuperposition()==buff2.getSuperposition());
+			}
 			/**
 			 * （全局级）物品信息集合（字典）[item数组]
 			 * //需在其他对象之前构建
@@ -1326,6 +1342,25 @@
 							dataRoleObj[0].delItem(currentItem);
 						}
 						//执行使用效果
+						//获取物品属性
+						var tempAttr = currentItem.getAttr();
+						if(tempAttr!=undefined&&tempAttr!=null){
+							//判断有hpPercent，则按百分比增加角色HP
+							if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
+								dataRoleObj[0].setHp(dataRoleObj[0].getHp()+(dataRoleObj[0].getHp()*Number(tempAttr.hpPercent)));
+							}
+							//判断有hp，则增加角色HP
+							if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
+								dataRoleObj[0].setHp(dataRoleObj[0].getHp()+Number(tempAttr.hp));
+							}
+						}
+						//判断为增加buff
+						var tempBuffs = currentItem.getBuffs();
+						if(tempBuffs!=undefined&&tempBuffs!=null&&typeof tempBuffs == "array"){
+							for (var i=0; i < tempBuffs.length; i++) {
+								dataRoleObj[0].add(tempBuffs[i]);
+							};
+						}
 					}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
 						//判断为使用(物品/非消耗品)
 						//执行使用效果

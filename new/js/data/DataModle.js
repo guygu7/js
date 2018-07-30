@@ -20,6 +20,14 @@ DataModle = {
 	 * 角色
 	 */
 	Role : function role () {},
+	/**
+	 * 技能
+	 */
+	Skill: function skill () {},
+	/**
+	 * 增益减益
+	 */
+	Buff: function buff () {},
 };
 DataModleFactory = {
 	createRole:function() {
@@ -76,27 +84,67 @@ DataModleFactory = {
 			return Hp;
 		};
 		role.setHp = function(pram) {
-			Hp = parseInt(pram);//舍去小数
+			Hp = Math.round(pram);//舍去小数
+			var tempMaxHp = this.getMaxHp();
+			if(Hp>tempMaxHp){
+				Hp=tempMaxHp;
+			}
 			if(Hp<0){Hp=0;}
 			return this;
 		};
 		/**
 		 * 角色最大HP（包含计算加成）
+		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
 		 */
 		role.getMaxHp  = function() {
-			var maxHp = baseHp;
+			var maxHp = Number(baseHp);
+			var tempHp=0;//直接加成
+			var tempHpPercent=0;//百分比
+			//遍历角色技能加成
+			for (var i=0; i < skills.length; i++) {
+				//不判断类型直接获取效果中的hp相关属性
+				var tempEffect = skills[i].getEffect();
+				//判断effect存在
+				if(tempEffect!=undefined&&tempEffect!=null){
+					//判断获取到的hp属性为数字
+					if("hp" in tempEffect&&tempEffect.hp!=undefined&&tempEffect.hp!=null&&typeof Number(tempEffect.hp) == "number"){
+						tempHp+=Number(tempEffect.hp);
+					}
+					//判断获取到的hpPercent属性为数字
+					if("hpPercent" in tempEffect&&tempEffect.hpPercent!=undefined&&tempEffect.hpPercent!=null&&typeof Number(tempEffect.hpPercent) == "number"){
+						tempHpPercent+=Number(tempEffect.hpPercent);
+					}
+				}
+			};
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
 				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断获取到的hp属性为数字
-					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"hp" in items[i].getAttr()&&items[i].getAttr().hp!=undefined&&items[i].getAttr().hp!=null&&typeof Number(items[i].getAttr().hp) == "number"){
-						maxHp+=Number(items[i].getAttr().hp);
+					//判断attr存在
+					var tempAttr = items[i].getAttr();
+					if(tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
+							tempHp+=Number(tempAttr.hp);
+						}
+						//判断获取到的hpPercent属性为数字
+						if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
+							tempHpPercent+=Number(tempAttr.hpPercent);
+						}
 					}
 				}
 			};
-			return maxHp;
+			//遍历buff加成，包括增益减益
+			for (var i=0; i < buffs.length; i++) {
+				if (buffs[i].getEffect()) {
+					
+				};
+			};
+			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
+			return maxHp+maxHp*tempHpPercent+tempHp;
 		};
+		
+		
 		/**
 		 * 角色基础Att
 		 */
@@ -153,6 +201,99 @@ DataModleFactory = {
 			};
 			return parseInt(nowDef);
 		};
+		
+		
+		/**
+		 * 所有技能
+		 */
+		var skills=[];
+		role.getSkills = function(num){
+			return skills[num];
+		};
+		role.getSkills = function(){
+			return skills;
+		};
+		/**
+		 * 传参：Skill对象
+		 */
+		role.addSkill = function(pram){
+			if(!skills){
+				skills = new Array();
+			}
+			skills.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Skill对象
+		 */
+		role.delSkill = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				skills.splice(pram,1);
+			} else {
+				for (var i=0; i < skills.length; i++) {
+					if(skills[i] == pram){
+						skills.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 增益减益
+		 */
+		var buffs=[];
+		role.getBuff = function(num){
+			return buffs[num];
+		};
+		role.getBuffs = function(pram){
+			return buffs;
+		};
+		role.addBuff = function(pram){
+			if(!buffs){
+				buffs = new Array();
+			}
+			//校验buff的堆叠
+			var superposition = 0;
+			var tempArr=[];
+			for (var i=0; i < buffs.length; i++) {
+				if(compareBuff(pram,buffs[i])){//判断为同一种
+					superposition++;//堆叠+1
+					tempArr.push(buffs[i]);//暂存进数组
+				}
+			};
+			if(superposition>=pram.getSuperposition()){//判断堆叠已超出
+				in
+			} else {//堆叠未超出直接加入
+				buffs.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Buff对象
+		 */
+		role.delBuff = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				buffs.splice(pram,1);
+			} else {
+				for (var i=0; i < buffs.length; i++) {
+					if(buffs[i] === pram){
+						buffs.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 清空增益减益
+		 */
+		role.clearBuffs = function() {
+			buffs = [];
+			return this;
+		};
+		
+		
 		/**
 		 * 所有物品数据（价格）
 		 */
@@ -188,6 +329,8 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
+		
 		/**
 		 * 所有物品
 		 */
@@ -670,6 +813,46 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 增益减益
+		 */
+		var buffs=[];
+		item.getBuff = function(num){
+			return buffs[num];
+		};
+		item.getBuffs = function(pram){
+			return buffs;
+		};
+		item.addBuff = function(pram){
+			if(!buffs){
+				buffs = new Array();
+			}
+			buffs.push(pram);
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Buff对象
+		 */
+		item.delBuff = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				buffs.splice(pram,1);
+			} else {
+				for (var i=0; i < buffs.length; i++) {
+					if(buffs[i] === pram){
+						buffs.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 清空增益减益
+		 */
+		item.clearBuffs = function() {
+			buffs = [];
+			return this;
+		};
+		
+		/**
 		 * 说明内容
 		 */
 		var content;
@@ -831,6 +1014,124 @@ DataModleFactory = {
 			return this;
 		};
 		return item;
+	},
+	createSkill:function() {
+		var skill = new DataModle.Skill();
+		/**
+		 * 显示名称 
+		 */
+		var name;
+		skill.getName = function() {
+			return name;
+		};
+		skill.setName = function(pram) {
+			name = pram;
+			return this;
+		};
+		/**
+		 * 说明 
+		 */
+		var content;
+		skill.getContent = function() {
+			return content;
+		};
+		skill.setContent = function(pram) {
+			content = pram;
+			return this;
+		};
+		/**
+		 * 类型 
+		 */
+		var type;
+		skill.getType = function() {
+			return type;
+		};
+		skill.setType = function(pram) {
+			type = pram;
+			return this;
+		};
+		/**
+		 * 效果
+		 */
+		var effect;
+		skill.getEffect = function() {
+			return effect;
+		};
+		skill.setEffect = function(pram) {
+			effect = pram;
+			return this;
+		};
+		return skill;
+	},
+	createBuff:function() {
+		var buff = new DataModle.Buff();
+		/**
+		 * 显示名称 
+		 */
+		var name;
+		buff.getName = function() {
+			return name;
+		};
+		buff.setName = function(pram) {
+			name = pram;
+			return this;
+		};
+		/**
+		 * 说明 
+		 */
+		var content;
+		skill.getContent = function() {
+			return content;
+		};
+		skill.setContent = function(pram) {
+			content = pram;
+			return this;
+		};
+		/**
+		 * 类型 
+		 */
+		var type;
+		buff.getType = function() {
+			return type;
+		};
+		buff.setType = function(pram) {
+			type = pram;
+			return this;
+		};
+		/**
+		 * 效果
+		 */
+		var effect;
+		buff.getEffect = function() {
+			return effect;
+		};
+		buff.setEffect = function(pram) {
+			effect = pram;
+			return this;
+		};
+		/**
+		 * 持续回合数
+		 */
+		var round=1;
+		buff.getRound = function() {
+			return round;
+		};
+		buff.setRound = function(pram) {
+			round = pram;
+			return this;
+		};
+		/**
+		 * 可叠加次数
+		 */
+		var superposition=1;
+		buff.getSuperposition = function() {
+			return superposition;
+		};
+		buff.setSuperposition = function(pram) {
+			superposition = pram;
+			return this;
+		};
+		return buff;
 	},
 };
 DataModleFactory.createItemInfo = DataModleFactory.createItem;
