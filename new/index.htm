@@ -344,11 +344,11 @@
 					<!--对象信息组件-->
 					<div class="panelFight-objInfo">
 						<div class="panelFight-lattice">
-							<div class="panelFight-lattice-enemyValue">{{viewDataModel.battle.roleHP()}}/{{viewDataModel.battle.roleMaxHP()}}</div>
+							<div class="panelFight-lattice-enemyValue">{{viewDataModel.battle.enemyHP()}}/{{viewDataModel.battle.enemyMaxHP()}}</div>
 							<div class="panelFight-lattice-enemyPrefix">:HP</div>
 						</div>
 						<div class="panelFight-lattice" style="height: 10px;left:10px;">
-							<div ng-class="{'panelFight-bar-enemy-grey':viewControl.panelFightBarColour()!='red','panelFight-bar-enemy-red':viewControl.panelFightBarColour()=='red'}" ng-style="viewControl.panelFightBar_StyleFn()"></div>
+							<div ng-class="{'panelFight-bar-enemy-grey':viewControl.panelFightBarColour2()!='red','panelFight-bar-enemy-red':viewControl.panelFightBarColour2()=='red'}" ng-style="viewControl.panelFightBar_StyleFn2()"></div>
 						</div>
 						<div class="panelFight-lattice">
 							<div class="panelFight-lattice-buffimg">
@@ -360,7 +360,41 @@
 						</div>
 					</div>
 					<!--测试按钮-->
-					<button ng-click="TestClick()">HP-1</button>
+					<button ng-click="TestClick()">hit</button>
+					<button ng-click="TestItem()">item</button>
+					<div class="menuAuto-background">
+						<div class="menuAuto">
+							<div class="menuAuto-list">
+								<div class="menuAuto-list-background2"></div>
+								<div class="menuAuto-list-content">a
+								</div>
+								<div class="panelFight-actionButton-nextMenu"></div>
+							</div>
+							<div class="menuAuto-list">
+								<div class="menuAuto-list-background2"></div>
+								<div class="menuAuto-list-content">a
+								</div>
+								<div class="panelFight-actionButton-nextMenu"></div>
+							</div>
+						</div>
+					</div>
+					<!--
+					<div class="panelFight-actionMenu">
+						<div class="panelFight-actionButton">
+							<div class="panelFight-actionButton-content">a</div>
+							<div class="panelFight-actionButton-nextMenu"></div>
+						</div>
+						<div class="panelFight-actionButton">
+							<div class="panelFight-actionButton-nextMenu"></div>
+						</div>
+						<div class="panelFight-actionButton">
+							<div class="panelFight-actionButton-nextMenu"></div>
+						</div>
+						<div class="panelFight-actionButton">
+							<div class="panelFight-actionButton-nextMenu"></div>
+						</div>
+					</div>
+					-->
 					<!--角色信息组件-->
 					<div class="panelFight-roleInfo">
 						<div class="panelFight-lattice">
@@ -392,6 +426,8 @@
 						-->
 					</div>
 				</div>
+				
+				
 			</div>
 		</div>
 		<script src="js/angular.js"></script>
@@ -1968,8 +2004,53 @@
 			
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
-				$scope.TestClick=function(){
-					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-50);
+				$scope.TestClick=function(){//测试攻击按钮
+					//计算造成伤害:角色att-目标def
+					currentInteractiveObject.setHp(currentInteractiveObject.getHp()-(dataRoleObj[0].getAtt()-currentInteractiveObject.getDef()));
+					//计算收到伤害：目标att-角色def
+					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-(currentInteractiveObject.getAtt()-dataRoleObj[0].getDef()));
+					
+				};
+				$scope.TestItem=function(){//测试道具使用
+					if(dataRoleObj[0].getStatus()!="fight"){
+						//判断为非战斗状态，不可操作
+						return;
+					}
+					//打开背包功能
+					//加载包裹数据,重新定位视图数据指针
+					viewDataModel.menuBag.buttonElements = function () {
+						return dataRoleObj[0].getItems(dataRoleObj[0].getStatus());
+					};
+					var menuBagLeft=0;
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.zIndexList["panel"] = maxZIndex+2;
+					viewControl.zIndexList["panel3"] = maxZIndex+2;
+					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
+					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
+					viewControl.panel3_Style["z-index"] = viewControl.zIndexList["panel3"];
+					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
+					//弹出遮罩层
+					viewControl.display.panel5MaskLayerHide = false;
+					//同时打开包
+					viewControl.display.menuBagHide = false;
+					viewControl.menu_bag_Style.left = 295 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					//显示角色信息面板
+					viewControl.panel3_Style.top = 60 + "px";
+					viewControl.panel3_Style.left =  0 + "px";
+					viewControl.panel3_Style.opacity = 0;
+					$timeout(function() {
+						//包
+						viewControl.menu_bag_Style.left = 300 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.opacity = 1;
+						//角色信息面板
+						viewControl.display.panel3Hide = false;
+						viewControl.panel3_Style.left =  5 + "px";
+						viewControl.panel3_Style.opacity = 1;
+					}, 200);
 				};
 			});
 		</script>

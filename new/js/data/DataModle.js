@@ -68,28 +68,32 @@ DataModleFactory = {
 		/**
 		 * 角色基础HP
 		 */
-		var baseHp;
+		var baseHp=100;
 		role.getBaseHp  = function() {
 			return baseHp;
 		};
 		role.setBaseHp = function(pram) {
-			baseHp = pram;
+			if(!isNaN(Number(pram))){
+				baseHp = Number(pram);
+			}
 			return this;
 		};
 		/**
 		 * 角色当前HP
 		 */
-		var Hp;
+		var Hp=100;
 		role.getHp  = function() {
 			return Hp;
 		};
 		role.setHp = function(pram) {
-			Hp = Math.round(pram);//舍去小数
-			var tempMaxHp = this.getMaxHp();
-			if(Hp>tempMaxHp){
-				Hp=tempMaxHp;
+			if(!isNaN(Number(pram))){
+				Hp = Math.round(Number(pram));//舍去小数
+				var tempMaxHp = this.getMaxHp();
+				if(Hp>tempMaxHp){
+					Hp=tempMaxHp;
+				}
+				if(Hp<0){Hp=0;}
 			}
-			if(Hp<0){Hp=0;}
 			return this;
 		};
 		/**
@@ -153,7 +157,9 @@ DataModleFactory = {
 			return baseAtt;
 		};
 		role.setBaseAtt = function(pram) {
-			baseAtt = pram;
+			if(!isNaN(Number(pram))){
+				baseAtt = Number(pram);
+			}
 			return this;
 		};
 		/**
@@ -264,7 +270,14 @@ DataModleFactory = {
 				}
 			};
 			if(superposition>=pram.getSuperposition()){//判断堆叠已超出
-				in
+				//去掉剩余时间最短的一个
+				var tempRound=tempArr[0];
+				for (var i=0; i < tempArr.length; i++) {
+					if(tempRound.getRound()>tempArr[i].getRound()){
+						tempRound=tempArr[i];
+					}
+				};
+				this.delBuff(tempRound);
 			} else {//堆叠未超出直接加入
 				buffs.push(pram);
 			}
@@ -526,36 +539,44 @@ DataModleFactory = {
 			name = pram;
 			return this;
 		};
-		var Hp;
+		var Hp=100;
 		interactiveObject.getHp  = function() {
 			return Hp;
 		};
 		interactiveObject.setHp = function(pram) {
-			Hp = pram;
+			if(!isNaN(Number(pram))){
+				Hp = Number(pram);
+			}
 			return this;
 		};
-		var MaxHp;
+		var MaxHp=100;
 		interactiveObject.getMaxHp  = function() {
 			return MaxHp;
 		};
 		interactiveObject.setMaxHp = function(pram) {
-			MaxHp = pram;
+			if(!isNaN(Number(pram))){
+				MaxHp = Number(pram);
+			}
 			return this;
 		};
-		var Att;
+		var Att=1;
 		interactiveObject.getAtt  = function() {
 			return Att;
 		};
 		interactiveObject.setAtt = function(pram) {
-			Att = pram;
+			if(!isNaN(Number(pram))){
+				Att = Number(pram);
+			}
 			return this;
 		};
-		var Def;
+		var Def=1;
 		interactiveObject.getDef  = function() {
 			return Def;
 		};
 		interactiveObject.setDef = function(pram) {
-			Def = pram;
+			if(!isNaN(Number(pram))){
+				Def = Number(pram);
+			}
 			return this;
 		};
 		/**
@@ -866,34 +887,40 @@ DataModleFactory = {
 		/**
 		 * 堆叠数量 
 		 */
-		var totalNum;
+		var totalNum=0;
 		item.getTotalNum = function() {
 			return totalNum;
 		};
 		item.setTotalNum = function(pram) {
-			totalNum = pram;
+			if(!isNaN(Number(pram))){
+				totalNum = Number(pram);
+			}
 			return this;
 		};
 		/**
 		 * 卖出价 
 		 */
-		var sellCost;
+		var sellCost=0;
 		item.getSellCost = function() {
 			return sellCost;
 		};
 		item.setSellCost = function(pram) {
-			sellCost = pram;
+			if(!isNaN(Number(pram))){
+				sellCost = Number(pram);
+			}
 			return this;
 		};
 		/**
 		 * 购入价
 		 */
-		var buyCost;
+		var buyCost=9999;
 		item.getBuyCost = function() {
 			return buyCost;
 		};
 		item.setBuyCost = function(pram) {
-			buyCost = pram;
+			if(!isNaN(Number(pram))){
+				buyCost = Number(pram);
+			}
 			return this;
 		};
 		/**
@@ -904,7 +931,9 @@ DataModleFactory = {
 			return isPutOn;
 		};
 		item.setIsPutOn = function(pram) {
-			isPutOn = pram;
+			if(pram==true||pram==false){
+				isPutOn = pram;
+			}
 			return this;
 		};
 		/**
@@ -1080,10 +1109,10 @@ DataModleFactory = {
 		 * 说明 
 		 */
 		var content;
-		skill.getContent = function() {
+		buff.getContent = function() {
 			return content;
 		};
-		skill.setContent = function(pram) {
+		buff.setContent = function(pram) {
 			content = pram;
 			return this;
 		};
@@ -1117,7 +1146,9 @@ DataModleFactory = {
 			return round;
 		};
 		buff.setRound = function(pram) {
-			round = pram;
+			if(!isNaN(Number(pram))){
+				round = Number(pram);
+			}
 			return this;
 		};
 		/**
@@ -1128,7 +1159,9 @@ DataModleFactory = {
 			return superposition;
 		};
 		buff.setSuperposition = function(pram) {
-			superposition = pram;
+			if(!isNaN(Number(pram))){
+				superposition =  Number(pram);
+			}
 			return this;
 		};
 		return buff;

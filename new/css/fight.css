@@ -59,7 +59,7 @@
 	text-align: right;
 	right: 70px;
 }
-
+/*进度条*/
 .panelFight-bar-grey, .panelFight-bar-red 
 ,.panelFight-bar-enemy-grey,.panelFight-bar-enemy-red {
 	width: 400px;
@@ -97,11 +97,25 @@
 	background-color:rgb(184,179,155);
 	position: absolute;
 }
-
+/*buff图标框*/
 .panelFight-lattice-buffimg{
 	width: 20px;
 	height: 20px;
 	margin:0px 0px 0px 5px;
 	//border: 1px solid rgb(154,150,132);
 	display: inline-block;
+}
+
+/*-----战斗动作菜单-----*/
+/*次级菜单*/
+.panelFight-actionButton-nextMenu{
+	right: -210px;
+	width: 200px;
+	height: 300px;
+	border: 1px solid rgb(154,150,132);
+	display:none;
+	position: absolute;
+}
+.menuAuto-list:hover > .panelFight-actionButton-nextMenu{
+	display:inherit;
 }

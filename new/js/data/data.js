@@ -283,6 +283,11 @@ var ITEM={
 		 * 装备
 		 */
 		equip:"equip",
+		/**
+		 * 战斗消耗品
+		 */
+		battleConsumable:"battleConsumable",
+		
 	},
 	/**
 	 * 类型（小类、第二分类） 
@@ -522,7 +527,11 @@ var data = {
 					//itemInfo:[],
 				},
 				{
-					name:"交流对象2",
+					name:"对战对象",
+					hp:250,
+					maxHp:300,
+					att:20,
+					def:10,
 					items:[
 						dictionaryData.item.item1,
 					],

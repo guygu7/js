@@ -131,6 +131,8 @@ var viewDataModel = {
 	 * 战斗面板
 	 */
 	battle:{
+		enemyHP:function(){return currentInteractiveObject.getHp();},
+		enemyMaxHP:function(){return currentInteractiveObject.getMaxHp();},
 		roleHP:function(){return dataRoleObj[0].getHp();},
 		roleMaxHP:function(){return dataRoleObj[0].getMaxHp();},
 	},
@@ -355,6 +357,28 @@ var viewControl = {
 	panelFightBar_StyleFn:function(){
 		sumMaxHp=dataRoleObj[0].getMaxHp();
 		sumHp=dataRoleObj[0].getHp();
+		if(sumHp<0){sumHp=0;}
+		if(sumMaxHp<400){
+			return {"width":sumHp+"px","right":70+"px"};
+		}else if(sumMaxHp>=400){
+			return {"width":(sumHp/sumMaxHp)*400+"px","right":70+"px"};
+		}else{
+			return {"width":0+"px","right":70+"px"};
+		}
+	},
+	panelFightBarColour2:function(){
+		sumMaxHp=currentInteractiveObject.getMaxHp();
+		sumHp=currentInteractiveObject.getHp();
+		percent = (sumHp/sumMaxHp);
+		if(percent>0.25){
+			return "grey";
+		}else{
+			return "red";
+		}
+	},
+	panelFightBar_StyleFn2:function(){
+		sumMaxHp=currentInteractiveObject.getMaxHp();
+		sumHp=currentInteractiveObject.getHp();
 		if(sumHp<0){sumHp=0;}
 		if(sumMaxHp<400){
 			return {"width":sumHp+"px","right":70+"px"};
