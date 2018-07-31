@@ -102,20 +102,67 @@
 	width: 20px;
 	height: 20px;
 	margin:0px 0px 0px 5px;
-	//border: 1px solid rgb(154,150,132);
+	border: 1px solid rgb(154,150,132);
 	display: inline-block;
 }
 
 /*-----战斗动作菜单-----*/
 /*次级菜单*/
 .panelFight-actionButton-nextMenu{
-	right: -210px;
-	width: 200px;
-	height: 300px;
+	top:-20px;
+	right: -280px;
+	width: 270px;
+	height: 350px;
 	border: 1px solid rgb(154,150,132);
 	display:none;
 	position: absolute;
 }
 .menuAuto-list:hover > .panelFight-actionButton-nextMenu{
 	display:inherit;
+}
+/*快捷释放*/
+.panelFight-quick{
+	top:350px;
+	width:500px;
+	height:40px;
+	border: 1px solid rgb(154,150,132);
+	position: absolute;
+}
+.panelFight-quick-button{
+	width: 150px;
+	height: 40px;
+	margin-right: 10px;
+	border: 1px solid rgb(154,150,132);
+	display:inline-block;
+	position: relative;
+}
+.panelFight-quick-button-background{
+	
+}
+.panelFight-quick-button-background2{
+	width:150px;
+	height: 30px;
+	left:-4px;
+	margin:5px 0px 5px 0px;
+	background:rgb(72,69,60);
+	opacity:0;
+	transition: 0.2s;
+	position: absolute;
+}
+.panelFight-quick-button-content{
+	width:100%;
+	height: 30px;
+	line-height:30px;
+	margin:5px 1px 5px 1px;
+	text-align:center;
+	transition: 0.2s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
+	position: absolute;
+}
+.panelFight-quick-button:hover > .panelFight-quick-button-background2{
+	opacity:1;
+	animation:menuAuto-list-background2 2s infinite;
+	animation-delay: 1s ;
+}
+.menuAuto-list:hover > .menuAuto-list-content{
+	color:rgb(252,245,216);
 }
