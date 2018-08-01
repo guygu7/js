@@ -23,7 +23,7 @@ var ACTION={
 		/**
 		 * 使用非消耗品 
 		 */
-		useUnConsumable:"useUnConsumable",
+		//useUnConsumable:"useUnConsumable",
 		/**
 		 * 穿上（装备）
 		 */
@@ -115,12 +115,14 @@ dictionaryData.action={
 	/**
 	 * （物品）使用非消耗品
 	 */
+	/*
 	role_useUnConsumable:{
 					name:"使用非消耗",
 					type:ACTION.TYPE.useUnConsumable,
 					target:"",
 					belong:ACTION.BELONG.role,
 				},
+			*/
 	/**
 	 * （物品）穿上装备
 	 */
@@ -283,10 +285,6 @@ var ITEM={
 		 * 装备
 		 */
 		equip:"equip",
-		/**
-		 * 战斗消耗品
-		 */
-		battleConsumable:"battleConsumable",
 		
 	},
 	/**
@@ -294,7 +292,15 @@ var ITEM={
 	 */
 	TYPE2:{
 		equipHead:"head",
-		equip2:"2"
+		equip2:"2",
+		/**
+		 * 战斗消耗品
+		 */
+		battleConsumable:"battleConsumable",
+		/**
+		 * 非消耗品
+		 */
+		unConsumable:"unConsumable",
 	},
 };
 /**
@@ -318,7 +324,7 @@ dictionaryData.item={
 		],
 	},
 	item2:{
-		name:"消耗品+battleBuff:hp",
+		name:"消耗品+buff",
 		type:ITEM.TYPE.consumable,
 		content:"消耗品2说明",
 		buffs:[
@@ -330,11 +336,11 @@ dictionaryData.item={
 		actions:[
 			dictionaryData.action.itemToRoleBag,
 			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_useUnConsumable,
+			//dictionaryData.action.role_useUnConsumable,
 		],
 	},
 	item3:{
-		name:"消耗品3",
+		name:"消耗品",
 		type:ITEM.TYPE.consumable,
 		content:"消耗品3说明",
 		totalNum:1,
@@ -572,7 +578,7 @@ var data = {
 		},
 	],
 };
-data.roles[0].items[0].totalNum=99;
+data.roles[0].items[0].totalNum=9;
 data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
 data.roles[0].items[3].totalNum=1;

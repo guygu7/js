@@ -18,6 +18,7 @@
 		<link href="css/numberPicker.css" rel="stylesheet">
 		<link href="css/top.css" rel="stylesheet">
 		<link href="css/fight.css" rel="stylesheet">
+		<link href="css/img.css" rel="stylesheet">
 		
 	</head>
 
@@ -174,9 +175,9 @@
 				
 				<!--列表菜单:包裹-->
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
-					<div class="menu">
+					<div class="menu" >
 						{{viewDataModel.menuBag.tittleText()}}
-						<div ng-click="menulistClick($event,$index)"  ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+						<div ng-click="menulistClick($event,$index)" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -361,64 +362,40 @@
 					</div>
 					<!--测试按钮-->
 					<button ng-click="TestClick()">hit</button>
-					<button ng-click="TestItem()">item</button>
-					<div class="menuAuto-background">
-						<div class="menuAuto">
-							<div class="menuAuto-list">
-								<div class="menuAuto-list-background2"></div>
-								<div class="menuAuto-list-content">a
-								</div>
-								<div class="panelFight-actionButton-nextMenu menu-background">
-									<div class="menu" style="height: 95%;">
-										<div class="menu-list">
-											<div class="menu-list-background"></div>
-											<div class="menu-list-background2"></div>
-											<div class="menu-list-content">aaa
-											</div>
-											<div class="menu-list-content-suffix">aaa
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="menuAuto-list">
-								<div class="menuAuto-list-background2"></div>
-								<div class="menuAuto-list-content">a
-								</div>
-								<div class="panelFight-actionButton-nextMenu"></div>
-							</div>
-						</div>
-					</div>
 					<!--快捷释放-->
 					<div class="panelFight-quick">
-						<div class="panelFight-quick-button">
-							<div class="panelFight-quick-button-background2"></div>
-							<div class="panelFight-quick-button-content">a
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(1)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton1()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(1)" class="panelFight-quick-unit-prefixButton">
+								+
 							</div>
 						</div>
-						<div class="panelFight-quick-button">
-							<div class="panelFight-quick-button-background2"></div>
-							<div class="panelFight-quick-button-content">a
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(2)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton2()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(2)" class="panelFight-quick-unit-prefixButton">
+								+
+							</div>
 						</div>
-						<div class="panelFight-quick-button">a</div>
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(3)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton3()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(3)" class="panelFight-quick-unit-prefixButton">
+								+
+							</div>
+						</div>
 					</div>
-					<!--
-					<div class="panelFight-actionMenu">
-						<div class="panelFight-actionButton">
-							<div class="panelFight-actionButton-content">a</div>
-							<div class="panelFight-actionButton-nextMenu"></div>
-						</div>
-						<div class="panelFight-actionButton">
-							<div class="panelFight-actionButton-nextMenu"></div>
-						</div>
-						<div class="panelFight-actionButton">
-							<div class="panelFight-actionButton-nextMenu"></div>
-						</div>
-						<div class="panelFight-actionButton">
-							<div class="panelFight-actionButton-nextMenu"></div>
-						</div>
-					</div>
-					-->
+					
 					<!--角色信息组件-->
 					<div class="panelFight-roleInfo">
 						<div class="panelFight-lattice">
@@ -448,6 +425,24 @@
 							<div class="panelFight-bar-block"></div>
 						</div>
 						-->
+					</div>
+					
+					<!--遮罩层-->
+					<div ng-hide="viewControl.display.quickMenuBagMaskLayerHide" ng-style="viewControl.quickMenuBagMaskLayer_Style" ng-mousedown="quickMenuBagMaskLayerClick($event)" class="maskLayer" ></div>
+					<!--设置快捷按钮选择菜单-->
+					<div ng-hide="viewControl.display.quickMenuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
+						<div class="menu" >
+							<div ng-click="menulistClick($index)"  ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+								<div class="menu-list-background"></div>
+								<div class="menu-list-background2"></div>
+								<div class="menu-list-content">
+									{{y.getName()}}
+								</div>
+								<div class="menu-list-content-suffix" ng-hide="y.constructor.name=='skill'">
+									×{{y.getTotalNum()}}
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				
@@ -608,11 +603,28 @@
 				sellItems:[],
 				buyItems:[],
 			};
-			
+			/**
+			 * 快捷按钮
+			 */
+			var quickButton1;
+			var quickButton2;
+			var quickButton3;
 			var app = angular.module("myApp", []);
 			app.directive('ngRightclick', function($parse) {
 			    return function(scope, element, attrs) {
 			        var fn = $parse(attrs.ngRightclick);
+			        element.bind('contextmenu', function(event) {
+			            scope.$apply(function() {
+			                event.preventDefault();
+			                fn(scope, {$event:event});
+			            });
+			        });
+			    };
+			});
+			/*滚轮事件监听*/
+			app.directive('ngMousewheel', function($parse) {
+			    return function(scope, element, attrs) {
+			        var fn = $parse(attrs.ngMousewheel);
 			        element.bind('contextmenu', function(event) {
 			            scope.$apply(function() {
 			                event.preventDefault();
@@ -638,8 +650,8 @@
 				$rootScope.testright = function(){
 					console.info("testright");
 				};
-				$rootScope.testright2 = function(){
-					console.info("testright2");
+				$rootScope.testOnMousewheel = function(){
+					console.info("testOnMousewheel");
 				};
 				
 				/**
@@ -1421,7 +1433,7 @@
 								dataRoleObj[0].add(tempBuffs[i]);
 							};
 						}
-					}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
+					//}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
 						//判断为使用(物品/非消耗品)
 						//执行使用效果
 					}else if(currentAction.getType()==ACTION.TYPE.putOn){
@@ -2028,6 +2040,28 @@
 			
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
+				quickMenuBagHide = function(){
+					viewControl.display.quickMenuBagHide = true;
+					viewControl.display.quickMenuBagMaskLayerHide = true;
+					viewControl.zIndexList["menuBag"] = 0;
+					viewControl.zIndexList["quickMenuBagMaskLayer"] = 0;
+					viewControl.menu_bag_Style["z-index"] = 0;
+					viewControl.quickMenuBagMaskLayer_Style["z-index"] = 0;
+					viewControl.menu_bag_Style.opacity = 0;
+				};
+				quickMenuBagShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.zIndexList["quickMenuBagMaskLayer"] = maxZIndex+1;
+					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					viewControl.quickMenuBagMaskLayer_Style["z-index"] = viewControl.zIndexList["quickMenuBagMaskLayer"];
+					//显示选择菜单
+					viewControl.display.quickMenuBagHide = false;
+					viewControl.display.quickMenuBagMaskLayerHide = false;
+					viewControl.menu_bag_Style.left = 200+"px";
+					viewControl.menu_bag_Style.opacity = 1;
+				};
 				$scope.TestClick=function(){//测试攻击按钮
 					//计算造成伤害:角色att-目标def
 					currentInteractiveObject.setHp(currentInteractiveObject.getHp()-(dataRoleObj[0].getAtt()-currentInteractiveObject.getDef()));
@@ -2035,46 +2069,61 @@
 					dataRoleObj[0].setHp(dataRoleObj[0].getHp()-(currentInteractiveObject.getAtt()-dataRoleObj[0].getDef()));
 					
 				};
-				$scope.TestItem=function(){//测试道具使用
-					if(dataRoleObj[0].getStatus()!="fight"){
-						//判断为非战斗状态，不可操作
-						return;
+				var quickButtonChangeArr;
+				var nowQuickButtonSet;
+				$scope.quickButtonChange = function(num){//选择快捷按钮
+					quickMenuBagShow();
+					if(num==1){//加载背包中消耗品（包含战斗消耗品）
+						quickButtonChangeArr = dataRoleObj[0].getItems("useRoleBag-Consumable");
+						nowQuickButtonSet=1;
+					}else if(num==2){//加载角色技能
+						quickButtonChangeArr = dataRoleObj[0].getSkills();
+						nowQuickButtonSet=2;
 					}
-					//打开背包功能
-					//加载包裹数据,重新定位视图数据指针
-					viewDataModel.menuBag.buttonElements = function () {
-						return dataRoleObj[0].getItems(dataRoleObj[0].getStatus());
+					viewDataModel.menuBag.buttonElements=function(){
+						return quickButtonChangeArr;
 					};
-					var menuBagLeft=0;
-					//获取层叠关系数组中最大值，并+1存入
-					var maxZIndex = getMaxZIndex(100);
-					viewControl.zIndexList["menuBag"] = maxZIndex+2;
-					viewControl.zIndexList["panel"] = maxZIndex+2;
-					viewControl.zIndexList["panel3"] = maxZIndex+2;
-					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
-					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
-					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
-					viewControl.panel3_Style["z-index"] = viewControl.zIndexList["panel3"];
-					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
-					//弹出遮罩层
-					viewControl.display.panel5MaskLayerHide = false;
-					//同时打开包
-					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 295 +menuBagLeft+ "px";
-					viewControl.menu_bag_Style.opacity = 0;
-					//显示角色信息面板
-					viewControl.panel3_Style.top = 60 + "px";
-					viewControl.panel3_Style.left =  0 + "px";
-					viewControl.panel3_Style.opacity = 0;
-					$timeout(function() {
-						//包
-						viewControl.menu_bag_Style.left = 300 +menuBagLeft+ "px";
-						viewControl.menu_bag_Style.opacity = 1;
-						//角色信息面板
-						viewControl.display.panel3Hide = false;
-						viewControl.panel3_Style.left =  5 + "px";
-						viewControl.panel3_Style.opacity = 1;
-					}, 200);
+				};
+				$scope.menulistClick = function($index){//点击选择
+					quickMenuBagHide();
+					switch(nowQuickButtonSet){
+						case 1:
+							quickButton1=quickButtonChangeArr[$index];
+							break;
+						case 2:
+							quickButton2=quickButtonChangeArr[$index];
+							break;
+						default:
+					   		break;
+					};
+				};
+				$scope.quickMenuBagMaskLayerClick = function(){
+					quickMenuBagHide();
+				};
+				$scope.quickButtonClick = function(num){
+					switch(num){
+						case 1://使用消耗品
+							if (quickButton1.getType()==ITEM.TYPE.consumable) {//判断为消耗品
+								if(quickButton1.getActions())
+								var totalNum = quickButton1.getTotalNum();
+								totalNum -= 1;
+								if(totalNum<=0){
+									dataRoleObj[0].delItem(quickButton1);
+									quickButton1 = null;
+								}else{
+									quickButton1.setTotalNum(totalNum);
+								}
+							}else if(num){//判断为战斗消耗品
+								
+							}
+							console.info(quickButton1);
+							break;
+						case 2:
+							console.info(quickButton2);
+							break;
+						default:
+					   		break;
+					}
 				};
 			});
 		</script>

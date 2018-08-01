@@ -1,0 +1,82 @@
+
+/**
+ *  三横菜单图标
+ */
+.img-menu{
+	width:15px;
+	height:15px;
+	position: absolute;
+}
+.img-menu1,.img-menu2,.img-menu3{
+	width:15px;
+	height:3px;
+	background-color:rgb(63,60,52);
+	transition:0.2s;
+	position: absolute;
+}
+.img-menu1{
+	top:5px;
+}
+.img-menu2{
+	top:9px;
+}
+.img-menu3{
+	top:13px;
+}
+.img-menu:hover > .img-menu1{
+	height:4px;
+	top:2px;
+}
+.img-menu:hover > .img-menu2{
+	height:4px;
+	top:8px;
+}
+.img-menu:hover > .img-menu3{
+	height:4px;
+	top:14px;
+}
+/** 锁形状图
+ * 	<div class="img-lock" style="top:4px;left:7px;">
+		<div class="img-lock1"></div>
+		<div class="img-lock2"></div>
+		<div class="img-lock3"></div>
+	</div>
+ */
+.img-lock{
+	width:15px;
+	height:15px;
+	background-color:inherit;
+	position: absolute;
+}
+.img-lock1{
+	left:1px;
+	width:6px;
+	height:6px;
+	border-radius:40px;
+	border: 4px solid rgb(63,60,52);
+	position: absolute;
+}
+.img-lock2{
+	top:8px;
+	width:15px;
+	height:10px;
+	background-color:inherit;
+	position: absolute;
+}
+.img-lock3{
+	bottom:-4px;
+	width:16px;
+	height:10px;
+	background-color:rgb(63,60,52);
+	transition:0.2s;
+	position: absolute;
+}
+.img-lock:hover >.img-lock1{
+	top:-2px;
+}
+.img-lock:hover >.img-lock2{
+	top:6px;
+}
+.img-lock:hover >.img-lock3{
+	bottom:-6px;
+}
