@@ -96,6 +96,7 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
 		/**
 		 * 角色最大HP（包含计算加成）
 		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
@@ -105,21 +106,23 @@ DataModleFactory = {
 			var tempHp=0;//直接加成
 			var tempHpPercent=0;//百分比
 			//遍历角色技能加成
-			for (var i=0; i < skills.length; i++) {
-				//不判断类型直接获取效果中的hp相关属性
-				var tempEffect = skills[i].getEffect();
-				//判断effect存在
-				if(tempEffect!=undefined&&tempEffect!=null){
-					//判断获取到的hp属性为数字
-					if("hp" in tempEffect&&tempEffect.hp!=undefined&&tempEffect.hp!=null&&typeof Number(tempEffect.hp) == "number"){
-						tempHp+=Number(tempEffect.hp);
+			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
+			if (unActiveSkills.length>0){
+				for (var i=0; i < unActiveSkills.length; i++) {
+					var tempAttr = unActiveSkills[i].getAttr();
+					//判断attr存在
+					if(tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
+							tempHp+=Number(tempAttr.hp);
+						}
+						//判断获取到的hpPercent属性为数字
+						if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
+							tempHpPercent+=Number(tempAttr.hpPercent);
+						}
 					}
-					//判断获取到的hpPercent属性为数字
-					if("hpPercent" in tempEffect&&tempEffect.hpPercent!=undefined&&tempEffect.hpPercent!=null&&typeof Number(tempEffect.hpPercent) == "number"){
-						tempHpPercent+=Number(tempEffect.hpPercent);
-					}
-				}
-			};
+				};
+			}
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
@@ -140,8 +143,8 @@ DataModleFactory = {
 			};
 			//遍历buff加成，包括增益减益
 			for (var i=0; i < buffs.length; i++) {
-				if (buffs[i].getEffect()) {
-					
+				if (buffs[i].getAttr()) {
+					in
 				};
 			};
 			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
@@ -166,7 +169,7 @@ DataModleFactory = {
 		 * 角色当前Att
 		 */
 		role.getAtt  = function() {
-			nowAtt = baseAtt;
+			var nowAtt = baseAtt;
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
@@ -213,10 +216,31 @@ DataModleFactory = {
 		 * 所有技能
 		 */
 		var skills=[];
-		role.getSkills = function(num){
+		role.getSkill = function(num){
 			return skills[num];
 		};
-		role.getSkills = function(){
+		role.getSkills = function(pram){
+			if(pram&&pram!=null&&pram!=undefined){
+				var tempSkills = skills.slice(0);
+				if (pram==SKILL.TYPE.active) {//判断传参是"active",只获取主动技能
+					for (var i=0; i < tempSkills.length; i++) {
+						if(tempSkills[i].getType()!=SKILL.TYPE.active){
+							//遍历到非主动技能，去掉
+							tempSkills.splice(i,1);
+							i--;
+						}
+					};
+				}else if(pram==SKILL.TYPE.unActive){//判断传参是"unActive",只获取非主动技能
+					for (var i=0; i < tempSkills.length; i++) {
+						if(tempSkills[i].getType()!=SKILL.TYPE.unActive){
+							//遍历，去掉
+							tempSkills.splice(i,1);
+							i--;
+						}
+					};
+				}
+				return tempSkills;
+			}
 			return skills;
 		};
 		/**
@@ -226,7 +250,10 @@ DataModleFactory = {
 			if(!skills){
 				skills = new Array();
 			}
-			skills.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
+				//判断传入参数不为空 且是 skill对象
+				skills.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -260,26 +287,29 @@ DataModleFactory = {
 			if(!buffs){
 				buffs = new Array();
 			}
-			//校验buff的堆叠
-			var superposition = 0;
-			var tempArr=[];
-			for (var i=0; i < buffs.length; i++) {
-				if(compareBuff(pram,buffs[i])){//判断为同一种
-					superposition++;//堆叠+1
-					tempArr.push(buffs[i]);//暂存进数组
-				}
-			};
-			if(superposition>=pram.getSuperposition()){//判断堆叠已超出
-				//去掉剩余时间最短的一个
-				var tempRound=tempArr[0];
-				for (var i=0; i < tempArr.length; i++) {
-					if(tempRound.getRound()>tempArr[i].getRound()){
-						tempRound=tempArr[i];
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
+				//判断传入参数不为空 且是 buff对象
+				//校验buff的堆叠
+				var superposition = 0;
+				var tempArr=[];
+				for (var i=0; i < buffs.length; i++) {
+					if(compareBuff(pram,buffs[i])){//判断为同一种
+						superposition++;//堆叠+1
+						tempArr.push(buffs[i]);//暂存进数组
 					}
 				};
-				this.delBuff(tempRound);
-			} else {//堆叠未超出直接加入
-				buffs.push(pram);
+				if(superposition>=pram.getSuperposition()){//判断堆叠已超出
+					//去掉剩余时间最短的一个
+					var tempRound=tempArr[0];
+					for (var i=0; i < tempArr.length; i++) {
+						if(tempRound.getRound()>tempArr[i].getRound()){
+							tempRound=tempArr[i];
+						}
+					};
+					this.delBuff(tempRound);
+				} else {//堆叠未超出直接加入
+					buffs.push(pram);
+				}
 			}
 			return this;						
 		};
@@ -324,7 +354,10 @@ DataModleFactory = {
 			if(!itemInfos){
 				itemInfos = new Array();
 			}
-			itemInfos.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是 item 对象
+				itemInfos.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -384,24 +417,26 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
-			if (pram) {//如果有传参Item,修改Item中某些值为默认值
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空  且是 item 对象
+				//修改Item中某些值为默认值
 				//遍历对比传入的item和itemInfos中的Item，遍历出对应的Item信息
-				var tempItemInfos = this.getItemInfos();
-				for (var i=0; i < tempItemInfos.length; i++) {
-					if (compareItem(pram,tempItemInfos[i])) {
-						//清除原有Actions
-						pram.clearActions();
-						//将角色Item信息中的Actions存入传参物品
-						var tempActions = tempItemInfos[i].getActions();
-						for (var k=0; k < tempActions.length; k++) {
-							pram.addAction(tempActions[k]);
+					var tempItemInfos = this.getItemInfos();
+					for (var i=0; i < tempItemInfos.length; i++) {
+						if (compareItem(pram,tempItemInfos[i])) {
+							//清除原有Actions
+							pram.clearActions();
+							//将角色Item信息中的Actions存入传参物品
+							var tempActions = tempItemInfos[i].getActions();
+							for (var k=0; k < tempActions.length; k++) {
+								pram.addAction(tempActions[k]);
+							};
+							break;
 						};
-						break;
 					};
-				};
-			};
-			pram.supper = this;
-			items.push(pram);
+				pram.supper = this;
+				items.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -461,8 +496,11 @@ DataModleFactory = {
 			if(!interactiveObjects){
 				interactiveObjects = new Array();
 			}
-			pram.supper = this;
-			interactiveObjects.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
+				//判断传入参数不为空 且是 interactiveObject 对象
+				pram.supper = this;
+				interactiveObjects.push(pram);
+			}
 			return this;
 		};
 		/**
@@ -497,7 +535,10 @@ DataModleFactory = {
 			if(!itemInfos){
 				itemInfos = new Array();
 			}
-			itemInfos.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是 item 对象
+				itemInfos.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -593,7 +634,10 @@ DataModleFactory = {
 			if(!actions){
 				actions = new Array();
 			}
-			actions.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="action"){
+				//判断传入参数不为空 且是 action 对象
+				actions.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -628,7 +672,10 @@ DataModleFactory = {
 			if(!itemInfos){
 				itemInfos = new Array();
 			}
-			itemInfos.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是 item 对象
+				itemInfos.push(item);
+			}
 			return this;						
 		};
 		/**
@@ -660,7 +707,9 @@ DataModleFactory = {
 			if(!items){
 				items = new Array();
 			}
-			if (pram) {//如果有传参Item,修改Item中某些值为默认值
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是 item 对象
+				//修改Item中某些值为默认值
 				//依次读取itemInfos，优先级：自身>domain>全局
 				var flag = false;
 				function fn1 (obj){
@@ -717,9 +766,9 @@ DataModleFactory = {
 					}
 				}
 				fn1(this);
-			};
-			pram.supper = this;
-			items.push(pram);
+				pram.supper = this;
+				items.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -847,7 +896,10 @@ DataModleFactory = {
 			if(!buffs){
 				buffs = new Array();
 			}
-			buffs.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
+				//判断传入参数不为空 且是 buff 对象
+				buffs.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -1017,7 +1069,10 @@ DataModleFactory = {
 			if(!actions){
 				actions = new Array();
 			}
-			actions.push(pram);
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="action"){
+				//判断传入参数不为空 且是 action 对象
+				actions.push(pram);
+			}
 			return this;						
 		};
 		/**
@@ -1080,14 +1135,60 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 第二类型 
+		 */
+		var type2;
+		skill.getType2 = function() {
+			return type2;
+		};
+		skill.setType2 = function(pram) {
+			type2 = pram;
+			return this;
+		};
+		/**
 		 * 效果
 		 */
-		var effect;
-		skill.getEffect = function() {
-			return effect;
+		var attr;
+		skill.getAttr = function() {
+			return attr;
 		};
-		skill.setEffect = function(pram) {
-			effect = pram;
+		skill.setAttr = function(pram) {
+			attr = pram;
+			return this;
+		};
+		/**
+		 * 增益减益
+		 */
+		var buffs=[];
+		skill.getBuff = function(num){
+			return buffs[num];
+		};
+		skill.getBuffs = function(pram){
+			return buffs;
+		};
+		skill.addBuff = function(pram){
+			if(!buffs){
+				buffs = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
+				//判断传入参数不为空 且是 buff 对象
+				buffs.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Buff对象
+		 */
+		skill.delBuff = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				buffs.splice(pram,1);
+			} else {
+				for (var i=0; i < buffs.length; i++) {
+					if(buffs[i] === pram){
+						buffs.splice(i,1);
+					};
+				};
+			};
 			return this;
 		};
 		return skill;
@@ -1128,14 +1229,14 @@ DataModleFactory = {
 			return this;
 		};
 		/**
-		 * 效果
+		 * 属性
 		 */
-		var effect;
-		buff.getEffect = function() {
-			return effect;
+		var attr;
+		buff.getAttr = function() {
+			return attr;
 		};
-		buff.setEffect = function(pram) {
-			effect = pram;
+		buff.setAttr = function(pram) {
+			attr = pram;
 			return this;
 		};
 		/**
@@ -1168,3 +1269,17 @@ DataModleFactory = {
 	},
 };
 DataModleFactory.createItemInfo = DataModleFactory.createItem;
+/**
+ * 复制buff对象
+ * @param {Object} buff
+ */
+function copyBuff(buff){
+	tempbuff = DataModleFactory.createBuff();
+	tempbuff.setName(buff.getName())
+			.setContent(buff.getContent())
+			.setType(buff.getType())
+			.setAttr(buff.getAttr())
+			.setRound(buff.getRound())
+			.setSuperposition(buff.getSuperposition());
+	return tempbuff;
+};

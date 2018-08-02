@@ -177,6 +177,47 @@ dictionaryData.action={
 	}
 };
 
+/**
+ * 增益减益常量数据
+ */
+var BUFF={
+	/**
+	 * 类型
+	 */
+	TYPE:{
+		/**
+		 * 战斗增益（战斗后消失）
+		 */
+		battleBuff:"battleBuff",
+		/**
+		 * 长期增益
+		 */
+		buff:"buff",
+		
+	},
+	/**
+	 * 效果
+	 */
+	attr:{
+		hpPercent:1,
+	},
+};
+/**
+ * 增益减益字典
+ */
+dictionaryData.buff={
+	BUFF1:{
+		name:"增益",
+		type:BUFF.TYPE.battleBuff,
+		attr:{
+			hpPercent:1,
+		},
+		round:3,
+		superposition:1,
+	},
+};
+
+
 
 /**
  * 技能常量数据
@@ -187,17 +228,24 @@ var SKILL={
 	 */
 	TYPE:{
 		/**
-		 * 主动技能
+		 * 主动技能（可使用）
 		 */
 		active:"active",
 		/**
-		 * 被动技能
+		 * 非主动技能（可使用）
+		 */
+		unActive:"unActive",
+	},
+	TYPE2:{
+		/**
+		 * 被动技能（不可使用）
 		 */
 		passive:"passive",
 		/**
 		 * 属性技能
 		 */
 		attribute:"attribute",
+		
 	},
 	/**
 	 * 效果
@@ -220,51 +268,27 @@ var SKILL={
 dictionaryData.skill={
 	skill1:{
 		name:"属性hpPercent:10",
-		type:SKILL.TYPE.attribute,
-		effect:{
+		type:SKILL.TYPE.unActive,
+		type2:SKILL.TYPE2.attribute,
+		attr:{
 			hpPercent:0.1,
 		},
 	},
-};
-
-
-/**
- * 增益减益常量数据
- */
-var BUFF={
-	/**
-	 * 类型
-	 */
-	TYPE:{
-		/**
-		 * 战斗增益（战斗后消失）
-		 */
-		battleBuff:"battleBuff",
-		/**
-		 * 长期增益
-		 */
-		buff:"buff",
-		
-	},
-	/**
-	 * 效果
-	 */
-	EFFECT:{
-		hpPercent:1,
-	},
-};
-/**
- * 增益减益字典
- */
-dictionaryData.buff={
-	BUFF1:{
-		name:"增益",
-		type:BUFF.TYPE.battleBuff,
-		effect:{
-			hpPercent:1,
+	skill2:{
+		name:"主动伤害",
+		type:SKILL.TYPE.active,
+		attr:{
+			att:100,
 		},
-		round:3,
-		superposition:1,
+	},
+	skill3:{
+		name:"主动状态",
+		type:SKILL.TYPE.active,
+		attr:{
+		},
+		buffs:[
+			dictionaryData.buff.BUFF1,
+		],
 	},
 };
 
@@ -294,13 +318,17 @@ var ITEM={
 		equipHead:"head",
 		equip2:"2",
 		/**
+		 * 消耗品
+		 */
+		consumable:"consumable",
+		/**
 		 * 战斗消耗品
 		 */
 		battleConsumable:"battleConsumable",
 		/**
-		 * 非消耗品
+		 * 可反复使用消耗品
 		 */
-		unConsumable:"unConsumable",
+		reusingConsumable:"reusingConsumable",
 	},
 };
 /**
@@ -310,6 +338,7 @@ dictionaryData.item={
 	item1:{
 		name:"消耗品+hp",
 		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
 		attr:{
 			hp:50,
 		},
@@ -326,6 +355,7 @@ dictionaryData.item={
 	item2:{
 		name:"消耗品+buff",
 		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
 		content:"消耗品2说明",
 		buffs:[
 			dictionaryData.buff.BUFF1,
@@ -340,8 +370,9 @@ dictionaryData.item={
 		],
 	},
 	item3:{
-		name:"消耗品",
+		name:"可反复使用消耗品",
 		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE.reusingConsumable,
 		content:"消耗品3说明",
 		totalNum:1,
 		sellCost:5,
@@ -352,7 +383,7 @@ dictionaryData.item={
 		],
 	},
 	item4:{
-		name:"实装物体1",
+		name:"装备物品1-1类",
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equipHead,
 		attr:{
@@ -374,7 +405,7 @@ dictionaryData.item={
 		],
 	},
 	item5:{
-		name:"实装物体2",
+		name:"装备物品2-1类",
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equipHead,
 		content:"物体2说明",
@@ -391,7 +422,7 @@ dictionaryData.item={
 		],
 	},
 	item7:{
-		name:"实装物体3",
+		name:"装备物品3-2类",
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equip2,
 		attr:{
@@ -410,6 +441,22 @@ dictionaryData.item={
 			dictionaryData.action.role_putOn,
 			dictionaryData.action.role_takeOff,
 			dictionaryData.action.role_alreadyEquipped,
+		],
+	},
+	item8:{
+		name:"战斗消耗品",
+		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.battleConsumable,
+		attr:{
+			att:50,
+		},
+		content:"消耗品1说明",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
 		],
 	},
 	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
@@ -474,14 +521,18 @@ var data = {
 		baseDef:1,
 		skills:[
 			dictionaryData.skill.skill1,
+			dictionaryData.skill.skill2,
+			dictionaryData.skill.skill3,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
 			dictionaryData.item.item1,
 			dictionaryData.item.item2,
+			dictionaryData.item.item3,
 			dictionaryData.item.item4,
 			dictionaryData.item.item5,
 			dictionaryData.item.item7,
+			dictionaryData.item.item8,
 		],
 	},],
 	/**
@@ -582,3 +633,5 @@ data.roles[0].items[0].totalNum=9;
 data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
 data.roles[0].items[3].totalNum=1;
+data.roles[0].items[4].totalNum=1;
+data.roles[0].items[4].totalNum=9;
