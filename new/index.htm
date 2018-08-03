@@ -1421,6 +1421,8 @@
 						//获取物品属性
 						var tempAttr = currentItem.getAttr();
 						if(tempAttr!=undefined&&tempAttr!=null){
+							roleSettlement(tempAttr);
+							/*
 							//判断有hpPercent，则按百分比增加角色HP
 							if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
 								dataRoleObj[0].setHp(dataRoleObj[0].getHp()+(dataRoleObj[0].getHp()*Number(tempAttr.hpPercent)));
@@ -1429,14 +1431,17 @@
 							if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
 								dataRoleObj[0].setHp(dataRoleObj[0].getHp()+Number(tempAttr.hp));
 							}
+							*/
 						}
-						//判断为增加buff
-						var tempBuffs = currentItem.getBuffs();
-						if(tempBuffs!=undefined&&tempBuffs!=null&&typeof tempBuffs == "array"){
+						//添加buff
+						var tempBuffs = currentItem.getBuffs();//tempBuff 为  array
+						if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
 							for (var i=0; i < tempBuffs.length; i++) {
-								dataRoleObj[0].add(tempBuffs[i]);
+								//复制一个buff对象，存入
+								var tempBuff = copyBuff(tempBuffs[i]);
+								dataRoleObj[0].addBuff(tempBuff);
 							};
-						}
+						};
 					//}else if(currentAction.getType()==ACTION.TYPE.useUnConsumable){
 						//判断为使用(物品/非消耗品)
 						//执行使用效果
@@ -2041,6 +2046,92 @@
 				};
 			});
 			
+			/**
+			 * 角色行动结算
+			 */
+			function roleSettlement(tempAttr){
+				//角色hp变化值（角色自身效果）
+				var roleHpChange = 0;
+				//角色的att输出
+				var roleAttDamage = 0;
+				if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+					//maxHp(百分比)恢复值
+					if("maxHpPercent" in tempAttr){
+						roleHpChange+=dataRoleObj[0].getMaxHp()*tempAttr.maxHpPercent;
+					}
+					//当前hp(百分比)恢复值
+					if("hpPercent" in tempAttr){
+						roleHpChange+=dataRoleObj[0].getHp()*tempAttr.hpPercent;
+					}
+					//hp恢复值
+					if("hp" in tempAttr){
+						roleHpChange+=tempAttr.hp;
+					}
+					//输出伤害值
+					if("att" in tempAttr){
+						//暂时只计算道具伤害
+						roleAttDamage = tempAttr.att;
+					}
+				}
+				
+				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
+					//对方hp计算:1.角色攻击给予的被动变化（受伤减少）
+					var tempEnemyHp = currentInteractiveObject.getHp();
+					var tempRoleAttDamage=roleAttDamage-currentInteractiveObject.getDef();
+					tempEnemyHp-=tempRoleAttDamage;
+					//将对方hp实现
+					currentInteractiveObject.setHp(tempEnemyHp);
+				}
+				
+				//角色hp计算:1.自身给予的主动变化（恢复）;
+				var tempRoleHp = dataRoleObj[0].getHp();
+				tempRoleHp+=roleHpChange;
+				//将角色hp实现
+				dataRoleObj[0].setHp(tempRoleHp);
+				
+				
+				//判断角色hp是否为0
+				if(dataRoleObj[0].getHp()<=0){
+					//结束（未实现）
+					alert("角色hp=0");
+				}
+				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
+					//判断对方hp是否为0
+					if(currentInteractiveObject.getHp()<=0){
+						//结束（未实现）
+						alert("对象hp=0");
+					}
+				}
+			}
+			/**
+			 * 对方行动结算
+			 */
+			function enemySettlement(){
+				//对方的att输出
+				var enemyAttDamage = 0;
+				//暂时只计算基础攻击
+				enemyAttDamage += currentInteractiveObject.getAtt();
+				//对方buff加成计算、技能计算
+				
+				
+				//角色hp计算:2.对方攻击给予被动变化（受伤减少）;减少值=对方输出-角色防御
+				var tempRoleHp = dataRoleObj[0].getHp();
+				var tempEnemyAttDamage = enemyAttDamage-dataRoleObj[0].getDef();
+				if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
+				tempRoleHp-=tempEnemyAttDamage;
+				//将角色hp实现
+				dataRoleObj[0].setHp(tempRoleHp);
+				//判断hp是否为0
+				if(dataRoleObj[0].getHp()<=0){
+					//结束（未实现）
+					alert("结束");
+				}
+				//判断对方hp是否为0
+				if(currentInteractiveObject.getHp()<=0){
+					//结束（未实现）
+					alert("对象hp=0");
+				}
+			}
 			
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
@@ -2066,26 +2157,6 @@
 					viewControl.menu_bag_Style.left = 200+"px";
 					viewControl.menu_bag_Style.opacity = 1;
 				};
-				$scope.TestClick=function(){//测试攻击按钮
-					//计算造成伤害:角色att-目标def
-					var tempDamage = dataRoleObj[0].getAtt()-currentInteractiveObject.getDef();
-					if(tempDamage<0){tempDamage=0;}
-					currentInteractiveObject.setHp(currentInteractiveObject.getHp()-tempDamage);
-					behit();
-				};
-				/**
-				 * 被击,传参（flag）: true:跳过被击回合;false或不传:正常计算
-				 */
-				behit = function(flag){
-					if(flag){
-						
-					}else{
-						//计算收到伤害：目标att-角色def
-						var tempDamage = currentInteractiveObject.getAtt()-dataRoleObj[0].getDef();
-						if(tempDamage<0){tempDamage=0;}
-						dataRoleObj[0].setHp(dataRoleObj[0].getHp()-tempDamage);
-					}
-				};
 				var quickButtonChangeArr;
 				var nowQuickButtonSet;
 				$scope.quickButtonChange = function(num){//选择快捷按钮
@@ -2096,6 +2167,8 @@
 					}else if(num==2){//加载角色技能
 						quickButtonChangeArr = dataRoleObj[0].getSkills("active");
 						nowQuickButtonSet=2;
+					}else{
+						quickButtonChangeArr = [];
 					}
 					viewDataModel.menuBag.buttonElements=function(){
 						return quickButtonChangeArr;
@@ -2118,6 +2191,7 @@
 					quickMenuBagHide();
 				};
 				$scope.quickButtonClick = function(num){
+					
 					switch(num){
 						case 1://使用消耗品
 							if (quickButton1&&quickButton1!=undefined&&quickButton1!=null){//判断quickButton1是否设置
@@ -2127,14 +2201,10 @@
 										if(quickButton1.getType2()==ITEM.TYPE2.consumable||quickButton1.getType2()==ITEM.TYPE2.reusingConsumable){//判断第二类型为消耗品或可反复使用消耗品
 											//执行使用效果
 											var tempAttr = quickButton1.getAttr();
-											if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-												if("hpPercent" in tempAttr){
-													dataRoleObj[0].setHp(dataRoleObj[0].getHp()+dataRoleObj[0].getHp()*tempAttr.hpPercent);
-												}
-												if("hp" in tempAttr){
-													dataRoleObj[0].setHp(dataRoleObj[0].getHp()+tempAttr.hp);
-												}
-											}
+											//行动结算
+											roleSettlement(tempAttr);
+											enemySettlement();
+											
 											//数量-1
 											if(!(quickButton1.getType2()==ITEM.TYPE2.reusingConsumable)){//是可反复使用消耗品则不减少数量
 												var totalNum = quickButton1.getTotalNum();
@@ -2146,20 +2216,13 @@
 													quickButton1.setTotalNum(totalNum);
 												}
 											}
-											
 										}else if(quickButton1.getType2()==ITEM.TYPE2.battleConsumable){//判断第二类型为战斗消耗品（攻击类）
 											//执行使用效果
-											console.info(quickButton1.getAttr);
-											console.info(quickButton1.getAttr());
 											var tempAttr = quickButton1.getAttr();
-											if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-												if("att" in tempAttr){
-													//计算造成伤害:当前物品att-目标def
-													var tempDamage = tempAttr.att-currentInteractiveObject.getDef();
-													if(tempDamage<0){tempDamage=0;}
-													currentInteractiveObject.setHp(currentInteractiveObject.getHp()-tempDamage);
-												}
-											}
+											//行动结算
+											roleSettlement(tempAttr);
+											enemySettlement();
+											
 											//数量-1
 											var totalNum = quickButton1.getTotalNum();
 											totalNum -= 1;
@@ -2170,9 +2233,16 @@
 												quickButton1.setTotalNum(totalNum);
 											}
 										}
+										//添加buff
+										var tempBuffs = quickButton1.getBuffs();//tempBuff 为  array
+										if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
+											for (var i=0; i < tempBuffs.length; i++) {
+												//复制一个buff对象，存入
+												var tempBuff = copyBuff(tempBuffs[i]);
+												dataRoleObj[0].addBuff(tempBuff);
+											};
+										};
 									}
-									//被击
-									behit();
 								}else{//判断TotalNum不存在<=0,重新校准数据
 									dataRoleObj[0].delItem(quickButton1);
 								}
@@ -2184,35 +2254,22 @@
 							if (quickButton2&&quickButton2!=undefined&&quickButton2!=null){//判断quickButton2是否设置
 								//执行使用效果
 								var tempAttr = quickButton2.getAttr();
-								var tempBuff = quickButton2.getBuffs();//tempBuff 为  array
-								if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){//判断有attr
-									if("hpPercent" in tempAttr){
-										dataRoleObj[0].setHp(dataRoleObj[0].getHp()+dataRoleObj[0].getHp()*tempAttr.hpPercent);
-									}
-									if("hp" in tempAttr){
-										dataRoleObj[0].setHp(dataRoleObj[0].getHp()+tempAttr.hp);
-									}
-									if("att" in tempAttr){
-										//计算造成伤害:当前角色att+技能att-目标def
-										var tempDamage = dataRoleObj[0].getAtt() + tempAttr.att - currentInteractiveObject.getDef();
-										if(tempDamage<0){tempDamage=0;}
-										console.info(tempDamage);
-										currentInteractiveObject.setHp(currentInteractiveObject.getHp()-tempDamage);
-									}
-								}
-								if(tempBuff&&tempBuff!=undefined&&tempBuff!=null&&tempBuff.length>0){//判断有buff
-									for (var i=0; i < tempBuff.length; i++) {
+								//行动结算
+								roleSettlement(tempAttr);
+								enemySettlement();
+								
+								//添加buff
+								var tempBuffs = quickButton2.getBuffs();//tempBuff 为  array
+								if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
+									for (var i=0; i < tempBuffs.length; i++) {
 										//复制一个buff对象，存入
-										var tempBuff = copyBuff(tempBuff[i]);
+										var tempBuff = copyBuff(tempBuffs[i]);
 										dataRoleObj[0].addBuff(tempBuff);
 									};
 								};
-								//被击
-								behit();
 							}else{//quickButton2未设置，打开设置
 								$scope.quickButtonChange(2);
 							}
-							console.info(quickButton2);
 							break;
 						default:
 					   		break;

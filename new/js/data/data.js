@@ -195,22 +195,31 @@ var BUFF={
 		buff:"buff",
 		
 	},
-	/**
-	 * 效果
-	 */
-	attr:{
-		hpPercent:1,
-	},
 };
 /**
  * 增益减益字典
  */
 dictionaryData.buff={
-	BUFF1:{
-		name:"增益",
+	/**
+	 * maxhp直接增加50
+	 */
+	hpUp1:{
+		name:"增益+hp50",
 		type:BUFF.TYPE.battleBuff,
 		attr:{
-			hpPercent:1,
+			hp:50,
+		},
+		round:3,
+		superposition:1,
+	},
+	/**
+	 * maxhp增加10%
+	 */
+	hpUp2:{
+		name:"增益+maxhp10%",
+		type:BUFF.TYPE.battleBuff,
+		attr:{
+			maxHpPercent:0.1,
 		},
 		round:3,
 		superposition:1,
@@ -247,20 +256,6 @@ var SKILL={
 		attribute:"attribute",
 		
 	},
-	/**
-	 * 效果
-	 */
-	EFFECT:{
-		/*------属性-----*/
-		hp:"hp",
-		att:"att",
-		def:"def",
-		hpPercent:"hpPercent",
-		attPercent:"attPercent",
-		defPercent:"defPercent",
-		/*------主动------*/
-		
-	},
 };
 /**
  * 技能字典
@@ -271,23 +266,41 @@ dictionaryData.skill={
 		type:SKILL.TYPE.unActive,
 		type2:SKILL.TYPE2.attribute,
 		attr:{
-			hpPercent:0.1,
+			maxHpPercent:0.1,
 		},
 	},
-	skill2:{
+	/**
+	 * 攻击技能
+	 */
+	att:{
 		name:"主动伤害",
 		type:SKILL.TYPE.active,
 		attr:{
 			att:100,
 		},
 	},
-	skill3:{
-		name:"主动状态",
+	/**
+	 * buff:maxhp+50
+	 */
+	buffHpUp:{
+		name:"buff:maxhp+50",
 		type:SKILL.TYPE.active,
 		attr:{
 		},
 		buffs:[
-			dictionaryData.buff.BUFF1,
+			dictionaryData.buff.hpUp1,
+		],
+	},
+	/**
+	 * buff:maxhp+10%
+	 */
+	buffHpUp2:{
+		name:"buff:maxhp+10%",
+		type:SKILL.TYPE.active,
+		attr:{
+		},
+		buffs:[
+			dictionaryData.buff.hpUp2,
 		],
 	},
 };
@@ -335,8 +348,88 @@ var ITEM={
  * 物品字典
  */
 dictionaryData.item={
+	/**
+	 * 恢复hp50
+	 */
+	recoveryHp:{
+		name:"耗+hp50",
+		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
+		attr:{
+			hp:50,
+		},
+		content:"耗+hp50",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_useConsumable,
+		],
+	},
+	/**
+	 * 恢复当前hp10%
+	 */
+	recoveryHp2:{
+		name:"耗+当前hp10%",
+		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
+		attr:{
+			hpPercent:0.1,
+		},
+		content:"耗+当前hp10%",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_useConsumable,
+		],
+	},
+	/**
+	 * 恢复Maxhp10%
+	 */
+	recoveryHp3:{
+		name:"耗+Maxhp10%",
+		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
+		attr:{
+			maxHpPercent:0.1,
+		},
+		content:"耗+当前hp10%",
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+			dictionaryData.action.role_useConsumable,
+		],
+	},
+	/**
+	 * 增加buff:MaxHp10%
+	 */
+	buffHp1:{
+		name:"耗+buff:MaxHp10%",
+		type:ITEM.TYPE.consumable,
+		type2:ITEM.TYPE2.consumable,
+		content:"耗+buff:MaxHp10%",
+		buffs:[
+			dictionaryData.buff.hpUp2,
+		],
+		totalNum:1,
+		sellCost:1,
+		buyCost:2,
+		actions:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
+		],
+	},
+	//------------------------------
 	item1:{
-		name:"消耗品+hp",
+		name:"消耗品hp+50",
 		type:ITEM.TYPE.consumable,
 		type2:ITEM.TYPE2.consumable,
 		attr:{
@@ -353,12 +446,12 @@ dictionaryData.item={
 		],
 	},
 	item2:{
-		name:"消耗品+buff",
+		name:"废",
 		type:ITEM.TYPE.consumable,
 		type2:ITEM.TYPE2.consumable,
 		content:"消耗品2说明",
 		buffs:[
-			dictionaryData.buff.BUFF1,
+			//dictionaryData.buff.BUFF1,
 		],
 		totalNum:1,
 		sellCost:1,
@@ -515,14 +608,15 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
-		hp:400,
+		hp:50,
 		baseHp:500,
 		baseAtt:10,
 		baseDef:1,
 		skills:[
 			dictionaryData.skill.skill1,
-			dictionaryData.skill.skill2,
-			dictionaryData.skill.skill3,
+			dictionaryData.skill.att,
+			dictionaryData.skill.buffHpUp1,
+			dictionaryData.skill.buffHpUp2,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
@@ -533,6 +627,10 @@ var data = {
 			dictionaryData.item.item5,
 			dictionaryData.item.item7,
 			dictionaryData.item.item8,
+			dictionaryData.item.recoveryHp,
+			dictionaryData.item.recoveryHp2,
+			dictionaryData.item.recoveryHp3,
+			dictionaryData.item.buffHp1,
 		],
 	},],
 	/**
@@ -587,7 +685,7 @@ var data = {
 					name:"对战对象",
 					hp:250,
 					maxHp:300,
-					att:20,
+					att:2,
 					def:10,
 					items:[
 						dictionaryData.item.item1,
@@ -634,4 +732,9 @@ data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
 data.roles[0].items[3].totalNum=1;
 data.roles[0].items[4].totalNum=1;
-data.roles[0].items[4].totalNum=9;
+data.roles[0].items[5].totalNum=9;
+data.roles[0].items[6].totalNum=9;
+data.roles[0].items[7].totalNum=9;
+data.roles[0].items[8].totalNum=9;
+data.roles[0].items[9].totalNum=9;
+data.roles[0].items[10].totalNum=9;

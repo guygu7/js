@@ -102,34 +102,35 @@ DataModleFactory = {
 		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
 		 */
 		role.getMaxHp  = function() {
-			var maxHp = Number(baseHp);
+			var maxHp = 0;
 			var tempHp=0;//直接加成
 			var tempHpPercent=0;//百分比
 			//遍历角色技能加成
 			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
-			if (unActiveSkills.length>0){
+			if (unActiveSkills&&unActiveSkills.length>0){
 				for (var i=0; i < unActiveSkills.length; i++) {
 					var tempAttr = unActiveSkills[i].getAttr();
 					//判断attr存在
-					if(tempAttr!=undefined&&tempAttr!=null){
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 						//判断获取到的hp属性为数字
-						if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
-							tempHp+=Number(tempAttr.hp);
+						if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
+							tempHp+=Number(tempAttr.maxHp);
 						}
-						//判断获取到的hpPercent属性为数字
-						if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
-							tempHpPercent+=Number(tempAttr.hpPercent);
+						//判断获取到的maxHpPercent属性为数字
+						if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
+							tempHpPercent+=Number(tempAttr.maxHpPercent);
 						}
 					}
 				};
 			}
+			in//需修改为maxhp
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
 				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
 					//判断attr存在
 					var tempAttr = items[i].getAttr();
-					if(tempAttr!=undefined&&tempAttr!=null){
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 						//判断获取到的hp属性为数字
 						if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
 							tempHp+=Number(tempAttr.hp);
@@ -141,14 +142,25 @@ DataModleFactory = {
 					}
 				}
 			};
+			var tempBuffHp=0;//buff直接加成
+			var tempBuffHpPercent=0;//buff百分比
 			//遍历buff加成，包括增益减益
 			for (var i=0; i < buffs.length; i++) {
-				if (buffs[i].getAttr()) {
-					in
+				var tempAttr = buffs[i].getAttr();
+				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
+					if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
+						tempBuffHp+=Number(tempAttr.hp);
+					}
+					//判断获取到的hpPercent属性为数字
+					if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
+						tempBuffHpPercent+=Number(tempAttr.hpPercent);
+					}
 				};
 			};
 			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
-			return maxHp+maxHp*tempHpPercent+tempHp;
+			maxHp = Number(baseHp)+ Number(baseHp)*tempHpPercent+tempHp;
+			//计算buff加成:先计算百分比，后计算直接加成
+			return maxHp+maxHp*tempBuffHpPercent+tempBuffHp;
 		};
 		
 		
@@ -307,9 +319,8 @@ DataModleFactory = {
 						}
 					};
 					this.delBuff(tempRound);
-				} else {//堆叠未超出直接加入
-					buffs.push(pram);
-				}
+				}//堆叠未超出直接加入
+				buffs.push(pram);
 			}
 			return this;						
 		};
