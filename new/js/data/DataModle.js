@@ -65,19 +65,7 @@ DataModleFactory = {
 			status2 = pram;
 			return this;
 		};
-		/**
-		 * 角色基础HP
-		 */
-		var baseHp=100;
-		role.getBaseHp  = function() {
-			return baseHp;
-		};
-		role.setBaseHp = function(pram) {
-			if(!isNaN(Number(pram))){
-				baseHp = Number(pram);
-			}
-			return this;
-		};
+		
 		/**
 		 * 角色当前HP
 		 */
@@ -98,10 +86,89 @@ DataModleFactory = {
 		};
 		
 		/**
+		 * 计算属性数值
+		 */
+		function compute (attrType,baseAttrType) {
+			var nowAttrType = 0;
+			var tempAttrType=0;//直接加成
+			var tempAttrTypePercent=0;//百分比
+			//遍历角色技能加成
+			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
+			if (unActiveSkills&&unActiveSkills.length>0){
+				for (var i=0; i < unActiveSkills.length; i++) {
+					var tempAttr = unActiveSkills[i].getAttr();
+					//判断attr存在
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+							tempAttrType+=Number(tempAttr[attrType]);
+						}
+						//判断获取到的defPercent属性为数字
+						if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
+						}
+					}
+				};
+			}
+			//遍历所有已装备物品
+			for (var i=0; i < items.length; i++) {
+				//判断是装备，且已装备上
+				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
+					//判断attr存在
+					var tempAttr = items[i].getAttr();
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+							tempAttrType+=Number(tempAttr[attrType]);
+						}
+						//判断获取到的defPercent属性为数字
+						if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
+						}
+					}
+				}
+			};
+			var tempBuffAttrType=0;//buff直接加成
+			var tempBuffAttrTypePercent=0;//buff百分比
+			//遍历buff加成，包括增益减益
+			for (var i=0; i < buffs.length; i++) {
+				var tempAttr = buffs[i].getAttr();
+				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
+					if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+						tempBuffAttrType+=Number(tempAttr[attrType]);
+					}
+					//判断获取到的defPercent属性为数字
+					if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+						tempBuffAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
+					}
+				};
+			};
+			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
+			nowAttrType = Number(baseAttrType)+ Number(baseAttrType)*tempAttrTypePercent+tempAttrType;
+			//计算buff加成:先计算百分比，后计算直接加成
+			return nowAttrType+nowAttrType*tempBuffAttrTypePercent+tempBuffAttrType;
+		}
+		
+		/**
+		 * 角色基础MaxHP
+		 */
+		var baseMaxHp=100;
+		role.getBaseMaxHp  = function() {
+			return baseMaxHp;
+		};
+		role.setBaseMaxHp = function(pram) {
+			if(!isNaN(Number(pram))){
+				baseMaxHp = Number(pram);
+			}
+			return this;
+		};
+		/**
 		 * 角色最大HP（包含计算加成）
 		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
 		 */
 		role.getMaxHp  = function() {
+			return compute("maxHp",baseMaxHp);
+			/*
 			var maxHp = 0;
 			var tempHp=0;//直接加成
 			var tempHpPercent=0;//百分比
@@ -123,7 +190,6 @@ DataModleFactory = {
 					}
 				};
 			}
-			in//需修改为maxhp
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
@@ -132,12 +198,12 @@ DataModleFactory = {
 					var tempAttr = items[i].getAttr();
 					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 						//判断获取到的hp属性为数字
-						if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
-							tempHp+=Number(tempAttr.hp);
+						if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
+							tempHp+=Number(tempAttr.maxHp);
 						}
-						//判断获取到的hpPercent属性为数字
-						if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
-							tempHpPercent+=Number(tempAttr.hpPercent);
+						//判断获取到的maxHpPercent属性为数字
+						if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
+							tempHpPercent+=Number(tempAttr.maxHpPercent);
 						}
 					}
 				}
@@ -148,12 +214,12 @@ DataModleFactory = {
 			for (var i=0; i < buffs.length; i++) {
 				var tempAttr = buffs[i].getAttr();
 				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
-					if("hp" in tempAttr&&tempAttr.hp!=undefined&&tempAttr.hp!=null&&typeof Number(tempAttr.hp) == "number"){
-						tempBuffHp+=Number(tempAttr.hp);
+					if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
+						tempBuffHp+=Number(tempAttr.maxHp);
 					}
-					//判断获取到的hpPercent属性为数字
-					if("hpPercent" in tempAttr&&tempAttr.hpPercent!=undefined&&tempAttr.hpPercent!=null&&typeof Number(tempAttr.hpPercent) == "number"){
-						tempBuffHpPercent+=Number(tempAttr.hpPercent);
+					//判断获取到的maxHpPercent属性为数字
+					if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
+						tempBuffHpPercent+=Number(tempAttr.maxHpPercent);
 					}
 				};
 			};
@@ -161,6 +227,7 @@ DataModleFactory = {
 			maxHp = Number(baseHp)+ Number(baseHp)*tempHpPercent+tempHp;
 			//计算buff加成:先计算百分比，后计算直接加成
 			return maxHp+maxHp*tempBuffHpPercent+tempBuffHp;
+			*/
 		};
 		
 		
@@ -181,19 +248,70 @@ DataModleFactory = {
 		 * 角色当前Att
 		 */
 		role.getAtt  = function() {
-			var nowAtt = baseAtt;
+			return compute("att",baseAtt);
+			/*
+			var nowAtt = 0;
+			var tempAtt=0;//直接加成
+			var tempAttPercent=0;//百分比
+			//遍历角色技能加成
+			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
+			if (unActiveSkills&&unActiveSkills.length>0){
+				for (var i=0; i < unActiveSkills.length; i++) {
+					var tempAttr = unActiveSkills[i].getAttr();
+					//判断attr存在
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的att属性为数字
+						if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
+							tempAtt+=Number(tempAttr.att);
+						}
+						//判断获取到的attPercent属性为数字
+						if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
+							tempAttPercent+=Number(tempAttr.attPercent);
+						}
+					}
+				};
+			}
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
 				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断获取到的att属性为数字
-					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"att" in items[i].getAttr()&&items[i].getAttr().att!=undefined&&items[i].getAttr().att!=null&&typeof Number(items[i].getAttr().att) == "number"){
-						nowAtt+=Number(items[i].getAttr().att);
+					//判断attr存在
+					var tempAttr = items[i].getAttr();
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
+							tempAtt+=Number(tempAttr.att);
+						}
+						//判断获取到的attPercent属性为数字
+						if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
+							tempAttPercent+=Number(tempAttr.attPercent);
+						}
 					}
 				}
 			};
-			return parseInt(nowAtt);
+			var tempBuffAtt=0;//buff直接加成
+			var tempBuffAttPercent=0;//buff百分比
+			//遍历buff加成，包括增益减益
+			for (var i=0; i < buffs.length; i++) {
+				var tempAttr = buffs[i].getAttr();
+				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
+					if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
+						tempBuffAtt+=Number(tempAttr.att);
+					}
+					//判断获取到的attPercent属性为数字
+					if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
+						tempBuffAttPercent+=Number(tempAttr.attPercent);
+					}
+				};
+			};
+			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
+			nowAtt = Number(baseAtt)+ Number(baseAtt)*tempAttPercent+tempAtt;
+			//计算buff加成:先计算百分比，后计算直接加成
+			return nowAtt+nowAtt*tempBuffAttPercent+tempBuffAtt;
+			*/
 		};
+		
+		
 		/**
 		 * 角色基础Def
 		 */
@@ -209,19 +327,149 @@ DataModleFactory = {
 		 * 角色当前Def
 		 */
 		role.getDef  = function() {
-			nowDef = baseDef;
+			return compute("def",baseDef);
+			/*
+			var nowDef = 0;
+			var tempDef=0;//直接加成
+			var tempDefPercent=0;//百分比
+			//遍历角色技能加成
+			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
+			if (unActiveSkills&&unActiveSkills.length>0){
+				for (var i=0; i < unActiveSkills.length; i++) {
+					var tempAttr = unActiveSkills[i].getAttr();
+					//判断attr存在
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
+							tempDef+=Number(tempAttr.def);
+						}
+						//判断获取到的defPercent属性为数字
+						if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
+							tempDefPercent+=Number(tempAttr.defPercent);
+						}
+					}
+				};
+			}
 			//遍历所有已装备物品
 			for (var i=0; i < items.length; i++) {
 				//判断是装备，且已装备上
 				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断获取到的def属性为数字
-					if(items[i].getAttr()!=undefined&&items[i].getAttr()!=null&&"def" in items[i].getAttr()&&items[i].getAttr().def!=undefined&&items[i].getAttr().def!=null&&typeof Number(items[i].getAttr().def) == "number"){
-						nowDef+=Number(items[i].getAttr().def);
+					//判断attr存在
+					var tempAttr = items[i].getAttr();
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+						//判断获取到的hp属性为数字
+						if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
+							tempDef+=Number(tempAttr.def);
+						}
+						//判断获取到的defPercent属性为数字
+						if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
+							tempDefPercent+=Number(tempAttr.defPercent);
+						}
 					}
 				}
 			};
-			return parseInt(nowDef);
+			var tempBuffDef=0;//buff直接加成
+			var tempBuffDefPercent=0;//buff百分比
+			//遍历buff加成，包括增益减益
+			for (var i=0; i < buffs.length; i++) {
+				var tempAttr = buffs[i].getAttr();
+				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
+					if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
+						tempBuffDef+=Number(tempAttr.def);
+					}
+					//判断获取到的defPercent属性为数字
+					if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
+						tempBuffDefPercent+=Number(tempAttr.defPercent);
+					}
+				};
+			};
+			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
+			nowDef = Number(baseDef)+ Number(baseDef)*tempDefPercent+tempDef;
+			//计算buff加成:先计算百分比，后计算直接加成
+			return nowDef+nowDef*tempBuffDefPercent+tempBuffDef;
+			*/
 		};
+		
+		
+		/**
+		 * 角色基础Cri(暴击率)
+		 */
+		var baseCri;
+		role.getBaseCri  = function() {
+			return baseCri;
+		};
+		role.setBaseCri = function(pram) {
+			baseCri = pram;
+			return this;
+		};
+		/**
+		 * 角色当前Cri
+		 */
+		role.getCri  = function() {
+			return compute("cri",baseCri);
+			//return baseCri;
+		};
+		
+		
+		/**
+		 * 角色基础criStrike(暴击伤害)
+		 */
+		var baseCriStrike;
+		role.getBaseCriStrike  = function() {
+			return baseCriStrike;
+		};
+		role.setBaseCri = function(pram) {
+			baseCriStrike = pram;
+			return this;
+		};
+		/**
+		 * 角色当前CriStrike
+		 */
+		role.getCriStrike  = function() {
+			return compute("criStrike",baseCriStrike);
+			//return baseCriStrike;
+		};
+		
+		
+		/**
+		 * 角色基础Avd(闪避率)
+		 */
+		var baseAvd;
+		role.getBaseAvd  = function() {
+			return baseAvd;
+		};
+		role.setBaseAvd = function(pram) {
+			baseAvd = pram;
+			return this;
+		};
+		/**
+		 * 角色当前Avd
+		 */
+		role.getAvd  = function() {
+			return compute("avd",baseAvd);
+			//return baseAvd;
+		};
+		
+		
+		/**
+		 * 角色基础Hit(命中率)
+		 */
+		var baseHit;
+		role.getBaseHit  = function() {
+			return baseHit;
+		};
+		role.setBaseHit = function(pram) {
+			baseHit = pram;
+			return this;
+		};
+		/**
+		 * 角色当前Hit
+		 */
+		role.getHit  = function() {
+			return compute("hit",baseHit);
+			//return baseHit;
+		};
+		
 		
 		
 		/**

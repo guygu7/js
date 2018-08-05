@@ -2063,21 +2063,30 @@
 					if("hpPercent" in tempAttr){
 						roleHpChange+=dataRoleObj[0].getHp()*tempAttr.hpPercent;
 					}
-					//hp恢复值
+					//hp直接恢复值
 					if("hp" in tempAttr){
 						roleHpChange+=tempAttr.hp;
 					}
-					//输出伤害值
-					if("att" in tempAttr){
-						//暂时只计算道具伤害
-						roleAttDamage = tempAttr.att;
+					//计算输出伤害值
+					if("damage" in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
+						roleAttDamage += tempAttr.att;
+					}else{
+						
+						if("attPercent" in tempAttr){
+							roleAttDamage += tempAttr.attPercent;
+						}
+						if("att" in tempAttr){
+							roleAttDamage += tempAttr.att;
+						}
 					}
+					
 				}
 				
 				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
 					//对方hp计算:1.角色攻击给予的被动变化（受伤减少）
 					var tempEnemyHp = currentInteractiveObject.getHp();
 					var tempRoleAttDamage=roleAttDamage-currentInteractiveObject.getDef();
+					if(tempRoleAttDamage<0){tempRoleAttDamage=0;}
 					tempEnemyHp-=tempRoleAttDamage;
 					//将对方hp实现
 					currentInteractiveObject.setHp(tempEnemyHp);

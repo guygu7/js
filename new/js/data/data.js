@@ -204,10 +204,10 @@ dictionaryData.buff={
 	 * maxhp直接增加50
 	 */
 	hpUp1:{
-		name:"增益+hp50",
+		name:"增益+maxHp50",
 		type:BUFF.TYPE.battleBuff,
 		attr:{
-			hp:50,
+			maxHp:50,
 		},
 		round:3,
 		superposition:1,
@@ -279,6 +279,7 @@ dictionaryData.skill={
 			att:100,
 		},
 	},
+	
 	/**
 	 * buff:maxhp+50
 	 */
@@ -480,7 +481,7 @@ dictionaryData.item={
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equipHead,
 		attr:{
-			hp:100,
+			maxHp:100,
 			def:1,
 		},
 		//skill:
@@ -519,7 +520,7 @@ dictionaryData.item={
 		type:ITEM.TYPE.equip,
 		type2:ITEM.TYPE2.equip2,
 		attr:{
-				hp:20,
+				maxHp:20,
 				att:10,
 				def:3,
 		},
@@ -609,7 +610,7 @@ var data = {
 	roles:[{
 		name:"角色",
 		hp:50,
-		baseHp:500,
+		baseMaxHp:500,
 		baseAtt:10,
 		baseDef:1,
 		skills:[
