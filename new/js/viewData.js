@@ -197,9 +197,29 @@ var viewControl = {
 		 */
 		panel3ItemInfoNameHide:true,
 		/**
-		 * 物品信息面板  - name属性显示隐藏
+		 * 物品信息面板  - Content属性显示隐藏
 		 */
 		panel3ItemInfoContentHide:true,
+		/**
+		 * 物品信息面板  - 各种属性显示隐藏
+		 */
+		panel3ItemInfoHpHide:true,
+		panel3ItemInfoHpPercentHide:true,
+		panel3ItemInfoMaxHpHide:true,
+		panel3ItemInfoMaxHpPercentHide:true,
+		panel3ItemInfoAttHide:true,
+		panel3ItemInfoAttPercentHide:true,
+		panel3ItemInfoDefHide:true,
+		panel3ItemInfoDefPercentHide:true,
+		panel3ItemInfoCriHide:true,
+		panel3ItemInfoCriPercentHide:true,
+		panel3ItemInfoCriStrikeHide:true,
+		panel3ItemInfoCriStrikePercentHide:true,
+		panel3ItemInfoAvdHide:true,
+		panel3ItemInfoAvdPercentHide:true,
+		panel3ItemInfoHitHide:true,
+		panel3ItemInfoHitPercentHide:true,
+		
 		/**
 		 * 对比角色物品（装备）信息面板  组件隐藏
 		 */
