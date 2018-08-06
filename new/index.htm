@@ -177,7 +177,7 @@
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
 					<div class="menu" >
 						{{viewDataModel.menuBag.tittleText()}}
-						<div ng-click="menulistClick($event,$index)" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
@@ -1983,6 +1983,89 @@
 						return currentItem.getContent();
 					}
 				};
+				
+				viewDataModel.panel3ItemInfo.attr = function (pram) {
+					if(currentItem&&currentItem.getAttr){
+						if(currentItem.getAttr()){
+							in
+							if(pram in currentItem.getAttr()
+								&& typeof Number(currentItem.getAttr()[pram])=="number" 
+								&& typeof Number(currentItem.getAttr()[pram])!=NaN
+								&& (currentItem.getAttr()[pram])!=0){
+								if(pram=="hp"){
+									viewControl.display.panel3ItemInfoHpHide = false;
+								}else if(pram=="hpPercent"){
+									viewControl.display.panel3ItemInfoHpPercentHide = false;
+								}else if(pram=="maxHp"){
+									viewControl.display.panel3ItemInfoMaxHpHide = false;
+								}else if(pram=="maxHpPercent"){
+									viewControl.display.panel3ItemInfoMaxHpPercentHide = false;
+								}else if(pram=="att"){
+									viewControl.display.panel3ItemInfoAttHide = false;
+								}else if(pram=="attPercent"){
+									viewControl.display.panel3ItemInfoAttPercentHide = false;
+								}else if(pram=="def"){
+									viewControl.display.panel3ItemInfoDefHide = false;
+								}else if(pram=="defPercent"){
+									viewControl.display.panel3ItemInfoDefPercentHide = false;
+								}else if(pram=="cri"){
+									viewControl.display.panel3ItemInfoCriHide = false;
+								}else if(pram=="criPercent"){
+									viewControl.display.panel3ItemInfoCriPercentHide = false;
+								}else if(pram=="criStrike"){
+									viewControl.display.panel3ItemInfoCriStrikeHide = false;
+								}else if(pram=="criStrikePercent"){
+									viewControl.display.panel3ItemInfoCriStrikePercentHide = false;
+								}else if(pram=="avd"){
+									viewControl.display.panel3ItemInfoAvdHide = false;
+								}else if(pram=="avdPercent"){
+									viewControl.display.panel3ItemInfoAvdPercentHide = false;
+								}else if(pram=="hit"){
+									viewControl.display.panel3ItemInfoHitHide = false;
+								}else if(pram=="hitPercent"){
+									viewControl.display.panel3ItemInfoHitPercentHide = false;
+								}
+							}else{
+								if(pram=="hp"){
+									viewControl.display.panel3ItemInfoHpHide = true;
+								}else if(pram=="hpPercent"){
+									viewControl.display.panel3ItemInfoHpPercentHide = true;
+								}else if(pram=="maxHp"){
+									viewControl.display.panel3ItemInfoMaxHpHide = true;
+								}else if(pram=="maxHpPercent"){
+									viewControl.display.panel3ItemInfoMaxHpPercentHide = true;
+								}else if(pram=="att"){
+									viewControl.display.panel3ItemInfoAttHide = true;
+								}else if(pram=="attPercent"){
+									viewControl.display.panel3ItemInfoAttPercentHide = true;
+								}else if(pram=="def"){
+									viewControl.display.panel3ItemInfoDefHide = true;
+								}else if(pram=="defPercent"){
+									viewControl.display.panel3ItemInfoDefPercentHide = true;
+								}else if(pram=="cri"){
+									viewControl.display.panel3ItemInfoCriHide = true;
+								}else if(pram=="criPercent"){
+									viewControl.display.panel3ItemInfoCriPercentHide = true;
+								}else if(pram=="criStrike"){
+									viewControl.display.panel3ItemInfoCriStrikeHide = true;
+								}else if(pram=="criStrikePercent"){
+									viewControl.display.panel3ItemInfoCriStrikePercentHide = true;
+								}else if(pram=="avd"){
+									viewControl.display.panel3ItemInfoAvdHide = true;
+								}else if(pram=="avdPercent"){
+									viewControl.display.panel3ItemInfoAvdPercentHide = true;
+								}else if(pram=="hit"){
+									viewControl.display.panel3ItemInfoHitHide = true;
+								}else if(pram=="hitPercent"){
+									viewControl.display.panel3ItemInfoHitPercentHide = true;
+								}
+							}
+							
+						}
+						return currentItem.getName();
+					}
+				};
+				
 			});
 			
 			//对比角色装备物品信息
@@ -2047,13 +2130,38 @@
 			});
 			
 			/**
-			 * 角色行动结算
+			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
+			 */
+			function random(objArr, arr2) {
+				var sum = 0,
+				factor = 0,
+				random = Math.random();
+				for(var i = arr2.length - 1; i >= 0; i--) {
+					sum += arr2[i]; // 统计概率总和
+				};
+				for(var i = arr2.length - 1; i >= 0; i--) {
+					factor += arr2[i];
+					if(random <= factor) 
+					return objArr[i];
+				};
+				//总概率不足1时，均未随机到则为null
+				return null;
+			};
+			
+			/**
+			 * 角色行动结算 return str:"cri"-暴击;"avd"-闪避
 			 */
 			function roleSettlement(tempAttr){
 				//角色hp变化值（角色自身效果）
 				var roleHpChange = 0;
 				//角色的att输出
 				var roleAttDamage = 0;
+				//角色的cri暴击率计算
+				var roleCri = 0;
+				//角色的criStrike暴击伤害计算
+				var roleCriStrike = 0;
+				//角色的hit命中率计算
+				var roleHit = 0;
 				if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 					//maxHp(百分比)恢复值
 					if("maxHpPercent" in tempAttr){
@@ -2071,21 +2179,52 @@
 					if("damage" in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
 						roleAttDamage += tempAttr.att;
 					}else{
-						
+						//计算攻击输出
 						if("attPercent" in tempAttr){
 							roleAttDamage += tempAttr.attPercent;
 						}
 						if("att" in tempAttr){
 							roleAttDamage += tempAttr.att;
 						}
+						//计算暴击率
+						if("cri" in tempAttr){
+							roleCri = dataRoleObj[0].getCri()+tempAttr.cri;
+						}
+						//计算暴击伤害
+						if("criStrike" in tempAttr){
+							roleCriStrike = dataRoleObj[0].getCri()+tempAttr.criStrike;
+						}
+						//计算命中
+						if("hit" in tempAttr){
+							roleHit = dataRoleObj[0].getHit()+tempAttr.hit;
+						}
 					}
 					
 				}
 				
+				var str="";
 				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
-					//对方hp计算:1.角色攻击给予的被动变化（受伤减少）
-					var tempEnemyHp = currentInteractiveObject.getHp();
-					var tempRoleAttDamage=roleAttDamage-currentInteractiveObject.getDef();
+					
+					//计算命中闪避
+					var tempHit = roleHit-currentInteractiveObject.getAvd();
+					if(random([true,false],[tempHit,(1-tempHit)])){//命中
+						//对方hp计算:1.角色攻击给予的被动变化（受伤减少）
+						var tempEnemyHp = currentInteractiveObject.getHp();
+						//角色输出伤害-对方防御
+						var tempRoleAttDamage=roleAttDamage-currentInteractiveObject.getDef();
+						//计算暴击加成
+						if(random([true,false],[roleCri,(1-roleCri)])){
+							//暴击发生，计算暴击伤害
+							tempRoleAttDamage+=tempRoleAttDamage*roleCriStrike;
+							//标记暴击发生
+							str = "cri";
+						};
+					}else{
+						//闪避发生
+						str = "avd";
+					}
+					
+					
 					if(tempRoleAttDamage<0){tempRoleAttDamage=0;}
 					tempEnemyHp-=tempRoleAttDamage;
 					//将对方hp实现
@@ -2111,6 +2250,8 @@
 						alert("对象hp=0");
 					}
 				}
+				//返回标记 命中、闪避 的str
+				return str;
 			}
 			/**
 			 * 对方行动结算
@@ -2120,7 +2261,7 @@
 				var enemyAttDamage = 0;
 				//暂时只计算基础攻击
 				enemyAttDamage += currentInteractiveObject.getAtt();
-				//对方buff加成计算、技能计算
+				//对方buff加成计算、技能计算（未实现）
 				
 				
 				//角色hp计算:2.对方攻击给予被动变化（受伤减少）;减少值=对方输出-角色防御

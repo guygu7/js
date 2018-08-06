@@ -204,6 +204,7 @@ dictionaryData.buff={
 	 * maxhp直接增加50
 	 */
 	hpUp1:{
+		id:1,
 		name:"增益+maxHp50",
 		type:BUFF.TYPE.battleBuff,
 		attr:{
@@ -216,6 +217,7 @@ dictionaryData.buff={
 	 * maxhp增加10%
 	 */
 	hpUp2:{
+		id:2,
 		name:"增益+maxhp10%",
 		type:BUFF.TYPE.battleBuff,
 		attr:{
@@ -613,6 +615,10 @@ var data = {
 		baseMaxHp:500,
 		baseAtt:10,
 		baseDef:1,
+		cri:0.5,//暴击率cri的直接 增加量 或 减少量
+		criStrike:1.5,//暴击伤害criStrike的直接  增加量 或 减少量
+		avd:0.1,//闪避率avd的直接  增加量 或 减少量
+		hit:0.1,//命中率hit的直接  增加量 或 减少量
 		skills:[
 			dictionaryData.skill.skill1,
 			dictionaryData.skill.att,

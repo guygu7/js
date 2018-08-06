@@ -12,11 +12,11 @@ attr={
 	
 	damage:1,//固定输出伤害，不计算角色攻击力
 	cri:0.1,//暴击率cri的直接 增加量 或 减少量
-	criPercent:0.1,//暴击率cri百分比的 增加量 或 减少量
+	criPercent:0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）
 	criStrike:0.1,//暴击伤害criStrike的直接  增加量 或 减少量
-	criStrikePercent:0.1,//暴击伤害criStrike百分比的  增加量 或 减少量
+	criStrikePercent:0.1,//暴击伤害criStrike百分比的  增加量 或 减少量（不适用skill）
 	avd:0.1,//闪避率avd的直接  增加量 或 减少量
-	avdPercent:0.1,//闪避率avd百分比的  增加量 或 减少量
+	avdPercent:0.1,//闪避率avd百分比的  增加量 或 减少量（不适用skill）
 	hit:0.1,//命中率hit的直接  增加量 或 减少量
-	hitPercent:0.1,//命中率hit百分比的  增加量 或 减少量
+	hitPercent:0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）
 };

@@ -100,11 +100,19 @@ DataModleFactory = {
 					//判断attr存在
 					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 						//判断获取到的hp属性为数字
-						if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+						if(attrType in tempAttr
+							//&&tempAttr[attrType]!=undefined
+							//&&tempAttr[attrType]!=null
+							&& typeof Number(tempAttr[attrType])=="number" 
+							&& typeof Number(tempAttr[attrType])!=NaN){
 							tempAttrType+=Number(tempAttr[attrType]);
 						}
 						//判断获取到的defPercent属性为数字
-						if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+						if((attrType+"Percent") in tempAttr
+							//&&tempAttr[(attrType+"Percent")]!=undefined
+							//&&tempAttr[(attrType+"Percent")]!=null
+							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
+							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
 							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 						}
 					}
@@ -118,11 +126,18 @@ DataModleFactory = {
 					var tempAttr = items[i].getAttr();
 					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 						//判断获取到的hp属性为数字
-						if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+						if(attrType in tempAttr&&tempAttr[attrType]!=undefined
+							//&&tempAttr[attrType]!=null
+							//&& typeof Number(tempAttr[attrType])=="number"
+							&& typeof Number(tempAttr[attrType])!=NaN){
 							tempAttrType+=Number(tempAttr[attrType]);
 						}
 						//判断获取到的defPercent属性为数字
-						if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+						if((attrType+"Percent") in tempAttr
+							//&&tempAttr[(attrType+"Percent")]!=undefined
+							//&&tempAttr[(attrType+"Percent")]!=null
+							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
+							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
 							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 						}
 					}
@@ -134,11 +149,19 @@ DataModleFactory = {
 			for (var i=0; i < buffs.length; i++) {
 				var tempAttr = buffs[i].getAttr();
 				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
-					if(attrType in tempAttr&&tempAttr[attrType]!=undefined&&tempAttr[attrType]!=null&&typeof Number(tempAttr[attrType]) == "number"){
+					if(attrType in tempAttr
+						//&&tempAttr[attrType]!=undefined
+						//&&tempAttr[attrType]!=null
+						&& typeof Number(tempAttr[attrType])=="number"
+						&& typeof Number(tempAttr[attrType])!=NaN){
 						tempBuffAttrType+=Number(tempAttr[attrType]);
 					}
 					//判断获取到的defPercent属性为数字
-					if((attrType+"Percent") in tempAttr&&tempAttr[(attrType+"Percent")]!=undefined&&tempAttr[(attrType+"Percent")]!=null&&typeof Number(tempAttr[(attrType+"Percent")]) == "number"){
+					if((attrType+"Percent") in tempAttr
+						//&&tempAttr[(attrType+"Percent")]!=undefined
+						//&&tempAttr[(attrType+"Percent")]!=null
+						&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
+						&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
 						tempBuffAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 					}
 				};
@@ -168,66 +191,6 @@ DataModleFactory = {
 		 */
 		role.getMaxHp  = function() {
 			return compute("maxHp",baseMaxHp);
-			/*
-			var maxHp = 0;
-			var tempHp=0;//直接加成
-			var tempHpPercent=0;//百分比
-			//遍历角色技能加成
-			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
-			if (unActiveSkills&&unActiveSkills.length>0){
-				for (var i=0; i < unActiveSkills.length; i++) {
-					var tempAttr = unActiveSkills[i].getAttr();
-					//判断attr存在
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的hp属性为数字
-						if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
-							tempHp+=Number(tempAttr.maxHp);
-						}
-						//判断获取到的maxHpPercent属性为数字
-						if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
-							tempHpPercent+=Number(tempAttr.maxHpPercent);
-						}
-					}
-				};
-			}
-			//遍历所有已装备物品
-			for (var i=0; i < items.length; i++) {
-				//判断是装备，且已装备上
-				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断attr存在
-					var tempAttr = items[i].getAttr();
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的hp属性为数字
-						if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
-							tempHp+=Number(tempAttr.maxHp);
-						}
-						//判断获取到的maxHpPercent属性为数字
-						if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
-							tempHpPercent+=Number(tempAttr.maxHpPercent);
-						}
-					}
-				}
-			};
-			var tempBuffHp=0;//buff直接加成
-			var tempBuffHpPercent=0;//buff百分比
-			//遍历buff加成，包括增益减益
-			for (var i=0; i < buffs.length; i++) {
-				var tempAttr = buffs[i].getAttr();
-				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
-					if("maxHp" in tempAttr&&tempAttr.maxHp!=undefined&&tempAttr.maxHp!=null&&typeof Number(tempAttr.maxHp) == "number"){
-						tempBuffHp+=Number(tempAttr.maxHp);
-					}
-					//判断获取到的maxHpPercent属性为数字
-					if("maxHpPercent" in tempAttr&&tempAttr.maxHpPercent!=undefined&&tempAttr.maxHpPercent!=null&&typeof Number(tempAttr.maxHpPercent) == "number"){
-						tempBuffHpPercent+=Number(tempAttr.maxHpPercent);
-					}
-				};
-			};
-			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
-			maxHp = Number(baseHp)+ Number(baseHp)*tempHpPercent+tempHp;
-			//计算buff加成:先计算百分比，后计算直接加成
-			return maxHp+maxHp*tempBuffHpPercent+tempBuffHp;
-			*/
 		};
 		
 		
@@ -249,66 +212,6 @@ DataModleFactory = {
 		 */
 		role.getAtt  = function() {
 			return compute("att",baseAtt);
-			/*
-			var nowAtt = 0;
-			var tempAtt=0;//直接加成
-			var tempAttPercent=0;//百分比
-			//遍历角色技能加成
-			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
-			if (unActiveSkills&&unActiveSkills.length>0){
-				for (var i=0; i < unActiveSkills.length; i++) {
-					var tempAttr = unActiveSkills[i].getAttr();
-					//判断attr存在
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的att属性为数字
-						if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
-							tempAtt+=Number(tempAttr.att);
-						}
-						//判断获取到的attPercent属性为数字
-						if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
-							tempAttPercent+=Number(tempAttr.attPercent);
-						}
-					}
-				};
-			}
-			//遍历所有已装备物品
-			for (var i=0; i < items.length; i++) {
-				//判断是装备，且已装备上
-				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断attr存在
-					var tempAttr = items[i].getAttr();
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的hp属性为数字
-						if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
-							tempAtt+=Number(tempAttr.att);
-						}
-						//判断获取到的attPercent属性为数字
-						if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
-							tempAttPercent+=Number(tempAttr.attPercent);
-						}
-					}
-				}
-			};
-			var tempBuffAtt=0;//buff直接加成
-			var tempBuffAttPercent=0;//buff百分比
-			//遍历buff加成，包括增益减益
-			for (var i=0; i < buffs.length; i++) {
-				var tempAttr = buffs[i].getAttr();
-				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
-					if("att" in tempAttr&&tempAttr.att!=undefined&&tempAttr.att!=null&&typeof Number(tempAttr.att) == "number"){
-						tempBuffAtt+=Number(tempAttr.att);
-					}
-					//判断获取到的attPercent属性为数字
-					if("attPercent" in tempAttr&&tempAttr.attPercent!=undefined&&tempAttr.attPercent!=null&&typeof Number(tempAttr.attPercent) == "number"){
-						tempBuffAttPercent+=Number(tempAttr.attPercent);
-					}
-				};
-			};
-			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
-			nowAtt = Number(baseAtt)+ Number(baseAtt)*tempAttPercent+tempAtt;
-			//计算buff加成:先计算百分比，后计算直接加成
-			return nowAtt+nowAtt*tempBuffAttPercent+tempBuffAtt;
-			*/
 		};
 		
 		
@@ -328,66 +231,6 @@ DataModleFactory = {
 		 */
 		role.getDef  = function() {
 			return compute("def",baseDef);
-			/*
-			var nowDef = 0;
-			var tempDef=0;//直接加成
-			var tempDefPercent=0;//百分比
-			//遍历角色技能加成
-			var unActiveSkills = role.getSkills(SKILL.TYPE.unActive);//获取到非主动技能
-			if (unActiveSkills&&unActiveSkills.length>0){
-				for (var i=0; i < unActiveSkills.length; i++) {
-					var tempAttr = unActiveSkills[i].getAttr();
-					//判断attr存在
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的hp属性为数字
-						if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
-							tempDef+=Number(tempAttr.def);
-						}
-						//判断获取到的defPercent属性为数字
-						if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
-							tempDefPercent+=Number(tempAttr.defPercent);
-						}
-					}
-				};
-			}
-			//遍历所有已装备物品
-			for (var i=0; i < items.length; i++) {
-				//判断是装备，且已装备上
-				if(items[i].getType()==ITEM.TYPE.equip&&items[i].getIsPutOn()==true){
-					//判断attr存在
-					var tempAttr = items[i].getAttr();
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-						//判断获取到的hp属性为数字
-						if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
-							tempDef+=Number(tempAttr.def);
-						}
-						//判断获取到的defPercent属性为数字
-						if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
-							tempDefPercent+=Number(tempAttr.defPercent);
-						}
-					}
-				}
-			};
-			var tempBuffDef=0;//buff直接加成
-			var tempBuffDefPercent=0;//buff百分比
-			//遍历buff加成，包括增益减益
-			for (var i=0; i < buffs.length; i++) {
-				var tempAttr = buffs[i].getAttr();
-				if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
-					if("def" in tempAttr&&tempAttr.def!=undefined&&tempAttr.def!=null&&typeof Number(tempAttr.def) == "number"){
-						tempBuffDef+=Number(tempAttr.def);
-					}
-					//判断获取到的defPercent属性为数字
-					if("defPercent" in tempAttr&&tempAttr.defPercent!=undefined&&tempAttr.defPercent!=null&&typeof Number(tempAttr.defPercent) == "number"){
-						tempBuffDefPercent+=Number(tempAttr.defPercent);
-					}
-				};
-			};
-			//计算顺序:基础>技能百分比加成+装备百分比加成>技能直接加成+装备直接加成
-			nowDef = Number(baseDef)+ Number(baseDef)*tempDefPercent+tempDef;
-			//计算buff加成:先计算百分比，后计算直接加成
-			return nowDef+nowDef*tempBuffDefPercent+tempBuffDef;
-			*/
 		};
 		
 		
@@ -407,7 +250,6 @@ DataModleFactory = {
 		 */
 		role.getCri  = function() {
 			return compute("cri",baseCri);
-			//return baseCri;
 		};
 		
 		
@@ -418,7 +260,7 @@ DataModleFactory = {
 		role.getBaseCriStrike  = function() {
 			return baseCriStrike;
 		};
-		role.setBaseCri = function(pram) {
+		role.setBaseCriStrike = function(pram) {
 			baseCriStrike = pram;
 			return this;
 		};
@@ -427,7 +269,6 @@ DataModleFactory = {
 		 */
 		role.getCriStrike  = function() {
 			return compute("criStrike",baseCriStrike);
-			//return baseCriStrike;
 		};
 		
 		
@@ -447,7 +288,6 @@ DataModleFactory = {
 		 */
 		role.getAvd  = function() {
 			return compute("avd",baseAvd);
-			//return baseAvd;
 		};
 		
 		
@@ -467,9 +307,7 @@ DataModleFactory = {
 		 */
 		role.getHit  = function() {
 			return compute("hit",baseHit);
-			//return baseHit;
 		};
-		
 		
 		
 		/**
@@ -556,6 +394,12 @@ DataModleFactory = {
 					if(compareBuff(pram,buffs[i])){//判断为同一种
 						superposition++;//堆叠+1
 						tempArr.push(buffs[i]);//暂存进数组
+					}else{
+						//判断是不是同一种buff但是同一ID,替换
+						if(pram.getBuffId() == buffs[i].getId()){
+							superposition++;//堆叠+1
+							this.delBuff(buffs[i]);//去掉之前的
+						}
 					}
 				};
 				if(superposition>=pram.getSuperposition()){//判断堆叠已超出
@@ -849,9 +693,49 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		/**
+		 * 计算属性数值
+		 */
+		function compute (attrType,baseAttrType) {
+			var tempBuffAttrType=0;//buff直接加成
+			var tempBuffAttrTypePercent=0;//buff百分比
+			//遍历buff加成，包括增益减益
+			if (typeof buffs!="undefined") {
+				for (var i=0; i < buffs.length; i++) {
+					var tempAttr = buffs[i].getAttr();
+					if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
+						if(attrType in tempAttr
+							//&&tempAttr[attrType]!=undefined
+							//&&tempAttr[attrType]!=null
+							&& typeof Number(tempAttr[attrType])=="number"
+							&& typeof Number(tempAttr[attrType])!=NaN){
+							tempBuffAttrType+=Number(tempAttr[attrType]);
+						}
+						//判断获取到的defPercent属性为数字
+						if((attrType+"Percent") in tempAttr
+							//&&tempAttr[(attrType+"Percent")]!=undefined
+							//&&tempAttr[(attrType+"Percent")]!=null
+							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
+							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
+							tempBuffAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
+						}
+					};
+				};
+			};
+			//计算buff加成:先计算百分比，后计算直接加成
+			return Number(baseAttrType)+Number(baseAttrType)*tempBuffAttrTypePercent+tempBuffAttrType;
+		}
+		
+		/**
+		 * 基础MaxHP
+		 */
 		var MaxHp=100;
+		/**
+		 * MaxHP（包含计算加成）
+		 */
 		interactiveObject.getMaxHp  = function() {
-			return MaxHp;
+			return compute("maxHp",MaxHp);
 		};
 		interactiveObject.setMaxHp = function(pram) {
 			if(!isNaN(Number(pram))){
@@ -859,9 +743,16 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		/**
+		 * 基础Att
+		 */
 		var Att=1;
+		/**
+		 * 当前Att（包含计算加成）
+		 */
 		interactiveObject.getAtt  = function() {
-			return Att;
+			return compute("att",Att);
 		};
 		interactiveObject.setAtt = function(pram) {
 			if(!isNaN(Number(pram))){
@@ -869,16 +760,83 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		/**
+		 * 基础Def
+		 */
 		var Def=1;
+		/**
+		 * 当前Def（包含计算加成）
+		 */
 		interactiveObject.getDef  = function() {
-			return Def;
+			return compute("def",Def);
 		};
-		interactiveObject.setDef = function(pram) {
-			if(!isNaN(Number(pram))){
-				Def = Number(pram);
-			}
+		interactiveObject.setBaseDef = function(pram) {
+			Def = pram;
 			return this;
 		};
+		
+		/**
+		 * 角色基础Cri(暴击率)
+		 */
+		var Cri=0;
+		/**
+		 * 当前Cri（包含计算加成）
+		 */
+		interactiveObject.getCri  = function() {
+			return compute("cri",baseCri);
+		};
+		interactiveObject.setCri = function(pram) {
+			Cri = pram;
+			return this;
+		};
+		
+		/**
+		 * 基础criStrike(暴击伤害)
+		 */
+		var CriStrike=1;
+		/**
+		 * 当前CriStrike（包含计算加成）
+		 */
+		interactiveObject.getCriStrike  = function() {
+			return compute("criStrike",CriStrike);
+		};
+		interactiveObject.setCriStrike = function(pram) {
+			CriStrike = pram;
+			return this;
+		};
+		
+		/**
+		 * 基础Avd(闪避率)
+		 */
+		var Avd=0;
+		/**
+		 * 当前Avd（包含计算加成）
+		 */
+		interactiveObject.getAvd  = function() {
+			return compute("avd",Avd);
+		};
+		interactiveObject.setAvd = function(pram) {
+			Avd = pram;
+			return this;
+		};
+		
+		/**
+		 * 基础Hit(命中率)
+		 */
+		var Hit=0;
+		/**
+		 * 当前Hit（包含计算加成）
+		 */
+		interactiveObject.getHit  = function() {
+			return compute("hit",Hit);
+		};
+		interactiveObject.setHit = function(pram) {
+			Hit = pram;
+			return this;
+		};
+		
+		
 		/**
 		 * 交互动作
 		 */
@@ -897,7 +855,7 @@ DataModleFactory = {
 				//判断传入参数不为空 且是 action 对象
 				actions.push(pram);
 			}
-			return this;						
+			return this;
 		};
 		/**
 		 * 传参：Number 或   Action对象
@@ -1028,6 +986,76 @@ DataModleFactory = {
 				pram.supper = this;
 				items.push(pram);
 			}
+			
+			/**
+			 * 增益减益
+			 */
+			var buffs=[];
+			interactiveObject.getBuff = function(num){
+				return buffs[num];
+			};
+			interactiveObject.getBuffs = function(pram){
+				return buffs;
+			};
+			interactiveObject.addBuff = function(pram){
+				if(!buffs){
+					buffs = new Array();
+				}
+				if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
+					//判断传入参数不为空 且是 buff对象
+					//校验buff的堆叠
+					var superposition = 0;
+					var tempArr=[];
+					for (var i=0; i < buffs.length; i++) {
+						if(compareBuff(pram,buffs[i])){//判断为同一种
+							superposition++;//堆叠+1
+							tempArr.push(buffs[i]);//暂存进数组
+						}else{
+							//判断是不是同一种buff但是同一ID,替换
+							if(pram.getBuffId() == buffs[i].getId()){
+								superposition++;//堆叠+1
+								this.delBuff(buffs[i]);//去掉之前的
+							}
+						}
+					};
+					if(superposition>=pram.getSuperposition()){//判断堆叠已超出
+						//去掉剩余时间最短的一个
+						var tempRound=tempArr[0];
+						for (var i=0; i < tempArr.length; i++) {
+							if(tempRound.getRound()>tempArr[i].getRound()){
+								tempRound=tempArr[i];
+							}
+						};
+						this.delBuff(tempRound);
+					}//堆叠未超出直接加入
+					buffs.push(pram);
+				}
+				return this;						
+			};
+			/**
+			 * 传参：Number 或   Buff对象
+			 */
+			interactiveObject.delBuff = function(pram) {
+				if (Object.prototype.toString.call(pram)==="[object Number]") {
+					buffs.splice(pram,1);
+				} else {
+					for (var i=0; i < buffs.length; i++) {
+						if(buffs[i] === pram){
+							buffs.splice(i,1);
+						};
+					};
+				};
+				return this;
+			};
+			/**
+			 * 清空增益减益
+			 */
+			interactiveObject.clearBuffs = function() {
+				buffs = [];
+				return this;
+			};
+		
+			
 			return this;						
 		};
 		/**
@@ -1454,6 +1482,17 @@ DataModleFactory = {
 	},
 	createBuff:function() {
 		var buff = new DataModle.Buff();
+		/**
+		 * buffId 用于判断是否为同种类型（覆盖、叠加）
+		 */
+		var buffId;
+		buff.getBuffId = function() {
+			return buffId;
+		};
+		buff.setBuffId = function(pram) {
+			buffId = pram;
+			return this;
+		};
 		/**
 		 * 显示名称 
 		 */
