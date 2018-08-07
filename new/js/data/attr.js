@@ -10,6 +10,12 @@ attr={
 	def:1,//攻击力def的直接 增加量 或 减少量
 	defPercent:0.1,//攻击力def百分比的 增加量 或 减少量
 	
+	//能量值
+	ep:1,//ep的直接 恢复量 或 减少量
+	epPercent:0.1,//当前ep百分比的 直接恢复量 或 减少量
+	maxEp:1,//最大maxEp的直接 增加量 或 减少量
+	maxEpPercent:0.1,//最大maxEp百分比的 增加量 或 减少量
+	
 	damage:1,//固定输出伤害，不计算角色攻击力
 	cri:0.1,//暴击率cri的直接 增加量 或 减少量
 	criPercent:0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）

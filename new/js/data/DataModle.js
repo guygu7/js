@@ -84,6 +84,24 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		/**
+		 * 角色当前EP
+		 */
+		var Ep=100;
+		role.getEp  = function() {
+			return Ep;
+		};
+		role.setEp = function(pram) {
+			if(!isNaN(Number(pram))){
+				Ep = Math.round(Number(pram));//舍去小数
+				var tempMaxEp = this.getMaxEp();
+				if(Ep>tempMaxEp){
+					Ep=tempMaxEp;
+				}
+				if(Ep<0){Ep=0;}
+			}
+			return this;
+		};
 		
 		/**
 		 * 计算属性数值
@@ -195,6 +213,28 @@ DataModleFactory = {
 		
 		
 		/**
+		 * 角色基础MaxEP
+		 */
+		var baseMaxEp=100;
+		role.getBaseMaxEp  = function() {
+			return baseMaxEp;
+		};
+		role.setBaseMaxEp = function(pram) {
+			if(!isNaN(Number(pram))){
+				baseMaxEp = Number(pram);
+			}
+			return this;
+		};
+		/**
+		 * 角色最大EP（包含计算加成）
+		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
+		 */
+		role.getMaxEp  = function() {
+			return compute("maxEp",baseMaxEp);
+		};
+		
+		
+		/**
 		 * 角色基础Att
 		 */
 		var baseAtt;
@@ -223,7 +263,9 @@ DataModleFactory = {
 			return baseDef;
 		};
 		role.setBaseDef = function(pram) {
-			baseDef = pram;
+			if(!isNaN(Number(pram))){
+				baseDef = pram;
+			}
 			return this;
 		};
 		/**
@@ -242,7 +284,9 @@ DataModleFactory = {
 			return baseCri;
 		};
 		role.setBaseCri = function(pram) {
-			baseCri = pram;
+			if(!isNaN(Number(pram))){
+				baseCri = pram;
+			}
 			return this;
 		};
 		/**
@@ -261,7 +305,9 @@ DataModleFactory = {
 			return baseCriStrike;
 		};
 		role.setBaseCriStrike = function(pram) {
-			baseCriStrike = pram;
+			if(!isNaN(Number(pram))){
+				baseCriStrike = pram;
+			}
 			return this;
 		};
 		/**
@@ -280,7 +326,9 @@ DataModleFactory = {
 			return baseAvd;
 		};
 		role.setBaseAvd = function(pram) {
-			baseAvd = pram;
+			if(!isNaN(Number(pram))){
+				baseAvd = pram;
+			}
 			return this;
 		};
 		/**
@@ -299,7 +347,9 @@ DataModleFactory = {
 			return baseHit;
 		};
 		role.setBaseHit = function(pram) {
-			baseHit = pram;
+			if(!isNaN(Number(pram))){
+				baseHit = pram;
+			}
 			return this;
 		};
 		/**
@@ -396,7 +446,7 @@ DataModleFactory = {
 						tempArr.push(buffs[i]);//暂存进数组
 					}else{
 						//判断是不是同一种buff但是同一ID,替换
-						if(pram.getBuffId() == buffs[i].getId()){
+						if(pram.getBuffId() == buffs[i].getBuffId()){
 							superposition++;//堆叠+1
 							this.delBuff(buffs[i]);//去掉之前的
 						}
@@ -683,13 +733,18 @@ DataModleFactory = {
 			name = pram;
 			return this;
 		};
-		var Hp=100;
+		var hp=100;
 		interactiveObject.getHp  = function() {
-			return Hp;
+			return hp;
 		};
 		interactiveObject.setHp = function(pram) {
 			if(!isNaN(Number(pram))){
-				Hp = Number(pram);
+				hp = Math.round(Number(pram));//舍去小数
+				var tempMaxHp = this.getMaxHp();
+				if(hp>tempMaxHp){
+					hp=tempMaxHp;
+				}
+				if(hp<0){hp=0;}
 			}
 			return this;
 		};
@@ -747,16 +802,16 @@ DataModleFactory = {
 		/**
 		 * 基础Att
 		 */
-		var Att=1;
+		var att=1;
 		/**
 		 * 当前Att（包含计算加成）
 		 */
 		interactiveObject.getAtt  = function() {
-			return compute("att",Att);
+			return compute("att",att);
 		};
 		interactiveObject.setAtt = function(pram) {
 			if(!isNaN(Number(pram))){
-				Att = Number(pram);
+				att = Number(pram);
 			}
 			return this;
 		};
@@ -764,60 +819,68 @@ DataModleFactory = {
 		/**
 		 * 基础Def
 		 */
-		var Def=1;
+		var def=1;
 		/**
 		 * 当前Def（包含计算加成）
 		 */
 		interactiveObject.getDef  = function() {
-			return compute("def",Def);
+			return compute("def",def);
 		};
 		interactiveObject.setBaseDef = function(pram) {
-			Def = pram;
+			if(!isNaN(Number(pram))){
+				def = pram;
+			}
 			return this;
 		};
 		
 		/**
 		 * 角色基础Cri(暴击率)
 		 */
-		var Cri=0;
+		var cri=0;
 		/**
 		 * 当前Cri（包含计算加成）
 		 */
 		interactiveObject.getCri  = function() {
-			return compute("cri",baseCri);
+			return compute("cri",cri);
 		};
 		interactiveObject.setCri = function(pram) {
-			Cri = pram;
+			if(!isNaN(Number(pram))){
+				cri = pram;
+			}
 			return this;
 		};
 		
 		/**
 		 * 基础criStrike(暴击伤害)
 		 */
-		var CriStrike=1;
+		var criStrike=1;
 		/**
 		 * 当前CriStrike（包含计算加成）
 		 */
 		interactiveObject.getCriStrike  = function() {
-			return compute("criStrike",CriStrike);
+			return compute("criStrike",criStrike);
 		};
 		interactiveObject.setCriStrike = function(pram) {
-			CriStrike = pram;
+			if(!isNaN(Number(pram))){
+				criStrike = pram;
+			}
 			return this;
 		};
 		
 		/**
 		 * 基础Avd(闪避率)
 		 */
-		var Avd=0;
+		var avd=0;
 		/**
 		 * 当前Avd（包含计算加成）
 		 */
 		interactiveObject.getAvd  = function() {
-			return compute("avd",Avd);
+			return compute("avd",avd);
 		};
 		interactiveObject.setAvd = function(pram) {
-			Avd = pram;
+			if(!isNaN(Number(pram))){
+				avd = pram;
+			}
 			return this;
 		};
 		
@@ -832,7 +895,9 @@ DataModleFactory = {
 			return compute("hit",Hit);
 		};
 		interactiveObject.setHit = function(pram) {
-			Hit = pram;
+			if(!isNaN(Number(pram))){
+				Hit = pram;
+			}
 			return this;
 		};
 		
@@ -1012,7 +1077,7 @@ DataModleFactory = {
 							tempArr.push(buffs[i]);//暂存进数组
 						}else{
 							//判断是不是同一种buff但是同一ID,替换
-							if(pram.getBuffId() == buffs[i].getId()){
+							if(pram.getBuffId() == buffs[i].getBuffId()){
 								superposition++;//堆叠+1
 								this.delBuff(buffs[i]);//去掉之前的
 							}

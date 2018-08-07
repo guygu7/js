@@ -278,7 +278,8 @@ dictionaryData.skill={
 		name:"主动伤害",
 		type:SKILL.TYPE.active,
 		attr:{
-			att:100,
+			att:20,
+			ep:-10,//代表EP消耗量
 		},
 	},
 	
@@ -613,12 +614,14 @@ var data = {
 		name:"角色",
 		hp:50,
 		baseMaxHp:500,
+		ep:50,
+		baseMaxEp:50,
 		baseAtt:10,
 		baseDef:1,
-		cri:0.5,//暴击率cri的直接 增加量 或 减少量
-		criStrike:1.5,//暴击伤害criStrike的直接  增加量 或 减少量
-		avd:0.1,//闪避率avd的直接  增加量 或 减少量
-		hit:0.1,//命中率hit的直接  增加量 或 减少量
+		baseCri:0.5,//暴击率cri的直接 增加量 或 减少量
+		baseCriStrike:1.5,//暴击伤害criStrike的直接  增加量 或 减少量
+		baseAvd:0.1,//闪避率avd的直接  增加量 或 减少量
+		baseHit:0.8,//命中率hit的直接  增加量 或 减少量
 		skills:[
 			dictionaryData.skill.skill1,
 			dictionaryData.skill.att,
@@ -690,8 +693,8 @@ var data = {
 				},
 				{
 					name:"对战对象",
-					hp:250,
-					maxHp:300,
+					hp:850,
+					maxHp:900,
 					att:2,
 					def:10,
 					items:[

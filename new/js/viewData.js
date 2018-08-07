@@ -135,9 +135,14 @@ var viewDataModel = {
 		enemyMaxHP:function(){if(currentInteractiveObject){return currentInteractiveObject.getMaxHp();}},
 		roleHP:function(){return dataRoleObj[0].getHp();},
 		roleMaxHP:function(){return dataRoleObj[0].getMaxHp();},
+		roleEP:function(){return dataRoleObj[0].getEp();},
+		roleMaxEP:function(){return dataRoleObj[0].getMaxEp();},
 		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "未设置";}},
 		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "未设置";}},
 		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "未设置";}},
+		objBuffs:function(){if(currentInteractiveObject&&currentInteractiveObject.getBuffs){return currentInteractiveObject.getBuffs();}},
+		roleBuffs:function(){return dataRoleObj[0].getBuffs();},
+		battleInfo:[],
 	},
 };
 /**
@@ -224,6 +229,27 @@ var viewControl = {
 		 * 对比角色物品（装备）信息面板  组件隐藏
 		 */
 		panel3RoleItemInfoHide:true,
+		/**
+		 * 对比角色物品（装备）信息面板  - 各种属性显示隐藏
+		 */
+		panel3RoleItemInfoHpHide:true,
+		panel3RoleItemInfoHpPercentHide:true,
+		panel3RoleItemInfoMaxHpHide:true,
+		panel3RoleItemInfoMaxHpPercentHide:true,
+		panel3RoleItemInfoAttHide:true,
+		panel3RoleItemInfoAttPercentHide:true,
+		panel3RoleItemInfoDefHide:true,
+		panel3RoleItemInfoDefPercentHide:true,
+		panel3RoleItemInfoCriHide:true,
+		panel3RoleItemInfoCriPercentHide:true,
+		panel3RoleItemInfoCriStrikeHide:true,
+		panel3RoleItemInfoCriStrikePercentHide:true,
+		panel3RoleItemInfoAvdHide:true,
+		panel3RoleItemInfoAvdPercentHide:true,
+		panel3RoleItemInfoHitHide:true,
+		panel3RoleItemInfoHitPercentHide:true,
+		
+		
 		/**
 		 * 仓库组件 专用遮罩层隐藏 
 		 */
@@ -394,6 +420,20 @@ var viewControl = {
 				return {"width":sumHp+"px","right":70+"px"};
 			}else if(sumMaxHp>=400){
 				return {"width":(sumHp/sumMaxHp)*400+"px","right":70+"px"};
+			}else{
+				return {"width":0+"px","right":70+"px"};
+			}
+		}
+	},
+	panelFightBarEP_StyleFn:function(){
+		if(currentInteractiveObject){
+			sumMaxEp=dataRoleObj[0].getMaxEp();
+			sumEp=dataRoleObj[0].getEp();
+			if(sumEp<0){sumEp=0;}
+			if(sumMaxEp<400){
+				return {"width":sumEp+"px","right":70+"px"};
+			}else if(sumMaxEp>=400){
+				return {"width":(sumEp/sumMaxEp)*400+"px","right":70+"px"};
 			}else{
 				return {"width":0+"px","right":70+"px"};
 			}

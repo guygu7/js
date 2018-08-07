@@ -21,6 +21,7 @@ function loadData(data,dataName){
 					if(tempData!=undefined&&tempData!=null){
 						tempData=JSON.parse(JSON.stringify(tempData));
 					}
+					console.info(objAttr+":"+tempData);
 					obj[objAttr](tempData);
 				}else if("add"==objAttr.substring(0,3)){//判断为add方法，需要递归
 					//获取到data中对应的数组
