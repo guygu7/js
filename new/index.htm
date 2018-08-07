@@ -668,7 +668,7 @@
 					<!--战斗信息显示-->
 					<div class="panelFight-battleInfo">
 						<div style="width:100%; bottom: 5px;position:absolute;">
-							<p ng-repeat="x in viewDataModel.battle.battleInfo">{{x}}</p>
+							<p ng-repeat="x in viewDataModel.battle.battleInfo">{{x.str}}</p>
 						</div>
 					</div>
 					
@@ -2596,7 +2596,7 @@
 				//角色hp变化值（角色自身效果）
 				var roleHpChange = 0;
 				//角色的att输出
-				var roleAttDamage = 0;
+				var roleAttDamage=NaN;
 				//角色的cri暴击率计算
 				var roleCri = 0;
 				//角色的criStrike暴击伤害计算
@@ -2618,13 +2618,16 @@
 					}
 					//计算输出伤害值
 					if("damage" in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
+						if(isNaN(roleAttDamage)){ roleAttDamage=0;};
 						roleAttDamage += tempAttr.att;
 					}else{
 						//计算攻击输出
 						if("attPercent" in tempAttr){
+							if(isNaN(roleAttDamage)){ roleAttDamage=0;};
 							roleAttDamage += tempAttr.attPercent;
 						}
 						if("att" in tempAttr){
+							if(isNaN(roleAttDamage)){ roleAttDamage=0;};
 							roleAttDamage += tempAttr.att;
 						}
 						//计算暴击率
@@ -2676,21 +2679,25 @@
 					tempEnemyHp-=tempRoleAttDamage;
 					//将对方hp实现
 					currentInteractiveObject.setHp(tempEnemyHp);
+					tempRoleAttDamage = Math.round(Number(tempRoleAttDamage));//舍去小数
 					//输出战斗信息
-					if(str=="cri"){
-						infoStr+="暴击!";
-					}
-					if(str=="avd"){
-						infoStr+="未命中...";
-					}else{
-						infoStr+="你造成了 "+tempRoleAttDamage+" 伤害;";
-					}
-					viewDataModel.battle.battleInfo.push(infoStr);
+					if(!isNaN(roleAttDamage)){
+						if(str=="cri"){
+							infoStr+="暴击!";
+						}
+						if(str=="avd"){
+							infoStr+="未命中...";
+						}else{
+							infoStr+="你造成了 "+tempRoleAttDamage+" 伤害;";
+						}
+						viewDataModel.battle.battleInfo.push({str:infoStr});
+					};
 					infoStr="";
 				}
 				
 				//角色hp计算:1.自身给予的主动变化（恢复）;
 				var tempRoleHp = dataRoleObj[0].getHp();
+				roleHpChange = Math.round(Number(roleHpChange));//舍去小数
 				if(roleHpChange>0){
 					infoStr+="你恢复了 "+roleHpChange+" 生命;";
 				}else if(roleHpChange<0){
@@ -2700,14 +2707,14 @@
 				//将角色hp实现
 				dataRoleObj[0].setHp(tempRoleHp);
 				if(infoStr!=""){
-					viewDataModel.battle.battleInfo.push(infoStr);
+					viewDataModel.battle.battleInfo.push({str:infoStr});
 				}
 				
 				//判断角色hp是否为0
 				if(dataRoleObj[0].getHp()<=0){
 					//结束（未实现）
 					alert("角色hp=0");
-					viewDataModel.battle.battleInfo.push("角色死亡");
+					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
 				}
 				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
 					//判断对方hp是否为0
@@ -2734,6 +2741,9 @@
 				var tempRoleHp = dataRoleObj[0].getHp();
 				var tempEnemyAttDamage = enemyAttDamage-dataRoleObj[0].getDef();
 				if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
+				tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
+				var infoStr = "对方对你造成了 "+tempEnemyAttDamage+" 伤害;";
+				viewDataModel.battle.battleInfo.push({str:infoStr});
 				tempRoleHp-=tempEnemyAttDamage;
 				//将角色hp实现
 				dataRoleObj[0].setHp(tempRoleHp);
@@ -2922,7 +2932,7 @@
 						default:
 					   		break;
 					}
-					viewDataModel.battle.battleInfo.push(infoStr);
+					viewDataModel.battle.battleInfo.push({str:infoStr});
 				};
 				
 			});

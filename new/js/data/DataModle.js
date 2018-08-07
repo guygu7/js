@@ -66,42 +66,6 @@ DataModleFactory = {
 			return this;
 		};
 		
-		/**
-		 * 角色当前HP
-		 */
-		var Hp=100;
-		role.getHp  = function() {
-			return Hp;
-		};
-		role.setHp = function(pram) {
-			if(!isNaN(Number(pram))){
-				Hp = Math.round(Number(pram));//舍去小数
-				var tempMaxHp = this.getMaxHp();
-				if(Hp>tempMaxHp){
-					Hp=tempMaxHp;
-				}
-				if(Hp<0){Hp=0;}
-			}
-			return this;
-		};
-		/**
-		 * 角色当前EP
-		 */
-		var Ep=100;
-		role.getEp  = function() {
-			return Ep;
-		};
-		role.setEp = function(pram) {
-			if(!isNaN(Number(pram))){
-				Ep = Math.round(Number(pram));//舍去小数
-				var tempMaxEp = this.getMaxEp();
-				if(Ep>tempMaxEp){
-					Ep=tempMaxEp;
-				}
-				if(Ep<0){Ep=0;}
-			}
-			return this;
-		};
 		
 		/**
 		 * 计算属性数值
@@ -231,6 +195,44 @@ DataModleFactory = {
 		 */
 		role.getMaxEp  = function() {
 			return compute("maxEp",baseMaxEp);
+		};
+		
+		/**
+		 * 角色当前HP
+		 */
+		var Hp=100;
+		role.getHp  = function() {
+			return Hp;
+		};
+		role.setHp = function(pram) {
+			if(!isNaN(Number(pram))){
+				Hp = Math.round(Number(pram));//舍去小数
+				var tempMaxHp = this.getMaxHp();
+				if(Hp>tempMaxHp){
+					Hp=tempMaxHp;
+				}
+				if(Hp<0){Hp=0;}
+			}
+			return this;
+		};
+		
+		/**
+		 * 角色当前EP
+		 */
+		var Ep=100;
+		role.getEp  = function() {
+			return Ep;
+		};
+		role.setEp = function(pram) {
+			if(!isNaN(Number(pram))){
+				Ep = Math.round(Number(pram));//舍去小数
+				var tempMaxEp = this.getMaxEp();
+				if(Ep>tempMaxEp){
+					Ep=tempMaxEp;
+				}
+				if(Ep<0){Ep=0;}
+			}
+			return this;
 		};
 		
 		
@@ -733,21 +735,7 @@ DataModleFactory = {
 			name = pram;
 			return this;
 		};
-		var hp=100;
-		interactiveObject.getHp  = function() {
-			return hp;
-		};
-		interactiveObject.setHp = function(pram) {
-			if(!isNaN(Number(pram))){
-				hp = Math.round(Number(pram));//舍去小数
-				var tempMaxHp = this.getMaxHp();
-				if(hp>tempMaxHp){
-					hp=tempMaxHp;
-				}
-				if(hp<0){hp=0;}
-			}
-			return this;
-		};
+		
 		
 		/**
 		 * 计算属性数值
@@ -798,6 +786,23 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		var hp=100;
+		interactiveObject.getHp  = function() {
+			return hp;
+		};
+		interactiveObject.setHp = function(pram) {
+			if(!isNaN(Number(pram))){
+				hp = Math.round(Number(pram));//舍去小数
+				var tempMaxHp = this.getMaxHp();
+				if(hp>tempMaxHp){
+					hp=tempMaxHp;
+				}
+				if(hp<0){hp=0;}
+			}
+			return this;
+		};
+		
 		
 		/**
 		 * 基础Att
