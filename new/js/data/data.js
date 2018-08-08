@@ -195,6 +195,19 @@ var BUFF={
 		buff:"buff",
 		
 	},
+	/**
+	 * 增益减益对象目标
+	 */
+	TARGET:{
+		/**
+		 * 给自己
+		 */
+		self:"self",
+		/**
+		 * 给对方
+		 */
+		opponent:"opponent",
+	},
 };
 /**
  * 增益减益字典
@@ -207,6 +220,7 @@ dictionaryData.buff={
 		id:1,
 		name:"增益+maxHp50",
 		type:BUFF.TYPE.battleBuff,
+		target:BUFF.TARGET.self,
 		attr:{
 			maxHp:50,
 		},
@@ -220,8 +234,23 @@ dictionaryData.buff={
 		id:2,
 		name:"增益+maxhp10%",
 		type:BUFF.TYPE.battleBuff,
+		target:BUFF.TARGET.self,
 		attr:{
 			maxHpPercent:0.1,
+		},
+		round:3,
+		superposition:1,
+	},
+	/**
+	 * maxhp减少10%
+	 */
+	hpDown1:{
+		id:3,
+		name:"减益+maxhp-10%",
+		type:BUFF.TYPE.battleBuff,
+		target:BUFF.TARGET.opponent,
+		attr:{
+			maxHpPercent:-0.1,
 		},
 		round:3,
 		superposition:1,
@@ -282,7 +311,19 @@ dictionaryData.skill={
 			ep:-10,//代表EP消耗量
 		},
 	},
-	
+	/**
+	 * deff弱化技能
+	 */
+	deBuff:{
+		name:"deBuff",
+		type:SKILL.TYPE.active,
+		attr:{
+			ep:-2,//代表EP消耗量
+		},
+		buffs:[
+			dictionaryData.buff.hpDown1,
+		],
+	},
 	/**
 	 * buff:maxhp+50
 	 */
@@ -627,6 +668,7 @@ var data = {
 			dictionaryData.skill.att,
 			dictionaryData.skill.buffHpUp1,
 			dictionaryData.skill.buffHpUp2,
+			dictionaryData.skill.deBuff,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[

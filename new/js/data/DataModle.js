@@ -725,7 +725,7 @@ DataModleFactory = {
 	createInteractiveObject:function() {
 		var interactiveObject = new DataModle.InteractiveObject();
 		/**
-		 * 显示名称 
+		 * 名称
 		 */
 		var name;
 		interactiveObject.getName = function() {
@@ -736,17 +736,17 @@ DataModleFactory = {
 			return this;
 		};
 		
-		
 		/**
 		 * 计算属性数值
 		 */
 		function compute (attrType,baseAttrType) {
 			var tempBuffAttrType=0;//buff直接加成
 			var tempBuffAttrTypePercent=0;//buff百分比
+			interactiveObject.getBuffs();
 			//遍历buff加成，包括增益减益
-			if (typeof buffs!="undefined") {
-				for (var i=0; i < buffs.length; i++) {
-					var tempAttr = buffs[i].getAttr();
+			if (typeof interactiveObject.getBuffs()!="undefined") {
+				for (var i=0; i < interactiveObject.getBuffs().length; i++) {
+					var tempAttr = interactiveObject.getBuffs()[i].getAttr();
 					if (tempAttr&&tempAttr!=undefined&&tempAttr!=null) {
 						if(attrType in tempAttr
 							//&&tempAttr[attrType]!=undefined
@@ -768,17 +768,14 @@ DataModleFactory = {
 			};
 			//计算buff加成:先计算百分比，后计算直接加成
 			return Number(baseAttrType)+Number(baseAttrType)*tempBuffAttrTypePercent+tempBuffAttrType;
-		}
+		};
 		
 		/**
-		 * 基础MaxHP
+		 * 角色基础MaxHP
 		 */
 		var MaxHp=100;
-		/**
-		 * MaxHP（包含计算加成）
-		 */
 		interactiveObject.getMaxHp  = function() {
-			return compute("maxHp",MaxHp);
+			return MaxHp;
 		};
 		interactiveObject.setMaxHp = function(pram) {
 			if(!isNaN(Number(pram))){
@@ -786,123 +783,308 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		/**
+		 * 角色最大HP（包含计算加成）
+		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
+		 */
+		interactiveObject.getMaxHp  = function() {
+			return compute("maxHp",MaxHp);
+		};
 		
-		var hp=100;
+		
+		/**
+		 * 角色基础MaxEP
+		 */
+		var MaxEp=100;
+		interactiveObject.getMaxEp  = function() {
+			return MaxEp;
+		};
+		interactiveObject.setMaxEp = function(pram) {
+			if(!isNaN(Number(pram))){
+				MaxEp = Number(pram);
+			}
+			return this;
+		};
+		/**
+		 * 角色最大EP（包含计算加成）
+		 * 计算顺序:基础>技能百分比+装备百分比>技能直接加成+装备直接加成
+		 */
+		interactiveObject.getMaxEp  = function() {
+			return compute("maxEp",MaxEp);
+		};
+		
+		/**
+		 * 角色当前HP
+		 */
+		var Hp=100;
 		interactiveObject.getHp  = function() {
-			return hp;
+			return Hp;
 		};
 		interactiveObject.setHp = function(pram) {
 			if(!isNaN(Number(pram))){
-				hp = Math.round(Number(pram));//舍去小数
+				Hp = Math.round(Number(pram));//舍去小数
 				var tempMaxHp = this.getMaxHp();
-				if(hp>tempMaxHp){
-					hp=tempMaxHp;
+				if(Hp>tempMaxHp){
+					Hp=tempMaxHp;
 				}
-				if(hp<0){hp=0;}
+				if(Hp<0){Hp=0;}
 			}
 			return this;
 		};
 		
 		
 		/**
-		 * 基础Att
+		 * 角色基础Att
 		 */
-		var att=1;
-		/**
-		 * 当前Att（包含计算加成）
-		 */
+		var Att=1;
 		interactiveObject.getAtt  = function() {
-			return compute("att",att);
+			return Att;
 		};
 		interactiveObject.setAtt = function(pram) {
 			if(!isNaN(Number(pram))){
-				att = Number(pram);
+				Att = Number(pram);
 			}
 			return this;
+		};
+		/**
+		 * 角色当前Att
+		 */
+		interactiveObject.getAtt  = function() {
+			return compute("att",Att);
 		};
 		
+		
 		/**
-		 * 基础Def
+		 * 角色基础Def
 		 */
-		var def=1;
-		/**
-		 * 当前Def（包含计算加成）
-		 */
+		var Def=1;
 		interactiveObject.getDef  = function() {
-			return compute("def",def);
+			return Def;
 		};
-		interactiveObject.setBaseDef = function(pram) {
+		interactiveObject.setDef = function(pram) {
 			if(!isNaN(Number(pram))){
-				def = pram;
+				Def = pram;
 			}
 			return this;
 		};
+		/**
+		 * 角色当前Def
+		 */
+		interactiveObject.getDef  = function() {
+			return compute("def",Def);
+		};
+		
 		
 		/**
 		 * 角色基础Cri(暴击率)
 		 */
-		var cri=0;
-		/**
-		 * 当前Cri（包含计算加成）
-		 */
+		var Cri=0.1;
 		interactiveObject.getCri  = function() {
-			return compute("cri",cri);
+			return Cri;
 		};
 		interactiveObject.setCri = function(pram) {
 			if(!isNaN(Number(pram))){
-				cri = pram;
+				Cri = pram;
 			}
 			return this;
 		};
+		/**
+		 * 角色当前Cri
+		 */
+		interactiveObject.getCri  = function() {
+			return compute("cri",Cri);
+		};
+		
 		
 		/**
-		 * 基础criStrike(暴击伤害)
+		 * 角色基础criStrike(暴击伤害)
 		 */
-		var criStrike=1;
-		/**
-		 * 当前CriStrike（包含计算加成）
-		 */
+		var CriStrike=1;
 		interactiveObject.getCriStrike  = function() {
-			return compute("criStrike",criStrike);
+			return CriStrike;
 		};
 		interactiveObject.setCriStrike = function(pram) {
 			if(!isNaN(Number(pram))){
-				criStrike = pram;
+				CriStrike = pram;
 			}
 			return this;
 		};
+		/**
+		 * 角色当前CriStrike
+		 */
+		interactiveObject.getCriStrike  = function() {
+			return compute("criStrike",CriStrike);
+		};
+		
 		
 		/**
-		 * 基础Avd(闪避率)
+		 * 角色基础Avd(闪避率)
 		 */
-		var avd=0;
-		/**
-		 * 当前Avd（包含计算加成）
-		 */
+		var Avd=0;
 		interactiveObject.getAvd  = function() {
-			return compute("avd",avd);
+			return Avd;
 		};
 		interactiveObject.setAvd = function(pram) {
 			if(!isNaN(Number(pram))){
-				avd = pram;
+				Avd = pram;
 			}
 			return this;
 		};
+		/**
+		 * 角色当前Avd
+		 */
+		interactiveObject.getAvd  = function() {
+			return compute("avd",Avd);
+		};
+		
 		
 		/**
-		 * 基础Hit(命中率)
+		 * 角色基础Hit(命中率)
 		 */
-		var Hit=0;
-		/**
-		 * 当前Hit（包含计算加成）
-		 */
+		var Hit=1;
 		interactiveObject.getHit  = function() {
-			return compute("hit",Hit);
+			return Hit;
 		};
 		interactiveObject.setHit = function(pram) {
 			if(!isNaN(Number(pram))){
 				Hit = pram;
 			}
+			return this;
+		};
+		/**
+		 * 角色当前Hit
+		 */
+		interactiveObject.getHit  = function() {
+			return compute("hit",Hit);
+		};
+		
+		
+		/**
+		 * 所有技能
+		 */
+		var skills=[];
+		interactiveObject.getSkill = function(num){
+			return skills[num];
+		};
+		interactiveObject.getSkills = function(pram){
+			if(pram&&pram!=null&&pram!=undefined){
+				var tempSkills = skills.slice(0);
+				if (pram==SKILL.TYPE.active) {//判断传参是"active",只获取主动技能
+					for (var i=0; i < tempSkills.length; i++) {
+						if(tempSkills[i].getType()!=SKILL.TYPE.active){
+							//遍历到非主动技能，去掉
+							tempSkills.splice(i,1);
+							i--;
+						}
+					};
+				}else if(pram==SKILL.TYPE.unActive){//判断传参是"unActive",只获取非主动技能
+					for (var i=0; i < tempSkills.length; i++) {
+						if(tempSkills[i].getType()!=SKILL.TYPE.unActive){
+							//遍历，去掉
+							tempSkills.splice(i,1);
+							i--;
+						}
+					};
+				}
+				return tempSkills;
+			}
+			return skills;
+		};
+		/**
+		 * 传参：Skill对象
+		 */
+		interactiveObject.addSkill = function(pram){
+			if(!skills){
+				skills = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
+				//判断传入参数不为空 且是 skill对象
+				skills.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Skill对象
+		 */
+		interactiveObject.delSkill = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				skills.splice(pram,1);
+			} else {
+				for (var i=0; i < skills.length; i++) {
+					if(skills[i] == pram){
+						skills.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+
+		
+		/**
+		 * 增益减益
+		 */
+		var buffs=[];
+		interactiveObject.getBuff = function(num){
+			return buffs[num];
+		};
+		interactiveObject.getBuffs = function(pram){
+			return buffs;
+		};
+		interactiveObject.addBuff = function(pram){
+			if(!buffs){
+				buffs = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
+				//判断传入参数不为空 且是 buff对象
+				//校验buff的堆叠
+				var superposition = 0;
+				var tempArr=[];
+				for (var i=0; i < buffs.length; i++) {
+					if(compareBuff(pram,buffs[i])){//判断为同一种
+						superposition++;//堆叠+1
+						tempArr.push(buffs[i]);//暂存进数组
+					}else{
+						//判断是不是同一种buff但是同一ID,替换
+						if(pram.getBuffId() == buffs[i].getBuffId()){
+							superposition++;//堆叠+1
+							this.delBuff(buffs[i]);//去掉之前的
+						}
+					}
+				};
+				if(superposition>=pram.getSuperposition()){//判断堆叠已超出
+					//去掉剩余时间最短的一个
+					var tempRound=tempArr[0];
+					for (var i=0; i < tempArr.length; i++) {
+						if(tempRound.getRound()>tempArr[i].getRound()){
+							tempRound=tempArr[i];
+						}
+					};
+					this.delBuff(tempRound);
+				}//堆叠未超出直接加入
+				buffs.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Buff对象
+		 */
+		interactiveObject.delBuff = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				buffs.splice(pram,1);
+			} else {
+				for (var i=0; i < buffs.length; i++) {
+					if(buffs[i] === pram){
+						buffs.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		/**
+		 * 清空增益减益
+		 */
+		interactiveObject.clearBuffs = function() {
+			buffs = [];
 			return this;
 		};
 		
@@ -942,10 +1124,11 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
 		/**
 		 * 所有物品数据（价格）
 		 */
-		var itemInfos=[];
+		var itemInfos;
 		interactiveObject.getItemInfo = function(num){
 			return itemInfos[num];
 		};
@@ -961,7 +1144,7 @@ DataModleFactory = {
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
 				//判断传入参数不为空 且是 item 对象
-				itemInfos.push(item);
+				itemInfos.push(pram);
 			}
 			return this;						
 		};
@@ -980,6 +1163,8 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
+		
 		/**
 		 * 所有物品
 		 */
@@ -987,7 +1172,33 @@ DataModleFactory = {
 		interactiveObject.getItem = function(num){
 			return items[num];
 		};
-		interactiveObject.getItems = function(){
+		/**
+		 * 传参："useRoleBag-Consumable":过滤出消耗品 ; "useRoleBag-Equip":过滤出装备
+		 */
+		interactiveObject.getItems = function(pram){
+			if(pram&&items&&items.length>0){
+				var tempItems = items.slice(0);
+				if(pram=="useRoleBag-Consumable"){
+					//判断是只显示消耗品
+					for (var i=0; i < tempItems.length; i++) {
+						if(tempItems[i].getType()!=ITEM.TYPE.consumable){
+							//遍历到非消耗品类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}
+					};
+				}else if(pram=="useRoleBag-Equip"){
+					//判断是只显示装备
+					for (var i=0; i < tempItems.length; i++) {
+						if(tempItems[i].getType()!=ITEM.TYPE.equip){
+							//遍历到非消耗品类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}
+					};
+				}
+				return tempItems;
+			}
 			return items;
 		};
 		interactiveObject.addItem = function(pram){
@@ -1055,78 +1266,8 @@ DataModleFactory = {
 				fn1(this);
 				pram.supper = this;
 				items.push(pram);
-			}
-			
-			/**
-			 * 增益减益
-			 */
-			var buffs=[];
-			interactiveObject.getBuff = function(num){
-				return buffs[num];
 			};
-			interactiveObject.getBuffs = function(pram){
-				return buffs;
-			};
-			interactiveObject.addBuff = function(pram){
-				if(!buffs){
-					buffs = new Array();
-				}
-				if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="buff"){
-					//判断传入参数不为空 且是 buff对象
-					//校验buff的堆叠
-					var superposition = 0;
-					var tempArr=[];
-					for (var i=0; i < buffs.length; i++) {
-						if(compareBuff(pram,buffs[i])){//判断为同一种
-							superposition++;//堆叠+1
-							tempArr.push(buffs[i]);//暂存进数组
-						}else{
-							//判断是不是同一种buff但是同一ID,替换
-							if(pram.getBuffId() == buffs[i].getBuffId()){
-								superposition++;//堆叠+1
-								this.delBuff(buffs[i]);//去掉之前的
-							}
-						}
-					};
-					if(superposition>=pram.getSuperposition()){//判断堆叠已超出
-						//去掉剩余时间最短的一个
-						var tempRound=tempArr[0];
-						for (var i=0; i < tempArr.length; i++) {
-							if(tempRound.getRound()>tempArr[i].getRound()){
-								tempRound=tempArr[i];
-							}
-						};
-						this.delBuff(tempRound);
-					}//堆叠未超出直接加入
-					buffs.push(pram);
-				}
-				return this;						
-			};
-			/**
-			 * 传参：Number 或   Buff对象
-			 */
-			interactiveObject.delBuff = function(pram) {
-				if (Object.prototype.toString.call(pram)==="[object Number]") {
-					buffs.splice(pram,1);
-				} else {
-					for (var i=0; i < buffs.length; i++) {
-						if(buffs[i] === pram){
-							buffs.splice(i,1);
-						};
-					};
-				};
-				return this;
-			};
-			/**
-			 * 清空增益减益
-			 */
-			interactiveObject.clearBuffs = function() {
-				buffs = [];
-				return this;
-			};
-		
-			
-			return this;						
+			return this;					
 		};
 		/**
 		 * 传参：Number 或   Item对象
@@ -1143,6 +1284,7 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
 		return interactiveObject;
 	},
 	createAction:function() {
@@ -1597,6 +1739,17 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 目标对象
+		 */
+		var target;
+		buff.getTarget = function() {
+			return target;
+		};
+		buff.setTarget = function(pram) {
+			target = pram;
+			return this;
+		};
+		/**
 		 * 属性
 		 */
 		var attr;
@@ -1643,9 +1796,11 @@ DataModleFactory.createItemInfo = DataModleFactory.createItem;
  */
 function copyBuff(buff){
 	tempbuff = DataModleFactory.createBuff();
-	tempbuff.setName(buff.getName())
+	tempbuff.setBuffId(buff.getBuffId())
+			.setName(buff.getName())
 			.setContent(buff.getContent())
 			.setType(buff.getType())
+			.setTarget(buff.getTarget())
 			.setAttr(buff.getAttr())
 			.setRound(buff.getRound())
 			.setSuperposition(buff.getSuperposition());

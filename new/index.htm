@@ -2591,7 +2591,7 @@
 			/**
 			 * 角色行动结算 return str:"cri"-暴击;"avd"-闪避
 			 */
-			function roleSettlement(tempAttr){
+			function roleSettlement(tempAttr,quickButton){
 				var infoStr="";
 				//角色hp变化值（角色自身效果）
 				var roleHpChange = 0;
@@ -2690,8 +2690,31 @@
 						}else{
 							infoStr+="你造成了 "+tempRoleAttDamage+" 伤害;";
 						}
-						viewDataModel.battle.battleInfo.push({str:infoStr});
 					};
+					//添加buff
+					var tempBuffs = quickButton.getBuffs();//tempBuff 为  array
+					if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
+						for (var i=0; i < tempBuffs.length; i++) {
+							//复制一个buff对象，存入
+							var tempBuff = copyBuff(tempBuffs[i]);
+							if(tempBuff.getTarget()==BUFF.TARGET.self){
+								//判断是赋予自己(buff)
+								dataRoleObj[0].addBuff(tempBuff);
+								infoStr+=("你获得了\""+tempBuff.getName()+"\"效果;");
+							}else if(tempBuff.getTarget()==BUFF.TARGET.opponent){
+								//判断是赋予对方(deBuff)
+								if(str!="avd"){
+									currentInteractiveObject.addBuff(tempBuff);
+									infoStr+=("你给对方\""+tempBuff.getName()+"\"效果;");
+								}else{
+									infoStr+=("你给对方\""+tempBuff.getName()+"\"效果,但未命中;");
+								}
+							}
+						};
+					};
+					//重设对方HP，以处理跟随MaxHP变化
+					in
+					viewDataModel.battle.battleInfo.push({str:infoStr});
 					infoStr="";
 				}
 				
@@ -2848,7 +2871,7 @@
 											//执行使用效果
 											var tempAttr = quickButton1.getAttr();
 											//行动结算
-											roleSettlement(tempAttr,infoStr);
+											roleSettlement(tempAttr,quickButton1);
 											enemySettlement();
 											buffSettlement();
 											//数量-1
@@ -2866,7 +2889,7 @@
 											//执行使用效果
 											var tempAttr = quickButton1.getAttr();
 											//行动结算
-											roleSettlement(tempAttr,infoStr);
+											roleSettlement(tempAttr,quickButton1);
 											enemySettlement();
 											buffSettlement();
 											//数量-1
@@ -2879,15 +2902,7 @@
 												quickButton1.setTotalNum(totalNum);
 											}
 										}
-										//添加buff
-										var tempBuffs = quickButton1.getBuffs();//tempBuff 为  array
-										if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
-											for (var i=0; i < tempBuffs.length; i++) {
-												//复制一个buff对象，存入
-												var tempBuff = copyBuff(tempBuffs[i]);
-												dataRoleObj[0].addBuff(tempBuff);
-											};
-										};
+										
 									}
 								}else{//判断TotalNum不存在<=0,重新校准数据
 									dataRoleObj[0].delItem(quickButton1);
@@ -2913,18 +2928,9 @@
 									}else{
 										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.ep));
 									}
-								roleSettlement(tempAttr,infoStr);
+								roleSettlement(tempAttr,quickButton2);
 								enemySettlement();
 								buffSettlement();
-								//添加buff
-								var tempBuffs = quickButton2.getBuffs();//tempBuff 为  array
-								if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
-									for (var i=0; i < tempBuffs.length; i++) {
-										//复制一个buff对象，存入
-										var tempBuff = copyBuff(tempBuffs[i]);
-										dataRoleObj[0].addBuff(tempBuff);
-									};
-								};
 							}else{//quickButton2未设置，打开设置
 								$scope.quickButtonChange(2);
 							}
