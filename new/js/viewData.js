@@ -140,7 +140,13 @@ var viewDataModel = {
 		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "未设置";}},
 		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "未设置";}},
 		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "未设置";}},
-		objBuffs:function(){if(currentInteractiveObject&&currentInteractiveObject.getBuffs){return currentInteractiveObject.getBuffs();}},
+		objBuffs:function(){
+						if(currentInteractiveObject!="undefined"&&currentInteractiveObject.getBuffs){
+							return currentInteractiveObject.getBuffs();
+						}else{
+							return [];
+						}
+					},
 		roleBuffs:function(){return dataRoleObj[0].getBuffs();},
 		battleInfo:[],
 	},
