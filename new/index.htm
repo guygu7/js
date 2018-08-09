@@ -1972,6 +1972,9 @@
 						if(pram=="skill"){//判断为加载角色技能
 							roleItems = dataRoleObj[0].getSkills();
 						}
+						if(dataRoleObj[0].getStatus()=="fight"){
+							roleItems = dataRoleObj[0].getItems("useRoleBag-Consumable");
+						}
 						//标记当前交互（物品）对象
 						currentItem = roleItems[index];
 						//显示物品信息面板
@@ -3060,10 +3063,29 @@
 				if(pram=="victory"){//战斗胜利
 					//数据计算
 					//携带buff清除
-					in
-					//currentInteractiveObject.
+					dataRoleObj[0].clearBuffs();
+					currentInteractiveObject.clearBuffs();
 					//计算掉落
-					//currentInteractiveObject.
+					var tempItems = currentInteractiveObject.getItems();
+					var dropItems = [];//最终的掉落物品
+					var dropItemsArr = [];//掉落物品对象数组
+					var dropChanceArr = [];//掉落概率数组
+					for (var i=0; i < tempItems.length; i++) {
+						if(typeof tempItems[i].getDropChance()=="number"){
+							dropItemsArr.push(tempItems[i]);
+							dropChanceArr.push(tempItems[i].getDropChance());
+						}
+					};
+					if (dropItemsArr.length>0){//判断有掉落率物品才进行
+						var dropNum = currentInteractiveObject.getDropNum();
+						for (var i=0; i < dropNum; i++) {//根据掉落数量随机多次
+							var dropItem = random(dropItemsArr,dropChanceArr);
+							if(dropItem!=null){
+								dropItems.push(dropItem);
+							}
+						};
+					}
+					console.info(dropItems);
 					//场景切换
 					sceneFightHide("战斗胜利");
 					sceneMainDataLoad(currentDomain);

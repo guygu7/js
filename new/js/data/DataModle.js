@@ -1164,6 +1164,19 @@ DataModleFactory = {
 			return this;
 		};
 		
+		/**
+		 * 掉落数量
+		 */
+		var dropNum=1;
+		interactiveObject.getDropNum  = function() {
+			return dropNum;
+		};
+		interactiveObject.setDropNum = function(pram) {
+			if(!isNaN(Number(pram))){
+				dropNum = pram;
+			}
+			return this;
+		};
 		
 		/**
 		 * 所有物品
@@ -1448,6 +1461,21 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		/**
+		 * 掉落概率 
+		 */
+		var dropChance=0;
+		item.getDropChance = function() {
+			return dropChance;
+		};
+		item.setDropChance = function(pram) {
+			if(!isNaN(Number(pram))){
+				dropChance = Number(pram);
+			}
+			return this;
+		};
+		
 		/**
 		 * 卖出价 
 		 */

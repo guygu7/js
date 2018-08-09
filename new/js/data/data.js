@@ -790,3 +790,4 @@ data.roles[0].items[7].totalNum=9;
 data.roles[0].items[8].totalNum=9;
 data.roles[0].items[9].totalNum=9;
 data.roles[0].items[10].totalNum=9;
+data.domains[1].interactiveObjects[2].items[0].dropChance=1;
