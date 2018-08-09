@@ -3076,18 +3076,25 @@
 							dropChanceArr.push(tempItems[i].getDropChance());
 						}
 					};
+					var itemNames="";
 					if (dropItemsArr.length>0){//判断有掉落率物品才进行
 						var dropNum = currentInteractiveObject.getDropNum();
 						for (var i=0; i < dropNum; i++) {//根据掉落数量随机多次
 							var dropItem = random(dropItemsArr,dropChanceArr);
 							if(dropItem!=null){
 								dropItems.push(dropItem);
+								itemNames+=(dropItem.getName()+";");
 							}
 						};
 					}
+					//掉落物品信息写入
+					if(itemNames.length>0){itemNames="掉落物品:"+itemNames;};
+					in
+					//将掉落物存入场景
+					currentDomain.addInteractiveObject();
 					console.info(dropItems);
 					//场景切换
-					sceneFightHide("战斗胜利");
+					sceneFightHide("战斗胜利!"+itemNames);
 					sceneMainDataLoad(currentDomain);
 					mainShow();
 				}else if(pram=="fail"){//战斗失败（未实现）
