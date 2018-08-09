@@ -42,7 +42,18 @@
 				<!--顶部菜单-->
 				<div ng-controller="topFrame" ng-hide="viewControl.display.topFrameHide" ng-class="{'hide-animation':viewControl.topFrameHide,'show-animation':!(viewControl.topFrameHide)}" class="top-frame">
 					<div class="top">
-						<div ng-click="clickButton1('useRoleBag')" class="top-button" style="right:510px;">
+						<div ng-click="clickButton1('skill')" class="top-button" style="right:690px;">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">技能</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
+						<div ng-click="clickButton1('useRoleBag')" class="top-button" style="right:520px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">背包</div>
 							<div class="top-button-arrow">
@@ -53,7 +64,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div ng-click="clickButton1('useRoleBag','useRoleBag-Consumable')" class="top-button" style="right:340px;">
+						<div ng-click="clickButton1('useRoleBag','useRoleBag-Consumable')" class="top-button" style="right:350px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">消耗</div>
 							<div class="top-button-arrow">
@@ -64,7 +75,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div ng-click="clickButton1('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:170px;">
+						<div ng-click="clickButton1('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:180px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">实装</div>
 							<div class="top-button-arrow">
@@ -104,6 +115,15 @@
 				
 				<!--角色信息面板-->
 				<div ng-controller="panel3" ng-rightclick="testright()" ng-hide="viewControl.display.panel3Hide" ng-style="viewControl.panel3_Style" class="panel3">
+					<div class="panel3-tittle">
+						{{viewDataModel.panel3.tittleText()}}
+					</div>
+					{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}</br>
+					{{viewDataModel.panel3.roleAtt()}}</br>
+					{{viewDataModel.panel3.roleDef()}}</br>
+				</div>
+				<!--角色信息面板2-->
+				<div ng-controller="panel3" ng-rightclick="testright()" ng-hide="viewControl.display.panel3Hide2" ng-style="viewControl.panel3_Style2" class="panel3">
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
@@ -177,13 +197,13 @@
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
 					<div class="menu" >
 						{{viewDataModel.menuBag.tittleText()}}
-						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 							<div class="menu-list-background"></div>
 							<div class="menu-list-background2"></div>
 							<div class="menu-list-content">
 								{{y.getName()}}
 							</div>
-							<div class="menu-list-content-suffix" ng-hide="y.getIsPutOn()">
+							<div class="menu-list-content-suffix" ng-hide="y.getIsPutOn()||y.constructor.name=='skill'">
 								×{{y.getTotalNum()}}
 							</div>
 							<div class="menu-list-content-suffix2" ng-hide="!y.getIsPutOn()">
@@ -336,6 +356,20 @@
 								{{viewDataModel.panel3ItemInfo.attr("hitPercent")}}
 							</div>
 						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoBuffsHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								-------------------持续状态------------------
+							</div>
+						</div>
+						<div ng-repeat="x in viewDataModel.panel3ItemInfo.buffs()" ng-hide="viewControl.display.panel3ItemInfoBuffsHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								{{x.getName()}}
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+							</div>
+						</div>
+					</div>
+					<div class="panel3-lattice" ng-hide="viewControl.display.panel3ItemInfoContentHide" style="width:250px;">
 						<div ng-hide="viewControl.display.panel3ItemInfoContentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								说明：
@@ -866,7 +900,7 @@
 					<!--设置快捷按钮选择菜单-->
 					<div ng-hide="viewControl.display.quickMenuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
 						<div class="menu" >
-							<div ng-click="menulistClick($index)"  ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
+							<div ng-click="menulistClick($index)"  ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
 								<div class="menu-list-background"></div>
 								<div class="menu-list-background2"></div>
 								<div class="menu-list-content">
@@ -1328,11 +1362,14 @@
 						//判断为使用仓库，变更显示位置
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
 						viewControl.panel3ItemInfo_Style.left = 970 + "px";
-					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+					}else if(dataRoleObj[0].getStatus()=="useRoleBag"||dataRoleObj[0].getStatus()=="skill"){
 						//判断为使用背包，变更显示位置
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
-						viewControl.panel3ItemInfo_Style.left = 600 + "px";
-					}else {
+						viewControl.panel3ItemInfo_Style.left = 350 + "px";
+					}else if(dataRoleObj[0].getStatus()=="fight"){
+						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.left = 550 + "px";
+					}else{
 						viewControl.panel3ItemInfo_Style.top = 10 + "px";
 						viewControl.panel3ItemInfo_Style.left = 970 + "px";
 					}
@@ -1351,10 +1388,13 @@
 							//判断为使用仓库，变更显示位置
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
 							viewControl.panel3ItemInfo_Style.left = 970 + "px";
-						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
+						}else if(dataRoleObj[0].getStatus()=="useRoleBag"||dataRoleObj[0].getStatus()=="skill"){
 							//判断为使用背包，变更显示位置
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
-							viewControl.panel3ItemInfo_Style.left = 600 + "px";
+							viewControl.panel3ItemInfo_Style.left = 350 + "px";
+						}else if(dataRoleObj[0].getStatus()=="fight"){
+							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.left = 550 + "px";
 						}else{
 							viewControl.panel3ItemInfo_Style.top = 20 + "px";
 							viewControl.panel3ItemInfo_Style.left = 970 + "px";
@@ -1396,7 +1436,7 @@
 					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 						//判断为使用背包，变更显示位置
 						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
-						viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 640 + "px";
 					}else {
 						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
 						viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
@@ -1419,7 +1459,7 @@
 						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 							//判断为使用背包，变更显示位置
 							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
-							viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 640 + "px";
 						}else {
 							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
 							viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
@@ -1508,6 +1548,10 @@
 					left = viewControl.panel5_Style.left;
 					viewControl.panel5_Style.left = (Number(left.substring(0, left.length - 2)) + 50) + "px";
 					viewControl.panel5_Style.opacity = 0;
+					//实现角色信息面板2的动画效果
+					left = viewControl.panel3_Style2.left;
+					viewControl.panel3_Style2.left = (Number(left.substring(0, left.length - 2)) + 30) + "px";
+					viewControl.panel3_Style2.opacity = 0;
 					//无论是否为交易状态，一并增加隐藏交易面板动画效果，重置角色状态
 					viewControl.transactionPanel_Style.opacity = 0;
 					dataRoleObj[0].setStatus("");
@@ -1526,14 +1570,17 @@
 						viewControl.zIndexList["menuBag"] = 0;
 						viewControl.zIndexList["panel5MaskLayer"] = 0;
 						viewControl.zIndexList["panel"] = 0;
+						viewControl.zIndexList["panel3-2"] = 0;
 						viewControl.panel5_Style["z-index"] = 0;
 						viewControl.menu_bag_Style["z-index"] = 0;
 						viewControl.panel5MaskLayer_Style["z-index"] = 0;
 						viewControl.panel_Style["z-index"] = 0;
+						viewControl.panel3_Style2["z-index"] = 0;
 						//隐藏组件
 						viewControl.display.panel5MaskLayerHide = true;
 						viewControl.display.panel5Hide = true;
 						viewControl.display.menuBagHide = true;
+						viewControl.display.panel3Hide = true;
 						//无论是否为交易状态，一并进行交易面板的处理
 						viewControl.zIndexList["transactionPanel"] = 0;
 						viewControl.transactionPanel_Style["z-index"] = 0;
@@ -1658,8 +1705,21 @@
 				/**
 				 * 隐藏战斗界面
 				 */
-				fightHide = function(){
-					
+				sceneFightHide = function(str){
+					//标记角色状态
+					dataRoleObj[0].setStatus("");
+					//场景切换,动态效果
+					viewControl.display.sceneMainHide = false;
+					$timeout(function() {
+						viewControl.currentScene = "scene-main";
+					}, 10);
+					$timeout(function() {
+						viewControl.display.sceneBattleHide = true;
+						viewControl.display.sceneStartHide = true;
+						//隐藏其他场景
+						mainShow();
+						panelTyping(str);
+					}, 200);
 				};
 			});
 
@@ -1905,10 +1965,13 @@
 
 			//列表菜单:包裹 组件
 			app.controller("menuBag", function($scope, $rootScope,$timeout) {
-				$rootScope.menulistHover = function(index) {
+				$rootScope.menulistHover = function(index,pram) {
 					$timeout(function() {
 						//角色物品数组集合
 						var roleItems = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2());
+						if(pram=="skill"){//判断为加载角色技能
+							roleItems = dataRoleObj[0].getSkills();
+						}
 						//标记当前交互（物品）对象
 						currentItem = roleItems[index];
 						//显示物品信息面板
@@ -1920,14 +1983,6 @@
 								//判断：1.已装备;2.和当前交互物品为同一类型装备
 								if (roleItems[i].getIsPutOn() && roleItems[i].getType2()==currentItem.getType2()){
 									//将数据写入视图
-									/*
-									viewDataModel.panel3RoleItemInfo.name = function(){
-										return roleItems[i].getName();
-									};
-									viewDataModel.panel3RoleItemInfo.content = function(){
-										return roleItems[i].getContent();
-									};
-									*/
 									viewDataModel.panel3RoleItemInfo.name = function () {
 										if(roleItems[i]&&roleItems[i].getName){
 											if(roleItems[i].getName()||roleItems[i].getName()==""){
@@ -2083,7 +2138,11 @@
 					//传入点击目标（用于定位），显示列表菜单
 					menuShow(tempt);
 					//标记当前交互（物品）对象
-					currentItem = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2())[index];
+					if("skill"==dataRoleObj[0].getStatus()){
+						currentItem = dataRoleObj[0].getSkills()[index];
+					}else{
+						currentItem = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2())[index];
+					}
 					//加载交互对象动作数据（同步至视图）
 					viewDataModel.menu.buttonElements = function () {
 						if("useRoleBag"==dataRoleObj[0].getStatus()){
@@ -2095,6 +2154,9 @@
 						}else if("useWarehouse"==dataRoleObj[0].getStatus()){
 							//判断是状态为使用仓库，仅堆叠选项显示
 							return currentItem.getActions("useWarehouse");
+						}else if("skill"==dataRoleObj[0].getStatus()){
+							//判断是状态为查看技能
+							return currentItem.getActions();
 						}
 						return currentItem.getActions();
 					};
@@ -2662,7 +2724,16 @@
 						}
 					}
 				};
-				
+				viewDataModel.panel3ItemInfo.buffs = function() {
+					if(currentItem&&currentItem.getBuffs
+						&&currentItem.getBuffs()
+						&&currentItem.getBuffs().length>0){
+						viewControl.display.panel3ItemInfoBuffsHide = false;
+						return currentItem.getBuffs();
+					}else{
+						viewControl.display.panel3ItemInfoBuffsHide = true;
+					}
+				};
 			});
 			
 			//对比角色装备物品信息
@@ -2689,39 +2760,45 @@
 					currentItem=null;
 					currentAction=null;
 					//打开背包功能
-					//加载包裹数据,重新定位视图数据指针
-					viewDataModel.menuBag.buttonElements = function () {
-						return dataRoleObj[0].getItems(pram2);
-					};
+					if(pram=="skill"){//判断为查看技能
+						viewDataModel.menuBag.buttonElements = function () {
+							return dataRoleObj[0].getSkills();
+						};
+					}else{
+						//加载包裹数据,重新定位视图数据指针
+						viewDataModel.menuBag.buttonElements = function () {
+							return dataRoleObj[0].getItems(pram2);
+						};
+					}
 					var menuBagLeft=0;
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["menuBag"] = maxZIndex+2;
 					viewControl.zIndexList["panel"] = maxZIndex+2;
-					viewControl.zIndexList["panel3"] = maxZIndex+2;
+					viewControl.zIndexList["panel3-2"] = maxZIndex+2;
 					viewControl.zIndexList["panel5MaskLayer"] = maxZIndex+1;
 					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
 					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
-					viewControl.panel3_Style["z-index"] = viewControl.zIndexList["panel3"];
+					viewControl.panel3_Style2["z-index"] = viewControl.zIndexList["panel3-2"];
 					viewControl.panel5MaskLayer_Style["z-index"] = viewControl.zIndexList["panel5MaskLayer"];
 					//弹出遮罩层
 					viewControl.display.panel5MaskLayerHide = false;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 295 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.left = 65 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
 					//显示角色信息面板
-					viewControl.panel3_Style.top = 60 + "px";
-					viewControl.panel3_Style.left =  0 + "px";
-					viewControl.panel3_Style.opacity = 0;
+					viewControl.panel3_Style2.top = 60 + "px";
+					viewControl.panel3_Style2.left =  950 + "px";
+					viewControl.panel3_Style2.opacity = 0;
 					$timeout(function() {
 						//包
-						viewControl.menu_bag_Style.left = 300 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.left = 60 +menuBagLeft+ "px";
 						viewControl.menu_bag_Style.opacity = 1;
 						//角色信息面板
-						viewControl.display.panel3Hide = false;
-						viewControl.panel3_Style.left =  5 + "px";
-						viewControl.panel3_Style.opacity = 1;
+						viewControl.display.panel3Hide2 = false;
+						viewControl.panel3_Style2.left =  930 + "px";
+						viewControl.panel3_Style2.opacity = 1;
 					}, 200);
 				};
 			});
@@ -2898,18 +2975,18 @@
 				//判断角色hp是否为0
 				if(dataRoleObj[0].getHp()<=0){
 					//结束（未实现）
-					alert("角色hp=0");
 					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
+					return "fail";
 				}
 				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
 					//判断对方hp是否为0
 					if(currentInteractiveObject.getHp()<=0){
 						//结束（未实现）
-						alert("对象hp=0");
+						viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
+						return "victory";
 					}
 				}
-				//返回标记 命中、闪避 的str
-				return str;
+				return "continue";
 			}
 			/**
 			 * 对方行动结算
@@ -2935,13 +3012,18 @@
 				//判断hp是否为0
 				if(dataRoleObj[0].getHp()<=0){
 					//结束（未实现）
-					alert("结束");
+					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
+					fightOver("fail");
+					return;
 				}
 				//判断对方hp是否为0
 				if(currentInteractiveObject.getHp()<=0){
 					//结束（未实现）
-					alert("对象hp=0");
+					viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
+					fightOver("victory");
+					return;
 				}
+				return "continue";
 			}
 			/**
 			 * 回合结束buff结算
@@ -2970,6 +3052,25 @@
 				//重设双方HP，以处理跟随MaxHP变化
 				dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*roleHpPercent);
 				currentInteractiveObject.setHp(currentInteractiveObject.getMaxHp()*enemyHpPercent);
+			}
+			/**
+			 * 结束战斗
+			 */
+			function fightOver (pram) {
+				if(pram=="victory"){//战斗胜利
+					//数据计算
+					//携带buff清除
+					in
+					//currentInteractiveObject.
+					//计算掉落
+					//currentInteractiveObject.
+					//场景切换
+					sceneFightHide("战斗胜利");
+					sceneMainDataLoad(currentDomain);
+					mainShow();
+				}else if(pram=="fail"){//战斗失败（未实现）
+					
+				}
 			}
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {
@@ -3092,7 +3193,7 @@
 									&& Number(tempAttr.ep)!=0
 									&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.ep))<0){
 										//判断为ep不足
-										alert("ep不足");
+										viewDataModel.battle.battleInfo.push({str:"ep不足,无法使用技能"});
 										break;
 									}else{
 										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.ep));

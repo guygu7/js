@@ -53,6 +53,7 @@ var viewDataModel = {
 	panel3ItemInfo:{
 		name:"",
 		content:"",
+		buffs:function(){return [];},
 	},
 	/**
 	 * 对比角色（装备）物品信息面板
@@ -140,13 +141,7 @@ var viewDataModel = {
 		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "未设置";}},
 		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "未设置";}},
 		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "未设置";}},
-		objBuffs:function(){
-						if(currentInteractiveObject!="undefined"&&currentInteractiveObject.getBuffs){
-							return currentInteractiveObject.getBuffs();
-						}else{
-							return [];
-						}
-					},
+		objBuffs:function(){if(currentInteractiveObject&&currentInteractiveObject.getBuffs){return currentInteractiveObject.getBuffs();}},
 		roleBuffs:function(){return dataRoleObj[0].getBuffs();},
 		battleInfo:[],
 	},
@@ -179,6 +174,10 @@ var viewControl = {
 		 * 角色信息面板隐藏
 		 */
 		panel3Hide:true,
+		/**
+		 * 角色信息面板隐藏
+		 */
+		panel3Hide2:true,
 		/**
 		 * 人物交互面板(按钮组)隐藏
 		 */
@@ -230,7 +229,7 @@ var viewControl = {
 		panel3ItemInfoAvdPercentHide:true,
 		panel3ItemInfoHitHide:true,
 		panel3ItemInfoHitPercentHide:true,
-		
+		panel3ItemInfoBuffsHide:true,
 		/**
 		 * 对比角色物品（装备）信息面板  组件隐藏
 		 */
@@ -318,6 +317,13 @@ var viewControl = {
 	panel3_Style:{
 		"top" : 60 + "px",
 		"left" : 20 + "px",
+	},
+	/**
+	 * 角色信息面板
+	 */
+	panel3_Style2:{
+		"top" : 60 + "px",
+		"left" : 600 + "px",
 	},
 	/**
 	 * 人物交互面板(按钮组)

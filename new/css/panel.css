@@ -41,7 +41,7 @@
 .panel3{
 	width:280px;
 	background-color:rgb(235,230,205);
-	transition:0.6s;
+	transition:0.3s;
 	position: absolute;
 }
 .panel3-tittle{

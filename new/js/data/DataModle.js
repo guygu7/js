@@ -1690,6 +1690,42 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
+		/**
+		 * 交互动作
+		 */
+		var actions=[];
+		skill.getAction = function(num){
+			return actions[num];
+		};
+		skill.getActions = function(){
+			return actions;
+		};
+		skill.addAction = function(pram){
+			if(!actions){
+				actions = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="action"){
+				//判断传入参数不为空 且是 action 对象
+				actions.push(pram);
+			}
+			return this;
+		};
+		/**
+		 * 传参：Number 或   Action对象
+		 */
+		skill.delAction = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				actions.splice(pram,1);
+			} else {
+				for (var i=0; i < actions.length; i++) {
+					if(actions[i] === pram){
+						actions.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
 		return skill;
 	},
 	createBuff:function() {
