@@ -664,6 +664,14 @@
 						</div>
 					</div>
 					<div class="panel3-lattice" style="width:250px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoEpHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP消耗:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("ep")}}
+							</div>
+						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoHpHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								HP恢复:
@@ -1044,6 +1052,10 @@
 			 * 暂时仅为只有一个role对象的数组
 			 */
 			var dataRoleObj = loadData(data.roles,"role");
+			/**
+			 * 全局临时存放点对象（用于复制的模版）
+			 */
+			var tempStoragePointObj = dataDomainsObj[0].getInteractiveObjects()[0];
 			/**
 			 * 当前场景地图
 			 */
@@ -2031,7 +2043,10 @@
 											&& typeof Number(roleItems[i].getAttr()[pram])=="number" 
 											&& typeof Number(roleItems[i].getAttr()[pram])!=NaN
 											&& Number(roleItems[i].getAttr()[pram])!=0){
-											if(pram=="hp"){
+											if(pram=="ep"){
+												viewControl.display.panel3RoleItemInfoEepHide = false;
+												return roleItems[i].getAttr().ep;
+											}else if(pram=="hp"){
 												viewControl.display.panel3RoleItemInfoHpHide = false;
 												return roleItems[i].getAttr().hp;
 											}else if(pram=="hpPercent"){
@@ -2081,7 +2096,9 @@
 												return roleItems[i].getAttr().hitPercent+"倍";
 											}
 										}else{
-											if(pram=="hp"){
+											if(pram=="ep"){
+												viewControl.display.panel3RoleItemInfoEpHide = true;
+											}else if(pram=="hp"){
 												viewControl.display.panel3RoleItemInfoHpHide = true;
 											}else if(pram=="hpPercent"){
 												viewControl.display.panel3RoleItemInfoHpPercentHide = true;
@@ -2642,7 +2659,10 @@
 						&& typeof Number(currentItem.getAttr()[pram])=="number" 
 						&& typeof Number(currentItem.getAttr()[pram])!=NaN
 						&& Number(currentItem.getAttr()[pram])!=0){
-						if(pram=="hp"){
+						if(pram=="ep"){
+							viewControl.display.panel3ItemInfoEpHide = false;
+							return currentItem.getAttr().ep;
+						}else if(pram=="hp"){
 							viewControl.display.panel3ItemInfoHpHide = false;
 							return currentItem.getAttr().hp;
 						}else if(pram=="hpPercent"){
@@ -2692,7 +2712,9 @@
 							return currentItem.getAttr().hitPercent+"倍";
 						}
 					}else{
-						if(pram=="hp"){
+						if(pram=="ep"){
+							viewControl.display.panel3ItemInfoEpHide = true;
+						}else if(pram=="hp"){
 							viewControl.display.panel3ItemInfoHpHide = true;
 						}else if(pram=="hpPercent"){
 							viewControl.display.panel3ItemInfoHpPercentHide = true;
@@ -2810,14 +2832,21 @@
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
 			 */
 			function random(objArr, arr2) {
+				//过滤校验,去掉概率不正确的元素(非Number、NaN、小于等于0)
+				for (var i=0; i < arr2.length; i++) {
+					if(typeof Number(arr2[i])!="number"||isNaN(Number(arr2[i]))||Number(arr2[i])<=0){
+						objArr.splice(i,1);
+						arr2.splice(i,1);
+					}
+				};
 				var sum = 0,
 				factor = 0,
 				random = Math.random();
 				for(var i = arr2.length - 1; i >= 0; i--) {
-					sum += arr2[i]; // 统计概率总和
+					sum += Number(arr2[i]); // 统计概率总和
 				};
 				for(var i = arr2.length - 1; i >= 0; i--) {
-					factor += arr2[i];
+					factor += Number(arr2[i]);
 					if(random <= factor) 
 					return objArr[i];
 				};
@@ -2913,10 +2942,10 @@
 					
 					
 					if(tempRoleAttDamage<0){tempRoleAttDamage=0;}
+					tempRoleAttDamage = Math.round(Number(tempRoleAttDamage));//舍去小数
 					tempEnemyHp-=tempRoleAttDamage;
 					//将对方hp实现
 					currentInteractiveObject.setHp(tempEnemyHp);
-					tempRoleAttDamage = Math.round(Number(tempRoleAttDamage));//舍去小数
 					//输出战斗信息
 					if(!isNaN(roleAttDamage)){
 						if(str=="cri"){
@@ -2997,21 +3026,176 @@
 			function enemySettlement(){
 				//对方的att输出
 				var enemyAttDamage = 0;
-				//暂时只计算基础攻击
-				enemyAttDamage += currentInteractiveObject.getAtt();
-				//对方buff加成计算、技能计算（未实现）
+				
+				//技能概率计算
+				var skillsArr = currentInteractiveObject.getSkills("active");
+				var skillsChanceArr=[];
+				if(Object.prototype.toString.call(skillsArr)=="[object Array]"&&skillsArr.length>0){//判断有技能
+					for (var i=0; i < skillsArr.length; i++) {
+						skillsChanceArr.push(Number(skillsArr[i].getUseChance()));
+					};
+				}
+				var useSkill = random(skillsArr,skillsChanceArr);
+				
+				if(useSkill!=null){//判断为使用技能
+					//获取技能属性
+					var tempAttr = useSkill.getAttr();
+					//hp变化值（自身效果）
+					var enemyHpChange = 0;
+					//att输出
+					enemyAttDamage=NaN;
+					//cri暴击率计算
+					var enemyCri = 0;
+					//criStrike暴击伤害计算
+					var enemyCriStrike = 0;
+					//hit命中率计算
+					var enemyHit = 0;
+					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+					    //maxHp(百分比)恢复值
+					    if("maxHpPercent" in tempAttr){
+					        enemyHpChange+=currentInteractiveObject.getMaxHp()*tempAttr.maxHpPercent;
+					    }
+					    //当前hp(百分比)恢复值
+					    if("hpPercent" in tempAttr){
+					        enemyHpChange+=currentInteractiveObject.getHp()*tempAttr.hpPercent;
+					    }
+					    //hp直接恢复值
+					    if("hp" in tempAttr){
+					        enemyHpChange+=tempAttr.hp;
+					    }
+					    //计算输出伤害值
+					    if("damage" in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
+					        if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
+					        enemyAttDamage += tempAttr.att;
+					    }else{
+					        //计算攻击输出
+					        if("attPercent" in tempAttr){
+					            if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
+					            enemyAttDamage += tempAttr.attPercent;
+					        }
+					        if("att" in tempAttr){
+					            if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
+					            enemyAttDamage += tempAttr.att;
+					        }
+					        //计算暴击率
+					        if("cri" in tempAttr){
+					            enemyCri = currentInteractiveObject.getCri()+tempAttr.cri;
+					        }else{
+					            enemyCri = currentInteractiveObject.getCri();
+					        }
+					        //计算暴击伤害
+					        if("criStrike" in tempAttr){
+					            enemyCriStrike = currentInteractiveObject.getCriStrike()+tempAttr.criStrike;
+					        }else{
+					            enemyCriStrike = currentInteractiveObject.getCriStrike();
+					        }
+					        //计算命中
+					        if("hit" in tempAttr){
+					            enemyHit = currentInteractiveObject.getHit()+tempAttr.hit;
+					        }else{
+					            enemyHit = currentInteractiveObject.getHit();
+					        }
+					    }
+					}
+					
+					var str="";
+				
+				    //计算命中闪避
+				    var tempHit = enemyHit-dataRoleObj[0].getAvd();
+				    if(random([true,false],[tempHit,(1-tempHit)])){//命中
+				        //角色hp计算:1.对方攻击给予角色的被动变化（受伤减少）
+				        var tempRoleHp = dataRoleObj[0].getHp();
+				        //对方输出伤害-角色防御
+				        var tempEnemyAttDamage=enemyAttDamage-dataRoleObj[0].getDef();
+				        //计算暴击加成
+				        if(random([true,false],[enemyCri,(1-enemyCri)])){
+				            //暴击发生，计算暴击伤害
+				            tempEnemyAttDamage+=tempEnemyAttDamage*enemyCriStrike;
+				            //标记暴击发生
+				            str = "cri";
+				        };
+				    }else{
+				        //闪避发生
+				        str = "avd";
+				    }
+				
+					var infoStr = "对方使用了技能："+useSkill.getName()+";";
+				    if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
+				    tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
+				    tempRoleHp-=tempEnemyAttDamage;
+				    //将角色hp实现
+				    dataRoleObj[0].setHp(tempRoleHp);
+				    //输出战斗信息
+				    if(!isNaN(enemyAttDamage)){
+				        if(str=="cri"){
+				            infoStr+="暴击!";
+				        }
+				        if(str=="avd"){
+				            infoStr+="未命中...";
+				        }else{
+				            infoStr+="对方对你造成了 "+tempEnemyAttDamage+" 伤害;";
+				        }
+				    };
+				    //添加buff
+				    var tempBuffs = useSkill.getBuffs();//tempBuff 为  array
+				    if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
+				        //获取对方当前hp的百分比
+				        var enemyHpPercent = currentInteractiveObject.getHp()/currentInteractiveObject.getMaxHp();
+				        //获取角色当前hp的百分比
+				        var roleHpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
+				        for (var i=0; i < tempBuffs.length; i++) {
+				            //复制一个buff对象，存入
+				            var tempBuff = copyBuff(tempBuffs[i]);
+				            if(tempBuff.getTarget()==BUFF.TARGET.self){
+				                //判断是赋予对方自己(buff)
+				                currentInteractiveObject.addBuff(tempBuff);
+				                infoStr+=("对方获得了\""+tempBuff.getName()+"\"效果;");
+				            }else if(tempBuff.getTarget()==BUFF.TARGET.opponent){
+				                //判断是赋予角色(deBuff)
+				                if(str!="avd"){
+				                    dataRoleObj[0].addBuff(tempBuff);
+				                    infoStr+=("你受到了对方的\""+tempBuff.getName()+"\"效果;");
+				                }else{
+				                    infoStr+=("对方的\""+tempBuff.getName()+"\"效果,未命中;");
+				                }
+				            }
+				        };
+				        //重设双方HP，以处理跟随MaxHP变化
+				        currentInteractiveObject.setHp(currentInteractiveObject.getMaxHp()*enemyHpPercent);
+				        dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*roleHpPercent);
+				    };
+				
+					//hp计算:1.自身给予的主动变化（恢复）;
+					var tempEnemyHp = currentInteractiveObject.getHp();
+					enemyHpChange = Math.round(Number(enemyHpChange));//舍去小数
+					if(enemyHpChange>0){
+					    infoStr+="对方恢复了 "+enemyHpChange+" 生命;";
+					}else if(enemyHpChange<0){
+					    infoStr+="对方的生命减少了 "+enemyHpChange+" ;";
+					}
+					tempEnemyHp+=enemyHpChange;
+					//将hp实现
+					currentInteractiveObject.setHp(tempEnemyHp);
+					if(infoStr!=""){
+					    viewDataModel.battle.battleInfo.push({str:infoStr});
+					}
+						
+				}else{
+					//只计算基础攻击
+					enemyAttDamage += currentInteractiveObject.getAtt();
+					//角色hp计算:2.对方攻击给予被动变化（受伤减少）;减少值=对方输出-角色防御
+					var tempRoleHp = dataRoleObj[0].getHp();
+					var tempEnemyAttDamage = enemyAttDamage-dataRoleObj[0].getDef();
+					if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
+					tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
+					var infoStr = "对方攻击对你造成了 "+tempEnemyAttDamage+" 伤害;";
+					viewDataModel.battle.battleInfo.push({str:infoStr});
+					tempRoleHp-=tempEnemyAttDamage;
+					//将角色hp实现
+					dataRoleObj[0].setHp(tempRoleHp);
+				}
 				
 				
-				//角色hp计算:2.对方攻击给予被动变化（受伤减少）;减少值=对方输出-角色防御
-				var tempRoleHp = dataRoleObj[0].getHp();
-				var tempEnemyAttDamage = enemyAttDamage-dataRoleObj[0].getDef();
-				if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
-				tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
-				var infoStr = "对方对你造成了 "+tempEnemyAttDamage+" 伤害;";
-				viewDataModel.battle.battleInfo.push({str:infoStr});
-				tempRoleHp-=tempEnemyAttDamage;
-				//将角色hp实现
-				dataRoleObj[0].setHp(tempRoleHp);
 				//判断hp是否为0
 				if(dataRoleObj[0].getHp()<=0){
 					//结束（未实现）
@@ -3082,16 +3266,38 @@
 						for (var i=0; i < dropNum; i++) {//根据掉落数量随机多次
 							var dropItem = random(dropItemsArr,dropChanceArr);
 							if(dropItem!=null){
-								dropItems.push(dropItem);
+								//对掉落物品对象复制处理
+								var item_Obj = DataModleFactory.createItem();
+								copyBean(dropItem,item_Obj);
+								item_Obj.setTotalNum(1);
+								dropItems.push(item_Obj);
 								itemNames+=(dropItem.getName()+";");
 							}
 						};
-					}
+					};
 					//掉落物品信息写入
-					if(itemNames.length>0){itemNames="掉落物品:"+itemNames;};
-					in
-					//将掉落物存入场景
-					currentDomain.addInteractiveObject();
+					if(itemNames.length>0){
+						itemNames="掉落物品:"+itemNames;
+						//获取到临时存放点对象
+						var tempObjArr = currentDomain.getInteractiveObjects();
+						var tempObj = null;
+						for (var i=0; i < tempObjArr.length; i++) {
+							if(tempObjArr[i].getName()=="临时存放点"){
+								tempObj = tempObjArr[i];
+								break;
+							}
+						};
+						if(tempObj==null){
+							//没有获取到，则新建一个临时存放点对象 
+							tempObj = DataModleFactory.createInteractiveObject();
+							copyBean(tempStoragePointObj,tempObj);
+							currentDomain.addInteractiveObject(tempObj,"unshift");
+						}
+						//将掉落物存入临时存放点对象 
+						for (var i=0; i < dropItems.length; i++) {
+							tempObj.addItem(dropItems[i]);
+						};
+					};
 					console.info(dropItems);
 					//场景切换
 					sceneFightHide("战斗胜利!"+itemNames);

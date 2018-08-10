@@ -312,6 +312,28 @@ dictionaryData.skill={
 		},
 	},
 	/**
+	 * 攻击技能
+	 */
+	att2:{
+		name:"重击",
+		type:SKILL.TYPE.active,
+		attr:{
+			att:20,
+		},
+		useChance:0.4,
+	},
+	/**
+	 * 恢复技能
+	 */
+	hpRecovery:{
+		name:"生命恢复",
+		type:SKILL.TYPE.active,
+		attr:{
+			hp:50,
+		},
+		useChance:0.3,
+	},
+	/**
 	 * deff弱化技能
 	 */
 	deBuff:{
@@ -696,6 +718,18 @@ var data = {
 			name:"引导场景",
 			signId:"startDomain",
 			interactiveObjects:[
+				/**
+				 * 全局临时存放点对象（用于复制的模版）|或许会有其他用处？
+				 */
+				{
+					name:"临时存放点",
+					actions:[
+						{name:"对话",type:"talk",content:"临时存放点"},
+						{name:"查看",type:"useWarehouse",content:"临时存放点"},
+					],
+					items:[
+					],
+				},
 				{	
 					name:"引导对象",
 					actions:[
@@ -744,6 +778,10 @@ var data = {
 					],
 					actions:[
 						dictionaryData.action.fight,
+					],
+					skills:[
+						dictionaryData.skill.att2,
+						dictionaryData.skill.hpRecovery,
 					],
 					//itemInfo:[],
 				},

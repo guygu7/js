@@ -213,6 +213,7 @@ var viewControl = {
 		/**
 		 * 物品信息面板  - 各种属性显示隐藏
 		 */
+		panel3ItemInfoEpHide:true,
 		panel3ItemInfoHpHide:true,
 		panel3ItemInfoHpPercentHide:true,
 		panel3ItemInfoMaxHpHide:true,

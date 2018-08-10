@@ -647,14 +647,18 @@ DataModleFactory = {
 		domain.getInteractiveObjects = function() {
 			return interactiveObjects;
 		};
-		domain.addInteractiveObject = function(pram){
+		domain.addInteractiveObject = function(pram,arrayFn){
 			if(!interactiveObjects){
 				interactiveObjects = new Array();
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
 				//判断传入参数不为空 且是 interactiveObject 对象
 				pram.supper = this;
-				interactiveObjects.push(pram);
+				if(arrayFn!="unshift"){//判断是在开头添加元素
+					interactiveObjects.push(pram);
+				}else{
+					interactiveObjects.unshift(pram);
+				}
 			}
 			return this;
 		};
@@ -1128,7 +1132,7 @@ DataModleFactory = {
 		/**
 		 * 所有物品数据（价格）
 		 */
-		var itemInfos;
+		var itemInfos=[];
 		interactiveObject.getItemInfo = function(num){
 			return itemInfos[num];
 		};
@@ -1718,6 +1722,20 @@ DataModleFactory = {
 			};
 			return this;
 		};
+		
+		
+		/**
+		 * 使用概率
+		 */
+		var useChance;
+		skill.getUseChance = function() {
+			return useChance;
+		};
+		skill.setUseChance = function(pram) {
+			useChance = pram;
+			return this;
+		};
+		
 		
 		/**
 		 * 交互动作
