@@ -130,10 +130,10 @@ html {
 	opacity: 1;
 }
 .maskLayer{
-	top:-40px;
-	left:-50px;
-	width: 1350px;
-	height: 650px;
+	top:-1000px;
+	left:-3000px;
+	width: 9350px;
+	height: 9650px;
 	background:rgba(180,180,180,0.3);
 	position: absolute;
 }

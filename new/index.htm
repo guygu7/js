@@ -40,6 +40,37 @@
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
 				
+				<!--背景装饰组件（齿轮）-->
+				<div class="decorativeGear" style="top:-500px;left:-500px;">
+					<div class="decorativeGear1"></div>
+					<div class="decorativeGear2"></div>
+					<div class="decorativeGear3"></div>
+					<div class="decorativeGear4"></div>
+					<div class="decorativeGear5"></div>
+					<div class="decorativeGear6"></div>
+					<div class="decorativeGear7"></div>
+					<div class="decorativeGear-animus">
+						<div class="decorativeGear-animus1"></div>
+						<div class="decorativeGear-animus2"></div>
+						<div class="decorativeGear-animus3"></div>
+					</div>
+				</div>
+				<!--背景装饰组件（齿轮）-->
+				<div class="decorativeGear" style="bottom: -500px;right: -500px;">
+					<div class="decorativeGear1"></div>
+					<div class="decorativeGear2"></div>
+					<div class="decorativeGear3"></div>
+					<div class="decorativeGear4"></div>
+					<div class="decorativeGear5"></div>
+					<div class="decorativeGear6"></div>
+					<div class="decorativeGear7"></div>
+					<div class="decorativeGear-animus">
+						<div class="decorativeGear-animus1"></div>
+						<div class="decorativeGear-animus2"></div>
+						<div class="decorativeGear-animus3"></div>
+					</div>
+				</div>
+				
 				<!--顶部菜单-->
 				<div ng-controller="topFrame" ng-hide="viewControl.display.topFrameHide" ng-class="{'hide-animation':viewControl.topFrameHide,'show-animation':!(viewControl.topFrameHide)}" class="top-frame">
 					<div class="top">
@@ -110,8 +141,7 @@
 				</div>
 				
 				
-				<!--背景装饰组件（齿轮）-->
-				<div class="decorativeGear"></div>
+				
 				<!--顶部横向装饰组件-->
 				<div class="decorativeStrip-top">
 					<div class="decorativeStrip-top1"></div>
@@ -693,6 +723,9 @@
 		
 			<!--战斗场景-->
 			<div ng-controller="scene-battle" ng-hide="viewControl.display.sceneBattleHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-battle','show-animation-scene':viewControl.currentScene=='scene-battle'}" class="scene">
+				
+				<!--左侧纵向装饰组件-->
+				<div class="decorativeStrip-left"></div>
 				
 				<!--交流信息面板-->
 				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-hide="viewControl.display.panelHide" ng-style="viewControl.panel_Style" class="panel">
