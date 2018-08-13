@@ -1,23 +1,36 @@
 /*菜单*/
 .menu-background{
 	width: 280px;
-	height: 500px;
+	height: 430px;
 	background-color:rgb(225,220,195);
     box-shadow:2px 2px 0px 0px rgb(152,151,130);
 	transition: 0.6s /*cubic-bezier(0.48, -0.68, 0.48, 1.3)*/;
 	position: absolute;
 }
 .menu{
-	width: 270px;
-	height: 475px;
-	box-shadow: 0px 2px 0px 0px rgb(180,175,155) inset
-				,0px -2px 0px 0px rgb(180,175,155) inset;
+	left:-45px;
+	width: 300px;
+	height: 405px;
 	padding:3px 0px 3px 0px;
 	top:10px;
 	overflow-y:scroll;
+	overflow-x:hidden;
 	position: relative;
 }
+.menu-top,.menu-bottom{
+	width:240px;
+	height:2px;
+	background:rgb(180,175,155);
+	position: absolute;
+}
+.menu-top{
+	top:10px;
+}
+.menu-bottom{
+	bottom: 9px;
+}
 .menu-list{
+	left:45px;
 	width:230px;
 	height: 30px;
 	margin:10px 0px 10px 0px;
@@ -69,7 +82,7 @@
 	font-size: small;
 }
 .menu-list:hover{
-	left:10px;
+	left:55px;
 	transform: scale(1.1);
 }
 .menu-list:hover > .menu-list-background{
@@ -109,6 +122,63 @@
 .menu-list:hover > .menu-list-content-suffix2{
 	color:rgb(235,230,205);
 }
+/*-----------左侧指示箭头------------*/
+.menu-list:hover > .menu-list-button-arrow{
+	display :inherit;
+}
+.menu-list-button-arrow{
+	top:10px;
+	left:-20px;
+	transform: rotateZ(90deg);
+	opacity:0.8;
+	display:none;
+	position: absolute;
+}
+/*箭头图形构成*/
+.menu-list-button-arrow1{
+	width: 20px;
+	height: 20px;
+	background: linear-gradient(135deg,rgba(235,230,205,1) 0%,rgba(235,230,205,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
+	transform: rotate(45deg) skew(30deg,30deg) ;
+	border-radius:2px;
+	position: absolute;
+}
+.menu-list-button-arrow2{
+	width: 20px;
+	height: 20px;
+	background: linear-gradient(-45deg,rgba(235,230,205,1) 0%,rgba(235,230,205,1) 50%,rgba(255,255,255,0)51%,rgba(255,255,255,0)100%);
+	transform: rotate(45deg)  scale(0.42);
+	border-radius:2px;
+	position: absolute;
+}
+.menu-list-button-arrow3{
+	width: 20px;
+	height: 20px;
+	background-color: rgb(165,161,142);
+	border-radius:30px;
+	transform: scale(0.15);
+	position: absolute;
+}
+.menu-list-button-arrow4{
+	top:-12px;
+	left:0px;
+	width: 4px;
+	height: 4px;
+	background-color: rgb(0,0,0);
+	border-radius:30px;
+	position: absolute;
+}
+.menu-list-button-arrow5{
+	top:-12px;
+	left:16px;
+	width: 4px;
+	height: 4px;
+	background-color: rgb(0,0,0);
+	border-radius:30px;
+	position: absolute;
+}
+
+
 /**--------------------自动大小菜单----------------------**/
 /*菜单*/
 .menuAuto-background{

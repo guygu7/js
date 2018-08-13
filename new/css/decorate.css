@@ -1,0 +1,65 @@
+/*---------左侧纵向装饰组件-----------*/
+.decorativeStrip-left{
+	top:80px;
+	left:10px;
+	width: 2px;
+	height: 430px;
+	border-color:rgb(152,148,132);
+	border-style:solid;
+	border-top-width:0px;
+	border-right-width:2px;
+	border-bottom-width:0px;
+	border-left-width:6px;
+	position:absolute;
+}
+/*----------顶部横向装饰组件-----------*/
+.decorativeStrip-top{
+	top:-1px;
+	width: 1500px;
+	position:absolute;
+}
+.decorativeStrip-top1{
+	left:-10%;
+	width: 150%;
+	border:1px solid rgb(52,49,42);
+	position:relative;
+}
+.decorativeStrip-top2-unit{
+	width: 50px;
+	height: 20px;
+	display: inline-block;
+	position:relative;
+}
+.decorativeStrip-top2-unit1{
+	top:0px;
+	left:0px;
+	width: 10px;
+	height: 3px;
+	background:rgb(52,49,42);
+	position:absolute;
+}
+.decorativeStrip-top2-unit2,.decorativeStrip-top2-unit3,.decorativeStrip-top2-unit4{
+	top:5px;
+	width: 5px;
+	height: 5px;
+	border-radius:5px;
+	background:rgb(52,49,42);
+	position:absolute;
+}
+.decorativeStrip-top2-unit2{
+	left:23px;
+}
+.decorativeStrip-top2-unit3{
+	right:9px;
+}
+.decorativeStrip-top2-unit4{
+	top:15px;
+	left:30px;
+}
+/*----------背景装饰组件（齿轮）-----------*/
+.decorativeGear{
+	width: 900px;
+	height: 900px;
+	border-radius:900px;
+	border:20px dashed;
+}

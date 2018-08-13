@@ -1,5 +1,5 @@
 html {
-	background: rgb(198,193,170)/*rgb(255,225,135)*/;/*#bdc3c7;*/
+	background: rgb(184,180,164)/*rgb(255,225,135)*/;/*#bdc3c7;*/
 	margin: 0;
 	padding: 0;
 	-moz-user-select: none;
@@ -22,6 +22,7 @@ html {
    	scrollbar-darkshadow-color:#D7DCE0; /*- 右一 -*/
    	scrollbar-base-color:#D7DCE0; /*- 基色 -*/
    	scrollbar-track-color:rgba(225,220,195,0.4);/*- 滑道 -*/
+   	overflow:hidden;
 }
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/   
 ::-webkit-scrollbar   
@@ -105,7 +106,7 @@ html {
 .scene {
 	width: 1250px;
 	height: 600px;
-	border:1px solid #000000;
+	//border:1px solid #000000;
 	color:rgba(49,46,38);
 	transition:1s 1s;
 	opacity: 0;

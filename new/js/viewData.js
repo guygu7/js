@@ -21,7 +21,6 @@ $rootScope.viewDataModel = viewDataModel;
 展示
 {{viewDataModel[0]}}
 */
-
 /**
  * 视图数据显示对象 
  */
@@ -316,8 +315,8 @@ var viewControl = {
 	 * 角色信息面板
 	 */
 	panel3_Style:{
-		"top" : 60 + "px",
-		"left" : 20 + "px",
+		"top" : 80 + "px",
+		"left" : 40 + "px",
 	},
 	/**
 	 * 角色信息面板
@@ -364,7 +363,7 @@ var viewControl = {
 	 * 列表菜单（包裹）组件（初始值）
 	 */
 	menu_bag_Style:{
-		"top" : 30 + "px",
+		"top" : 80 + "px",
 		"left" : 180 + "px",
 		"opacity" : 0,
 	},
