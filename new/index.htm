@@ -2957,6 +2957,7 @@
 			/**
 			 * 角色行动结算 return str:"cri"-暴击;"avd"-闪避
 			 */
+			/*
 			function roleSettlement(tempAttr,quickButton){
 				var infoStr="";
 				//角色hp变化值（角色自身效果）
@@ -3119,9 +3120,11 @@
 				}
 				return "continue";
 			}
+			*/
 			/**
 			 * 对方行动结算
 			 */
+			/*
 			function enemySettlement(){
 				//对方的att输出
 				var enemyAttDamage = 0;
@@ -3324,7 +3327,7 @@
 				
 				if(str!="avd"){//判断命中
 					//触发角色被动技能
-					/*---------未实现---------*/
+					/---------未实现---------/
 				}
 				
 				//判断hp是否为0
@@ -3343,6 +3346,207 @@
 				}
 				return "continue";
 			}
+			*/
+			/**
+			 * activeObj:主动对象
+			 * passiveObj:被动对象
+			 * activeObjSkill:主动对象所用技能
+			 */
+			function battleSettlement (activeObj,passiveObj,activeObjSkill) {
+				var tempAttr;
+				if("getAttr" in activeObjSkill&&activeObjSkill.getAttr()!=undefined&&Object.getOwnPropertyNames(ctiveObjSkill.getAttr()).length>0){
+					//判断有getAttr
+					tempAttr = activeObjSkill.getAttr();
+				}else{//没有则应该为直接传入了attr{}
+					tempAttr = activeObjSkill;
+				}
+				var infoStr="";
+				//主动对象hp变化值（主动对象自身效果）
+				var activeObjHpChange = 0;
+				//主动对象的att输出
+				var activeObjAttDamage=NaN;
+				//主动对象的cri暴击率计算
+				var activeObjCri = 0;
+				//主动对象的criStrike暴击伤害计算
+				var activeObjCriStrike = 0;
+				//主动对象的hit命中率计算
+				var activeObjHit = 0;
+				if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+					//maxHp(百分比)恢复值
+					if(SKILL.ATTR.hpRecoveryMaxHpPercent in tempAttr){
+						activeObjHpChange+=activeObj.getMaxHp()*tempAttr.hpRecoveryMaxHpPercent;
+					}
+					//当前hp(百分比)恢复值
+					if(SKILL.ATTR.hpRecoveryPercent in tempAttr){
+						activeObjHpChange+=activeObj.getHp()*tempAttr.hpRecoveryPercent;
+					}
+					//hp直接恢复值
+					if(SKILL.ATTR.hpRecovery in tempAttr){
+						activeObjHpChange+=tempAttr.hpRecovery;
+					}
+					//计算输出伤害值
+					if(SKILL.ATTR.damage in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
+						if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
+						activeObjAttDamage += tempAttr.damage;
+					}else{
+						//计算攻击输出
+						if(SKILL.ATTR.attPercent in tempAttr){
+							if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
+							activeObjAttDamage += tempAttr.attPercent;
+						}
+						if(SKILL.ATTR.att in tempAttr){
+							if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
+							activeObjAttDamage += tempAttr.att;
+						}
+						//计算暴击率
+						if(SKILL.ATTR.cri in tempAttr){
+							activeObjCri = activeObj.getCri()+tempAttr.cri;
+						}else{
+							activeObjCri = activeObj.getCri();
+						}
+						//计算暴击伤害
+						if(SKILL.ATTR.criStrike in tempAttr){
+							activeObjCriStrike = activeObj.getCriStrike()+tempAttr.criStrike;
+						}else{
+							activeObjCriStrike = activeObj.getCriStrike();
+						}
+						//计算命中
+						if(SKILL.ATTR.hit in tempAttr){
+							activeObjHit = activeObj.getHit()+tempAttr.hit;
+						}else{
+							activeObjHit = activeObj.getHit();
+						}
+					}
+					
+				}
+				
+				var str="";
+				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
+					//计算命中闪避
+					var tempHit = activeObjHit-passiveObj.getAvd();
+					if(random([true,false],[tempHit,(1-tempHit)])){//命中
+						//被动对象hp计算:1.主动对象攻击给予的变化（受伤减少）
+						var tempEnemyHp = passiveObj.getHp();
+						//主动对象输出伤害-被动对象防御
+						var tempActiveObjAttDamage=activeObjAttDamage-passiveObj.getDef();
+						//计算暴击加成
+						if(random([true,false],[activeObjCri,(1-activeObjCri)])){
+							//暴击发生，计算暴击伤害
+							tempActiveObjAttDamage+=tempActiveObjAttDamage*activeObjCriStrike;
+							//标记暴击发生
+							str = "cri";
+						};
+					}else{
+						//闪避发生
+						str = "avd";
+					}
+					
+					
+					if(tempActiveObjAttDamage<0){tempActiveObjAttDamage=0;}
+					tempActiveObjAttDamage = Math.round(Number(tempActiveObjAttDamage));//舍去小数
+					tempEnemyHp-=tempActiveObjAttDamage;
+					//将被动对象hp实现
+					passiveObj.setHp(tempEnemyHp);
+					//输出战斗信息
+					if(!isNaN(activeObjAttDamage)){
+						if(str=="cri"){
+							infoStr+="暴击!";
+						}
+						if(str=="avd"){
+							infoStr+="未命中...";
+						}else{
+							infoStr+=(activeObj.getName()+"造成了 "+tempActiveObjAttDamage+" 伤害;");
+						}
+					};
+					//添加buff
+					var tempBuffs = quickButton.getBuffs();//tempBuff 为  array
+					if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
+						//获取当前角色hp的百分比
+						var roleHpPercent = activeObj.getHp()/activeObj.getMaxHp();
+						//获取当前对方hp的百分比
+						var enemyHpPercent = passiveObj.getHp()/passiveObj.getMaxHp();
+						for (var i=0; i < tempBuffs.length; i++) {
+							//复制一个buff对象，存入
+							var tempBuff = copyBuff(tempBuffs[i]);
+							if(tempBuff.getTarget()==BUFF.TARGET.self){
+								//判断是赋予自己(buff)
+								activeObj.addBuff(tempBuff);
+								infoStr+=(activeObj.getName()+"获得了\""+tempBuff.getName()+"\"效果;");
+							}else if(tempBuff.getTarget()==BUFF.TARGET.opponent){
+								//判断是赋予对方(deBuff)
+								if(str!="avd"){
+									passiveObj.addBuff(tempBuff);
+									infoStr+=(activeObj.getName()+"给对方\""+tempBuff.getName()+"\"效果;");
+								}else{
+									infoStr+=(activeObj.getName()+"给对方\""+tempBuff.getName()+"\"效果,但未命中;");
+								}
+							}
+						};
+						//重设双方HP，以处理跟随MaxHP变化
+						activeObj.setHp(activeObj.getMaxHp()*roleHpPercent);
+						passiveObj.setHp(passiveObj.getMaxHp()*enemyHpPercent);
+					};
+					viewDataModel.battle.battleInfo.push({str:infoStr});
+					infoStr="";
+				}
+				
+				//主动对象hp计算:1.自身给予的主动变化（恢复）;
+				var tempActiveObjHp = activeObj.getHp();
+				activeObjHpChange = Math.round(Number(activeObjHpChange));//舍去小数
+				if(activeObjHpChange>0){
+					infoStr+=(activeObj.getName()+"恢复了 "+activeObjHpChange+" 生命;");
+				}else if(activeObjHpChange<0){
+					infoStr+=(activeObj.getName()+"的生命减少了 "+activeObjHpChange+";");
+				}
+				tempActiveObjHp+=activeObjHpChange;
+				//将主动对象hp实现
+				activeObj.setHp(tempActiveObjHp);
+				if(infoStr!=""){
+					viewDataModel.battle.battleInfo.push({str:infoStr});
+				}
+				
+				//判断hp是否为0
+				if(dataRoleObj[0].getHp()<=0){
+					//结束（未实现）
+					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
+					fightOver("fail");
+					return;
+				}
+				//判断对方hp是否为0
+				if(currentInteractiveObject.getHp()<=0){
+					//结束（未实现）
+					viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
+					fightOver("victory");
+					return;
+				}
+			}
+			/**
+			 * 双方行动结算（角色先行动）传入：skillObj
+			 */
+			function battleSettlement2 (skillObj) {
+				//角色行动
+				battleSettlement(dataRoleObj[0],currentInteractiveObject,skillObj);
+				//技能概率计算
+				var skillsArr = currentInteractiveObject.getSkills("active");
+				var skillsChanceArr=[];
+				if(Object.prototype.toString.call(skillsArr)=="[object Array]"&&skillsArr.length>0){//判断有技能
+					for (var i=0; i < skillsArr.length; i++) {
+						skillsChanceArr.push(Number(skillsArr[i].getUseChance()));
+					};
+				}
+				var useSkill = random(skillsArr,skillsChanceArr);
+				var str="";
+				if(useSkill!=null){//判断为使用技能
+				}else{
+					//没有使用技能，为普通攻击
+					in
+					useSkill=
+				}
+				//对方行动
+				battleSettlement(currentInteractiveObject,dataRoleObj[0],useSkill);
+				
+			}
+			
 			/**
 			 * 回合开始buff结算（hp增加、减少;ep增加、减少）
 			 */
@@ -3561,8 +3765,9 @@
 											var tempAttr = quickButton1.getAttr();
 											//行动结算
 											roundStartBuffSettlement();
-											roleSettlement(tempAttr,quickButton1);
-											enemySettlement();
+											battleSettlement2(quickButton1);
+											//roleSettlement(tempAttr,quickButton1);
+											//enemySettlement();
 											buffSettlement();
 											//数量-1
 											if(!(quickButton1.getType2()==ITEM.TYPE2.reusingConsumable)){//是可反复使用消耗品则不减少数量
@@ -3580,8 +3785,9 @@
 											var tempAttr = quickButton1.getAttr();
 											//行动结算
 											roundStartBuffSettlement();
-											roleSettlement(tempAttr,quickButton1);
-											enemySettlement();
+											battleSettlement2(quickButton1);
+											//roleSettlement(tempAttr,quickButton1);
+											//enemySettlement();
 											buffSettlement();
 											//数量-1
 											var totalNum = quickButton1.getTotalNum();
@@ -3620,8 +3826,9 @@
 										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.ep));
 									}
 								roundStartBuffSettlement();
-								roleSettlement(tempAttr,quickButton2);
-								enemySettlement();
+								battleSettlement2(quickButton2);
+								//roleSettlement(tempAttr,quickButton2);
+								//enemySettlement();
 								buffSettlement();
 							}else{//quickButton2未设置，打开设置
 								$scope.quickButtonChange(2);

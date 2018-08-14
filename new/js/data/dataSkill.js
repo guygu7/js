@@ -35,12 +35,14 @@ var SKILL={
 		attPercent:"attPercent",//攻击力att百分比的 增加量 或 减少量
 		def:"def",//防御力def的直接 增加量 或 减少量
 		defPercent:"defPercent",//防御力def百分比的 增加量 或 减少量
+		absorbHp:"absorbHp",//吸hp(百分比)
+		absorbEp:"absorbEp",//吸ep(百分比)
 		//能量值
-		/*--此部分暂未写入战斗逻辑--*/
+		/*----------------此部分暂未写入战斗逻辑---------------*/
 		epRecovery:"epRecovery",//ep的直接 恢复量 或 减少量
 		epRecoveryPercent:"epRecoveryPercent",//当前ep百分比的 直接恢复量 或 减少量
 		epRecoveryMaxEpPercent:"epRecoveryMaxEpPercent",//最大maxEp百分比的恢复量
-		/*-------------------*/
+		/*----------------------------------------------*/
 		maxEp:"maxEp",//最大maxEp的直接 增加量 或 减少量
 		maxEpPercent:"maxEpPercent",//最大maxEp百分比的 增加量 或 减少量
 		damage:"damage",//固定输出伤害，不计算角色攻击力
@@ -88,15 +90,14 @@ dictionaryData.skill={
 		content:"被动技能说明文本",
 		type:SKILL.TYPE.unActive,
 		attr:{
-			maxHp:1,//最大maxHp的直接 增加量 或 减少量
-			maxHpPercent:0.1,//最大maxHp百分比的 增加量 或 减少量
-			att:1,//攻击力att的直接 增加量 或 减少量
-			attPercent:0.1,//攻击力att百分比的 增加量 或 减少量
-			def:1,//防御力def的直接 增加量 或 减少量
-			defPercent:0.1,//防御力def百分比的 增加量 或 减少量
-			maxEp:1,//最大maxEp的直接 增加量 或 减少量
-			maxEpPercent:0.1,//最大maxEp百分比的 增加量 或 减少量
-			damage:1,//固定输出伤害，不计算角色攻击力
+			hpRecovery:1,//hp的直接 恢复量 或 减少量
+			hpRecoveryPercent:0.1,//当前hp百分比的 直接恢复量 或 减少量
+			hpRecoveryMaxHpPercent:1,//最大maxHp百分比的恢复量
+			epRecovery:1,//ep的直接 恢复量 或 减少量
+			epRecoveryPercent:0.1,//当前ep百分比的 直接恢复量 或 减少量
+			epRecoveryMaxEpPercent:0.1,//最大maxEp百分比的恢复量
+			
+			damage:1,//（反伤）固定输出伤害，不计算角色攻击力
 			cri:0.1,//暴击率cri的直接 增加量 或 减少量
 			criStrike:0.1,//暴击伤害criStrike的直接  增加量 或 减少量
 			avd:0.1,//闪避率avd的直接  增加量 或 减少量
