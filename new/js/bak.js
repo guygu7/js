@@ -312,6 +312,28 @@ dictionaryData.skill={
 		},
 	},
 	/**
+	 * 攻击技能
+	 */
+	att2:{
+		name:"重击",
+		type:SKILL.TYPE.active,
+		attr:{
+			att:20,
+		},
+		useChance:0.4,
+	},
+	/**
+	 * 恢复技能
+	 */
+	hpRecovery:{
+		name:"生命恢复",
+		type:SKILL.TYPE.active,
+		attr:{
+			hp:50,
+		},
+		useChance:0.3,
+	},
+	/**
 	 * deff弱化技能
 	 */
 	deBuff:{
@@ -756,6 +778,10 @@ var data = {
 					],
 					actions:[
 						dictionaryData.action.fight,
+					],
+					skills:[
+						dictionaryData.skill.att2,
+						dictionaryData.skill.hpRecovery,
 					],
 					//itemInfo:[],
 				},

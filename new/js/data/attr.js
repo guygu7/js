@@ -7,8 +7,8 @@ attr={
 	maxHpPercent:0.1,//最大maxHp百分比的 增加量 或 减少量
 	att:1,//攻击力att的直接 增加量 或 减少量
 	attPercent:0.1,//攻击力att百分比的 增加量 或 减少量
-	def:1,//攻击力def的直接 增加量 或 减少量
-	defPercent:0.1,//攻击力def百分比的 增加量 或 减少量
+	def:1,//防御力def的直接 增加量 或 减少量
+	defPercent:0.1,//防御力def百分比的 增加量 或 减少量
 	
 	//能量值
 	ep:1,//ep的直接 恢复量 或 减少量
