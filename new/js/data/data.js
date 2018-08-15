@@ -52,32 +52,35 @@ var data = {
 		baseMaxHp:500,
 		ep:50,
 		baseMaxEp:50,
-		baseAtt:10,
+		baseAtt:11,
 		baseDef:1,
 		baseCri:0.5,//暴击率cri的直接 增加量 或 减少量
-		baseCriStrike:1.5,//暴击伤害criStrike的直接  增加量 或 减少量
+		baseCriStrike:1.2,//暴击伤害criStrike的直接  增加量 或 减少量
 		baseAvd:0.1,//闪避率avd的直接  增加量 或 减少量
-		baseHit:0.8,//命中率hit的直接  增加量 或 减少量
+		baseHit:0.9,//命中率hit的直接  增加量 或 减少量
 		skills:[
-			dictionaryData.skill.skill1,
-			dictionaryData.skill.att,
-			dictionaryData.skill.buffHpUp1,
-			dictionaryData.skill.buffHpUp2,
-			dictionaryData.skill.deBuff,
+			dictionaryData.skill.testDeBuff2,
+			dictionaryData.skill.test3MaxHp,
+			//
+			dictionaryData.skill.testAttack,
+			dictionaryData.skill.testHpRecoveryMaxHpPercent,
+			dictionaryData.skill.testAttPercent,
+			//
+			dictionaryData.skill.testBuff,
+			dictionaryData.skill.testBuff2,
+			dictionaryData.skill.testDeBuff,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
-			dictionaryData.item.item1,
-			dictionaryData.item.item2,
-			dictionaryData.item.item3,
-			dictionaryData.item.item4,
-			dictionaryData.item.item5,
-			dictionaryData.item.item7,
-			dictionaryData.item.item8,
-			dictionaryData.item.recoveryHp,
-			dictionaryData.item.recoveryHp2,
-			dictionaryData.item.recoveryHp3,
-			dictionaryData.item.buffHp1,
+			dictionaryData.item.testEquip11,
+			dictionaryData.item.testEquip12,
+			dictionaryData.item.testEquip21,
+			dictionaryData.item.testEquip22,
+			dictionaryData.item.testHpRecovery,
+			dictionaryData.item.testEpRecovery,
+			dictionaryData.item.testBuff,
+			dictionaryData.item.test2Att,
+			dictionaryData.item.test2DeBuff,
 		],
 	},],
 	/**
@@ -130,9 +133,6 @@ var data = {
 				{
 					name:"交流对象",
 					items:[
-						dictionaryData.item.item1,
-						//dictionaryData.item.item3,
-						//dictionaryData.item.item4,
 					],
 					actions:[
 						{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
@@ -142,12 +142,17 @@ var data = {
 				},
 				{
 					name:"对战对象",
-					hp:50,
+					hp:150,
 					maxHp:900,
-					att:2,
+					att:10,
 					def:10,
+					cri:0.5,//暴击率cri的直接 增加量 或 减少量
+					criStrike:1.2,//暴击伤害criStrike的直接  增加量 或 减少量
+					avd:0.1,//闪避率avd的直接  增加量 或 减少量
+					hit:0.9,//命中率hit的直接  增加量 或 减少量
 					items:[
-						dictionaryData.item.item1,
+						dictionaryData.item.testEquip22,
+						dictionaryData.item.testHpRecovery,
 					],
 					actions:[
 						dictionaryData.action.fight,
@@ -182,23 +187,20 @@ var data = {
 						{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
 					],
 					items:[
-						//dictionaryData.item.item5,
-						//dictionaryData.item.item6,
 					],
 				},
 			],
 		},
 	],
 };
-data.roles[0].items[0].totalNum=9;
+data.roles[0].items[0].totalNum=1;
 data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
 data.roles[0].items[3].totalNum=1;
-data.roles[0].items[4].totalNum=1;
+data.roles[0].items[4].totalNum=9;
 data.roles[0].items[5].totalNum=9;
 data.roles[0].items[6].totalNum=9;
 data.roles[0].items[7].totalNum=9;
 data.roles[0].items[8].totalNum=9;
-data.roles[0].items[9].totalNum=9;
-data.roles[0].items[10].totalNum=9;
-data.domains[1].interactiveObjects[2].items[0].dropChance=1;
+data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;
+data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;

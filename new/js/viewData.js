@@ -235,14 +235,29 @@ var viewControl = {
 		 */
 		panel3RoleItemInfoHide:true,
 		/**
+		 * 对比角色物品（装备）信息面板  - name属性显示隐藏
+		 */
+		panel3RoleItemInfoNameHide:true,
+		/**
+		 * 对比角色物品（装备）信息面板 - Content属性显示隐藏
+		 */
+		panel3RoleItemInfoContentHide:true,
+		/**
 		 * 对比角色物品（装备）信息面板  - 各种属性显示隐藏
 		 */
-		panel3RoleItemInfoHpHide:true,
-		panel3RoleItemInfoHpPercentHide:true,
+		panel3RoleItemInfoEpRecoveryHide:true,
+		panel3RoleItemInfoEpRecoveryPercentHide:true,
+		panel3RoleItemInfoEpRecoveryMaxEpPercentHide:true,
+		panel3RoleItemInfoMaxEpHide:true,
+		panel3RoleItemInfoMaxEpPercentHide:true,
+		panel3RoleItemInfoHpRecoveryHide:true,
+		panel3RoleItemInfoHpRecoveryPercentHide:true,
+		panel3RoleItemInfoHpRecoveryMaxHpPercentHide:true,
 		panel3RoleItemInfoMaxHpHide:true,
 		panel3RoleItemInfoMaxHpPercentHide:true,
 		panel3RoleItemInfoAttHide:true,
 		panel3RoleItemInfoAttPercentHide:true,
+		panel3RoleItemInfoDamageHide:true,
 		panel3RoleItemInfoDefHide:true,
 		panel3RoleItemInfoDefPercentHide:true,
 		panel3RoleItemInfoCriHide:true,
@@ -253,7 +268,7 @@ var viewControl = {
 		panel3RoleItemInfoAvdPercentHide:true,
 		panel3RoleItemInfoHitHide:true,
 		panel3RoleItemInfoHitPercentHide:true,
-		
+		panel3RoleItemInfoBuffsHide:true,
 		
 		/**
 		 * 仓库组件 专用遮罩层隐藏 

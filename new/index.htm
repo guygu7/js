@@ -308,20 +308,52 @@
 						</div>
 					</div>
 					<div class="panel3-lattice" style="width:250px;">
-						<div ng-hide="viewControl.display.panel3ItemInfoHpHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								HP恢复:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attr("hp")}}
+								{{viewDataModel.panel3ItemInfo.attr("hpRecovery")}}
 							</div>
 						</div>
-						<div ng-hide="viewControl.display.panel3ItemInfoHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryPercentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								恢复当前HP:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attr("hpPercent")}}
+								{{viewDataModel.panel3ItemInfo.attr("hpRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复HP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("hpRecoveryMaxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP恢复:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecovery")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复当前EP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复EP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecoveryMaxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoMaxHpHide" style="height:10px;width: 250px;margin: 5px;">
@@ -334,10 +366,26 @@
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attrExplain("maxHpPercent")}}:
+								HP最大值增加:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.attr("maxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoMaxEpHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("maxEp")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("maxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoAttHide" style="height:10px;width: 250px;margin: 5px;">
@@ -354,6 +402,14 @@
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.attr("attPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoDamageHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								固定伤害:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("damage")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoDefHide" style="height:10px;width: 250px;margin: 5px;">
@@ -477,20 +533,52 @@
 						</div>
 					</div>
 					<div class="panel3-lattice" style="width:250px;">
-						<div ng-hide="viewControl.display.panel3RoleItemInfoHpHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3RoleItemInfoHpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								HP恢复:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3RoleItemInfo.attr("hp")}}
+								{{viewDataModel.panel3RoleItemInfo.attr("hpRecovery")}}
 							</div>
 						</div>
-						<div ng-hide="viewControl.display.panel3RoleItemInfoHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3RoleItemInfoHpRecoveryPercentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								恢复当前HP:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3RoleItemInfo.attr("hpPercent")}}
+								{{viewDataModel.panel3RoleItemInfo.attr("hpRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoHpRecoveryMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复HP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("hpRecoveryMaxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoEpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP恢复:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("epRecovery")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoEpRecoveryPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复当前EP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("epRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoEpRecoveryMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复EP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("epRecoveryMaxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3RoleItemInfoMaxHpHide" style="height:10px;width: 250px;margin: 5px;">
@@ -503,10 +591,26 @@
 						</div>
 						<div ng-hide="viewControl.display.panel3RoleItemInfoMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
-								{{viewDataModel.panel3RoleItemInfo.attrExplain("maxHpPercent")}}:
+								HP最大值增加:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3RoleItemInfo.attr("maxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoMaxEpHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("maxEp")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("maxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3RoleItemInfoAttHide" style="height:10px;width: 250px;margin: 5px;">
@@ -523,6 +627,14 @@
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3RoleItemInfo.attr("attPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3RoleItemInfoDamageHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								固定伤害:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3RoleItemInfo.attr("damage")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3RoleItemInfoDefHide" style="height:10px;width: 250px;margin: 5px;">
@@ -751,28 +863,52 @@
 						</div>
 					</div>
 					<div class="panel3-lattice" style="width:250px;">
-						<div ng-hide="viewControl.display.panel3ItemInfoEpHide" style="height:10px;width: 250px;margin: 5px;">
-							<div style="height: 10px;left: 10px;position: absolute;">
-								EP消耗:
-							</div>
-							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attr("ep")}}
-							</div>
-						</div>
-						<div ng-hide="viewControl.display.panel3ItemInfoHpHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								HP恢复:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attr("hp")}}
+								{{viewDataModel.panel3ItemInfo.attr("hpRecovery")}}
 							</div>
 						</div>
-						<div ng-hide="viewControl.display.panel3ItemInfoHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								恢复当前HP:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attr("hpPercent")}}
+								{{viewDataModel.panel3ItemInfo.attr("hpRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoHpRecoveryMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复HP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("hpRecoveryMaxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP恢复:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecovery")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复当前EP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecoveryPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoEpRecoveryMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								恢复EP最大值:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("epRecoveryMaxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoMaxHpHide" style="height:10px;width: 250px;margin: 5px;">
@@ -785,10 +921,26 @@
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoMaxHpPercentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
-								{{viewDataModel.panel3ItemInfo.attrExplain("maxHpPercent")}}:
+								HP最大值增加:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.attr("maxHpPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoMaxEpHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("maxEp")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoMaxEpPercentHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP最大值增加:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("maxEpPercent")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoAttHide" style="height:10px;width: 250px;margin: 5px;">
@@ -805,6 +957,14 @@
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
 								{{viewDataModel.panel3ItemInfo.attr("attPercent")}}
+							</div>
+						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoDamageHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								固定伤害:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3ItemInfo.attr("damage")}}
 							</div>
 						</div>
 						<div ng-hide="viewControl.display.panel3ItemInfoDefHide" style="height:10px;width: 250px;margin: 5px;">
@@ -887,6 +1047,20 @@
 								{{viewDataModel.panel3ItemInfo.attr("hitPercent")}}
 							</div>
 						</div>
+						<div ng-hide="viewControl.display.panel3ItemInfoBuffsHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								-------------------持续状态------------------
+							</div>
+						</div>
+						<div ng-repeat="x in viewDataModel.panel3ItemInfo.buffs()" ng-hide="viewControl.display.panel3ItemInfoBuffsHide" style="height:10px;width: 250px;margin: 5px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								{{x.getName()}}
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+							</div>
+						</div>
+					</div>
+					<div class="panel3-lattice" ng-hide="viewControl.display.panel3ItemInfoContentHide" style="width:250px;">
 						<div ng-hide="viewControl.display.panel3ItemInfoContentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								说明：
@@ -2078,17 +2252,20 @@
 			//列表菜单:包裹 组件
 			app.controller("menuBag", function($scope, $rootScope,$timeout) {
 				$rootScope.menulistHover = function(index,pram) {
-					$timeout(function() {
-						//角色物品数组集合
-						var roleItems = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2());
-						if(pram=="skill"){//判断为加载角色技能
+					//角色物品数组集合
+					var roleItems = dataRoleObj[0].getItems(dataRoleObj[0].getStatus2());
+					if(pram=="skill"){//判断为加载角色技能
+						if(dataRoleObj[0].getStatus()=="fight"){
+							roleItems = dataRoleObj[0].getSkills("active");
+						}else{
 							roleItems = dataRoleObj[0].getSkills();
 						}
-						if(dataRoleObj[0].getStatus()=="fight"){
-							roleItems = dataRoleObj[0].getItems("useRoleBag-Consumable");
-						}
-						//标记当前交互（物品）对象
-						currentItem = roleItems[index];
+					}else if(dataRoleObj[0].getStatus()=="fight"){
+						roleItems = dataRoleObj[0].getItems("useRoleBag-Consumable");
+					}
+					//标记当前交互（物品）对象
+					currentItem = roleItems[index];
+					$timeout(function() {
 						//显示物品信息面板
 						panel3ItemInfoShow();
 						//判断为装备,增加对比信息面板显示
@@ -2143,65 +2320,93 @@
 											&& typeof Number(roleItems[i].getAttr()[pram])=="number" 
 											&& typeof Number(roleItems[i].getAttr()[pram])!=NaN
 											&& Number(roleItems[i].getAttr()[pram])!=0){
-											if(pram=="ep"){
-												viewControl.display.panel3RoleItemInfoEepHide = false;
-												return roleItems[i].getAttr().ep;
-											}else if(pram=="hp"){
-												viewControl.display.panel3RoleItemInfoHpHide = false;
-												return roleItems[i].getAttr().hp;
-											}else if(pram=="hpPercent"){
-												viewControl.display.panel3RoleItemInfoHpPercentHide = false;
-												return (roleItems[i].getAttr().hpPercent*100)+"%";
+											if(pram=="epRecovery"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryHide = false;
+												return roleItems[i].getAttr().epRecovery;
+											}else if(pram=="epRecoveryPercent"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryPercentHide = false;
+												return parseInt(roleItems[i].getAttr().epRecoveryPercent*100)+"%";
+											}else if(pram=="epRecoveryMaxEpPercent"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryMaxEpPercentHide = false;
+												return parseInt(roleItems[i].getAttr().epRecoveryMaxEpPercent*100)+"%";
+											}else if(pram=="maxEp"){
+												viewControl.display.panel3RoleItemInfoMaxEpHide = false;
+												return roleItems[i].getAttr().maxEp;
+											}else if(pram=="maxEpPercent"){
+												viewControl.display.panel3RoleItemInfoMaxEpPercentHide = false;
+												return parseInt(roleItems[i].getAttr().maxEpPercent*100)+"%";
+											}else if(pram=="hpRecovery"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryHide = false;
+												return roleItems[i].getAttr().hpRecovery;
+											}else if(pram=="hpRecoveryPercent"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryPercentHide = false;
+												return parseInt(roleItems[i].getAttr().hpRecoveryPercent*100)+"%";
+											}else if(pram=="hpRecoveryMaxHpPercent"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryMaxHpPercentHide = false;
+												return parseInt(roleItems[i].getAttr().hpRecoveryMaxHpPercent*100)+"%";
 											}else if(pram=="maxHp"){
 												viewControl.display.panel3RoleItemInfoMaxHpHide = false;
 												return roleItems[i].getAttr().maxHp;
 											}else if(pram=="maxHpPercent"){
 												viewControl.display.panel3RoleItemInfoMaxHpPercentHide = false;
-												return (roleItems[i].getAttr().maxHpPercent*100)+"%";
+												return parseInt(roleItems[i].getAttr().maxHpPercent*100)+"%";
 											}else if(pram=="att"){
 												viewControl.display.panel3RoleItemInfoAttHide = false;
 												return roleItems[i].getAttr().att;
 											}else if(pram=="attPercent"){
 												viewControl.display.panel3RoleItemInfoAttPercentHide = false;
-												return (roleItems[i].getAttr().attPercent*100)+"%";
+												return parseInt(roleItems[i].getAttr().attPercent*100)+"%";
+											}else if(pram=="damage"){
+												viewControl.display.panel3RoleItemInfoDamageHide = false;
+												return roleItems[i].getAttr().damage;
 											}else if(pram=="def"){
 												viewControl.display.panel3RoleItemInfoDefHide = false;
 												return roleItems[i].getAttr().def;
 											}else if(pram=="defPercent"){
 												viewControl.display.panel3RoleItemInfoDefPercentHide = false;
-												return (roleItems[i].getAttr().defPercent*100)+"%";
+												return parseInt(roleItems[i].getAttr().defPercent*100)+"%";
 											}else if(pram=="cri"){
 												viewControl.display.panel3RoleItemInfoCriHide = false;
-												return (roleItems[i].getAttr().cri*100)+"%";
+												return parseInt(roleItems[i].getAttr().cri*100)+"%";
 											}else if(pram=="criPercent"){
 												viewControl.display.panel3RoleItemInfoCriPercentHide = false;
 												return roleItems[i].getAttr().criPercent+"倍";
 											}else if(pram=="criStrike"){
 												viewControl.display.panel3RoleItemInfoCriStrikeHide = false;
-												return (roleItems[i].getAttr().criStrike*100)+"%";
+												return parseInt(roleItems[i].getAttr().criStrike*100)+"%";
 											}else if(pram=="criStrikePercent"){
 												viewControl.display.panel3RoleItemInfoCriStrikePercentHide = false;
 												return roleItems[i].getAttr().criStrikePercent+"倍";
 											}else if(pram=="avd"){
 												viewControl.display.panel3RoleItemInfoAvdHide = false;
-												return (roleItems[i].getAttr().avd*100)+"%";
+												return parseInt(roleItems[i].getAttr().avd*100)+"%";
 											}else if(pram=="avdPercent"){
 												viewControl.display.panel3RoleItemInfoAvdPercentHide = false;
 												return roleItems[i].getAttr().avdPercent+"倍";
 											}else if(pram=="hit"){
 												viewControl.display.panel3RoleItemInfoHitHide = false;
-												return (roleItems[i].getAttr().hit*100)+"%";
+												return parseInt(roleItems[i].getAttr().hit*100)+"%";
 											}else if(pram=="hitPercent"){
 												viewControl.display.panel3RoleItemInfoHitPercentHide = false;
 												return roleItems[i].getAttr().hitPercent+"倍";
 											}
 										}else{
-											if(pram=="ep"){
-												viewControl.display.panel3RoleItemInfoEpHide = true;
-											}else if(pram=="hp"){
-												viewControl.display.panel3RoleItemInfoHpHide = true;
-											}else if(pram=="hpPercent"){
-												viewControl.display.panel3RoleItemInfoHpPercentHide = true;
+											if(pram=="epRecovery"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryHide = true;
+											}else if(pram=="epRecoveryPercent"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryPercentHide = true;
+											}else if(pram=="epRecoveryMaxEpPercent"){
+												viewControl.display.panel3RoleItemInfoEpRecoveryMaxEpPercentHide = true;
+											}else if(pram=="maxEp"){
+												viewControl.display.panel3RoleItemInfoMaxEpHide = true;
+											}else if(pram=="maxEpPercent"){
+												viewControl.display.panel3RoleItemInfoMaxEpPercentHide = true;
+											}else if(pram=="hpRecovery"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryHide = true;
+											}else if(pram=="hpRecoveryPercent"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryPercentHide = true;
+											}else if(pram=="hpRecoveryMaxHpPercent"){
+												viewControl.display.panel3RoleItemInfoHpRecoveryMaxHpPercentHide = true;
 											}else if(pram=="maxHp"){
 												viewControl.display.panel3RoleItemInfoMaxHpHide = true;
 											}else if(pram=="maxHpPercent"){
@@ -2210,13 +2415,15 @@
 												viewControl.display.panel3RoleItemInfoAttHide = true;
 											}else if(pram=="attPercent"){
 												viewControl.display.panel3RoleItemInfoAttPercentHide = true;
+											}else if(pram=="damage"){
+												viewControl.display.panel3RoleItemInfoDamageHide = true;
 											}else if(pram=="def"){
 												viewControl.display.panel3RoleItemInfoDefHide = true;
 											}else if(pram=="defPercent"){
 												viewControl.display.panel3RoleItemInfoDefPercentHide = true;
 											}else if(pram=="cri"){
 												viewControl.display.panel3RoleItemInfoCriHide = true;
-											}else if(pram=="criPercent"){
+											}else if(pram=="criaPercent"){
 												viewControl.display.panel3RoleItemInfoCriPercentHide = true;
 											}else if(pram=="criStrike"){
 												viewControl.display.panel3RoleItemInfoCriStrikeHide = true;
@@ -2759,65 +2966,93 @@
 						&& typeof Number(currentItem.getAttr()[pram])=="number" 
 						&& typeof Number(currentItem.getAttr()[pram])!=NaN
 						&& Number(currentItem.getAttr()[pram])!=0){
-						if(pram=="ep"){
-							viewControl.display.panel3ItemInfoEpHide = false;
-							return currentItem.getAttr().ep;
-						}else if(pram=="hp"){
-							viewControl.display.panel3ItemInfoHpHide = false;
-							return currentItem.getAttr().hp;
-						}else if(pram=="hpPercent"){
-							viewControl.display.panel3ItemInfoHpPercentHide = false;
-							return (currentItem.getAttr().hpPercent*100)+"%";
+						if(pram=="epRecovery"){
+							viewControl.display.panel3ItemInfoEpRecoveryHide = false;
+							return currentItem.getAttr().epRecovery;
+						}else if(pram=="epRecoveryPercent"){
+							viewControl.display.panel3ItemInfoEpRecoveryPercentHide = false;
+							return parseInt(currentItem.getAttr().epRecoveryPercent*100)+"%";
+						}else if(pram=="epRecoveryMaxEpPercent"){
+							viewControl.display.panel3ItemInfoEpRecoveryMaxEpPercentHide = false;
+							return parseInt(currentItem.getAttr().epRecoveryMaxEpPercent*100)+"%";
+						}else if(pram=="maxEp"){
+							viewControl.display.panel3ItemInfoMaxEpHide = false;
+							return currentItem.getAttr().maxEp;
+						}else if(pram=="maxEpPercent"){
+							viewControl.display.panel3ItemInfoMaxEpPercentHide = false;
+							return parseInt(currentItem.getAttr().maxEpPercent*100)+"%";
+						}else if(pram=="hpRecovery"){
+							viewControl.display.panel3ItemInfoHpRecoveryHide = false;
+							return currentItem.getAttr().hpRecovery;
+						}else if(pram=="hpRecoveryPercent"){
+							viewControl.display.panel3ItemInfoHpRecoveryPercentHide = false;
+							return parseInt(currentItem.getAttr().hpRecoveryPercent*100)+"%";
+						}else if(pram=="hpRecoveryMaxHpPercent"){
+							viewControl.display.panel3ItemInfoHpRecoveryMaxHpPercentHide = false;
+							return parseInt(currentItem.getAttr().hpRecoveryMaxHpPercent*100)+"%";
 						}else if(pram=="maxHp"){
 							viewControl.display.panel3ItemInfoMaxHpHide = false;
 							return currentItem.getAttr().maxHp;
 						}else if(pram=="maxHpPercent"){
 							viewControl.display.panel3ItemInfoMaxHpPercentHide = false;
-							return (currentItem.getAttr().maxHpPercent*100)+"%";
+							return parseInt(currentItem.getAttr().maxHpPercent*100)+"%";
 						}else if(pram=="att"){
 							viewControl.display.panel3ItemInfoAttHide = false;
 							return currentItem.getAttr().att;
 						}else if(pram=="attPercent"){
 							viewControl.display.panel3ItemInfoAttPercentHide = false;
-							return (currentItem.getAttr().attPercent*100)+"%";
+							return parseInt(currentItem.getAttr().attPercent*100)+"%";
+						}else if(pram=="damage"){
+							viewControl.display.panel3ItemInfoDamageHide = false;
+							return currentItem.getAttr().damage;
 						}else if(pram=="def"){
 							viewControl.display.panel3ItemInfoDefHide = false;
 							return currentItem.getAttr().def;
 						}else if(pram=="defPercent"){
 							viewControl.display.panel3ItemInfoDefPercentHide = false;
-							return (currentItem.getAttr().defPercent*100)+"%";
+							return parseInt(currentItem.getAttr().defPercent*100)+"%";
 						}else if(pram=="cri"){
 							viewControl.display.panel3ItemInfoCriHide = false;
-							return (currentItem.getAttr().cri*100)+"%";
+							return parseInt(currentItem.getAttr().cri*100)+"%";
 						}else if(pram=="criPercent"){
 							viewControl.display.panel3ItemInfoCriPercentHide = false;
 							return currentItem.getAttr().criPercent+"倍";
 						}else if(pram=="criStrike"){
 							viewControl.display.panel3ItemInfoCriStrikeHide = false;
-							return (currentItem.getAttr().criStrike*100)+"%";
+							return parseInt(currentItem.getAttr().criStrike*100)+"%";
 						}else if(pram=="criStrikePercent"){
 							viewControl.display.panel3ItemInfoCriStrikePercentHide = false;
 							return currentItem.getAttr().criStrikePercent+"倍";
 						}else if(pram=="avd"){
 							viewControl.display.panel3ItemInfoAvdHide = false;
-							return (currentItem.getAttr().avd*100)+"%";
+							return parseInt(currentItem.getAttr().avd*100)+"%";
 						}else if(pram=="avdPercent"){
 							viewControl.display.panel3ItemInfoAvdPercentHide = false;
 							return currentItem.getAttr().avdPercent+"倍";
 						}else if(pram=="hit"){
 							viewControl.display.panel3ItemInfoHitHide = false;
-							return (currentItem.getAttr().hit*100)+"%";
+							return parseInt(currentItem.getAttr().hit*100)+"%";
 						}else if(pram=="hitPercent"){
 							viewControl.display.panel3ItemInfoHitPercentHide = false;
 							return currentItem.getAttr().hitPercent+"倍";
 						}
 					}else{
-						if(pram=="ep"){
-							viewControl.display.panel3ItemInfoEpHide = true;
-						}else if(pram=="hp"){
-							viewControl.display.panel3ItemInfoHpHide = true;
-						}else if(pram=="hpPercent"){
-							viewControl.display.panel3ItemInfoHpPercentHide = true;
+						if(pram=="epRecovery"){
+							viewControl.display.panel3ItemInfoEpRecoveryHide = true;
+						}else if(pram=="epRecoveryPercent"){
+							viewControl.display.panel3ItemInfoEpRecoveryPercentHide = true;
+						}else if(pram=="epRecoveryMaxEpPercent"){
+							viewControl.display.panel3ItemInfoEpRecoveryMaxEpPercentHide = true;
+						}else if(pram=="maxEp"){
+							viewControl.display.panel3ItemInfoMaxEpHide = true;
+						}else if(pram=="maxEpPercent"){
+							viewControl.display.panel3ItemInfoMaxEpPercentHide = true;
+						}else if(pram=="hpRecovery"){
+							viewControl.display.panel3ItemInfoHpRecoveryHide = true;
+						}else if(pram=="hpRecoveryPercent"){
+							viewControl.display.panel3ItemInfoHpRecoveryPercentHide = true;
+						}else if(pram=="hpRecoveryMaxHpPercent"){
+							viewControl.display.panel3ItemInfoHpRecoveryMaxHpPercentHide = true;
 						}else if(pram=="maxHp"){
 							viewControl.display.panel3ItemInfoMaxHpHide = true;
 						}else if(pram=="maxHpPercent"){
@@ -2826,6 +3061,8 @@
 							viewControl.display.panel3ItemInfoAttHide = true;
 						}else if(pram=="attPercent"){
 							viewControl.display.panel3ItemInfoAttPercentHide = true;
+						}else if(pram=="damage"){
+							viewControl.display.panel3ItemInfoDamageHide = true;
 						}else if(pram=="def"){
 							viewControl.display.panel3ItemInfoDefHide = true;
 						}else if(pram=="defPercent"){
@@ -3353,8 +3590,9 @@
 			 * activeObjSkill:主动对象所用技能
 			 */
 			function battleSettlement (activeObj,passiveObj,activeObjSkill) {
+				in//测试普通攻击activeObjAttDamage=NaN
 				var tempAttr;
-				if("getAttr" in activeObjSkill&&activeObjSkill.getAttr()!=undefined&&Object.getOwnPropertyNames(ctiveObjSkill.getAttr()).length>0){
+				if("getAttr" in activeObjSkill&&activeObjSkill.getAttr()!=undefined&&Object.getOwnPropertyNames(activeObjSkill.getAttr()).length>0){
 					//判断有getAttr
 					tempAttr = activeObjSkill.getAttr();
 				}else{//没有则应该为直接传入了attr{}
@@ -3363,6 +3601,8 @@
 				var infoStr="";
 				//主动对象hp变化值（主动对象自身效果）
 				var activeObjHpChange = 0;
+				//主动对象ep变化值（主动对象自身效果）
+				var activeObjEpChange = 0;
 				//主动对象的att输出
 				var activeObjAttDamage=NaN;
 				//主动对象的cri暴击率计算
@@ -3371,6 +3611,8 @@
 				var activeObjCriStrike = 0;
 				//主动对象的hit命中率计算
 				var activeObjHit = 0;
+				//标记是否对被动对象有攻击
+				var flag=false;
 				if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
 					//maxHp(百分比)恢复值
 					if(SKILL.ATTR.hpRecoveryMaxHpPercent in tempAttr){
@@ -3384,38 +3626,48 @@
 					if(SKILL.ATTR.hpRecovery in tempAttr){
 						activeObjHpChange+=tempAttr.hpRecovery;
 					}
-					//计算输出伤害值
-					if(SKILL.ATTR.damage in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
+					//maxEp(百分比)恢复值
+					if(SKILL.ATTR.epRecoveryMaxEpPercent in tempAttr){
+						activeObjEpChange+=activeObj.getMaxEp()*tempAttr.epRecoveryMaxEpPercent;
+					}
+					//当前ep(百分比)恢复值
+					if(SKILL.ATTR.epRecoveryPercent in tempAttr){
+						activeObjEpChange+=activeObj.getEp()*tempAttr.epRecoveryPercent;
+					}
+					//ep直接恢复值
+					if(SKILL.ATTR.epRecovery in tempAttr){
+						activeObjEpChange+=tempAttr.epRecovery;
+					}
+					
+					//计算输出伤害值（不包含固定伤害）
+					//计算攻击输出（不包含固定伤害）
+					if(SKILL.ATTR.attPercent in tempAttr){
 						if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
-						activeObjAttDamage += tempAttr.damage;
+						activeObjAttDamage += activeObj.getAttr*tempAttr.attPercent;
+						flag=true;
+					}
+					if(SKILL.ATTR.att in tempAttr){
+						if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
+						activeObjAttDamage += tempAttr.att;
+						flag=true;
+					}
+					//计算暴击率
+					if(SKILL.ATTR.cri in tempAttr){
+						activeObjCri = activeObj.getCri()+tempAttr.cri;
 					}else{
-						//计算攻击输出
-						if(SKILL.ATTR.attPercent in tempAttr){
-							if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
-							activeObjAttDamage += tempAttr.attPercent;
-						}
-						if(SKILL.ATTR.att in tempAttr){
-							if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
-							activeObjAttDamage += tempAttr.att;
-						}
-						//计算暴击率
-						if(SKILL.ATTR.cri in tempAttr){
-							activeObjCri = activeObj.getCri()+tempAttr.cri;
-						}else{
-							activeObjCri = activeObj.getCri();
-						}
-						//计算暴击伤害
-						if(SKILL.ATTR.criStrike in tempAttr){
-							activeObjCriStrike = activeObj.getCriStrike()+tempAttr.criStrike;
-						}else{
-							activeObjCriStrike = activeObj.getCriStrike();
-						}
-						//计算命中
-						if(SKILL.ATTR.hit in tempAttr){
-							activeObjHit = activeObj.getHit()+tempAttr.hit;
-						}else{
-							activeObjHit = activeObj.getHit();
-						}
+						activeObjCri = activeObj.getCri();
+					}
+					//计算暴击伤害
+					if(SKILL.ATTR.criStrike in tempAttr){
+						activeObjCriStrike = activeObj.getCriStrike()+tempAttr.criStrike;
+					}else{
+						activeObjCriStrike = activeObj.getCriStrike();
+					}
+					//计算命中
+					if(SKILL.ATTR.hit in tempAttr){
+						activeObjHit = activeObj.getHit()+tempAttr.hit;
+					}else{
+						activeObjHit = activeObj.getHit();
 					}
 					
 				}
@@ -3436,6 +3688,19 @@
 							//标记暴击发生
 							str = "cri";
 						};
+						
+						//判断为固定伤害输出计算，不计算防御力
+						if(SKILL.ATTR.damage in tempAttr){
+							if(isNaN(tempActiveObjAttDamage)){ tempActiveObjAttDamage=0;};
+							tempActiveObjAttDamage += tempAttr.damage;
+							flag=true;
+						}
+						
+						//触发被动技能
+						if(flag){
+							//---------未实现--------------
+						}
+						
 					}else{
 						//闪避发生
 						str = "avd";
@@ -3448,7 +3713,7 @@
 					//将被动对象hp实现
 					passiveObj.setHp(tempEnemyHp);
 					//输出战斗信息
-					if(!isNaN(activeObjAttDamage)){
+					if(!isNaN(activeObjAttDamage)&&flag){
 						if(str=="cri"){
 							infoStr+="暴击!";
 						}
@@ -3458,8 +3723,44 @@
 							infoStr+=(activeObj.getName()+"造成了 "+tempActiveObjAttDamage+" 伤害;");
 						}
 					};
-					//添加buff
-					var tempBuffs = quickButton.getBuffs();//tempBuff 为  array
+				}
+				
+				
+				//主动对象hp计算:1.自身给予的主动变化（恢复）;
+				var tempActiveObjHp = activeObj.getHp();
+				activeObjHpChange = Math.round(Number(activeObjHpChange));//舍去小数
+				if(activeObjHpChange>0){
+					infoStr+=(activeObj.getName()+"恢复了 "+activeObjHpChange+" 生命;");
+				}else if(activeObjHpChange<0){
+					infoStr+=(activeObj.getName()+"的生命减少了 "+activeObjHpChange+";");
+				}
+				tempActiveObjHp+=activeObjHpChange;
+				//将主动对象hp实现
+				activeObj.setHp(tempActiveObjHp);
+				
+				if("getEp" in activeObj){
+					//主动对象ep计算:1.自身给予的主动变化（恢复）;
+					var tempActiveObjEp = activeObj.getEp();
+					activeObjEpChange = Math.round(Number(activeObjEpChange));//舍去小数
+					if(activeObjEpChange>0){
+						infoStr+=(activeObj.getName()+"恢复了 "+activeObjEpChange+" 能量;");
+					}else if(activeObjEpChange<0){
+						infoStr+=(activeObj.getName()+"的能量减少了 "+activeObjEpChange+";");
+					}
+					tempActiveObjEp+=activeObjEpChange;
+					//将主动对象ep实现
+					activeObj.setEp(tempActiveObjEp);
+					
+				}
+				
+				if(infoStr!=""){
+					viewDataModel.battle.battleInfo.push({str:infoStr});
+					infoStr = "";
+				}
+				
+				//添加buff
+				if("getBuffs" in activeObjSkill){
+					var tempBuffs = activeObjSkill.getBuffs();//tempBuff 为  array
 					if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
 						//获取当前角色hp的百分比
 						var roleHpPercent = activeObj.getHp()/activeObj.getMaxHp();
@@ -3488,21 +3789,6 @@
 					};
 					viewDataModel.battle.battleInfo.push({str:infoStr});
 					infoStr="";
-				}
-				
-				//主动对象hp计算:1.自身给予的主动变化（恢复）;
-				var tempActiveObjHp = activeObj.getHp();
-				activeObjHpChange = Math.round(Number(activeObjHpChange));//舍去小数
-				if(activeObjHpChange>0){
-					infoStr+=(activeObj.getName()+"恢复了 "+activeObjHpChange+" 生命;");
-				}else if(activeObjHpChange<0){
-					infoStr+=(activeObj.getName()+"的生命减少了 "+activeObjHpChange+";");
-				}
-				tempActiveObjHp+=activeObjHpChange;
-				//将主动对象hp实现
-				activeObj.setHp(tempActiveObjHp);
-				if(infoStr!=""){
-					viewDataModel.battle.battleInfo.push({str:infoStr});
 				}
 				
 				//判断hp是否为0
@@ -3539,8 +3825,7 @@
 				if(useSkill!=null){//判断为使用技能
 				}else{
 					//没有使用技能，为普通攻击
-					in
-					useSkill=
+					useSkill={attPercent:1};
 				}
 				//对方行动
 				battleSettlement(currentInteractiveObject,dataRoleObj[0],useSkill);

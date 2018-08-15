@@ -96,6 +96,29 @@ dictionaryData.buff={
 		superposition:2,//可叠加数（根据id）
 		content:"增益减益说明文本",
 	},
+	/*-----测试（减益）----*/
+	testDeBuffAtt:{
+		id:10006,
+		name:"攻击力减少50",
+		type:BUFF.TYPE.battleBuff,
+		target:BUFF.TARGET.opponent,
+		attr:{att:-50,//攻击力att的直接 增加量 或 减少量
+		},
+		round:3,//持续回合数
+		superposition:2,//可叠加数（根据id）
+		content:"攻击力减少50",
+	},
+	testDeBuffMaxHpPercent:{
+		id:10005,
+		name:"MaxHp减少10%",
+		type:BUFF.TYPE.battleBuff,
+		target:BUFF.TARGET.opponent,
+		attr:{maxHpPercent:-0.1,//最大maxHp百分比的 增加量 或 减少量
+		},
+		round:3,//持续回合数
+		superposition:2,//可叠加数（根据id）
+		content:"MaxHp减少10%",
+	},
 	/*-----测试（增益）----*/
 	testHpRecovery:{
 		id:10001,
