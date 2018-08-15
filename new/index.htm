@@ -190,18 +190,156 @@
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
-					{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}</br>
-					{{viewDataModel.panel3.roleAtt()}}</br>
-					{{viewDataModel.panel3.roleDef()}}</br>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								HP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleEp()}}/{{viewDataModel.panel3.roleMaxEp()}}
+							</div>
+						</div>
+						
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="width: 256px;height: 20px;background-image:linear-gradient(90deg, rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(90deg, transparent 80%, rgb(235,230,205) 80%),linear-gradient( transparent 80%, rgb(235,230,205) 80%),linear-gradient(90deg, rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(90deg, transparent 70%, rgb(179,174,152) 70%),linear-gradient( transparent 70%, rgb(179,174,152) 70%);background-size: 20px 20px;background-color:rgb(224,219,195);">
+							</div>
+						</div>
+						
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								攻击:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleAtt()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								防御:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleDef()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								暴击率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleCri()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								暴击伤害:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleCriStrike()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								闪避率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleAvd()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								命中率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleHit()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 5px;">
+						</div>
 				</div>
 				<!--角色信息面板2-->
 				<div ng-controller="panel3" ng-rightclick="testright()" ng-hide="viewControl.display.panel3Hide2" ng-style="viewControl.panel3_Style2" class="panel3">
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
-					{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}</br>
-					{{viewDataModel.panel3.roleAtt()}}</br>
-					{{viewDataModel.panel3.roleDef()}}</br>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								HP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleHp()}}/{{viewDataModel.panel3.roleMaxHp()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								EP:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleEp()}}/{{viewDataModel.panel3.roleMaxEp()}}
+							</div>
+						</div>
+						
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="width: 256px;height: 20px;background-image:linear-gradient(90deg, rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(90deg, transparent 80%, rgb(235,230,205) 80%),linear-gradient( transparent 80%, rgb(235,230,205) 80%),linear-gradient(90deg, rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(90deg, transparent 70%, rgb(179,174,152) 70%),linear-gradient( transparent 70%, rgb(179,174,152) 70%);background-size: 20px 20px;background-color:rgb(224,219,195);">
+							</div>
+						</div>
+						
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								攻击:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleAtt()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								防御:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleDef()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								暴击率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleCri()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								暴击伤害:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleCriStrike()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								闪避率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleAvd()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								命中率:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleHit()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 5px;">
+						</div>
 				</div>
 
 				<!--人物交互面板(按钮组)-->
@@ -717,6 +855,8 @@
 								{{viewDataModel.panel3RoleItemInfo.attr("hitPercent")}}
 							</div>
 						</div>
+					</div>
+					<div class="panel3-lattice" style="width:250px;">
 						<div ng-hide="viewControl.display.panel3RoleItemInfoContentHide" style="height:10px;width: 250px;margin: 5px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								说明：
@@ -791,13 +931,13 @@
 								×{{x.getTotalNum()}}
 							</div>
 						</div>
+					<div class="menu-bottom" style="bottom:0px;width: 99%"></div>
 					</div>
-					<div class="menu-bottom" style="width: 99%"></div>
 					<div style="width:485px;height: 30px;top:15px;left:10px;text-align:center;position: relative;">
 						<div ng-click="confirm()">确定</div>
 					</div>
-					<div class="menu-top" style="width: 99%"></div>
 					<div class="menu" style="width: 485px;height: 170px;left:10px;">
+					<div class="menu-top" style="top:0px;width: 99%"></div>
 						<div ng-click="buysClick($event,$index)" ng-repeat="x in viewDataModel.transactionPanel.buyButtonElements()" class="button2">
 							<div class="button2-background"></div>
 							<div class="button2-background2"></div>
@@ -814,22 +954,6 @@
 					</div>
 					<div class="menu-bottom" style="width: 99%"></div>
 				</div>
-				
-				<!--未实装组件-->
-				<!--列表菜单
-				<div ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-class="{'hide-animation':menuHide,'show-animation':!menuHide}" class="menu-background">
-					<div ng-controller="menu" class="menu">
-						{{viewDataModel.menu.tittleText}}
-						<div ng-click="menulistClick($index)" ng-repeat="y in viewDataModel.menu.buttonElements" class="menu-list">
-							<div class="menu-list-background"></div>
-							<div class="menu-list-background2"></div>
-							<div class="menu-list-content">
-								{{y.getName()}}
-							</div>
-						</div>
-					</div>
-				</div>
-				-->
 				
 			</div>
 		
@@ -2907,9 +3031,23 @@
 				//角色暂时只有一个，直接与角色数据绑定
 				viewDataModel.panel3.tittleText=dataRoleObj[0].getName;
 				viewDataModel.panel3.roleHp=dataRoleObj[0].getHp;
+				viewDataModel.panel3.roleEp=dataRoleObj[0].getEp ;
 				viewDataModel.panel3.roleMaxHp=dataRoleObj[0].getMaxHp;
+				viewDataModel.panel3.roleMaxEp=dataRoleObj[0].getMaxEp;
 				viewDataModel.panel3.roleAtt=dataRoleObj[0].getAtt;
 				viewDataModel.panel3.roleDef=dataRoleObj[0].getDef;
+				viewDataModel.panel3.roleCri=function (){
+					return parseInt(dataRoleObj[0].getCri()*100)+"%";
+				};
+				viewDataModel.panel3.roleCriStrike=function (){
+					return parseInt(dataRoleObj[0].getCriStrike()*100)+"%";
+				};
+				viewDataModel.panel3.roleAvd=function (){
+					return parseInt(dataRoleObj[0].getAvd()*100)+"%";
+				};
+				viewDataModel.panel3.roleHit=function (){
+					return parseInt(dataRoleObj[0].getHit()*100)+"%";
+				};
 			});
 			
 			//物品信息面板
@@ -3590,7 +3728,6 @@
 			 * activeObjSkill:主动对象所用技能
 			 */
 			function battleSettlement (activeObj,passiveObj,activeObjSkill) {
-				in//测试普通攻击activeObjAttDamage=NaN
 				var tempAttr;
 				if("getAttr" in activeObjSkill&&activeObjSkill.getAttr()!=undefined&&Object.getOwnPropertyNames(activeObjSkill.getAttr()).length>0){
 					//判断有getAttr
@@ -3643,7 +3780,7 @@
 					//计算攻击输出（不包含固定伤害）
 					if(SKILL.ATTR.attPercent in tempAttr){
 						if(isNaN(activeObjAttDamage)){ activeObjAttDamage=0;};
-						activeObjAttDamage += activeObj.getAttr*tempAttr.attPercent;
+						activeObjAttDamage += activeObj.getAtt()*tempAttr.attPercent;
 						flag=true;
 					}
 					if(SKILL.ATTR.att in tempAttr){

@@ -62,7 +62,7 @@ var BUFF={
  */
 dictionaryData.buff={
 	example:{
-		id:9999,
+		buffId:9999,
 		name:"增益减益示例",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,//给对方附加:BUFF.TARGET.opponent,
@@ -93,516 +93,516 @@ dictionaryData.buff={
 			hitPercent:0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增益减益说明文本",
 	},
 	/*-----测试（减益）----*/
 	testDeBuffAtt:{
-		id:10006,
+		buffId:10006,
 		name:"攻击力减少50",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.opponent,
 		attr:{att:-50,//攻击力att的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"攻击力减少50",
 	},
 	testDeBuffMaxHpPercent:{
-		id:10005,
+		buffId:10005,
 		name:"MaxHp减少10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.opponent,
 		attr:{maxHpPercent:-0.1,//最大maxHp百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxHp减少10%",
 	},
 	/*-----测试（增益）----*/
 	testHpRecovery:{
-		id:10001,
+		buffId:10001,
 		name:"HP恢复10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecovery:10,//hp的直接 恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"HP恢复10",
 	},
 	testHpRecoveryPercent:{
-		id:10002,
+		buffId:10002,
 		name:"恢复当前HP10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryPercent:0.1,//当前hp百分比的 直接恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"恢复当前HP10%",
 	},
 	testHpRecoveryMaxHpPercent:{
-		id:10003,
+		buffId:10003,
 		name:"恢复MaxHp10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryMaxHpPercent:0.1,//最大maxHp百分比的恢复量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"恢复MaxHp10%",
 	},
 	testMaxHp:{
-		id:10004,
+		buffId:10004,
 		name:"MaxHp增加10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHp:10,//最大maxHp的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxHp增加10",
 	},
 	testMaxHpPercent:{
-		id:10005,
+		buffId:10005,
 		name:"MaxHp增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHpPercent:0.1,//最大maxHp百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxHp增加10%",
 	},
 	testAtt:{
-		id:10006,
+		buffId:10006,
 		name:"攻击力增加10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{att:10,//攻击力att的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"攻击力增加10",
 	},
 	testAttPercent:{
-		id:10007,
+		buffId:10007,
 		name:"攻击力增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{attPercent:0.1,//攻击力att百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"攻击力增加10%",
 	},
 	testDef:{
-		id:10008,
+		buffId:10008,
 		name:"防御力增加10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{def:10,//防御力def的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"防御力增加10",
 	},
 	testDefPercent:{
-		id:10009,
+		buffId:10009,
 		name:"防御力增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{defPercent:0.1,//防御力def百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"防御力增加10%",
 	},
 	testEpRecovery:{
-		id:10010,
+		buffId:10010,
 		name:"EP恢复10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecovery:10,//ep的直接 恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"EP恢复10",
 	},
 	testEpRecoveryPercent:{
-		id:10011,
+		buffId:10011,
 		name:"恢复当前EP10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryPercent:0.1,//当前ep百分比的 直接恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"恢复当前EP10%",
 	},
 	testEpRecoveryMaxEpPercent:{
-		id:10012,
+		buffId:10012,
 		name:"恢复MaxEp10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryMaxEpPercent:0.1,//最大maxEp百分比的恢复量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"恢复MaxEp10%",
 	},
 	testMaxEp:{
-		id:10013,
+		buffId:10013,
 		name:"MaxEp增加10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEp:10,//最大maxEp的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxEp增加10",
 	},
 	testMaxEpPercent:{
-		id:10014,
+		buffId:10014,
 		name:"MaxEp增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEpPercent:0.1,//最大maxEp百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxEp增加10%",
 	},
 	testCri:{
-		id:10015,
+		buffId:10015,
 		name:"暴击率增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{cri:0.1,//暴击率cri的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"暴击率增加10%",
 	},
 	testCriPercent:{
-		id:10016,
+		buffId:10016,
 		name:"增加当前暴击率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criPercent:0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加当前暴击率的10%",
 	},
 	testCriStrike:{
-		id:10017,
+		buffId:10017,
 		name:"暴击伤害增加10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrike:0.1,
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"暴击伤害增加10%",
 	},
 	testCriStrikePercent:{
-		id:10018,
+		buffId:10018,
 		name:"增加当前暴击伤害的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrikePercent:0.1,//暴击伤害criStrike百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加当前暴击伤害的10%",
 	},
 	testAvd:{
-		id:10019,
+		buffId:10019,
 		name:"增加闪避率10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avd:0.1,//闪避率avd的直接  增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加闪避率10%",
 	},
 	testAvdPercent:{
-		id:10020,
+		buffId:10020,
 		name:"增加当前闪避率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avdPercent:0.1,//闪避率avd百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加当前闪避率的10%",
 	},
 	testHit:{
-		id:10021,
+		buffId:10021,
 		name:"增加命中率10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hit:0.1,//命中率hit的直接  增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加命中率10%",
 	},
 	testHitPercent:{
-		id:10022,
+		buffId:10022,
 		name:"增加当前命中率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hitPercent:0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"增加当前命中率的10%",
 	},
 	/*-----测试（减益）----*/
-	testHpRecovery:{//适用中毒、流血等效果
-		id:20001,
+	test2HpRecovery:{//适用中毒、流血等效果
+		buffId:20001,
 		name:"HP减少10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecovery:-10,//hp的直接 恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"HP减少10",
 	},
-	testHpRecoveryPercent:{//适用中毒、流血等效果
-		id:20002,
+	test2HpRecoveryPercent:{//适用中毒、流血等效果
+		buffId:20002,
 		name:"减少当前HP10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryPercent:-0.1,//当前hp百分比的 直接恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"减少当前HP10%",
 	},
-	testHpRecoveryMaxHpPercent:{//适用中毒、流血等效果
-		id:20003,
+	test2HpRecoveryMaxHpPercent:{//适用中毒、流血等效果
+		buffId:20003,
 		name:"减少MaxHp10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryMaxHpPercent:-0.1,//最大maxHp百分比的恢复量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"减少MaxHp10%",
 	},
-	testMaxHp:{
-		id:20004,
+	test2MaxHp:{
+		buffId:20004,
 		name:"MaxHp降低10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHp:-10,//最大maxHp的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxHp降低10",
 	},
-	testMaxHpPercent:{
-		id:20005,
+	test2MaxHpPercent:{
+		buffId:20005,
 		name:"MaxHp降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHpPercent:-0.1,//最大maxHp百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxHp降低10%",
 	},
-	testAtt:{
-		id:20006,
+	test2Att:{
+		buffId:20006,
 		name:"攻击力降低10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{att:-10,//攻击力att的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"攻击力降低10",
 	},
-	testAttPercent:{
-		id:20007,
+	test2AttPercent:{
+		buffId:20007,
 		name:"攻击力降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{attPercent:-0.1,//攻击力att百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"攻击力降低10%",
 	},
-	testDef:{
-		id:20008,
+	test2Def:{
+		buffId:20008,
 		name:"防御力降低10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{def:-10,//防御力def的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"防御力降低10",
 	},
-	testDefPercent:{
-		id:20009,
+	test2DefPercent:{
+		buffId:20009,
 		name:"防御力降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{defPercent:-0.1,//防御力def百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"防御力降低10%",
 	},
-	testEpRecovery:{
-		id:20010,
+	test2EpRecovery:{
+		buffId:20010,
 		name:"EP减少10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecovery:-10,//ep的直接 恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"EP减少10",
 	},
-	testEpRecoveryPercent:{
-		id:20011,
+	test2EpRecoveryPercent:{
+		buffId:20011,
 		name:"减少当前EP10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryPercent:-0.1,//当前ep百分比的 直接恢复量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"减少当前EP10%",
 	},
-	testEpRecoveryMaxEpPercent:{
-		id:20012,
+	test2EpRecoveryMaxEpPercent:{
+		buffId:20012,
 		name:"减少MaxEp10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryMaxEpPercent:-0.1,//最大maxEp百分比的恢复量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"减少MaxEp10%",
 	},
-	testMaxEp:{
-		id:20013,
+	test2MaxEp:{
+		buffId:20013,
 		name:"MaxEp降低10",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEp:-10,//最大maxEp的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxEp降低10",
 	},
-	testMaxEpPercent:{
-		id:20014,
+	test2MaxEpPercent:{
+		buffId:20014,
 		name:"MaxEp降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEpPercent:-0.1,//最大maxEp百分比的 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"MaxEp降低10%",
 	},
-	testCri:{
-		id:20015,
+	test2Cri:{
+		buffId:20015,
 		name:"暴击率降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{cri:-0.1,//暴击率cri的直接 增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"暴击率降低10%",
 	},
-	testCriPercent:{
-		id:20016,
+	test2CriPercent:{
+		buffId:20016,
 		name:"降低当前暴击率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criPercent:-0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低当前暴击率的10%",
 	},
-	testCriStrike:{
-		id:20017,
+	test2CriStrike:{
+		buffId:20017,
 		name:"暴击伤害降低10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrike:-0.1,
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"暴击伤害降低10%",
 	},
-	testCriStrikePercent:{
-		id:20018,
+	test2CriStrikePercent:{
+		buffId:20018,
 		name:"降低当前暴击伤害的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrikePercent:-0.1,//暴击伤害criStrike百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低当前暴击伤害的10%",
 	},
-	testAvd:{
-		id:20019,
+	test2Avd:{
+		buffId:20019,
 		name:"降低闪避率10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avd:-0.1,//闪避率avd的直接  增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低闪避率10%",
 	},
-	testAvdPercent:{
-		id:20020,
+	test2AvdPercent:{
+		buffId:20020,
 		name:"降低当前闪避率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avdPercent:-0.1,//闪避率avd百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低当前闪避率的10%",
 	},
-	testHit:{
-		id:20021,
+	test2Hit:{
+		buffId:20021,
 		name:"降低命中率10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hit:-0.1,//命中率hit的直接  增加量 或 减少量
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低命中率10%",
 	},
-	testHitPercent:{
-		id:20022,
+	test2HitPercent:{
+		buffId:20022,
 		name:"降低当前命中率的10%",
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hitPercent:-0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）
 		},
 		round:3,//持续回合数
-		superposition:2,//可叠加数（根据id）
+		superposition:2,//可叠加数（根据buffId）
 		content:"降低当前命中率的10%",
 	},
 };
