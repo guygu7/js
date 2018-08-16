@@ -60,11 +60,12 @@ var data = {
 		baseHit:0.9,//命中率hit的直接  增加量 或 减少量
 		skills:[
 			dictionaryData.skill.testDeBuff2,
-			dictionaryData.skill.test3MaxHp,
 			//
 			dictionaryData.skill.testAttack,
+			dictionaryData.skill.test3MaxHp,
 			dictionaryData.skill.testHpRecoveryMaxHpPercent,
 			dictionaryData.skill.testAttPercent,
+			dictionaryData.skill.testOver,
 			//
 			dictionaryData.skill.testBuff,
 			dictionaryData.skill.testBuff2,

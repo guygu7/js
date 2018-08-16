@@ -83,7 +83,8 @@ dictionaryData.skill={
 		],
 		useChance:0.1,//敌方使用概率
 		actions:[
-			//恢复类型可以操作
+			dictionaryData.action.skillUse,//恢复类型可以操作
+			dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	example2:{//被攻击时触发
@@ -108,7 +109,7 @@ dictionaryData.skill={
 			//各种状态
 		],
 		useChance:0.1,//自身触发概率
-		actions:[
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	example3:{
@@ -131,10 +132,26 @@ dictionaryData.skill={
 			avd:1,//闪避率avd的直接  增加量 或 减少量
 			hit:0.1,//命中率hit的直接  增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 		//属性技能不存在buff、使用概率
 	},
 	/*-------测试（主动技能）------*/
+	//用于测试立即结束战斗
+	testOver:{
+		name:"测试立即结束",
+		content:"测试立即结束",
+		type:SKILL.TYPE.active,
+		attr:{att:999999,
+			attPercent:9999,
+			hit:1,
+			//epRecovery:-10,//消耗EP的技能为负数
+		},
+		buffs:[],
+		useChance:0.1,//敌方使用概率
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
+	},
 	//普通攻击
 	testAttack:{
 		name:"普通攻击",
@@ -145,7 +162,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	
@@ -157,7 +174,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testHpRecoveryPercent:{
@@ -168,7 +185,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testHpRecoveryMaxHpPercent:{
@@ -180,7 +197,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testEpRecovery:{
@@ -191,7 +208,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testEpRecoveryPercent:{
@@ -202,7 +219,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testEpRecoveryMaxEpPercent:{
@@ -213,7 +230,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUse,//恢复类型可以操作
 		],
 	},
 	testAtt:{
@@ -225,7 +242,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	testAttPercent:{
@@ -237,7 +254,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	testCri:{
@@ -249,7 +266,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	testCriStrike:{
@@ -261,7 +278,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	testHit:{
@@ -273,7 +290,7 @@ dictionaryData.skill={
 		},
 		buffs:[],
 		useChance:0.1,//敌方使用概率
-		actions:[//恢复类型可以操作
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
 		],
 	},
 	/*-------测试（BUFF技能）------*/
@@ -326,7 +343,8 @@ dictionaryData.skill={
 		attr:{
 			maxHp:10,//最大maxHp的直接 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3MaxHpPercent:{
 		name:"MaxHp增加10%",
@@ -335,7 +353,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{maxHpPercent:0.1,//最大maxHp百分比的 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3MaxEp:{
 		name:"MaxEp增加10",
@@ -344,7 +363,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{maxEp:10,//最大maxEp的直接 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3MaxEpPercent:{
 		name:"MaxEp增加10%",
@@ -353,7 +373,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{maxEpPercent:0.1,//最大maxEp百分比的 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3Att:{
 		name:"攻击力增加10",
@@ -362,7 +383,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{att:10,//攻击力att的直接 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3AttPercent:{
 		name:"攻击力增加10%",
@@ -371,7 +393,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{attPercent:0.1,//攻击力att百分比的 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3Cri:{
 		name:"暴击率增加10%",
@@ -380,7 +403,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{cri:0.1,//暴击率cri的直接 增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3CriStrike:{
 		name:"暴击伤害增加10%",
@@ -389,7 +413,8 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{criStrike:0.1,//暴击伤害criStrike的直接  增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 	test3Hit:{
 		name:"增加命中率10%",
@@ -398,6 +423,7 @@ dictionaryData.skill={
 		type2:SKILL.TYPE2.attribute,
 		attr:{hit:0.1,//命中率hit的直接  增加量 或 减少量
 		},
-		actions:[],
+		actions:[dictionaryData.action.skillUnavailable,//非恢复类型不可操作
+		],
 	},
 };

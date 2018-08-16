@@ -120,7 +120,7 @@
 						</div>
 						<div ng-hide="viewControl.display.top-button4" class="top-button">
 							<div class="top-button-background"></div>
-							<div class="top-button-content">文字</div>
+							<div class="top-button-content">系统</div>
 							<div class="top-button-arrow">
 								<div class="top-button-arrow1"></div>
 								<div class="top-button-arrow2"></div>
@@ -1548,26 +1548,6 @@
 					typing();
 				};
 				/**
-				 * 场景更新数据
-				 */
-				sceneMainDataLoad = function(domainData){
-					//加载场景数据
-					currentDomain = domainData;
-				};
-				//初始化
-				(function () {
-					//初始化数据
-					sceneMainDataLoad(dataDomainsObj[0]);
-				})();
-			});
-			
-			//起始场景
-			app.controller("scene-start", function($scope, $rootScope, $timeout) {
-				//开始按钮
-				$scope.buttonStart = function(){
-					sceneMainShow(data.startText);
-				};
-				/**
 				 * 主场景显示&数据加载
 				 */
 				sceneMainShow = function(str) {
@@ -1608,6 +1588,27 @@
 						return currentDomain.getName();
 					};
 				};
+				/**
+				 * 场景更新数据
+				 */
+				sceneMainDataLoad = function(domainData){
+					//加载场景数据
+					currentDomain = domainData;
+				};
+				//初始化
+				(function () {
+					//初始化数据
+					sceneMainDataLoad(dataDomainsObj[0]);
+				})();
+			});
+			
+			//起始场景
+			app.controller("scene-start", function($scope, $rootScope, $timeout) {
+				//开始按钮
+				$scope.buttonStart = function(){
+					sceneMainShow(data.startText);
+				};
+				
 			});
 			
 			app.controller("scene-main", function($scope, $rootScope, $timeout) {
@@ -1632,12 +1633,12 @@
 					//场景名称展示条
 					viewControl.display.panel2Hide = false;
 					viewControl.panel2_Style.top = 30 + "px";
-					viewControl.panel2_Style.left =  5 + "px";
+					viewControl.panel2_Style.left = 5 + "px";
 					viewControl.panel2_Style.opacity = 0;
 					//角色信息面板
 					viewControl.display.panel3Hide = false;
 					viewControl.panel3_Style.top = 80 + "px";
-					viewControl.panel3_Style.left =  35 + "px";
+					viewControl.panel3_Style.left = 35 + "px";
 					viewControl.panel3_Style.opacity = 0;
 					//人物交互面板(按钮组)
 					viewControl.display.panel4Hide = false;
@@ -1646,10 +1647,10 @@
 					viewControl.display.panelHide = false;
 					$timeout(function() {
 						//场景名称展示条
-						viewControl.panel2_Style.left =  10 + "px";
+						viewControl.panel2_Style.left = 10 + "px";
 						viewControl.panel2_Style.opacity = 1;
 						//角色信息面板
-						viewControl.panel3_Style.left =  40 + "px";
+						viewControl.panel3_Style.left = 40 + "px";
 						viewControl.panel3_Style.opacity = 1;
 						//人物交互面板(按钮组)
 						viewControl.panel4_Style.opacity = 1;
@@ -1766,21 +1767,21 @@
 				panel3ItemInfoShow = function(){
 					if(dataRoleObj[0].getStatus()=="transaction"){
 						//判断为交易状态，变更显示位置
-						viewControl.panel3ItemInfo_Style.top = 405 + "px";
+						viewControl.panel3ItemInfo_Style.top = 27 + "px";
 						viewControl.panel3ItemInfo_Style.left = 475 + "px";
 					}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 						//判断为使用仓库，变更显示位置
-						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.top = 27 + "px";
 						viewControl.panel3ItemInfo_Style.left = 970 + "px";
 					}else if(dataRoleObj[0].getStatus()=="useRoleBag"||dataRoleObj[0].getStatus()=="skill"){
 						//判断为使用背包，变更显示位置
-						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.top = 57 + "px";
 						viewControl.panel3ItemInfo_Style.left = 350 + "px";
 					}else if(dataRoleObj[0].getStatus()=="fight"){
-						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.top = 57 + "px";
 						viewControl.panel3ItemInfo_Style.left = 550 + "px";
 					}else{
-						viewControl.panel3ItemInfo_Style.top = 10 + "px";
+						viewControl.panel3ItemInfo_Style.top = 57 + "px";
 						viewControl.panel3ItemInfo_Style.left = 970 + "px";
 					}
 					viewControl.panel3ItemInfo_Style.opacity = 0;
@@ -1792,21 +1793,21 @@
 					$timeout(function() {
 						if(dataRoleObj[0].getStatus()=="transaction"){
 							//判断为交易状态，变更显示位置
-							viewControl.panel3ItemInfo_Style.top = 410 + "px";
+							viewControl.panel3ItemInfo_Style.top = 30 + "px";
 							viewControl.panel3ItemInfo_Style.left = 475 + "px";
 						}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 							//判断为使用仓库，变更显示位置
-							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.top = 30 + "px";
 							viewControl.panel3ItemInfo_Style.left = 970 + "px";
 						}else if(dataRoleObj[0].getStatus()=="useRoleBag"||dataRoleObj[0].getStatus()=="skill"){
 							//判断为使用背包，变更显示位置
-							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.top = 60 + "px";
 							viewControl.panel3ItemInfo_Style.left = 350 + "px";
 						}else if(dataRoleObj[0].getStatus()=="fight"){
-							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.top = 60 + "px";
 							viewControl.panel3ItemInfo_Style.left = 550 + "px";
 						}else{
-							viewControl.panel3ItemInfo_Style.top = 20 + "px";
+							viewControl.panel3ItemInfo_Style.top = 60 + "px";
 							viewControl.panel3ItemInfo_Style.left = 970 + "px";
 						}
 						viewControl.panel3ItemInfo_Style.opacity = 1;
@@ -1837,18 +1838,18 @@
 				panel3RoleItemInfoShow = function(){
 					if(dataRoleObj[0].getStatus()=="transaction"){
 						//判断为交易状态，变更显示位置
-						viewControl.panel3RoleItemInfo_Style.top = 405 + "px";
-						viewControl.panel3RoleItemInfo_Style.left = 950 + "px";
+						viewControl.panel3RoleItemInfo_Style.top = 277 + "px";
+						viewControl.panel3RoleItemInfo_Style.left = 475 + "px";
 					}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 						//判断为使用仓库，变更显示位置
-						viewControl.panel3RoleItemInfo_Style.top = 295 + "px";
+						viewControl.panel3RoleItemInfo_Style.top = 277 + "px";
 						viewControl.panel3RoleItemInfo_Style.left = 970 + "px";
 					}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 						//判断为使用背包，变更显示位置
-						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
+						viewControl.panel3RoleItemInfo_Style.top = 57 + "px";
 						viewControl.panel3RoleItemInfo_Style.left = 640 + "px";
 					}else {
-						viewControl.panel3RoleItemInfo_Style.top = 10 + "px";
+						viewControl.panel3RoleItemInfo_Style.top = 57+ "px";
 						viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
 					}
 					viewControl.panel3RoleItemInfo_Style.opacity = 0;
@@ -1860,18 +1861,18 @@
 					$timeout(function() {
 						if(dataRoleObj[0].getStatus()=="transaction"){
 							//判断为交易状态，变更显示位置
-							viewControl.panel3RoleItemInfo_Style.top = 410 + "px";
-							viewControl.panel3RoleItemInfo_Style.left = 950 + "px";
+							viewControl.panel3RoleItemInfo_Style.top = 300 + "px";
+							viewControl.panel3RoleItemInfo_Style.left = 475 + "px";
 						}else if(dataRoleObj[0].getStatus()=="useWarehouse"){
 							//判断为使用仓库，变更显示位置
 							viewControl.panel3RoleItemInfo_Style.top = 300 + "px";
 							viewControl.panel3RoleItemInfo_Style.left = 970 + "px";
 						}else if(dataRoleObj[0].getStatus()=="useRoleBag"){
 							//判断为使用背包，变更显示位置
-							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
+							viewControl.panel3RoleItemInfo_Style.top = 60 + "px";
 							viewControl.panel3RoleItemInfo_Style.left = 640 + "px";
 						}else {
-							viewControl.panel3RoleItemInfo_Style.top = 20 + "px";
+							viewControl.panel3RoleItemInfo_Style.top = 60 + "px";
 							viewControl.panel3RoleItemInfo_Style.left = 900 + "px";
 						}
 						viewControl.panel3RoleItemInfo_Style.opacity = 1;
@@ -1916,11 +1917,11 @@
 					//判断为交易状态，增加交易面板显示
 					if(model&&model=="transaction"){
 						panel5Left+=320;
-						menuBagLeft-=180;
+						menuBagLeft-=90;
 						viewControl.zIndexList["transactionPanel"] = maxZIndex+1;
 						viewControl.transactionPanel_Style["z-index"] = viewControl.zIndexList["transactionPanel"];
 						viewControl.display.transactionPanelHide = false;
-						viewControl.transactionPanel_Style.top = 5 + "px";
+						viewControl.transactionPanel_Style.top = 75 + "px";
 						viewControl.transactionPanel_Style.opacity = 0;
 					}
 					//弹出遮罩层
@@ -1931,18 +1932,18 @@
 					viewControl.panel5_Style.opacity = 0;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 100 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.left = 55 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
 					$timeout(function() {
 						//判断为交易状态，增加交易面板显示
 						if(model&&model=="transaction"){
-							viewControl.transactionPanel_Style.top = 10 + "px";
+							viewControl.transactionPanel_Style.top = 80 + "px";
 							viewControl.transactionPanel_Style.opacity = 1;
 						}
 						viewControl.panel5_Style.left = 450 +panel5Left+ "px";
 						viewControl.panel5_Style.opacity = 1;
 						//包
-						viewControl.menu_bag_Style.left = 150 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.left = 60 +menuBagLeft+ "px";
 						viewControl.menu_bag_Style.opacity = 1;
 					}, 100);
 				};
@@ -2169,7 +2170,9 @@
 						return;
 					}
 					/*---------交互对象操作动作--------*/
+					var flag=false;
 					if(currentAction.getType()=="talk"){
+						flag=true;
 						//判断为对话
 						panelTyping(currentAction.getContent());
 						//对话动作完成，清空当前交互动作
@@ -2177,8 +2180,9 @@
 						//对话动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="move"){
+						flag=true;
 						//判断为移动，场景切换
-						//currentDomain.clear();
+						sceneMainViewDataClear();//视图数据清除
 						for (var i=0; i < dataDomainsObj.length; i++) {
 							if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
 								sceneMainDataLoad(dataDomainsObj[i]);
@@ -2191,6 +2195,7 @@
 						//移动动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="useWarehouse"){
+						flag=true;
 						//判断为打开仓库动作
 						panelTyping(currentAction.getContent());
 						//加载仓库数据
@@ -2212,6 +2217,7 @@
 						//使用流程继续，保留当前交互对象
 						currentInteractiveObject;
 					}else if(currentAction.getType()=="transaction"){
+						flag=true;
 						//判断为打开交易动作
 						panelTyping(currentAction.getContent());
 						//标记角色状态为交易状态
@@ -2290,14 +2296,15 @@
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
 					}else if(currentAction.getType()==ACTION.TYPE.fight){
+						flag=true;
 						//判断为开始战斗
 						mainHide();
 						sceneMainViewDataClear();
-						//in
 						sceneFightShow();
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
+						flag=true;
 						//判断为交易,重新定位视图数据指针
 						viewDataModel.numberPicker.number = currentItem.getTotalNum();
 						//打开数字选择器
@@ -2307,6 +2314,7 @@
 						//交易流程继续，保留当前交互对象
 						currentInteractiveObject;
 					}else if(currentAction.getType()==ACTION.TYPE.useConsumable){
+						flag=true;
 						//判断为使用(物品/消耗品)
 						if(currentItem.getType2()==ITEM.TYPE.reusingConsumable){
 							//判断第二类型为可复用,数量不减少
@@ -2346,6 +2354,7 @@
 						//判断为使用(物品/非消耗品)
 						//执行使用效果
 					}else if(currentAction.getType()==ACTION.TYPE.putOn){
+						flag=true;
 						//判断为穿上装备
 						//获取当前hp的百分比
 						var hpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
@@ -2361,6 +2370,7 @@
 						//按百分比重新计算当前hp
 						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
 					}else if(currentAction.getType()==ACTION.TYPE.takeOff){
+						flag=true;
 						//获取当前hp的百分比
 						var hpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
 						//判断为卸下装备
@@ -2368,8 +2378,16 @@
 						//按百分比重新计算当前hp
 						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
 					}
-					//隐藏菜单
-					menuHide();
+					/*-------------使用技能-------------*/
+					else if(currentAction.getType()==ACTION.TYPE.useSkill){
+						flag=true;
+						alert("使用技能");
+						//未实现
+					}
+					if(flag){//如果是不可使用的按钮，则不隐藏菜单
+						//隐藏菜单
+						menuHide();
+					}
 				};
 			});
 
@@ -3285,7 +3303,7 @@
 					viewControl.display.panel5MaskLayerHide = false;
 					//同时打开包
 					viewControl.display.menuBagHide = false;
-					viewControl.menu_bag_Style.left = 65 +menuBagLeft+ "px";
+					viewControl.menu_bag_Style.left = 55 +menuBagLeft+ "px";
 					viewControl.menu_bag_Style.opacity = 0;
 					//显示角色信息面板
 					viewControl.panel3_Style2.top = 60 + "px";
@@ -3329,399 +3347,6 @@
 				return null;
 			};
 			
-			/**
-			 * 角色行动结算 return str:"cri"-暴击;"avd"-闪避
-			 */
-			/*
-			function roleSettlement(tempAttr,quickButton){
-				var infoStr="";
-				//角色hp变化值（角色自身效果）
-				var roleHpChange = 0;
-				//角色的att输出
-				var roleAttDamage=NaN;
-				//角色的cri暴击率计算
-				var roleCri = 0;
-				//角色的criStrike暴击伤害计算
-				var roleCriStrike = 0;
-				//角色的hit命中率计算
-				var roleHit = 0;
-				if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-					//maxHp(百分比)恢复值
-					if(SKILL.ATTR.hpRecoveryMaxHpPercent in tempAttr){
-						roleHpChange+=dataRoleObj[0].getMaxHp()*tempAttr.hpRecoveryMaxHpPercent;
-					}
-					//当前hp(百分比)恢复值
-					if(SKILL.ATTR.hpRecoveryPercent in tempAttr){
-						roleHpChange+=dataRoleObj[0].getHp()*tempAttr.hpRecoveryPercent;
-					}
-					//hp直接恢复值
-					if(SKILL.ATTR.hpRecovery in tempAttr){
-						roleHpChange+=tempAttr.hpRecovery;
-					}
-					//计算输出伤害值
-					if(SKILL.ATTR.damage in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
-						if(isNaN(roleAttDamage)){ roleAttDamage=0;};
-						roleAttDamage += tempAttr.damage;
-					}else{
-						//计算攻击输出
-						if(SKILL.ATTR.attPercent in tempAttr){
-							if(isNaN(roleAttDamage)){ roleAttDamage=0;};
-							roleAttDamage += tempAttr.attPercent;
-						}
-						if(SKILL.ATTR.att in tempAttr){
-							if(isNaN(roleAttDamage)){ roleAttDamage=0;};
-							roleAttDamage += tempAttr.att;
-						}
-						//计算暴击率
-						if(SKILL.ATTR.cri in tempAttr){
-							roleCri = dataRoleObj[0].getCri()+tempAttr.cri;
-						}else{
-							roleCri = dataRoleObj[0].getCri();
-						}
-						//计算暴击伤害
-						if(SKILL.ATTR.criStrike in tempAttr){
-							roleCriStrike = dataRoleObj[0].getCriStrike()+tempAttr.criStrike;
-						}else{
-							roleCriStrike = dataRoleObj[0].getCriStrike();
-						}
-						//计算命中
-						if(SKILL.ATTR.hit in tempAttr){
-							roleHit = dataRoleObj[0].getHit()+tempAttr.hit;
-						}else{
-							roleHit = dataRoleObj[0].getHit();
-						}
-					}
-					
-				}
-				
-				var str="";
-				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
-					//计算命中闪避
-					var tempHit = roleHit-currentInteractiveObject.getAvd();
-					if(random([true,false],[tempHit,(1-tempHit)])){//命中
-						//对方hp计算:1.角色攻击给予的被动变化（受伤减少）
-						var tempEnemyHp = currentInteractiveObject.getHp();
-						//角色输出伤害-对方防御
-						var tempRoleAttDamage=roleAttDamage-currentInteractiveObject.getDef();
-						//计算暴击加成
-						if(random([true,false],[roleCri,(1-roleCri)])){
-							//暴击发生，计算暴击伤害
-							tempRoleAttDamage+=tempRoleAttDamage*roleCriStrike;
-							//标记暴击发生
-							str = "cri";
-						};
-					}else{
-						//闪避发生
-						str = "avd";
-					}
-					
-					
-					if(tempRoleAttDamage<0){tempRoleAttDamage=0;}
-					tempRoleAttDamage = Math.round(Number(tempRoleAttDamage));//舍去小数
-					tempEnemyHp-=tempRoleAttDamage;
-					//将对方hp实现
-					currentInteractiveObject.setHp(tempEnemyHp);
-					//输出战斗信息
-					if(!isNaN(roleAttDamage)){
-						if(str=="cri"){
-							infoStr+="暴击!";
-						}
-						if(str=="avd"){
-							infoStr+="未命中...";
-						}else{
-							infoStr+="你造成了 "+tempRoleAttDamage+" 伤害;";
-						}
-					};
-					//添加buff
-					var tempBuffs = quickButton.getBuffs();//tempBuff 为  array
-					if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
-						//获取当前角色hp的百分比
-						var roleHpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
-						//获取当前对方hp的百分比
-						var enemyHpPercent = currentInteractiveObject.getHp()/currentInteractiveObject.getMaxHp();
-						for (var i=0; i < tempBuffs.length; i++) {
-							//复制一个buff对象，存入
-							var tempBuff = copyBuff(tempBuffs[i]);
-							if(tempBuff.getTarget()==BUFF.TARGET.self){
-								//判断是赋予自己(buff)
-								dataRoleObj[0].addBuff(tempBuff);
-								infoStr+=("你获得了\""+tempBuff.getName()+"\"效果;");
-							}else if(tempBuff.getTarget()==BUFF.TARGET.opponent){
-								//判断是赋予对方(deBuff)
-								if(str!="avd"){
-									currentInteractiveObject.addBuff(tempBuff);
-									infoStr+=("你给对方\""+tempBuff.getName()+"\"效果;");
-								}else{
-									infoStr+=("你给对方\""+tempBuff.getName()+"\"效果,但未命中;");
-								}
-							}
-						};
-						//重设双方HP，以处理跟随MaxHP变化
-						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*roleHpPercent);
-						currentInteractiveObject.setHp(currentInteractiveObject.getMaxHp()*enemyHpPercent);
-					};
-					viewDataModel.battle.battleInfo.push({str:infoStr});
-					infoStr="";
-				}
-				
-				//角色hp计算:1.自身给予的主动变化（恢复）;
-				var tempRoleHp = dataRoleObj[0].getHp();
-				roleHpChange = Math.round(Number(roleHpChange));//舍去小数
-				if(roleHpChange>0){
-					infoStr+="你恢复了 "+roleHpChange+" 生命;";
-				}else if(roleHpChange<0){
-					infoStr+="你的生命减少了 "+roleHpChange+" ;";
-				}
-				tempRoleHp+=roleHpChange;
-				//将角色hp实现
-				dataRoleObj[0].setHp(tempRoleHp);
-				if(infoStr!=""){
-					viewDataModel.battle.battleInfo.push({str:infoStr});
-				}
-				
-				//判断角色hp是否为0
-				if(dataRoleObj[0].getHp()<=0){
-					//结束（未实现）
-					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
-					return "fail";
-				}
-				if(dataRoleObj[0].getStatus()=="fight"){//判断是战斗状态
-					//判断对方hp是否为0
-					if(currentInteractiveObject.getHp()<=0){
-						//结束（未实现）
-						viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
-						return "victory";
-					}
-				}
-				return "continue";
-			}
-			*/
-			/**
-			 * 对方行动结算
-			 */
-			/*
-			function enemySettlement(){
-				//对方的att输出
-				var enemyAttDamage = 0;
-				
-				//技能概率计算
-				var skillsArr = currentInteractiveObject.getSkills("active");
-				var skillsChanceArr=[];
-				if(Object.prototype.toString.call(skillsArr)=="[object Array]"&&skillsArr.length>0){//判断有技能
-					for (var i=0; i < skillsArr.length; i++) {
-						skillsChanceArr.push(Number(skillsArr[i].getUseChance()));
-					};
-				}
-				var useSkill = random(skillsArr,skillsChanceArr);
-				var str="";
-				if(useSkill!=null){//判断为使用技能
-					//获取技能属性
-					var tempAttr = useSkill.getAttr();
-					//hp变化值（自身效果）
-					var enemyHpChange = 0;
-					//att输出
-					enemyAttDamage=NaN;
-					//cri暴击率计算
-					var enemyCri = 0;
-					//criStrike暴击伤害计算
-					var enemyCriStrike = 0;
-					//hit命中率计算
-					var enemyHit = 0;
-					if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
-					    //maxHp(百分比)恢复值
-					    if(SKILL.ATTR.hpRecoveryMaxHpPercent in tempAttr){
-					        enemyHpChange+=currentInteractiveObject.getMaxHp()*tempAttr.hpRecoveryMaxHpPercent;
-					    }
-					    //当前hp(百分比)恢复值
-					    if(SKILL.ATTR.hpRecoveryPercent in tempAttr){
-					        enemyHpChange+=currentInteractiveObject.getHp()*tempAttr.hpRecoveryPercent;
-					    }
-					    //hp直接恢复值
-					    if(SKILL.ATTR.hpRecovery in tempAttr){
-					        enemyHpChange+=tempAttr.hpRecovery;
-					    }
-					    //计算输出伤害值
-					    if(SKILL.ATTR.damage in tempAttr){//判断为固定伤害输出，不计算角色攻击力和其他加成
-					        if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
-					        enemyAttDamage += tempAttr.att;
-					    }else{
-					        //计算攻击输出
-					        if(SKILL.ATTR.attPercent in tempAttr){
-					            if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
-					            enemyAttDamage += tempAttr.attPercent;
-					        }
-					        if(SKILL.ATTR.att in tempAttr){
-					            if(isNaN(enemyAttDamage)){ enemyAttDamage=0;};
-					            enemyAttDamage += tempAttr.att;
-					        }
-					        //计算暴击率
-					        if(SKILL.ATTR.cri in tempAttr){
-					            enemyCri = currentInteractiveObject.getCri()+tempAttr.cri;
-					        }else{
-					            enemyCri = currentInteractiveObject.getCri();
-					        }
-					        //计算暴击伤害
-					        if(SKILL.ATTR.criStrike in tempAttr){
-					            enemyCriStrike = currentInteractiveObject.getCriStrike()+tempAttr.criStrike;
-					        }else{
-					            enemyCriStrike = currentInteractiveObject.getCriStrike();
-					        }
-					        //计算命中
-					        if(SKILL.ATTR.hit in tempAttr){
-					            enemyHit = currentInteractiveObject.getHit()+tempAttr.hit;
-					        }else{
-					            enemyHit = currentInteractiveObject.getHit();
-					        }
-					    }
-					}
-					
-				    //计算命中闪避
-				    var tempHit = enemyHit-dataRoleObj[0].getAvd();
-				    if(random([true,false],[tempHit,(1-tempHit)])){//命中
-				        //角色hp计算:1.对方攻击给予角色的被动变化（受伤减少）
-				        var tempRoleHp = dataRoleObj[0].getHp();
-				        //对方输出伤害-角色防御
-				        var tempEnemyAttDamage=enemyAttDamage-dataRoleObj[0].getDef();
-				        //计算暴击加成
-				        if(random([true,false],[enemyCri,(1-enemyCri)])){
-				            //暴击发生，计算暴击伤害
-				            tempEnemyAttDamage+=tempEnemyAttDamage*enemyCriStrike;
-				            //标记暴击发生
-				            str = "cri";
-				        };
-				    }else{
-				        //闪避发生
-				        str = "avd";
-				    }
-				
-					var infoStr = currentInteractiveObject.getName()+"使用了技能："+useSkill.getName()+";";
-				    if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
-				    tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
-				    tempRoleHp-=tempEnemyAttDamage;
-				    //将角色hp实现
-				    dataRoleObj[0].setHp(tempRoleHp);
-				    //输出战斗信息
-				    if(!isNaN(enemyAttDamage)){
-				        if(str=="cri"){
-				            infoStr+="暴击!";
-				        }
-				        if(str=="avd"){
-				            infoStr+="未命中...";
-				        }else{
-				            infoStr+=currentInteractiveObject.getName()+"对你造成了 "+tempEnemyAttDamage+" 伤害;";
-				        }
-				    };
-				    //添加buff
-				    var tempBuffs = useSkill.getBuffs();//tempBuff 为  array
-				    if(tempBuffs&&tempBuffs!=undefined&&tempBuffs!=null&&tempBuffs.length>0){//判断有buff
-				        //获取对方当前hp的百分比
-				        var enemyHpPercent = currentInteractiveObject.getHp()/currentInteractiveObject.getMaxHp();
-				        //获取角色当前hp的百分比
-				        var roleHpPercent = dataRoleObj[0].getHp()/dataRoleObj[0].getMaxHp();
-				        for (var i=0; i < tempBuffs.length; i++) {
-				            //复制一个buff对象，存入
-				            var tempBuff = copyBuff(tempBuffs[i]);
-				            if(tempBuff.getTarget()==BUFF.TARGET.self){
-				                //判断是赋予对方自己(buff)
-				                currentInteractiveObject.addBuff(tempBuff);
-				                infoStr+=(currentInteractiveObject.getName()+"获得了\""+tempBuff.getName()+"\"效果;");
-				            }else if(tempBuff.getTarget()==BUFF.TARGET.opponent){
-				                //判断是赋予角色(deBuff)
-				                if(str!="avd"){
-				                    dataRoleObj[0].addBuff(tempBuff);
-				                    infoStr+=("你受到了"+currentInteractiveObject+"的\""+tempBuff.getName()+"\"效果;");
-				                }else{
-				                    infoStr+=(currentInteractiveObject.getName()+"的\""+tempBuff.getName()+"\"效果,未命中;");
-				                }
-				            }
-				        };
-				        //重设双方HP，以处理跟随MaxHP变化
-				        currentInteractiveObject.setHp(currentInteractiveObject.getMaxHp()*enemyHpPercent);
-				        dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*roleHpPercent);
-				    };
-				
-					//hp计算:1.自身给予的主动变化（恢复）;
-					var tempEnemyHp = currentInteractiveObject.getHp();
-					enemyHpChange = Math.round(Number(enemyHpChange));//舍去小数
-					if(enemyHpChange>0){
-					    infoStr+=currentInteractiveObject.getName()+"恢复了 "+enemyHpChange+" 生命;";
-					}else if(enemyHpChange<0){
-					    infoStr+=currentInteractiveObject.getName()+"的生命减少了 "+enemyHpChange+" ;";
-					}
-					tempEnemyHp+=enemyHpChange;
-					//将hp实现
-					currentInteractiveObject.setHp(tempEnemyHp);
-					if(infoStr!=""){
-					    viewDataModel.battle.battleInfo.push({str:infoStr});
-					}
-						
-				}else{
-					//只计算基础攻击
-					enemyAttDamage += currentInteractiveObject.getAtt();
-					
-				    //计算命中闪避
-				    var tempHit = currentInteractiveObject.getHit()-dataRoleObj[0].getAvd();
-				    if(random([true,false],[tempHit,(1-tempHit)])){//命中
-				        //角色hp计算:1.对方攻击给予角色的被动变化（受伤减少）
-				        var tempRoleHp = dataRoleObj[0].getHp();
-				        //对方输出伤害-角色防御
-				        var tempEnemyAttDamage=enemyAttDamage-dataRoleObj[0].getDef();
-				        //计算暴击加成
-				        if(random([true,false],[enemyCri,(1-enemyCri)])){
-				            //暴击发生，计算暴击伤害
-				            tempEnemyAttDamage+=tempEnemyAttDamage*currentInteractiveObject.getCriStrike();
-				            //标记暴击发生
-				            str = "cri";
-				        };
-				    }else{
-				        //闪避发生
-				        str = "avd";
-				    }
-				    
-					//角色hp计算:2.对方攻击给予被动变化（受伤减少）;减少值=对方输出-角色防御
-					var tempRoleHp = dataRoleObj[0].getHp();
-					var tempEnemyAttDamage = enemyAttDamage-dataRoleObj[0].getDef();
-					if(tempEnemyAttDamage<0){tempEnemyAttDamage=0;}
-					tempEnemyAttDamage = Math.round(Number(tempEnemyAttDamage));//舍去小数
-				    //输出战斗信息
-				    if(!isNaN(enemyAttDamage)){
-				        if(str=="cri"){
-				            infoStr+="暴击!";
-				        }
-				        if(str=="avd"){
-				            infoStr+="未命中...";
-				        }else{
-				            infoStr+=currentInteractiveObject.getName()+"的攻击对你造成了 "+tempEnemyAttDamage+" 伤害;";
-				        }
-				    };
-					viewDataModel.battle.battleInfo.push({str:infoStr});
-					tempRoleHp-=tempEnemyAttDamage;
-					//将角色hp实现
-					dataRoleObj[0].setHp(tempRoleHp);
-				}
-				
-				if(str!="avd"){//判断命中
-					//触发角色被动技能
-					/---------未实现---------/
-				}
-				
-				//判断hp是否为0
-				if(dataRoleObj[0].getHp()<=0){
-					//结束（未实现）
-					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
-					fightOver("fail");
-					return;
-				}
-				//判断对方hp是否为0
-				if(currentInteractiveObject.getHp()<=0){
-					//结束（未实现）
-					viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
-					fightOver("victory");
-					return;
-				}
-				return "continue";
-			}
-			*/
 			/**
 			 * activeObj:主动对象
 			 * passiveObj:被动对象
@@ -3933,40 +3558,41 @@
 					//结束（未实现）
 					viewDataModel.battle.battleInfo.push({str:"角色死亡"});
 					fightOver("fail");
-					return;
-				}
+					return false;
+				}else 
 				//判断对方hp是否为0
 				if(currentInteractiveObject.getHp()<=0){
 					//结束（未实现）
 					viewDataModel.battle.battleInfo.push({str:"战斗胜利"});
 					fightOver("victory");
-					return;
+					return false;
 				}
+				return true;
 			}
 			/**
 			 * 双方行动结算（角色先行动）传入：skillObj
 			 */
 			function battleSettlement2 (skillObj) {
 				//角色行动
-				battleSettlement(dataRoleObj[0],currentInteractiveObject,skillObj);
-				//技能概率计算
-				var skillsArr = currentInteractiveObject.getSkills("active");
-				var skillsChanceArr=[];
-				if(Object.prototype.toString.call(skillsArr)=="[object Array]"&&skillsArr.length>0){//判断有技能
-					for (var i=0; i < skillsArr.length; i++) {
-						skillsChanceArr.push(Number(skillsArr[i].getUseChance()));
-					};
+				if(battleSettlement(dataRoleObj[0],currentInteractiveObject,skillObj)){
+					//技能概率计算
+					var skillsArr = currentInteractiveObject.getSkills("active");
+					var skillsChanceArr=[];
+					if(Object.prototype.toString.call(skillsArr)=="[object Array]"&&skillsArr.length>0){//判断有技能
+						for (var i=0; i < skillsArr.length; i++) {
+							skillsChanceArr.push(Number(skillsArr[i].getUseChance()));
+						};
+					}
+					var useSkill = random(skillsArr,skillsChanceArr);
+					var str="";
+					if(useSkill!=null){//判断为使用技能
+					}else{
+						//没有使用技能，为普通攻击
+						useSkill={attPercent:1};
+					}
+					//对方行动
+					battleSettlement(currentInteractiveObject,dataRoleObj[0],useSkill);
 				}
-				var useSkill = random(skillsArr,skillsChanceArr);
-				var str="";
-				if(useSkill!=null){//判断为使用技能
-				}else{
-					//没有使用技能，为普通攻击
-					useSkill={attPercent:1};
-				}
-				//对方行动
-				battleSettlement(currentInteractiveObject,dataRoleObj[0],useSkill);
-				
 			}
 			
 			/**
@@ -4115,7 +3741,8 @@
 					//场景切换
 					sceneFightHide("战斗胜利!"+itemNames);
 					sceneMainDataLoad(currentDomain);
-					mainShow();
+					sceneMainShow("");
+					//mainShow();
 				}else if(pram=="fail"){//战斗失败（未实现）
 					
 				}
@@ -4236,16 +3863,16 @@
 								var tempAttr = quickButton2.getAttr();
 								//行动结算
 								//如果消耗ep,计算ep是否足够
-								if("ep" in tempAttr
-									&& typeof Number(tempAttr.ep)=="number" 
-									&& typeof Number(tempAttr.ep)!=NaN
-									&& Number(tempAttr.ep)!=0
-									&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.ep))<0){
+								if("epRecovery" in tempAttr
+									&& typeof Number(tempAttr.epRecovery)=="number" 
+									&& typeof Number(tempAttr.epRecovery)!=NaN
+									&& Number(tempAttr.epRecovery)!=0
+									&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery))<0){
 										//判断为ep不足
 										viewDataModel.battle.battleInfo.push({str:"ep不足,无法使用技能"});
 										break;
 									}else{
-										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.ep));
+										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery));
 									}
 								roundStartBuffSettlement();
 								battleSettlement2(quickButton2);

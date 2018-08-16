@@ -406,7 +406,7 @@ var viewControl = {
 	 * 仓库组件面板（初始值）
 	 */
 	panel5_Style : {
-		"top" : 10 + "px",
+		"top" : 60 + "px",
 		"left" : 650 + "px",
 		"opacity" : 0,
 	},

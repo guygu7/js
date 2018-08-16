@@ -36,9 +36,13 @@ var ACTION={
 		 */
 		takeOff:"takeOff",
 		/**
-		 * 显示已装备按钮选项（点击无效果，或不可点击）
+		 * 不可操作按钮（已装备）
 		 */
-		alreadyEquipped:"alreadyEquipped",
+		unOperation:"unOperation",
+		/**
+		 * 使用技能
+		 */
+		useSkill:"useSkill",
 		/**
 		 * 进入战斗界面
 		 */
@@ -130,7 +134,7 @@ dictionaryData.action={
 	 * （物品）穿上装备
 	 */
 	role_putOn:{
-					name:"实装",
+					name:"装备",
 					type:ACTION.TYPE.putOn,
 					target:"",
 					belong:ACTION.BELONG.role,
@@ -139,7 +143,7 @@ dictionaryData.action={
 	 * （物品）卸下装备
 	 */
 	role_takeOff:{
-					name:"卸下实装",
+					name:"卸下装备",
 					type:ACTION.TYPE.takeOff,
 					target:"",
 					belong:ACTION.BELONG.role,
@@ -148,8 +152,8 @@ dictionaryData.action={
 	 * （物品） 显示已装备按钮选项（点击无效果，或不可点击）
 	 */
 	role_alreadyEquipped:{
-					name:"已实装",
-					type:ACTION.TYPE.alreadyEquipped,
+					name:"已装备",
+					type:ACTION.TYPE.unOperation,
 					target:"",
 					belong:ACTION.BELONG.role,
 				},
@@ -169,12 +173,29 @@ dictionaryData.action={
 				type:ACTION.TYPE.split,
 				target:ACTION.TARGET.buyback,
 			},
+	/*--------对技能动作---------*/
+	/**
+	 * 使用恢复类技能
+	 */
+	skillUse:{
+				name:"使用技能",
+				type:ACTION.TYPE.useSkill,
+				target:ACTION.TARGET.buyback,
+	},
+	/**
+	 * 非恢复类技能（无法使用）
+	 */
+	skillUnavailable:{
+				name:"无法使用",
+				type:ACTION.TYPE.unOperation,
+				target:ACTION.TARGET.buyback,
+	},
 	/*--------对交互对象动作------*/
 	/**
 	 * 攻击动作，进入战斗界面
 	 */
 	fight:{
-				name:"跳转界面",
+				name:"进入战斗",
 				type:ACTION.TYPE.fight,
 				target:ACTION.TARGET.interactiveObject
 	}
