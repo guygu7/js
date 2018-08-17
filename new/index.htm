@@ -133,7 +133,7 @@
 				</div>
 				
 				<!--交流信息面板-->
-				<div ng-click="panelOnClick(viewDataModel.panelText)" ng-hide="viewControl.display.panelHide" ng-style="viewControl.panel_Style" class="panel">
+				<div ng-click="panelTypingOnClick()" ng-hide="viewControl.display.panelHide" ng-style="viewControl.panel_Style" class="panel">
 					<div>
 						{{viewDataModel.panelText}}
 					</div>
@@ -910,7 +910,7 @@
 							<div class="numberPicker-arrow2"></div>
 							<div class="numberPicker-arrow3"></div>
 						</div>
-						<div ng-click="confirm()" class="numberPicker-button">{{viewDataModel.numberPicker.confirmButton}}</div>
+						<div ng-click="confirm()" class="numberPicker-button" data-word="{{viewDataModel.numberPicker.confirmButton}}"></div>
 					</div>
 				</div>
 				
@@ -1535,17 +1535,30 @@
 				/**
 				 * 交流面板的打字效果方法
 				 */
+				var panelTypingSign;//全局标记，用于保持单线程运行
+				var panelTypingSign2="";//全局标记，用于点击显示全部内容（需点击事件修改）
 				panelTyping = function(str) {
 					var i = 0;
+					//修改全局sign
+					panelTypingSign = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
+					var tempSign = panelTypingSign;
+					panelTypingSign2="";
 					function typing() {
-						if (i <= str.length) {
-							viewDataModel.panelText = str.slice(0, i++) + '_';
-							$timeout(typing, 30);//递归调用
-						} else {
-							viewDataModel.panelText = str;//结束打字,移除 _ 光标
-						}
-					}
+						//判断全局sign是否修改
+						if (tempSign==panelTypingSign){
+							if (i <= str.length&&panelTypingSign2=="") {
+								viewDataModel.panelText = str.slice(0, i++) + '_';
+								$timeout(typing, 30);//递归调用
+							} else {
+								panelTypingSign2="";//重置
+								viewDataModel.panelText = str;//结束打字,移除 _ 光标
+							}
+						}else{return;}
+					};
 					typing();
+				};
+				$scope.panelTypingOnClick = function(){
+					panelTypingSign2="typingAll";
 				};
 				/**
 				 * 主场景显示&数据加载
@@ -1612,7 +1625,6 @@
 			});
 			
 			app.controller("scene-main", function($scope, $rootScope, $timeout) {
-				//$scope.panelOnClick = panelTyping;
 				/**
 				 * 获取层叠关系数组中最大值
 				 */
@@ -2381,8 +2393,49 @@
 					/*-------------使用技能-------------*/
 					else if(currentAction.getType()==ACTION.TYPE.useSkill){
 						flag=true;
-						alert("使用技能");
-						//未实现
+						//获取当前技能
+						var activeObjHpChange = 0;
+						var activeObjEpChange = 0;
+						var tempAttr = currentItem.getAttr();
+						
+						//如果消耗ep,计算ep是否足够
+						if("epRecovery" in tempAttr
+							&& typeof Number(tempAttr.epRecovery)=="number" 
+							&& typeof Number(tempAttr.epRecovery)!=NaN
+							&& Number(tempAttr.epRecovery)!=0
+							&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery))<0){
+								//判断为ep不足
+								panelTyping("ep不足,无法使用技能.");
+						}else{
+							if(tempAttr&&tempAttr!=undefined&&tempAttr!=null){
+								//maxHp(百分比)恢复值
+								if(SKILL.ATTR.hpRecoveryMaxHpPercent in tempAttr){
+									activeObjHpChange+=dataRoleObj[0].getMaxHp()*tempAttr.hpRecoveryMaxHpPercent;
+								}
+								//当前hp(百分比)恢复值
+								if(SKILL.ATTR.hpRecoveryPercent in tempAttr){
+									activeObjHpChange+=dataRoleObj[0].getHp()*tempAttr.hpRecoveryPercent;
+								}
+								//hp直接恢复值
+								if(SKILL.ATTR.hpRecovery in tempAttr){
+									activeObjHpChange+=tempAttr.hpRecovery;
+								}
+								//maxEp(百分比)恢复值
+								if(SKILL.ATTR.epRecoveryMaxEpPercent in tempAttr){
+									activeObjEpChange+=dataRoleObj[0].getMaxEp()*tempAttr.epRecoveryMaxEpPercent;
+								}
+								//当前ep(百分比)恢复值
+								if(SKILL.ATTR.epRecoveryPercent in tempAttr){
+									activeObjEpChange+=dataRoleObj[0].getEp()*tempAttr.epRecoveryPercent;
+								}
+								//ep直接恢复值
+								if(SKILL.ATTR.epRecovery in tempAttr){
+									activeObjEpChange+=tempAttr.epRecovery;
+								}
+							}
+							dataRoleObj[0].setHp(dataRoleObj[0].getHp()+activeObjHpChange);
+							dataRoleObj[0].setEp(dataRoleObj[0].getEp()+activeObjEpChange);
+						}
 					}
 					if(flag){//如果是不可使用的按钮，则不隐藏菜单
 						//隐藏菜单

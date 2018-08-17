@@ -109,6 +109,23 @@ var data = {
 				},
 				{	
 					name:"引导对象",
+					/*
+					contents:[
+						"对话一","对话二","对话三","对话四",
+					],
+					missions:[
+						{
+							name:"任务名称",
+							type:"任务类型",//target对话、物品收集、击杀对象、到指定位置
+							status:"状态",//可接取、不可接取、进行中、已完成、失败
+							target:"目标对象",
+							reward:[//任务奖励
+								item,
+								skill,
+							],
+						}
+					],
+					*/
 					actions:[
 						{name:"对话",type:"talk",content:"对话内容"},
 						{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},

@@ -47,6 +47,18 @@ var ACTION={
 		 * 进入战斗界面
 		 */
 		fight:"fight",
+		/**
+		 * 对话
+		 */
+		talk:"talk",
+		/**
+		 * 地图移动
+		 */
+		move:"move",
+		/**
+		 * 任务
+		 */
+		mission:"mission",
 	},
 	/**
 	 * 交互动作.目标
@@ -198,5 +210,12 @@ dictionaryData.action={
 				name:"进入战斗",
 				type:ACTION.TYPE.fight,
 				target:ACTION.TARGET.interactiveObject
-	}
+	},
+	/**
+	 * 打开可接取任务菜单
+	 */
+	mission:{
+		name:"任务",
+		type:ACTION.TYPE.mission,
+	},
 };

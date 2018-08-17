@@ -28,6 +28,10 @@ DataModle = {
 	 * 增益减益
 	 */
 	Buff: function buff () {},
+	/**
+	 * 任务
+	 */
+	Mission:function mission () {},
 };
 DataModleFactory = {
 	createRole:function() {
@@ -610,6 +614,46 @@ DataModleFactory = {
 			return this;
 		};
 		
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var missions=[];
+		role.getMission = function(num){
+			return missions[num];
+		};
+		role.getMissions = function(pram){
+			return missions;
+		};
+		/**
+		 * 传参：Mission对象
+		 */
+		role.addMission = function(pram){
+			if(!missions){
+				missions = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="mission"){
+				//判断传入参数不为空 且是 mission对象
+				missions.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Mission对象
+		 */
+		role.delMission = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				missions.splice(pram,1);
+			} else {
+				for (var i=0; i < missions.length; i++) {
+					if(missions[i] == pram){
+						missions.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
 		return role;
 	},
 	createDomain:function() {
@@ -1302,6 +1346,46 @@ DataModleFactory = {
 			return this;
 		};
 		
+		
+		/**
+		 * 所有任务
+		 */
+		var missions=[];
+		interactiveObject.getMission = function(num){
+			return missions[num];
+		};
+		interactiveObject.getMissions = function(pram){
+			return missions;
+		};
+		/**
+		 * 传参：Mission对象
+		 */
+		interactiveObject.addMission = function(pram){
+			if(!missions){
+				missions = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="mission"){
+				//判断传入参数不为空 且是 mission对象
+				pram.supper = this;
+				missions.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或   Mission对象
+		 */
+		interactiveObject.delMission = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				missions.splice(pram,1);
+			} else {
+				for (var i=0; i < missions.length; i++) {
+					if(missions[i] == pram){
+						missions.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
 		return interactiveObject;
 	},
 	createAction:function() {
@@ -1869,6 +1953,11 @@ DataModleFactory = {
 			return this;
 		};
 		return buff;
+	},
+	createMission:function() {
+		var mission = new DataModle.Mission();
+		
+		return mission;
 	},
 };
 DataModleFactory.createItemInfo = DataModleFactory.createItem;
