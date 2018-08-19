@@ -295,6 +295,11 @@ var viewControl = {
 		 */
 		topFrameHide:false,
 		/**
+		 * 确认对话框面板
+		 */
+		confirmPanleHide:true,
+		/*-------战斗场景-------*/
+		/**
 		 * 战斗场景
 		 */
 		sceneBattleHide:true,
@@ -306,6 +311,7 @@ var viewControl = {
 		 * 快捷按钮设置菜单
 		 */
 		quickMenuBagHide:true,
+		
 	},
 	/**
 	 * 当前所在场景（初始值） 

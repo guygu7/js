@@ -1,0 +1,42 @@
+.confirmDialog-textContent{
+	top:10px;
+	left:10px;
+	width: 95%;
+	position: relative;
+}
+.confirmDialog-decoratingLine {
+	top: 170px;
+	left: 10px;
+	width: 95%;
+	height: 2px;
+	background-color: rgb(180,175,155);
+	position: absolute;
+}
+.confirmDialog-decoratingBlock {
+	width: 12px;
+	height: 12px;
+	margin-right:10px;
+	background: rgb(69,66,58);
+	display: inline-block;
+	transition: 0.2s;
+}
+.confirmDialog-button {
+	bottom: 25px;
+	width: 90px;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 10px;
+	background: rgb(174,169,148);
+	transition: 0.2s;
+	position: absolute;
+}
+.confirmDialog-button:hover {
+	bottom: 26px;
+	padding-left: 10px;
+	color: rgb(235,230,205);
+	background: rgb(69,66,58);
+	box-shadow: 1px 1px 0px 0px rgb(180,175,155);
+}
+.confirmDialog-button:hover > .confirmDialog-decoratingBlock{
+	background: rgb(235,230,205);
+}

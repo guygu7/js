@@ -96,7 +96,7 @@
 }
 .numberPicker-button:hover:before{
 	background:rgb(72,69,71);
-	animation:menu-list-background2 2s infinite;
+	animation:numberPicker-button 2s infinite;
 	animation-delay: 0.5s ;
 }
 @keyframes numberPicker-button

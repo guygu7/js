@@ -20,6 +20,7 @@
 		<link href="css/fight.css" rel="stylesheet">
 		<link href="css/img.css" rel="stylesheet">
 		<link href="css/decorate.css" rel="stylesheet">
+		<link href="css/confirmDialog.css" rel="stylesheet">
 		
 	</head>
 
@@ -953,6 +954,24 @@
 						</div>
 					</div>
 					<div class="menu-bottom" style="width: 99%"></div>
+				</div>
+				
+				<!--确认对话框面板-->
+				<div ng-hide="viewControl.display.confirmPanleHide" style="top:20%;left:30%;width: 500px;height: 250px;" class="panel3">
+					<div style="width: 490px;" class="panel3-tittle">
+						<div style="background:rgb(235,230,205);" class="confirmDialog-decoratingBlock"></div>
+						标题
+					</div>
+					<div class="confirmDialog-textContent">确定？</div>
+					<div class="confirmDialog-decoratingLine"></div>
+					<div style="left:95px;" class="confirmDialog-button">
+						<div class="confirmDialog-decoratingBlock"></div>
+						是
+					</div>
+					<div style="right:95px;" class="confirmDialog-button">
+						<div class="confirmDialog-decoratingBlock"></div>
+						否
+					</div>
 				</div>
 				
 			</div>
