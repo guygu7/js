@@ -1956,6 +1956,114 @@ DataModleFactory = {
 	},
 	createMission:function() {
 		var mission = new DataModle.Mission();
+		/**
+		 * 显示名称 
+		 */
+		var name;
+		mission.getName = function() {
+			return name;
+		};
+		mission.setName = function(pram) {
+			name = pram;
+			return this;
+		};
+		/**
+		 * 说明 
+		 */
+		var content;
+		mission.getContent = function() {
+			return content;
+		};
+		mission.setContent = function(pram) {
+			content = pram;
+			return this;
+		};
+		/**
+		 * 类型 
+		 */
+		var type;
+		mission.getType = function() {
+			return type;
+		};
+		mission.setType = function(pram) {
+			type = pram;
+			return this;
+		};
+		/**
+		 * 状态
+		 */
+		var status;
+		mission.getStatus = function() {
+			return status;
+		};
+		mission.setStatus = function(pram) {
+			status = pram;
+			return this;
+		};
+		/**
+		 * 是否可见(true,false)
+		 */
+		var display;
+		mission.getDisplay = function() {
+			return display;
+		};
+		mission.setDisplay = function(pram) {
+			display = pram;
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var triggerItems=[];
+		mission.getTriggerItem = function(num){
+			return triggerItems[num];
+		};
+		mission.getTriggerItems = function(pram){
+			return triggerItems;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		mission.addTriggerItem = function(pram){
+			if(!triggerItems){
+				triggerItems = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是item对象
+				triggerItems.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Item对象
+		 */
+		mission.delTriggerItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				triggerItems.splice(pram,1);
+			} else {
+				for (var i=0; i < triggerItems.length; i++) {
+					if(triggerItems[i] == pram){
+						triggerItems.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		triggerItems
+		triggerSkills
+		triggerTalks
+		triggerBattles
+		triggerDomains
+		completeItems
+		completeSkills
+		completeTalks
+		completeBattles
+		completeDomains
+		
+		reward
 		
 		return mission;
 	},
