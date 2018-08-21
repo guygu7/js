@@ -7,7 +7,17 @@ function loadData(data,dataName){
 	//判断传入的data是对象
 	if(Object.prototype.toString.call(data) === "[object Object]"){
 		//根据data类型创建对应的对象，role|domain|interactiveObject|item
-		var obj = DataModleFactory[("create"+dataName.substring(0,1).toUpperCase()+dataName.substring(1))]();
+		var tempName = dataName.substring(0,1).toUpperCase()+dataName.substring(1);
+		//由于任务对象的字段Trigger类型、Complete类型、Reward类型对此进行过滤
+		if(tempName.substring(0,7)=="Trigger"){
+			tempName = tempName.substring(7);
+		}else if(tempName.substring(0,8)=="Complete"){
+			tempName = tempName.substring(8);
+		}else if(tempName.substring(0,6)=="Reward"){
+			tempName = tempName.substring(6);
+		}
+		//console.info(tempName);
+		var obj = DataModleFactory[("create"+tempName)]();
 		//获取data数据的属性名称数组
 		var dataAttrs = Object.keys(data);
 		//遍历生成对象的属性

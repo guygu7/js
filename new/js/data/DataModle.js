@@ -2052,18 +2052,499 @@ DataModleFactory = {
 			return this;
 		};
 		
-		triggerItems
-		triggerSkills
-		triggerTalks
-		triggerBattles
-		triggerDomains
-		completeItems
-		completeSkills
-		completeTalks
-		completeBattles
-		completeDomains
 		
-		reward
+		/**
+		 * 所有任务
+		 */
+		var triggerSkills=[];
+		mission.getTriggerSkill = function(num){
+			return triggerSkills[num];
+		};
+		mission.getTriggerSkills = function(pram){
+			return triggerSkills;
+		};
+		/**
+		 * 传参：Skill对象
+		 */
+		mission.addTriggerSkill = function(pram){
+			if(!triggerSkills){
+				triggerSkills = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
+				//判断传入参数不为空 且是Skill对象
+				triggerSkills.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Skill对象
+		 */
+		mission.delTriggerSkill = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				triggerSkills.splice(pram,1);
+			} else {
+				for (var i=0; i < triggerSkills.length; i++) {
+					if(triggerSkills[i] == pram){
+						triggerSkills.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var triggerTalks=[];
+		mission.getTriggerTalk = function(num){
+			return triggerTalks[num];
+		};
+		mission.getTriggerTalks = function(pram){
+			return triggerTalks;
+		};
+		/**
+		 * 传参：InteractiveObject对象
+		 */
+		mission.addTriggerTalk = function(pram){
+			if(!triggerTalks){
+				triggerTalks = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
+				//判断传入参数不为空 且是InteractiveObject对象
+				triggerTalks.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  InteractiveObject对象
+		 */
+		mission.delTriggerTalk = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				triggerTalks.splice(pram,1);
+			} else {
+				for (var i=0; i < triggerTalks.length; i++) {
+					if(triggerTalks[i] == pram){
+						triggerTalks.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var triggerBattles=[];
+		mission.getTriggerBattle = function(num){
+			return triggerBattles[num];
+		};
+		mission.getTriggerBattles = function(pram){
+			return triggerBattles;
+		};
+		/**
+		 * 传参：InteractiveObject对象
+		 */
+		mission.addTriggerBattle = function(pram){
+			if(!triggerBattles){
+				triggerBattles = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
+				//判断传入参数不为空 且是Battle对象
+				triggerBattles.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或 InteractiveObject对象
+		 */
+		mission.delTriggerBattle = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				triggerBattles.splice(pram,1);
+			} else {
+				for (var i=0; i < triggerBattles.length; i++) {
+					if(triggerBattles[i] == pram){
+						triggerBattles.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var triggerDomains=[];
+		mission.getTriggerDomain = function(num){
+			return triggerDomains[num];
+		};
+		mission.getTriggerDomains = function(pram){
+			return triggerDomains;
+		};
+		/**
+		 * 传参：Domain对象
+		 */
+		mission.addTriggerDomain = function(pram){
+			if(!triggerDomains){
+				triggerDomains = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="domain"){
+				//判断传入参数不为空 且是Domain对象
+				triggerDomains.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Domain对象
+		 */
+		mission.delTriggerDomain = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				triggerDomains.splice(pram,1);
+			} else {
+				for (var i=0; i < triggerDomains.length; i++) {
+					if(triggerDomains[i] == pram){
+						triggerDomains.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var completeItems=[];
+		mission.getCompleteItem = function(num){
+			return triggerItems[num];
+		};
+		mission.getCompleteItems = function(pram){
+			return completeItems;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		mission.addCompleteItem = function(pram){
+			if(!completeItems){
+				completeItems = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是item对象
+				completeItems.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Item对象
+		 */
+		mission.delCompleteItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				completeItems.splice(pram,1);
+			} else {
+				for (var i=0; i < completeItems.length; i++) {
+					if(completeItems[i] == pram){
+						completeItems.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var completeSkills=[];
+		mission.getCompleteSkill = function(num){
+			return completeSkills[num];
+		};
+		mission.getCompleteSkills = function(pram){
+			return completeSkills;
+		};
+		/**
+		 * 传参：Skill对象
+		 */
+		mission.addCompleteSkill = function(pram){
+			if(!completeSkills){
+				completeSkills = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
+				//判断传入参数不为空 且是Skill对象
+				completeSkills.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Skill对象
+		 */
+		mission.delCompleteSkill = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				completeSkills.splice(pram,1);
+			} else {
+				for (var i=0; i < completeSkills.length; i++) {
+					if(completeSkills[i] == pram){
+						completeSkills.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var completeTalks=[];
+		mission.getCompleteTalk = function(num){
+			return completeTalks[num];
+		};
+		mission.getCompleteTalks = function(pram){
+			return completeTalks;
+		};
+		/**
+		 * 传参：InteractiveObject对象
+		 */
+		mission.addCompleteTalk = function(pram){
+			if(!completeTalks){
+				completeTalks = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
+				//判断传入参数不为空 且是InteractiveObject对象
+				completeTalks.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Talk对象
+		 */
+		mission.delCompleteTalk = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				completeTalks.splice(pram,1);
+			} else {
+				for (var i=0; i < completeTalks.length; i++) {
+					if(completeTalks[i] == pram){
+						completeTalks.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var completeBattles=[];
+		mission.getCompleteBattle = function(num){
+			return completeBattles[num];
+		};
+		mission.getCompleteBattles = function(pram){
+			return completeBattles;
+		};
+		/**
+		 * 传参：InteractiveObject对象
+		 */
+		mission.addCompleteBattle = function(pram){
+			if(!completeBattles){
+				completeBattles = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
+				//判断传入参数不为空 且是Battle对象
+				completeBattles.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或 InteractiveObject对象
+		 */
+		mission.delCompleteBattle = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				completeBattles.splice(pram,1);
+			} else {
+				for (var i=0; i < completeBattles.length; i++) {
+					if(completeBattles[i] == pram){
+						completeBattles.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var completeDomains=[];
+		mission.getCompleteDomain = function(num){
+			return completeDomains[num];
+		};
+		mission.getCompleteDomains = function(pram){
+			return completeDomains;
+		};
+		/**
+		 * 传参：Domain对象
+		 */
+		mission.addCompleteDomain = function(pram){
+			if(!completeDomains){
+				completeDomains = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="domain"){
+				//判断传入参数不为空 且是Domain对象
+				completeDomains.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Domain对象
+		 */
+		mission.delCompleteDomain = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				completeDomains.splice(pram,1);
+			} else {
+				for (var i=0; i < completeDomains.length; i++) {
+					if(completeDomains[i] == pram){
+						completeDomains.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var rewardItems=[];
+		mission.getRewardItem = function(num){
+			return rewardItems[num];
+		};
+		mission.getRewardItems = function(pram){
+			return rewardItems;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		mission.addRewardItem = function(pram){
+			if(!rewardItems){
+				rewardItems = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是Domain对象
+				rewardItems.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或  Item对象
+		 */
+		mission.delRewardItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				rewardItems.splice(pram,1);
+			} else {
+				for (var i=0; i < rewardItems.length; i++) {
+					if(rewardItems[i] == pram){
+						rewardItems.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var rewardItems=[];
+		mission.getRewardItem = function(num){
+			return rewardItems[num];
+		};
+		mission.getRewardItems = function(pram){
+			return rewardItems;
+		};
+		/**
+		 * 传参：Item对象
+		 */
+		mission.addRewardItem = function(pram){
+			if(!rewardItems){
+				rewardItems = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
+				//判断传入参数不为空 且是Item对象
+				rewardItems.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或 Item对象
+		 */
+		mission.delRewardItem = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				rewardItems.splice(pram,1);
+			} else {
+				for (var i=0; i < rewardItems.length; i++) {
+					if(rewardItems[i] == pram){
+						rewardItems.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 所有任务
+		 */
+		var rewardSkills=[];
+		mission.getRewardSkill = function(num){
+			return rewardSkills[num];
+		};
+		mission.getRewardSkills = function(pram){
+			return rewardSkills;
+		};
+		/**
+		 * 传参：Skill对象
+		 */
+		mission.addRewardSkill = function(pram){
+			if(!rewardSkills){
+				rewardSkills = new Array();
+			}
+			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
+				//判断传入参数不为空 且是Skill对象
+				rewardSkills.push(pram);
+			}
+			return this;						
+		};
+		/**
+		 * 传参：Number 或 Skill对象
+		 */
+		mission.delRewardSkill = function(pram) {
+			if (Object.prototype.toString.call(pram)==="[object Number]") {
+				rewardSkills.splice(pram,1);
+			} else {
+				for (var i=0; i < rewardSkills.length; i++) {
+					if(rewardSkills[i] == pram){
+						rewardSkills.splice(i,1);
+					};
+				};
+			};
+			return this;
+		};
+		
+		
+		/**
+		 * 任务奖励情报
+		 */
+		var rewardInformation;
+		mission.getRewardInformation = function() {
+			return rewardInformation;
+		};
+		mission.setRewardInformation = function(pram) {
+			rewardInformation = pram;
+			return this;
+		};
 		
 		return mission;
 	},

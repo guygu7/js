@@ -111,16 +111,18 @@ var data = {
 				},
 				{	
 					name:"引导对象",
-					contents:[
+					contents:"对话",
+					/*[
 						["对话组合1一","对话组合1二","对话组合1三","对话组合1四",],
 						["对话组合2一","对话组合2二","对话组合2三","对话组合2四",],
-					],
+					],*/
 					missions:[
 						dictionaryData.mission.example
 					],
 					actions:[
 						{name:"对话",type:"talk",content:"对话内容"},
 						{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
+						dictionaryData.action.mission,
 					],
 				},
 			],

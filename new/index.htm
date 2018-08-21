@@ -1346,6 +1346,7 @@
 		<script src="js/data/dataBuff.js"></script>
 		<script src="js/data/dataSkill.js"></script>
 		<script src="js/data/dataItem.js"></script>
+		<script src="js/data/dataMission.js"></script>
 		<script src="js/data/data.js"></script>
 		<script src="js/initFunction.js"></script>
 		
@@ -1427,6 +1428,19 @@
 					}
 				}
 				return copyObj;
+			};
+			/**
+			 * 对比两个Domain场景对象是否为同一种
+			 */
+			function compareDomain(domain1,domain2){
+				return (domain1.getName()==domain2.getName()
+						&&domain1.getSignId()==domain2.getSignId());
+			};
+			/**
+			 * 对比两个InteractiveObject对象是否为同一种
+			 */
+			function compareInteractiveObject(interactiveObject1,interactiveObject2){
+				return (interactiveObject1.getName()==interactiveObject2.getName());
 			};
 			/**
 			 * 对比两个Item物品对象是否为同一种物品
@@ -2332,6 +2346,9 @@
 						mainHide();
 						sceneMainViewDataClear();
 						sceneFightShow();
+					}else if(currentAction.getType()==ACTION.TYPE.mission){
+						alert("任务");
+						
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
