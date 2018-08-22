@@ -1354,8 +1354,26 @@ DataModleFactory = {
 		interactiveObject.getMission = function(num){
 			return missions[num];
 		};
-		interactiveObject.getMissions = function(pram){
-			return missions;
+		/**
+		 * 传参：pram12345:status--可接取:accept|不可接取:unAccept|进行中:ongoing|可交付:deliverable|已完成:completed|失败:failed
+		 */
+		interactiveObject.getMissions = function(pram1,pram2,pram3,pram4,pram5){
+			var tempMissions = missions.slice(0);
+			//pram==MISSION.STATUS.accept||pram==MISSION.STATUS.unAccept||pram==MISSION.STATUS.ongoing||pram==MISSION.STATUS.completed||pram==MISSION.STATUS.failed
+			if(typeof pram1 == "string"&&pram1!=""){
+				for (var i=0; i < tempMissions.length; i++) {
+					if(!tempMissions[i].getDisplay()//不可见的
+					   ||(tempMissions[i].getStatus()!=pram1
+					   &&tempMissions[i].getStatus()!=pram2
+					   &&tempMissions[i].getStatus()!=pram3
+					   &&tempMissions[i].getStatus()!=pram4
+					   &&tempMissions[i].getStatus()!=pram5)){
+						tempMissions.splice(i,1);
+						i--;
+					}
+				};
+			}
+			return tempMissions;
 		};
 		/**
 		 * 传参：Mission对象

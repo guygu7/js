@@ -12,7 +12,30 @@ var MISSION={
 	 * 状态
 	 */
 	STATUS:{
-		
+		/**
+		 * 可接取
+		 */
+		accept:"accept",
+		/**
+		 * 不可接取
+		 */
+		unAccept:"unAccept",
+		/**
+		 * 进行中
+		 */
+		ongoing:"ongoing",
+		/**
+		 * 可交付
+		 */
+		deliverable:"deliverable",
+		/**
+		 * 已完成
+		 */
+		completed:"completed",
+		/**
+		 * 失败
+		 */
+		failed:"failed",
 	},
 	
 };
@@ -22,7 +45,7 @@ dictionaryData.mission={
 		name:"任务名称",
 		content:"任务说明",
 		type:"任务类型",//target对话、物品收集、击杀对象、到指定位置
-		status:"状态",//可接取、不可接取、进行中、已完成、失败
+		status:MISSION.STATUS.accept,//状态:可接取、不可接取、进行中、可交付、已完成、失败
 		display:true,//是否可见
 		//触发(接取)条件:
 		triggerItems:[//1.需要拥有指定数量物品,数量通过totalNum表示,需要在后面修改

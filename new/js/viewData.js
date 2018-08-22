@@ -126,6 +126,19 @@ var viewDataModel = {
 		 */
 		buyButtonElements:function(){return transactionItems.buyItems;},
 	},
+	/**
+	 * 任务列表
+	 */
+	missionSelect:{
+		/**
+		 * 任务元素集合
+		 */
+		elements:[],
+		/**
+		 * 任务内容
+		 */
+		info:"",
+	},
 	/*------------------战斗场景组件视图数据------------------*/
 	/**
 	 * 战斗面板
@@ -298,6 +311,18 @@ var viewControl = {
 		 * 确认对话框面板
 		 */
 		confirmPanleHide:true,
+		/**
+		 * 任务列表 专用遮罩层隐藏 
+		 */
+		missionSelectMaskLayerHide:true,
+		/**
+		 * 任务列表
+		 */
+		missionSelectHide:true,
+		/**
+		 * 任务信息面板
+		 */
+		missionInfoHide:true,
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景
@@ -433,6 +458,27 @@ var viewControl = {
 		"left" : 260 + "px",
 		"opacity" : 0,
 	},
+	/**
+	 * 任务列表 专用遮罩层（初始值）
+	 */
+	missionSelectMaskLayer_Style:{},
+	/**
+	 * 任务列表（初始值）
+	 */
+	missionSelect_Style:{
+		"top":80+"px",
+		"right":30+"px",
+		"opacity" : 0,
+	},
+	/**
+	 * 任务信息面板（初始值）
+	 */
+	missionInfo_Style:{
+		"top":80+"px",
+		"left":60+"px",
+		"opacity" : 0,
+	},
+	
 	/*----------战斗场景面板组件----------*/
 	panelFightBarColour:function(){
 		sumMaxHp=dataRoleObj[0].getMaxHp();

@@ -1,0 +1,48 @@
+.mission-select{
+	top:80px;
+	right:30px;
+	width: 500px;
+	transition:0.2s;
+	position: absolute;
+}
+.mission-select-option{
+	width: 100%;
+	height:30px;
+	line-height: 30px;
+	margin:5px;
+	padding-left:10px;
+	background: rgb(235,230,205);
+	position: relative;
+}
+.mission-select-option-background{
+	left:0px;
+	width: 0px;
+	height:30px;
+	background: rgb(235,230,205);
+	display: block;
+	transition:0.4s;
+	position: absolute;
+}
+.mission-select-option:hover > .mission-select-option-background{
+	width: 510px;
+	background: rgb(102,99,101);
+}
+.mission-select-option-content{
+	transition:0.4s;
+	position: absolute;
+}
+.mission-select-option:hover > .mission-select-option-content{
+	color:rgb(235,230,205);
+}
+
+
+.mission-info{
+	top:80px;
+	left:60px;
+	width:600px;
+	height:400px;
+	background-color:rgb(235,230,205);
+	box-shadow: 0px 0px 1px 0px rgb(80,80,80);
+	transition:0.2s;
+	position: relative;
+}

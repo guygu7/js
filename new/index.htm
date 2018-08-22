@@ -21,7 +21,7 @@
 		<link href="css/img.css" rel="stylesheet">
 		<link href="css/decorate.css" rel="stylesheet">
 		<link href="css/confirmDialog.css" rel="stylesheet">
-		
+		<link href="css/mission.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -972,6 +972,20 @@
 						<div class="confirmDialog-decoratingBlock"></div>
 						否
 					</div>
+				</div>
+				
+				<!--遮罩层-->
+				<div ng-controller="missionSelectMaskLayer" ng-hide="viewControl.display.missionSelectMaskLayerHide" ng-style="viewControl.missionSelectMaskLayer_Style" ng-mousedown="missionSelectMaskLayerClick()" class="maskLayer" ></div>
+				<!--任务列表-->
+				<div ng-controller="missionSelect" ng-hide="viewControl.display.missionSelectHide" ng-style="viewControl.missionSelect_Style" class="mission-select">
+					<div ng-repeat="x in viewDataModel.missionSelect.elements()" ng-mouseenter="missionSelectHover($index)" class="mission-select-option">
+						<div class="mission-select-option-background"></div>
+						<div class="mission-select-option-content">i {{x.getName()}}</div>
+					</div>
+				</div>
+				<!--任务信息面板-->
+				<div ng-hide="viewControl.display.missionInfoHide" ng-style="viewControl.missionInfo_Style" class="mission-info">
+					
 				</div>
 				
 			</div>
@@ -2107,6 +2121,7 @@
 					
 					viewControl.numberPicker_Style["z-index"] = viewControl.zIndexList["numberPicker"];
 					viewControl.numberPickerMaskLayer_Style["z-index"] = viewControl.zIndexList["numberPickerMaskLayer"];
+					
 					//弹出遮罩层
 					viewControl.display.numberPickerMaskLayerHide = false;
 					
@@ -2136,6 +2151,67 @@
 						viewControl.display.numberPickerHide = true;
 					}, 100);
 				};
+				
+				/**
+				 * 任务列表 显示命令
+				 */
+				missionSelectShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["missionSelect"] = maxZIndex+2;
+					viewControl.zIndexList["missionInfo"] = maxZIndex+2;
+					viewControl.zIndexList["missionSelectMaskLayer"] = maxZIndex+1;
+					viewControl.zIndexList["panel"] = maxZIndex+2;
+					
+					viewControl.missionSelect_Style["z-index"] = viewControl.zIndexList["missionSelect"];
+					viewControl.missionInfo_Style["z-index"] = viewControl.zIndexList["missionInfo"];
+					viewControl.missionSelectMaskLayer_Style["z-index"] = viewControl.zIndexList["missionSelectMaskLayer"];
+					viewControl.panel_Style["z-index"] = viewControl.zIndexList["panel"];
+					//弹出遮罩层
+					viewControl.display.missionSelectMaskLayerHide = false;
+					
+					viewControl.display.missionSelectHide = false;
+					viewControl.display.missionInfoHide = false;
+					viewControl.missionSelect_Style.right = 20 + "px";
+					viewControl.missionSelect_Style.opacity = 0;
+					viewControl.missionInfo_Style.left = 50 + "px";
+					viewControl.missionInfo_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.missionSelect_Style.right = 30 + "px";
+						viewControl.missionSelect_Style.opacity = 1;
+						viewControl.missionInfo_Style.left = 60 + "px";
+						viewControl.missionInfo_Style.opacity = 1;
+					}, 400);
+				};
+				/**
+				 * 任务列表 隐藏命令
+				 */
+				missionSelectHide = function(){
+					viewControl.missionSelect_Style.opacity = 0;
+					var right = viewControl.missionSelect_Style.right;
+					viewControl.missionSelect_Style.right = (Number(right.substring(0, right.length - 2)) - 10) + "px";
+					viewControl.missionInfo_Style.opacity = 0;
+					var left = viewControl.missionInfo_Style.left;
+					viewControl.missionInfo_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
+					
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["missionSelect"] = 0;
+						viewControl.missionSelect_Style["z-index"] = 0;
+						viewControl.zIndexList["missionSelectMaskLayer"] = 0;
+						viewControl.missionSelectMaskLayer_Style["z-index"] = 0;
+						viewControl.zIndexList["missionInfo"] = 0;
+						viewControl.missionInfo_Style["z-index"] = 0;
+						viewControl.zIndexList["panel"] = 0;
+						viewControl.panel_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.missionSelectMaskLayerHide = true;
+						viewControl.display.missionSelectHide = true;
+						viewControl.display.missionInfoHide = true;
+						mainShow();
+					}, 200);
+				};
+				
 				
 				/**
 				 * 展示战斗界面
@@ -2347,8 +2423,18 @@
 						sceneMainViewDataClear();
 						sceneFightShow();
 					}else if(currentAction.getType()==ACTION.TYPE.mission){
-						alert("任务");
-						
+						//alert("任务");
+						flag=true;
+						viewDataModel.missionSelect.elements=function(){
+							//只读取  可接取:accept|进行中:ongoing|可交付:deliverable
+							var missionArray = currentInteractiveObject.getMissions(
+								MISSION.STATUS.accept
+								,MISSION.STATUS.ongoing
+								,MISSION.STATUS.deliverable);
+							return missionArray;
+						};
+						mainHide();
+						missionSelectShow();
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
@@ -3132,6 +3218,13 @@
 					numberPickerHide();
 				};
 			});
+			//任务列表专用遮罩层
+			app.controller("missionSelectMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$scope.missionSelectMaskLayerClick = function($event) {
+					missionSelectHide();
+				};
+			});
 			
 			//角色信息面板
 			app.controller("panel3", function($scope, $rootScope, $timeout) {
@@ -3410,6 +3503,15 @@
 				};
 			});
 			
+			app.controller("missionSelect", function($scope, $rootScope){
+				$scope.missionSelectHover=function(){
+					in
+				};
+				
+				
+			});
+			
+			/*--------------------------------------------------------*/
 			/**
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
 			 */
@@ -3791,7 +3893,8 @@
 					};
 					var itemNames="";
 					if (dropItemsArr.length>0){//判断有掉落率物品才进行
-						var dropNum = currentInteractiveObject.getDropNum();
+						//随机掉落数量
+						var dropNum  = Math.ceil(Math.random()*currentInteractiveObject.getDropNum());
 						for (var i=0; i < dropNum; i++) {//根据掉落数量随机多次
 							var dropItem = random(dropItemsArr,dropChanceArr);
 							if(dropItem!=null){
