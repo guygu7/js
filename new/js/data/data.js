@@ -36,6 +36,31 @@ dictionaryData.itemInfo = [];
 	};
 })();
 /**
+ * 全局示例数据
+ */
+var exampleData = {
+	interactiveObjects:[
+		/**
+		 * 全局临时存放点对象（用于复制的模版）|或许会有其他用处？
+		 */
+		{
+			name:"临时存放点",
+			actions:[
+				{name:"对话",type:"talk",content:"临时存放点"},
+				{name:"查看",type:"useWarehouse",content:"临时存放点"},
+			],
+			items:[
+			],
+		},
+	],
+	/**
+	 * 全局任务交互动作
+	 */
+	actions:[
+		dictionaryData.action.mission,
+	],
+};
+/**
  * 初始数据 
  */
 var data = {
@@ -122,7 +147,7 @@ var data = {
 					actions:[
 						{name:"对话",type:"talk",content:"对话内容"},
 						{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
-						dictionaryData.action.mission,
+						//dictionaryData.action.mission,
 					],
 				},
 			],

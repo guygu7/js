@@ -133,11 +133,11 @@ var viewDataModel = {
 		/**
 		 * 任务元素集合
 		 */
-		elements:[],
+		elements:function(){return [];},
 		/**
 		 * 任务内容
 		 */
-		info:"",
+		content:function(){return currentMission.getContent();},
 	},
 	/*------------------战斗场景组件视图数据------------------*/
 	/**
@@ -150,9 +150,13 @@ var viewDataModel = {
 		roleMaxHP:function(){return dataRoleObj[0].getMaxHp();},
 		roleEP:function(){return dataRoleObj[0].getEp();},
 		roleMaxEP:function(){return dataRoleObj[0].getMaxEp();},
-		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "未设置";}},
-		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "未设置";}},
-		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "未设置";}},
+		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "技能栏";}},
+		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "技能栏";}},
+		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "技能栏";}},
+		quickButton4:function(){if(quickButton1){return quickButton4.getName();}else{return "物品栏";}},
+		quickButton5:function(){if(quickButton2){return quickButton5.getName();}else{return "物品栏";}},
+		quickButton6:function(){if(quickButton3){return quickButton6.getName();}else{return "物品栏";}},
+		
 		objBuffs:function(){if(currentInteractiveObject&&currentInteractiveObject.getBuffs){return currentInteractiveObject.getBuffs();}},
 		roleBuffs:function(){return dataRoleObj[0].getBuffs();},
 		battleInfo:[],
@@ -308,6 +312,10 @@ var viewControl = {
 		 */
 		topFrameHide:false,
 		/**
+		 * 确认对话框面板 专用遮罩层隐藏 
+		 */
+		confirmPanleMaskLayerHide:true,
+		/**
 		 * 确认对话框面板
 		 */
 		confirmPanleHide:true,
@@ -456,6 +464,20 @@ var viewControl = {
 		"width": 500+"px",
 		"top" : 50 + "px",
 		"left" : 260 + "px",
+		"opacity" : 0,
+	},
+	/**
+	 * 确认对话框 专用遮罩层（初始值）
+	 */
+	confirmPanleMaskLayer_Style:{},
+	/**
+	 * 确认对话框（初始值）
+	 */
+	confirmPanle_Style:{
+		"top":20+"%",
+		"left":30+"%",
+		"width": 500+"px",
+		"height": 250+"px",
 		"opacity" : 0,
 	},
 	/**

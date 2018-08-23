@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-		<div ng-app="myApp" ng-controller="myApp" class="main-desktop">
+		<div ng-app="myApp" ng-controller="myApp" ng-rightclick="" class="main-desktop">
 			<!--起始场景-->
 			<div ng-controller="scene-start" ng-hide="viewControl.display.sceneStartHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-start','show-animation-scene':viewControl.currentScene=='scene-start'}" class="scene">
 				<input type="BUTTON" name="FullScreen" value="全屏显示" onClick="window.open(document.location, 'big', 'fullscreen=yes')">
@@ -75,6 +75,17 @@
 				<!--顶部菜单-->
 				<div ng-controller="topFrame" ng-hide="viewControl.display.topFrameHide" ng-class="{'hide-animation':viewControl.topFrameHide,'show-animation':!(viewControl.topFrameHide)}" class="top-frame">
 					<div class="top">
+						<div ng-click="clickButton2()" class="top-button" style="right:860px;">
+							<div class="top-button-background"></div>
+							<div class="top-button-content">任务</div>
+							<div class="top-button-arrow">
+								<div class="top-button-arrow1"></div>
+								<div class="top-button-arrow2"></div>
+								<div class="top-button-arrow3"></div>
+								<div class="top-button-arrow4"></div>
+								<div class="top-button-arrow5"></div>
+							</div>
+						</div>
 						<div ng-click="clickButton1('skill')" class="top-button" style="right:690px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">技能</div>
@@ -187,7 +198,7 @@
 				</div>
 				
 				<!--角色信息面板-->
-				<div ng-controller="panel3" ng-rightclick="testright()" ng-hide="viewControl.display.panel3Hide" ng-style="viewControl.panel3_Style" class="panel3">
+				<div ng-controller="panel3" ng-hide="viewControl.display.panel3Hide" ng-style="viewControl.panel3_Style" class="panel3">
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
@@ -384,9 +395,9 @@
 				</div>
 
 				<!--列表菜单-遮罩层-->
-				<div ng-controller="menuAutoMaskLayer" ng-hide="viewControl.display.menuAutoMaskLayerHide"  ng-style="viewControl.menuAutoMaskLayer_Style" ng-mousedown="menuAutoMaskLayerClick($event)" class="maskLayer" ></div>
+				<div ng-controller="menuAutoMaskLayer" ng-hide="viewControl.display.menuAutoMaskLayerHide"  ng-style="viewControl.menuAutoMaskLayer_Style" ng-rightclick="menuAutoMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单（自动大小_带箭头）-->
-				<div id="menuAuto" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" class="menuAuto-background">
+				<div id="menuAuto" ng-controller="menu" ng-hide="viewControl.display.menuHide" ng-style="viewControl.menu_Style" ng-rightclick="menuAutoMaskLayerClick($event)" class="menuAuto-background">
 					<div class="menuAuto">
 						<div ng-click="menulistClick($index,$event)" ng-repeat="y in viewDataModel.menu.buttonElements()" class="menuAuto-list">
 							<div class="menuAuto-list-background2"></div>
@@ -405,7 +416,7 @@
 				</div>
 				
 				<!--列表菜单:包裹-->
-				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
+				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" ng-rightclick="panel5MaskLayerClick($event)" class="menu-background">
 					<div class="menu-top"></div>
 					<div class="menu" >
 						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
@@ -870,9 +881,9 @@
 				</div>
 				
 				<!--仓库-遮罩层-->
-				<div ng-controller="panel5MaskLayer" ng-hide="viewControl.display.panel5MaskLayerHide"  ng-style="viewControl.panel5MaskLayer_Style" ng-mousedown="panel5MaskLayerClick($event)" class="maskLayer" ></div>
+				<div ng-controller="panel5MaskLayer" ng-hide="viewControl.display.panel5MaskLayerHide"  ng-style="viewControl.panel5MaskLayer_Style" ng-rightclick="panel5MaskLayerClick($event)" class="maskLayer" ></div>
 				<!--仓库-->
-				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" class="panel5">
+				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-rightclick="panel5MaskLayerClick($event)" class="panel5">
 					<div class="panel5-tittle">
 						{{viewDataModel.panel5.tittleText()}}
 					</div>
@@ -894,9 +905,9 @@
 				</div>
 				
 				<!--数字选择器-遮罩层-->
-				<div ng-controller="numberPickerMaskLayer" ng-hide="viewControl.display.numberPickerMaskLayerHide"  ng-style="viewControl.numberPickerMaskLayer_Style" ng-mousedown="numberPickerMaskLayerClick($event)" class="maskLayer" ></div>
+				<div ng-controller="numberPickerMaskLayer" ng-hide="viewControl.display.numberPickerMaskLayerHide"  ng-style="viewControl.numberPickerMaskLayer_Style" ng-rightclick="numberPickerMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--数字选择器-->
-				<div ng-controller="numberPicker" ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" class="numberPicker-background">
+				<div ng-controller="numberPicker" ng-hide="viewControl.display.numberPickerHide" ng-style="viewControl.numberPicker_Style" ng-rightclick="numberPickerMaskLayerClick($event)" class="numberPicker-background">
 					<div class="numberPicker">
 						<div class="numberPicker-tittle">{{viewDataModel.numberPicker.tittleText}}</div>
 						<div ng-mousedown="numberUp()" ng-mouseup="numberUpStop()" ng-mouseleave="numberUpStop()" class="numberPicker-upperArrow">
@@ -916,7 +927,7 @@
 				</div>
 				
 				<!--交易面板-->
-				<div ng-controller="transactionPanel" ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" class="panel5">
+				<div ng-controller="transactionPanel" ng-hide="viewControl.display.transactionPanelHide" ng-style="viewControl.transactionPanel_Style" ng-rightclick="panel5MaskLayerClick($event)" class="panel5">
 					<div class="menu-top" style="width: 99%"></div>
 					<div class="menu" style="width: 485px;height: 170px;left:10px;">
 						<div ng-click="sellsClick($event,$index)" ng-repeat="x in viewDataModel.transactionPanel.sellButtonElements()" class="button2">
@@ -956,36 +967,49 @@
 					<div class="menu-bottom" style="width: 99%"></div>
 				</div>
 				
+				<!--遮罩层-->
+				<div ng-controller="confirmPanleMaskLayer" ng-hide="viewControl.display.confirmPanleMaskLayerHide" ng-style="viewControl.confirmPanleMaskLayer_Style" ng-rightclick="confirmPanleMaskLayerClick()" class="maskLayer" ></div>
 				<!--确认对话框面板-->
-				<div ng-hide="viewControl.display.confirmPanleHide" style="top:20%;left:30%;width: 500px;height: 250px;" class="panel3">
+				<div ng-controller="confirmPanle" ng-hide="viewControl.display.confirmPanleHide" ng-style="viewControl.confirmPanle_Style" ng-rightclick="confirmPanleMaskLayerClick()" class="panel3">
 					<div style="width: 490px;" class="panel3-tittle">
 						<div style="background:rgb(235,230,205);" class="confirmDialog-decoratingBlock"></div>
 						标题
 					</div>
 					<div class="confirmDialog-textContent">确定？</div>
 					<div class="confirmDialog-decoratingLine"></div>
-					<div style="left:95px;" class="confirmDialog-button">
+					<div ng-click="confirmPanleButtonSureClick()" style="left:95px;" class="confirmDialog-button">
 						<div class="confirmDialog-decoratingBlock"></div>
 						是
 					</div>
-					<div style="right:95px;" class="confirmDialog-button">
+					<div ng-click="confirmPanleMaskLayerClick()" style="right:95px;" class="confirmDialog-button">
 						<div class="confirmDialog-decoratingBlock"></div>
 						否
 					</div>
 				</div>
 				
 				<!--遮罩层-->
-				<div ng-controller="missionSelectMaskLayer" ng-hide="viewControl.display.missionSelectMaskLayerHide" ng-style="viewControl.missionSelectMaskLayer_Style" ng-mousedown="missionSelectMaskLayerClick()" class="maskLayer" ></div>
+				<div ng-controller="missionSelectMaskLayer" ng-hide="viewControl.display.missionSelectMaskLayerHide" ng-style="viewControl.missionSelectMaskLayer_Style" ng-rightclick="missionSelectMaskLayerClick()" class="maskLayer" ></div>
 				<!--任务列表-->
-				<div ng-controller="missionSelect" ng-hide="viewControl.display.missionSelectHide" ng-style="viewControl.missionSelect_Style" class="mission-select">
-					<div ng-repeat="x in viewDataModel.missionSelect.elements()" ng-mouseenter="missionSelectHover($index)" class="mission-select-option">
+				<div ng-controller="missionSelect" ng-hide="viewControl.display.missionSelectHide" ng-style="viewControl.missionSelect_Style" ng-rightclick="missionSelectMaskLayerClick()" class="mission-select">
+					<div ng-click="missionSelectClick($index)" ng-mouseenter="missionSelectHover($index)" ng-repeat="x in viewDataModel.missionSelect.elements()" class="mission-select-option">
 						<div class="mission-select-option-background"></div>
-						<div class="mission-select-option-content">i {{x.getName()}}</div>
+						<!--可接取任务图标
+						<div class="mission-imgAccept">
+							<div class="mission-imgAccept1"></div>
+						</div>
+						-->
+						<!--进行中任务图标
+						<div class=""></div>
+						-->
+						<!--已完成任务图标
+						<div class=""></div>
+						-->
+						<div class="mission-select-option-content">{{x.getName()}}</div>
 					</div>
 				</div>
 				<!--任务信息面板-->
-				<div ng-hide="viewControl.display.missionInfoHide" ng-style="viewControl.missionInfo_Style" class="mission-info">
-					
+				<div ng-hide="viewControl.display.missionInfoHide" ng-style="viewControl.missionInfo_Style" ng-rightclick="missionSelectMaskLayerClick()" class="mission-info">
+					{{viewDataModel.missionSelect.content()}}
 				</div>
 				
 			</div>
@@ -1281,6 +1305,36 @@
 								+
 							</div>
 						</div>
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(4)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton4()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(4)" class="panelFight-quick-unit-prefixButton">
+								+
+							</div>
+						</div>
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(5)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton5()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(5)" class="panelFight-quick-unit-prefixButton">
+								+
+							</div>
+						</div>
+						<div class="panelFight-quick-unit">
+							<div ng-click="quickButtonClick(6)" class="panelFight-quick-unit-button">
+								<div class="panelFight-quick-unit-button-content">
+									{{viewDataModel.battle.quickButton6()}}
+								</div>
+							</div>
+							<div ng-click="quickButtonChange(6)" class="panelFight-quick-unit-prefixButton">
+								+
+							</div>
+						</div>
 					</div>
 					
 					<!--战斗信息显示-->
@@ -1322,9 +1376,9 @@
 					</div>
 					
 					<!--遮罩层-->
-					<div ng-hide="viewControl.display.quickMenuBagMaskLayerHide" ng-style="viewControl.quickMenuBagMaskLayer_Style" ng-mousedown="quickMenuBagMaskLayerClick($event)" class="maskLayer" ></div>
+					<div ng-hide="viewControl.display.quickMenuBagMaskLayerHide" ng-style="viewControl.quickMenuBagMaskLayer_Style" ng-rightclick="quickMenuBagMaskLayerClick($event)" class="maskLayer" ></div>
 					<!--设置快捷按钮选择菜单-->
-					<div ng-hide="viewControl.display.quickMenuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" class="menu-background">
+					<div ng-hide="viewControl.display.quickMenuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" ng-rightclick="quickMenuBagMaskLayerClick($event)" class="menu-background">
 						<div class="menu-top"></div>
 						<div class="menu" >
 							<div ng-click="menulistClick($index)"  ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
@@ -1498,9 +1552,13 @@
 			 */
 			var dataRoleObj = loadData(data.roles,"role");
 			/**
+			 * 全局任务交互动作
+			 */
+			var missionActionObj = loadData(exampleData.actions[0],"action");
+			/**
 			 * 全局临时存放点对象（用于复制的模版）
 			 */
-			var tempStoragePointObj = dataDomainsObj[0].getInteractiveObjects()[0];
+			var tempStoragePointObj = loadData(exampleData.interactiveObjects[0],"interactiveObject");
 			/**
 			 * 当前场景地图
 			 */
@@ -1518,6 +1576,10 @@
 			 */
 			var currentAction = DataModleFactory.createAction();
 			/**
+			 * 当前的任务
+			 */
+			var currentMission = DataModleFactory.createMission();
+			/**
 			 * 当前交易物品信息数据（价格）[item数组]
 			 */
 			var currentItemInfo = [];
@@ -1534,6 +1596,9 @@
 			var quickButton1;
 			var quickButton2;
 			var quickButton3;
+			var quickButton4;
+			var quickButton5;
+			var quickButton6;
 			var app = angular.module("myApp", []);
 			app.directive('ngRightclick', function($parse) {
 			    return function(scope, element, attrs) {
@@ -2152,6 +2217,44 @@
 					}, 100);
 				};
 				
+				
+				/**
+				 * 确认对话框 显示命令
+				 */
+				confirmPanleShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["confirmPanle"] = maxZIndex+2;
+					viewControl.zIndexList["confirmPanleMaskLayer"] = maxZIndex+1;
+					viewControl.confirmPanle_Style["z-index"] = viewControl.zIndexList["confirmPanle"];
+					viewControl.confirmPanleMaskLayer_Style["z-index"] = viewControl.zIndexList["confirmPanleMaskLayer"];
+					
+					//弹出遮罩层
+					viewControl.display.confirmPanleMaskLayerHide = false;
+					viewControl.display.confirmPanleHide = false;
+					viewControl.confirmPanle_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.confirmPanle_Style.opacity = 1;
+					}, 10);
+				};
+				/**
+				 * 确认对话框  隐藏命令
+				 */
+				confirmPanleHide = function(){
+					viewControl.confirmPanle_Style.opacity = 0;
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["confirmPanle"] = 0;
+						viewControl.confirmPanle_Style["z-index"] = 0;
+						viewControl.zIndexList["confirmPanleMaskLayer"] = 0;
+						viewControl.confirmPanleMaskLayer_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.confirmPanleMaskLayerHide = true;
+						viewControl.display.confirmPanleHide = true;
+					}, 200);
+				};
+				
+				
 				/**
 				 * 任务列表 显示命令
 				 */
@@ -2193,7 +2296,7 @@
 					viewControl.missionInfo_Style.opacity = 0;
 					var left = viewControl.missionInfo_Style.left;
 					viewControl.missionInfo_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
-					
+					currentMission = DataModleFactory.createMission();
 					$timeout(function() {
 						//重置层叠
 						viewControl.zIndexList["missionSelect"] = 0;
@@ -3199,14 +3302,14 @@
 			//列表菜单（自动大小_带箭头）专用遮罩层
 			app.controller("menuAutoMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$scope.menuAutoMaskLayerClick = function($event) {
+				$rootScope.menuAutoMaskLayerClick = function($event) {
 					menuHide();
 				};
 			});
 			//仓库专用遮罩层
 			app.controller("panel5MaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$scope.panel5MaskLayerClick = function($event) {
+				$rootScope.panel5MaskLayerClick = function($event) {
 					panelTyping("");
 					panel5Hide();
 				};
@@ -3214,14 +3317,21 @@
 			//数字选择器专用遮罩层
 			app.controller("numberPickerMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$scope.numberPickerMaskLayerClick = function($event) {
+				$rootScope.numberPickerMaskLayerClick = function($event) {
 					numberPickerHide();
+				};
+			});
+			//确认对话框专用遮罩层
+			app.controller("confirmPanleMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$rootScope.confirmPanleMaskLayerClick = function($event) {
+					confirmPanleHide();
 				};
 			});
 			//任务列表专用遮罩层
 			app.controller("missionSelectMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$scope.missionSelectMaskLayerClick = function($event) {
+				$rootScope.missionSelectMaskLayerClick = function($event) {
 					missionSelectHide();
 				};
 			});
@@ -3449,6 +3559,7 @@
 					mainHide();
 					if(dataRoleObj[0].getStatus()=="fight"){
 						//判断为战斗状态，不可操作
+						alert("当前为战斗状态不可操作!");
 						return;
 					}
 					//设置当前状态为使用背包
@@ -3501,16 +3612,55 @@
 						viewControl.panel3_Style2.opacity = 1;
 					}, 200);
 				};
+				$scope.clickButton2 = function(pram,pram2){
+					mainHide();
+					if(dataRoleObj[0].getStatus()=="fight"){
+						//判断为战斗状态，不可操作
+						alert("当前为战斗状态不可操作!");
+						return;
+					}
+					viewDataModel.missionSelect.elements=function(){
+						//这里全读取(只读取  可接取:accept|进行中:ongoing|可交付:deliverable)
+						var missionArray = dataRoleObj[0].getMissions();
+						console.info(missionArray.length);
+						return missionArray;
+					};
+					$timeout(function() {
+						missionSelectShow();
+					}, 200);
+				};
 			});
 			
 			app.controller("missionSelect", function($scope, $rootScope){
-				$scope.missionSelectHover=function(){
-					in
+				$scope.missionSelectHover=function($index){
+					//只读取  可接取:accept|进行中:ongoing|可交付:deliverable
+					currentMission = currentInteractiveObject.getMissions(
+								MISSION.STATUS.accept
+								,MISSION.STATUS.ongoing
+								,MISSION.STATUS.deliverable)[$index];
 				};
-				
-				
+				$scope.missionSelectClick=function($index){
+					//展示确认框
+					confirmPanleShow();
+				};
 			});
 			
+			app.controller("confirmPanle", function($scope, $rootScope){
+				$scope.confirmPanleButtonSureClick = function(){
+					if(currentMission.getStatus()==MISSION.STATUS.accept){
+						//判断为可接取accept，修改为进行中ongoing，并存入角色
+						currentMission.setStatus(MISSION.STATUS.ongoing);
+						dataRoleObj[0].addMission(currentMission);
+						panelTyping("已接取:  "+currentMission.getName());
+					}else if(currentMission.getStatus()==MISSION.STATUS.ongoing){
+						//判断为进行中ongoing，修改为可接取accept，并从角色中删除
+						currentMission.setStatus(MISSION.STATUS.accept);
+						dataRoleObj[0].delMission(currentMission);
+						panelTyping("已放弃:  "+currentMission.getName());
+					}
+					confirmPanleHide();
+				};
+			});
 			/*--------------------------------------------------------*/
 			/**
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
@@ -3967,12 +4117,24 @@
 				var nowQuickButtonSet;
 				$scope.quickButtonChange = function(num){//选择快捷按钮
 					quickMenuBagShow();
-					if(num==1){//加载背包中消耗品（包含战斗消耗品）
+					if(num==4){//加载背包中消耗品（包含战斗消耗品）
 						quickButtonChangeArr = dataRoleObj[0].getItems("useRoleBag-Consumable");
+						nowQuickButtonSet=4;
+					}else if(num==5){//加载背包中消耗品（包含战斗消耗品）
+						quickButtonChangeArr = dataRoleObj[0].getItems("useRoleBag-Consumable");
+						nowQuickButtonSet=5;
+					}else if(num==6){//加载背包中消耗品（包含战斗消耗品）
+						quickButtonChangeArr = dataRoleObj[0].getItems("useRoleBag-Consumable");
+						nowQuickButtonSet=6;
+					}else if(num==1){//加载角色技能
+						quickButtonChangeArr = dataRoleObj[0].getSkills("active");
 						nowQuickButtonSet=1;
 					}else if(num==2){//加载角色技能
 						quickButtonChangeArr = dataRoleObj[0].getSkills("active");
 						nowQuickButtonSet=2;
+					}else if(num==3){//加载角色技能
+						quickButtonChangeArr = dataRoleObj[0].getSkills("active");
+						nowQuickButtonSet=3;
 					}else{
 						quickButtonChangeArr = [];
 					}
@@ -3983,9 +4145,17 @@
 				$scope.menulistClick = function($index){//点击选择
 					quickMenuBagHide();
 					switch(nowQuickButtonSet){
+						case 4:quickButton4=quickButtonChangeArr[$index];
+							break;
+						case 5:quickButton5=quickButtonChangeArr[$index];
+							break;
+						case 6:quickButton6=quickButtonChangeArr[$index];
+							break;
 						case 1:quickButton1=quickButtonChangeArr[$index];
 							break;
 						case 2:quickButton2=quickButtonChangeArr[$index];
+							break;
+						case 3:quickButton3=quickButtonChangeArr[$index];
 							break;
 						default:break;
 					};
@@ -3995,64 +4165,61 @@
 				};
 				$scope.quickButtonClick = function(num){
 					var infoStr="";
-					switch(num){
-						case 1://使用消耗品
-							if (quickButton1&&quickButton1!=undefined&&quickButton1!=null){//判断quickButton1是否设置
-								if(quickButton1.getTotalNum()&&quickButton1.getTotalNum()!=undefined&&quickButton1.getTotalNum()!=null&&quickButton1.getTotalNum()>0){
+					
+					var useItem = function (quickButton,num){
+						if (quickButton&&quickButton!=undefined&&quickButton!=null){//判断quickButton是否设置
+								if(quickButton.getTotalNum()&&quickButton.getTotalNum()!=undefined&&quickButton.getTotalNum()!=null&&quickButton.getTotalNum()>0){
 									//判断TotalNum存在且>0
-									if (quickButton1.getType()==ITEM.TYPE.consumable) {//判断第一类型为消耗品
-										if(quickButton1.getType2()==ITEM.TYPE2.consumable||quickButton1.getType2()==ITEM.TYPE2.reusingConsumable){//判断第二类型为消耗品或可反复使用消耗品
+									if (quickButton.getType()==ITEM.TYPE.consumable) {//判断第一类型为消耗品
+										if(quickButton.getType2()==ITEM.TYPE2.consumable||quickButton.getType2()==ITEM.TYPE2.reusingConsumable){//判断第二类型为消耗品或可反复使用消耗品
 											//执行使用效果
-											var tempAttr = quickButton1.getAttr();
+											var tempAttr = quickButton.getAttr();
 											//行动结算
 											roundStartBuffSettlement();
-											battleSettlement2(quickButton1);
-											//roleSettlement(tempAttr,quickButton1);
-											//enemySettlement();
+											battleSettlement2(quickButton);
 											buffSettlement();
 											//数量-1
-											if(!(quickButton1.getType2()==ITEM.TYPE2.reusingConsumable)){//是可反复使用消耗品则不减少数量
-												var totalNum = quickButton1.getTotalNum();
+											if(!(quickButton.getType2()==ITEM.TYPE2.reusingConsumable)){//是可反复使用消耗品则不减少数量
+												var totalNum = quickButton.getTotalNum();
 												totalNum -= 1;
 												if(totalNum<=0){
-													dataRoleObj[0].delItem(quickButton1);
-													quickButton1 = null;
+													dataRoleObj[0].delItem(quickButton);
+													quickButton = null;
 												}else{
-													quickButton1.setTotalNum(totalNum);
+													quickButton.setTotalNum(totalNum);
 												}
 											}
-										}else if(quickButton1.getType2()==ITEM.TYPE2.battleConsumable){//判断第二类型为战斗消耗品（攻击类）
+										}else if(quickButton.getType2()==ITEM.TYPE2.battleConsumable){//判断第二类型为战斗消耗品（攻击类）
 											//执行使用效果
-											var tempAttr = quickButton1.getAttr();
+											var tempAttr = quickButton.getAttr();
 											//行动结算
 											roundStartBuffSettlement();
-											battleSettlement2(quickButton1);
-											//roleSettlement(tempAttr,quickButton1);
-											//enemySettlement();
+											battleSettlement2(quickButton);
 											buffSettlement();
 											//数量-1
-											var totalNum = quickButton1.getTotalNum();
+											var totalNum = quickButton.getTotalNum();
 											totalNum -= 1;
 											if(totalNum<=0){
-												dataRoleObj[0].delItem(quickButton1);
-												quickButton1 = null;
+												dataRoleObj[0].delItem(quickButton);
+												quickButton = null;
 											}else{
-												quickButton1.setTotalNum(totalNum);
+												quickButton.setTotalNum(totalNum);
 											}
 										}
 										
 									}
 								}else{//判断TotalNum不存在<=0,重新校准数据
-									dataRoleObj[0].delItem(quickButton1);
+									dataRoleObj[0].delItem(quickButton);
 								}
-							}else{//quickButton1未设置，打开设置
-								$scope.quickButtonChange(1);
+							}else{//quickButton未设置，打开设置
+								$scope.quickButtonChange(num);
 							}
-							break;
-						case 2://使用技能
-							if (quickButton2&&quickButton2!=undefined&&quickButton2!=null){//判断quickButton2是否设置
+					};
+					
+					var useSkill = function (quickButton,num){
+						if (quickButton&&quickButton!=undefined&&quickButton!=null){//判断quickButton是否设置
 								//执行使用效果
-								var tempAttr = quickButton2.getAttr();
+								var tempAttr = quickButton.getAttr();
 								//行动结算
 								//如果消耗ep,计算ep是否足够
 								if("epRecovery" in tempAttr
@@ -4062,23 +4229,39 @@
 									&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery))<0){
 										//判断为ep不足
 										viewDataModel.battle.battleInfo.push({str:"ep不足,无法使用技能"});
-										break;
+										return;
 									}else{
 										dataRoleObj[0].setEp(Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery));
 									}
 								roundStartBuffSettlement();
-								battleSettlement2(quickButton2);
-								//roleSettlement(tempAttr,quickButton2);
-								//enemySettlement();
+								battleSettlement2(quickButton);
 								buffSettlement();
-							}else{//quickButton2未设置，打开设置
-								$scope.quickButtonChange(2);
+							}else{//quickButton未设置，打开设置
+								$scope.quickButtonChange(num);
 							}
+					};
+					switch(num){
+						case 1://使用技能
+							useSkill(quickButton1,1);
+							break;
+						case 2://使用技能
+							useSkill(quickButton2,2);
+							break;
+						case 3://使用技能
+							useSkill(quickButton3,3);
+							break;
+						case 4://使用消耗品
+							useItem(quickButton4,4);
+							break;
+						case 5://使用消耗品
+							useItem(quickButton5,5);
+							break;
+						case 6://使用消耗品
+							useItem(quickButton6,6);
 							break;
 						default:
 					   		break;
 					}
-					//viewDataModel.battle.battleInfo.push({str:infoStr});
 				};
 				
 			});

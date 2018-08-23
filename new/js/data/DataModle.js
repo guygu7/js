@@ -1145,6 +1145,22 @@ DataModleFactory = {
 			return actions[num];
 		};
 		interactiveObject.getActions = function(){
+			//判定有任务，则追加显示任务选项
+			var flag = false;
+			if(missions.length>0){
+				for (var i=0; i < actions.length; i++) {
+					if(compareAction(actions[i],missionActionObj)){
+						break;
+					}else{
+						flag = true;
+					};
+				};
+			}
+			if (flag) {
+				var tempActions = actions.slice(0);
+				tempActions.push(missionActionObj);
+				return tempActions;
+			};
 			return actions;
 		};
 		interactiveObject.addAction = function(pram){

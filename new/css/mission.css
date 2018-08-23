@@ -28,6 +28,7 @@
 	background: rgb(102,99,101);
 }
 .mission-select-option-content{
+	left:30px;
 	transition:0.4s;
 	position: absolute;
 }
@@ -41,8 +42,66 @@
 	left:60px;
 	width:600px;
 	height:400px;
+	padding:10px;
 	background-color:rgb(235,230,205);
 	box-shadow: 0px 0px 1px 0px rgb(80,80,80);
 	transition:0.2s;
 	position: relative;
+}
+
+.mission-imgAccept{
+	top:10px;
+	left:15px;
+	width:3px;
+	height:15px;
+	background-color:rgb(102,99,101);
+	transition:0.2s;
+	position: absolute;
+}
+.mission-imgAccept::before{
+	content:"";
+	top:-1px;
+	left:-6px;
+	width:6px;
+	height:6px;
+	border-bottom:2px solid rgb(102,99,101);
+	border-left:2px solid rgb(102,99,101);
+	transform:rotate(45deg);
+	transition:0.2s;
+	position: absolute;
+}
+.mission-imgAccept::after{
+	content:"";
+	top:-1px;
+	right:-6px;
+	width:6px;
+	height:6px;
+	border-top:2px solid rgb(102,99,101);
+	border-right:2px solid rgb(102,99,101);
+	transform:rotate(45deg);
+	transition:0.2s;
+	position: absolute;
+}
+.mission-imgAccept1{
+	content:"";
+	top:-5px;
+	width:3px;
+	height:3px;
+	background-color:rgb(102,99,101);
+	transform:rotate(45deg);
+	transition:0.2s;
+	position: absolute;
+}
+.mission-select-option:hover > .mission-imgAccept
+,.mission-select-option:hover > .mission-imgAccept > .mission-imgAccept1{
+	background-color:rgb(235,230,205);
+}
+
+.mission-select-option:hover > .mission-imgAccept:before{
+	border-bottom:2px solid rgb(235,230,205);
+	border-left:2px solid rgb(235,230,205);
+}
+.mission-select-option:hover > .mission-imgAccept:after{
+	border-top:2px solid rgb(235,230,205);
+	border-right:2px solid rgb(235,230,205);
 }
