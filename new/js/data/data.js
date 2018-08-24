@@ -59,6 +59,12 @@ var exampleData = {
 	actions:[
 		dictionaryData.action.mission,
 	],
+	/**
+	 * 用于显示没有任务
+	 */
+	missions:[
+		dictionaryData.mission.none,
+	],
 };
 /**
  * 初始数据 

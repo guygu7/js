@@ -596,6 +596,17 @@ DataModleFactory = {
 				pram.supper = this;
 				items.push(pram);
 			}
+			/*---增加对任务完成情况的处理(未完成)---*/
+			if(missions.length>0){
+				for (var i=0; i < missions.length; i++) {
+					//检查进行中的任务
+					if(missions[i].getStatus()==MISSION.STATUS.ongoing){
+						//检查物品
+						in
+						//missions[i].
+					}
+				};
+			}
 			return this;						
 		};
 		/**
@@ -624,7 +635,25 @@ DataModleFactory = {
 			return missions[num];
 		};
 		role.getMissions = function(pram){
-			return missions;
+			var tempMissions = missions.slice(0);
+			//pram==MISSION.STATUS.accept||pram==MISSION.STATUS.unAccept||pram==MISSION.STATUS.ongoing||pram==MISSION.STATUS.completed||pram==MISSION.STATUS.failed
+			if(typeof pram1 == "string"&&pram1!=""){
+				for (var i=0; i < tempMissions.length; i++) {
+					if(!tempMissions[i].getDisplay()//不可见的
+					   ||(tempMissions[i].getStatus()!=pram1
+					   &&tempMissions[i].getStatus()!=pram2
+					   &&tempMissions[i].getStatus()!=pram3
+					   &&tempMissions[i].getStatus()!=pram4
+					   &&tempMissions[i].getStatus()!=pram5)){
+						tempMissions.splice(i,1);
+						i--;
+					}
+				};
+			}
+			if(tempMissions.length==0){
+				tempMissions.push(noneMissionObj);
+			}
+			return tempMissions;
 		};
 		/**
 		 * 传参：Mission对象
@@ -637,6 +666,8 @@ DataModleFactory = {
 				//判断传入参数不为空 且是 mission对象
 				missions.push(pram);
 			}
+			/*---增加对任务完成情况的处理(未完成)---*/
+			in
 			return this;						
 		};
 		/**
@@ -2048,7 +2079,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 触发可接受所需拥有物品
 		 */
 		var triggerItems=[];
 		mission.getTriggerItem = function(num){
@@ -2088,7 +2119,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 触发可接受所需拥有技能
 		 */
 		var triggerSkills=[];
 		mission.getTriggerSkill = function(num){
@@ -2128,7 +2159,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 触发可接受所需对话对象
 		 */
 		var triggerTalks=[];
 		mission.getTriggerTalk = function(num){
@@ -2168,7 +2199,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 触发可接受所需战斗对象
 		 */
 		var triggerBattles=[];
 		mission.getTriggerBattle = function(num){
@@ -2208,7 +2239,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 触发可接受所需到达地点
 		 */
 		var triggerDomains=[];
 		mission.getTriggerDomain = function(num){
@@ -2249,7 +2280,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 完成所需物品
 		 */
 		var completeItems=[];
 		mission.getCompleteItem = function(num){
@@ -2289,7 +2320,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 完成所需拥有技能
 		 */
 		var completeSkills=[];
 		mission.getCompleteSkill = function(num){
@@ -2329,7 +2360,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 完成所需对话对象
 		 */
 		var completeTalks=[];
 		mission.getCompleteTalk = function(num){
@@ -2347,7 +2378,10 @@ DataModleFactory = {
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
 				//判断传入参数不为空 且是InteractiveObject对象
-				completeTalks.push(pram);
+				completeTalks.push({
+					interactiveObject:pram
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2359,7 +2393,7 @@ DataModleFactory = {
 				completeTalks.splice(pram,1);
 			} else {
 				for (var i=0; i < completeTalks.length; i++) {
-					if(completeTalks[i] == pram){
+					if(completeTalks[i].interactiveObject == pram){
 						completeTalks.splice(i,1);
 					};
 				};
@@ -2369,7 +2403,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 完成所需战斗对象
 		 */
 		var completeBattles=[];
 		mission.getCompleteBattle = function(num){
@@ -2409,7 +2443,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 完成所需到达地点
 		 */
 		var completeDomains=[];
 		mission.getCompleteDomain = function(num){
@@ -2449,7 +2483,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
+		 * 任务奖励物品
 		 */
 		var rewardItems=[];
 		mission.getRewardItem = function(num){
@@ -2489,47 +2523,7 @@ DataModleFactory = {
 		
 		
 		/**
-		 * 所有任务
-		 */
-		var rewardItems=[];
-		mission.getRewardItem = function(num){
-			return rewardItems[num];
-		};
-		mission.getRewardItems = function(pram){
-			return rewardItems;
-		};
-		/**
-		 * 传参：Item对象
-		 */
-		mission.addRewardItem = function(pram){
-			if(!rewardItems){
-				rewardItems = new Array();
-			}
-			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="item"){
-				//判断传入参数不为空 且是Item对象
-				rewardItems.push(pram);
-			}
-			return this;						
-		};
-		/**
-		 * 传参：Number 或 Item对象
-		 */
-		mission.delRewardItem = function(pram) {
-			if (Object.prototype.toString.call(pram)==="[object Number]") {
-				rewardItems.splice(pram,1);
-			} else {
-				for (var i=0; i < rewardItems.length; i++) {
-					if(rewardItems[i] == pram){
-						rewardItems.splice(i,1);
-					};
-				};
-			};
-			return this;
-		};
-		
-		
-		/**
-		 * 所有任务
+		 * 任务奖励技能
 		 */
 		var rewardSkills=[];
 		mission.getRewardSkill = function(num){

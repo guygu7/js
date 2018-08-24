@@ -973,9 +973,9 @@
 				<div ng-controller="confirmPanle" ng-hide="viewControl.display.confirmPanleHide" ng-style="viewControl.confirmPanle_Style" ng-rightclick="confirmPanleMaskLayerClick()" class="panel3">
 					<div style="width: 490px;" class="panel3-tittle">
 						<div style="background:rgb(235,230,205);" class="confirmDialog-decoratingBlock"></div>
-						标题
+						{{viewDataModel.confirmPanle.tittle}}
 					</div>
-					<div class="confirmDialog-textContent">确定？</div>
+					<div class="confirmDialog-textContent">{{viewDataModel.confirmPanle.textContent}}</div>
 					<div class="confirmDialog-decoratingLine"></div>
 					<div ng-click="confirmPanleButtonSureClick()" style="left:95px;" class="confirmDialog-button">
 						<div class="confirmDialog-decoratingBlock"></div>
@@ -1551,6 +1551,7 @@
 			 * 暂时仅为只有一个role对象的数组
 			 */
 			var dataRoleObj = loadData(data.roles,"role");
+			/*-------------特殊对象-------------*/
 			/**
 			 * 全局任务交互动作
 			 */
@@ -1559,6 +1560,11 @@
 			 * 全局临时存放点对象（用于复制的模版）
 			 */
 			var tempStoragePointObj = loadData(exampleData.interactiveObjects[0],"interactiveObject");
+			/**
+			 * 用于在任务栏显示没有任务
+			 */
+			var noneMissionObj = loadData(exampleData.missions[0],"mission");
+			/*--------------------------------*/
 			/**
 			 * 当前场景地图
 			 */
@@ -2241,6 +2247,8 @@
 				 * 确认对话框  隐藏命令
 				 */
 				confirmPanleHide = function(){
+					dataRoleObj[0].setStatus("");
+					dataRoleObj[0].setStatus2("");
 					viewControl.confirmPanle_Style.opacity = 0;
 					$timeout(function() {
 						//重置层叠
@@ -2284,6 +2292,7 @@
 						viewControl.missionSelect_Style.opacity = 1;
 						viewControl.missionInfo_Style.left = 60 + "px";
 						viewControl.missionInfo_Style.opacity = 1;
+						panelTyping("查看任务...");
 					}, 400);
 				};
 				/**
@@ -2312,6 +2321,7 @@
 						viewControl.display.missionSelectHide = true;
 						viewControl.display.missionInfoHide = true;
 						mainShow();
+						panelTyping("");
 					}, 200);
 				};
 				
@@ -3575,11 +3585,13 @@
 						viewDataModel.menuBag.buttonElements = function () {
 							return dataRoleObj[0].getSkills();
 						};
+						panelTyping("查看技能...");
 					}else{
 						//加载包裹数据,重新定位视图数据指针
 						viewDataModel.menuBag.buttonElements = function () {
 							return dataRoleObj[0].getItems(pram2);
 						};
+						panelTyping("查看物品...");
 					}
 					var menuBagLeft=0;
 					//获取层叠关系数组中最大值，并+1存入
@@ -3622,8 +3634,7 @@
 					viewDataModel.missionSelect.elements=function(){
 						//这里全读取(只读取  可接取:accept|进行中:ongoing|可交付:deliverable)
 						var missionArray = dataRoleObj[0].getMissions();
-						in
-						console.info(missionArray.length);
+						dataRoleObj[0].setStatus("checkMission");
 						return missionArray;
 					};
 					$timeout(function() {
@@ -3634,15 +3645,52 @@
 			
 			app.controller("missionSelect", function($scope, $rootScope){
 				$scope.missionSelectHover=function($index){
-					//只读取  可接取:accept|进行中:ongoing|可交付:deliverable
-					currentMission = currentInteractiveObject.getMissions(
-								MISSION.STATUS.accept
-								,MISSION.STATUS.ongoing
-								,MISSION.STATUS.deliverable)[$index];
+					if(dataRoleObj[0].getStatus()=="checkMission"){
+						//是在查看任务界面
+						currentMission = dataRoleObj[0].getMissions(
+									MISSION.STATUS.accept
+									,MISSION.STATUS.ongoing
+									,MISSION.STATUS.deliverable)[$index];
+					}else{//是在交互界面
+						//只读取  可接取:accept|进行中:ongoing|可交付:deliverable
+						currentMission = currentInteractiveObject.getMissions(
+									MISSION.STATUS.accept
+									,MISSION.STATUS.ongoing
+									,MISSION.STATUS.deliverable)[$index];
+					}
 				};
 				$scope.missionSelectClick=function($index){
-					//展示确认框
-					confirmPanleShow();
+					viewDataModel.confirmPanle.tittle="任务";
+					if(dataRoleObj[0].getStatus()=="checkMission"){
+						//是在查看任务界面
+						//可接取、进行中，弹出确认框
+						if(currentMission.getStatus()==MISSION.STATUS.accept){
+							viewDataModel.confirmPanle.textContent="接受任务？";
+							//展示确认框
+							confirmPanleShow();
+						}else if(currentMission.getStatus()==MISSION.STATUS.ongoing){
+							viewDataModel.confirmPanle.textContent="放弃任务？";
+							//展示确认框
+							confirmPanleShow();
+						}
+						//其他状态不可操作
+					}else{//是在交互界面
+						//可接取、进行中、可交付，弹出确认框
+						if(currentMission.getStatus()==MISSION.STATUS.accept){
+							viewDataModel.confirmPanle.textContent="接受任务？";
+							//展示确认框
+							confirmPanleShow();
+						}else if(currentMission.getStatus()==MISSION.STATUS.ongoing){
+							viewDataModel.confirmPanle.textContent="放弃任务？";
+							//展示确认框
+							confirmPanleShow();
+						}else if(currentMission.getStatus()==MISSION.STATUS.deliverable){
+							viewDataModel.confirmPanle.textContent="完成任务？";
+							//展示确认框
+							confirmPanleShow();
+						}
+						//其他状态不可操作
+					}
 				};
 			});
 			
@@ -3658,6 +3706,11 @@
 						currentMission.setStatus(MISSION.STATUS.accept);
 						dataRoleObj[0].delMission(currentMission);
 						panelTyping("已放弃:  "+currentMission.getName());
+					}else if(currentMission.getStatus()==MISSION.STATUS.deliverable){
+						//----判断包裹空间是否足够-未完成-----
+						//判断为可交付deliverable，修改为已完成
+						currentMission.setStatus(MISSION.STATUS.completed);
+						panelTyping("已完成:  "+currentMission.getName());
 					}
 					confirmPanleHide();
 				};

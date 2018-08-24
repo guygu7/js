@@ -73,6 +73,10 @@ dictionaryData.mission={
 			dictionaryData.skill.example,
 		],
 		completeTalks:[//3.与某对象完成对话
+			{
+				interactiveObject:interactiveObject,
+				complete:false
+			}
 			//[interactiveObject,true]
 		],
 		completeBattles:[//4.需要击败指定对象[多个]；1.类型，2.固定对象
@@ -90,4 +94,13 @@ dictionaryData.mission={
 		],
 		rewardInformation:"",
 	},
+	/**
+	 * 用于在任务栏显示没有任务
+	 */
+	none:{
+		name:"无任务",
+		content:"当前没有接受任务",
+		status:MISSION.STATUS.unAccept,//状态:不可接取
+		display:true,//是否可见
+	}
 };

@@ -126,6 +126,10 @@ var viewDataModel = {
 		 */
 		buyButtonElements:function(){return transactionItems.buyItems;},
 	},
+	confirmPanle:{
+		tittle:"",
+		textContent:"",
+	},
 	/**
 	 * 任务列表
 	 */
