@@ -599,11 +599,14 @@ DataModleFactory = {
 			/*---增加对任务完成情况的处理(未完成)---*/
 			if(missions.length>0){
 				for (var i=0; i < missions.length; i++) {
-					//检查进行中的任务
-					if(missions[i].getStatus()==MISSION.STATUS.ongoing){
-						//检查物品
-						in
-						//missions[i].
+					//检查进行中的任务 和 可交付任务
+					if(missions[i].getStatus()==MISSION.STATUS.ongoing||missions[i].getStatus()==MISSION.STATUS.deliverable){
+						//检查是否达成拥有物品完成条件
+						if(missions[i].checkCompleteItem(items)){
+							in
+						}else{
+							
+						};
 					}
 				};
 			}
@@ -2177,7 +2180,10 @@ DataModleFactory = {
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
 				//判断传入参数不为空 且是InteractiveObject对象
-				triggerTalks.push(pram);
+				triggerTalks.push({
+					interactiveObject:pram
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2189,7 +2195,7 @@ DataModleFactory = {
 				triggerTalks.splice(pram,1);
 			} else {
 				for (var i=0; i < triggerTalks.length; i++) {
-					if(triggerTalks[i] == pram){
+					if(triggerTalks[i].interactiveObject == pram){
 						triggerTalks.splice(i,1);
 					};
 				};
@@ -2216,8 +2222,13 @@ DataModleFactory = {
 				triggerBattles = new Array();
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
-				//判断传入参数不为空 且是Battle对象
-				triggerBattles.push(pram);
+				//判断传入参数不为空 且是interactiveObject对象
+				triggerBattles.push({
+					interactiveObject:pram
+					,completeNum:0//当前完成数量
+					,totalNum:1//总共数量
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2229,7 +2240,7 @@ DataModleFactory = {
 				triggerBattles.splice(pram,1);
 			} else {
 				for (var i=0; i < triggerBattles.length; i++) {
-					if(triggerBattles[i] == pram){
+					if(triggerBattles[i].interactiveObject == pram){
 						triggerBattles.splice(i,1);
 					};
 				};
@@ -2257,7 +2268,10 @@ DataModleFactory = {
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="domain"){
 				//判断传入参数不为空 且是Domain对象
-				triggerDomains.push(pram);
+				triggerDomains.push({
+					domain:pram
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2269,7 +2283,7 @@ DataModleFactory = {
 				triggerDomains.splice(pram,1);
 			} else {
 				for (var i=0; i < triggerDomains.length; i++) {
-					if(triggerDomains[i] == pram){
+					if(triggerDomains[i].domain == pram){
 						triggerDomains.splice(i,1);
 					};
 				};
@@ -2386,7 +2400,7 @@ DataModleFactory = {
 			return this;						
 		};
 		/**
-		 * 传参：Number 或  Talk对象
+		 * 传参：Number 或  interactiveObject对象
 		 */
 		mission.delCompleteTalk = function(pram) {
 			if (Object.prototype.toString.call(pram)==="[object Number]") {
@@ -2420,8 +2434,13 @@ DataModleFactory = {
 				completeBattles = new Array();
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="interactiveObject"){
-				//判断传入参数不为空 且是Battle对象
-				completeBattles.push(pram);
+				//判断传入参数不为空 且是InteractiveObject对象
+				completeBattles.push({
+					interactiveObject:pram
+					,completeNum:0//当前完成数量
+					,totalNum:1//总共数量
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2433,7 +2452,7 @@ DataModleFactory = {
 				completeBattles.splice(pram,1);
 			} else {
 				for (var i=0; i < completeBattles.length; i++) {
-					if(completeBattles[i] == pram){
+					if(completeBattles[i].interactiveObject == pram){
 						completeBattles.splice(i,1);
 					};
 				};
@@ -2461,7 +2480,10 @@ DataModleFactory = {
 			}
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="domain"){
 				//判断传入参数不为空 且是Domain对象
-				completeDomains.push(pram);
+				completeDomains.push({
+					domain:pram
+					,complete:false
+				});
 			}
 			return this;						
 		};
@@ -2473,7 +2495,7 @@ DataModleFactory = {
 				completeDomains.splice(pram,1);
 			} else {
 				for (var i=0; i < completeDomains.length; i++) {
-					if(completeDomains[i] == pram){
+					if(completeDomains[i].domain == pram){
 						completeDomains.splice(i,1);
 					};
 				};
@@ -2572,6 +2594,148 @@ DataModleFactory = {
 		mission.setRewardInformation = function(pram) {
 			rewardInformation = pram;
 			return this;
+		};
+		
+		
+		
+		/**
+		 * 传参:[Item] Item对象数组
+		 * return:true(满足完成条件)、false(不满足完成条件)
+		 */
+		mission.checkCompleteItem = function(pramArr){
+			if(pramArr.length>0){
+				//遍历完成任务所需物品
+				for (var i=0; i < completeItems.length; i++) {
+					//遍历当前拥有物品
+					for (var i1=0; i1 < pramArr.length; i1++) {
+						//对比出同物品
+						if(compareItem(completeItems[i],pramArr[i1])){
+							//判断数量是否达标
+							if(Number(items[i2].getTotalNum())>=Number(tempItems[i1].getTotalNum())){
+								//数量达标,返回true
+								return true;
+							}
+						};
+					};
+				};
+			}
+		};
+		
+		
+		/**
+		 * 校验是否完成
+		 * return:true(满足完成条件)、false(不满足完成条件)
+		 */
+		mission.checkComplete = function(){
+			//完成所需物品条件校验
+			var checkItems = true;
+			roleItems = dataRoleObj[0].getItems();
+			//首先判断有需要物品的条件
+			if(completeItems.length>0){
+				//其次判断角色拥有物品
+				if (roleItems.length>0) {
+					//遍历完成任务所需物品
+					for (var i=0; i < completeItems.length; i++) {
+						//标记，false为遍历完都未匹配上
+						var flag = false;
+						//遍历当前拥有物品
+						for (var i1=0; i1 < roleItems.length; i1++) {
+							//对比出同种物品
+							if(compareItem(completeItems[i],roleItems[i1])){
+								//判断数量是否达标
+								if(Number(items[i2].getTotalNum())>=Number(tempItems[i1].getTotalNum())){
+									//数量达标,返回true(checkItems不做变更)
+									flag = true;
+								}else{
+									//数量不达标,返回false(只要有一个不足，则全部为false),无需继续遍历break;
+									checkItems=false;
+									break;
+								}
+							};
+						}
+						if(flag==false){//遍历完都未匹配上
+							//数量不达标,返回false,且无需继续遍历break;
+							checkItems=false;
+							break;
+						}
+					}
+				}else{//没有物品则直接标记为false
+					checkItems=false;
+				}
+			}else{//不需要物品则直接标记为true
+				checkItems=true;
+			}
+			
+			
+			//完成所需拥有技能校验
+			var checkSkills = true;
+			roleSkills = dataRoleObj[0].getItems();
+			//首先判断有需要拥有技能的条件
+			if(completeSkills.length>0){
+				//其次判断角色有技能
+				if (roleSkills.length>0) {
+					//遍历完成任务所需拥有技能
+					for (var i=0; i < completeSkills.length; i++) {
+						//标记，false为遍历完都未匹配上
+						var flag = false;
+						//遍历当前拥有技能
+						for (var i1=0; i1 < roleSkills.length; i1++) {
+							//对比出同种技能
+							if(compareItem(completeSkills[i],roleSkills[i1])){
+								//有对应技能,返回true(checkSkills不做变更)
+								flag = true;
+								break;
+							};
+						}
+						if(flag==false){//遍历完都未匹配上
+							//返回false,且无需继续遍历break;
+							checkSkills=false;
+							break;
+						}
+					}
+				}else{//没有技能则直接标记为false
+					checkSkills=false;
+				}
+			}else{//不需要拥有技能则直接标记为true
+				checkSkills=true;
+			}
+			
+			
+			//完成所需对话对象
+			var checkTalks = true;
+			//首先判断有需要对话对象的条件
+			if(completeTalks.length>0){
+				//遍历所有需要对话对象的条件
+				for (var i=0; i < completeTalks.length; i++) {
+					//检查是否已完成对话
+					if(completeTalks[i].complete==false){
+						//如果有一个false,则直接break;
+						checkTalks=false;
+						break;
+					}
+				};
+			}else{//不需要对话对象则直接标记为true
+				checkTalks=true;
+			}
+			
+			
+			//完成所需战斗对象
+			var checkBattles = true;
+			//首先判断有需要战斗对象的条件
+			if(completeBattles.length>0){
+				//遍历所有需要战斗对象的条件
+				for (var i=0; i < completeBattles.length; i++) {
+					//检查是否已达标,当前完成数量>=总共需要的数量
+					if(completeTalks[i].completeNum>=completeTalks[i].totalNum){
+					}else{//如果有一个不达标，则为false,直接break;
+						checkBattles=false;
+						break;
+					}
+				};
+			}else{//不需要战斗对象则直接标记为true
+				checkBattles=true;
+			}
+			
 		};
 		
 		return mission;

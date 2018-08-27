@@ -56,12 +56,26 @@ dictionaryData.mission={
 			dictionaryData.skill.example,
 		],
 		triggerTalks:[//3.与某对象完成对话
+			{
+				interactiveObject:interactiveObject,
+				complete:false,
+			},
 			//[interactiveObject,true]
 		],
 		triggerBattles:[//4.需要击败指定对象[多个]；1.类型，2.固定对象
+			{
+				interactiveObject:interactiveObject,
+				completeNum:0,//当前完成数量
+				totalNum:1,//总共数量
+				complete:false,
+			},
 			//interactiveObject
 		],
 		triggerDomains:[//5.到达指定地点
+			{
+				domain:domain,
+				complete:false,
+			},
 			//domain
 		],
 		//达成条件:
@@ -75,14 +89,24 @@ dictionaryData.mission={
 		completeTalks:[//3.与某对象完成对话
 			{
 				interactiveObject:interactiveObject,
-				complete:false
-			}
+				complete:false,
+			},
 			//[interactiveObject,true]
 		],
 		completeBattles:[//4.需要击败指定对象[多个]；1.类型，2.固定对象
+			{
+				interactiveObject:interactiveObject,
+				completeNum:0,//当前完成数量
+				totalNum:1,//总共数量
+				complete:false,
+			},
 			//interactiveObject
 		],
 		completeDomains:[//5.到达指定地点
+			{
+				domain:domain,
+				complete:false,
+			},
 			//domain
 		],
 		//任务奖励:
