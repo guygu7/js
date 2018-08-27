@@ -2666,7 +2666,6 @@ DataModleFactory = {
 				checkItems=true;
 			}
 			
-			
 			//完成所需拥有技能校验
 			var checkSkills = true;
 			roleSkills = dataRoleObj[0].getItems();
@@ -2700,7 +2699,6 @@ DataModleFactory = {
 				checkSkills=true;
 			}
 			
-			
 			//完成所需对话对象
 			var checkTalks = true;
 			//首先判断有需要对话对象的条件
@@ -2717,7 +2715,6 @@ DataModleFactory = {
 			}else{//不需要对话对象则直接标记为true
 				checkTalks=true;
 			}
-			
 			
 			//完成所需战斗对象
 			var checkBattles = true;
@@ -2736,6 +2733,29 @@ DataModleFactory = {
 				checkBattles=true;
 			}
 			
+			//完成所需到达地点
+			var checkDomains = true;
+			//首先判断有需要到达地点的条件
+			if(completeDomains.length>0){
+				//遍历所有需要到达地点的条件
+				for (var i=0; i < completeDomains.length; i++) {
+					//检查是否已完成到达地点
+					if(completeDomains[i].complete==false){
+						//如果有一个false,则直接break;
+						checkDomains=false;
+						break;
+					}
+				};
+			}else{//不需要到达地点则直接标记为true
+				checkDomains=true;
+			}
+			
+			if(checkItems&&checkSkills&&checkTalks&&checkBattles&&checkDomains){
+				//全部条件达成
+				return true;
+			}else{
+				return false;
+			}
 		};
 		
 		return mission;
