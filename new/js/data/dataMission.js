@@ -55,28 +55,12 @@ dictionaryData.mission={
 		triggerSkills:[//2.需要拥有的技能
 			dictionaryData.skill.example,
 		],
-		triggerTalks:[//3.与某对象完成对话
-			{
-				interactiveObject:interactiveObject,
-				complete:false,
-			},
-			//[interactiveObject,true]
+		triggerTalks:[//3.与某对象完成对话/对战
+			//interactiveObject.triggerTalk=true/false//需对话
+			//interactiveObject.triggerBattleTotalNum=1//需击败次数
 		],
-		triggerBattles:[//4.需要击败指定对象[多个]；1.类型，2.固定对象
-			{
-				interactiveObject:interactiveObject,
-				completeNum:0,//当前完成数量
-				totalNum:1,//总共数量
-				complete:false,
-			},
-			//interactiveObject
-		],
-		triggerDomains:[//5.到达指定地点
-			{
-				domain:domain,
-				complete:false,
-			},
-			//domain
+		triggerDomains:[//4.到达指定地点
+			//domain.arrive=true/false//需到达
 		],
 		//达成条件:
 		completeItems:[//1.需要拥有指定数量物品,数量通过totalNum表示,需要在后面修改
@@ -86,28 +70,12 @@ dictionaryData.mission={
 		completeSkills:[//2.需要拥有的技能
 			dictionaryData.skill.example,
 		],
-		completeTalks:[//3.与某对象完成对话
-			{
-				interactiveObject:interactiveObject,
-				complete:false,
-			},
-			//[interactiveObject,true]
+		completeInteractiveObjects:[//3.与某对象完成对话/对战
+			//interactiveObject.completeTalk=true/false//需对话
+			//interactiveObject.completeBattleTotalNum=1//需击败次数
 		],
-		completeBattles:[//4.需要击败指定对象[多个]；1.类型，2.固定对象
-			{
-				interactiveObject:interactiveObject,
-				completeNum:0,//当前完成数量
-				totalNum:1,//总共数量
-				complete:false,
-			},
-			//interactiveObject
-		],
-		completeDomains:[//5.到达指定地点
-			{
-				domain:domain,
-				complete:false,
-			},
-			//domain
+		completeDomains:[//4.到达指定地点
+			//domain.arrive=true/false//需到达
 		],
 		//任务奖励:
 		rewardItems:[
