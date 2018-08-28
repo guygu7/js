@@ -991,7 +991,7 @@
 				<div ng-controller="missionSelectMaskLayer" ng-hide="viewControl.display.missionSelectMaskLayerHide" ng-style="viewControl.missionSelectMaskLayer_Style" ng-rightclick="missionSelectMaskLayerClick()" class="maskLayer" ></div>
 				<!--任务列表-->
 				<div ng-controller="missionSelect" ng-hide="viewControl.display.missionSelectHide" ng-style="viewControl.missionSelect_Style" ng-rightclick="missionSelectMaskLayerClick()" class="mission-select">
-					<div ng-click="missionSelectClick($index)" ng-mouseenter="missionSelectHover($index)" ng-repeat="x in viewDataModel.missionSelect.elements()" class="mission-select-option">
+					<div ng-click="missionSelectClick($index)" ng-mouseenter="missionSelectHover($index)" ng-rightclick="missionSelectMaskLayerClick()" ng-repeat="x in viewDataModel.missionSelect.elements()" class="mission-select-option">
 						<div class="mission-select-option-background"></div>
 						<!--可接取任务图标
 						<div class="mission-imgAccept">
@@ -2408,6 +2408,8 @@
 					if(currentAction.getType()=="talk"){
 						flag=true;
 						//判断为对话
+						//任务校验
+						in
 						panelTyping(currentAction.getContent());
 						//对话动作完成，清空当前交互动作
 						currentAction = null;
@@ -2416,6 +2418,8 @@
 					}else if(currentAction.getType()=="move"){
 						flag=true;
 						//判断为移动，场景切换
+						//任务校验
+						in
 						sceneMainViewDataClear();//视图数据清除
 						for (var i=0; i < dataDomainsObj.length; i++) {
 							if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
@@ -3341,7 +3345,7 @@
 			//任务列表专用遮罩层
 			app.controller("missionSelectMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
-				$rootScope.missionSelectMaskLayerClick = function($event) {
+				$rootScope.missionSelectMaskLayerClick = function() {
 					missionSelectHide();
 				};
 			});
@@ -3631,10 +3635,10 @@
 						alert("当前为战斗状态不可操作!");
 						return;
 					}
+					dataRoleObj[0].setStatus("checkMission");
 					viewDataModel.missionSelect.elements=function(){
 						//这里全读取(只读取  可接取:accept|进行中:ongoing|可交付:deliverable)
 						var missionArray = dataRoleObj[0].getMissions();
-						dataRoleObj[0].setStatus("checkMission");
 						return missionArray;
 					};
 					$timeout(function() {
@@ -4134,6 +4138,8 @@
 							tempObj.addItem(dropItems[i]);
 						};
 					};
+					//任务校验
+					in
 					//场景切换
 					sceneFightHide("战斗胜利!"+itemNames);
 					sceneMainDataLoad(currentDomain);

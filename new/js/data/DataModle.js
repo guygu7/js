@@ -407,6 +407,8 @@ DataModleFactory = {
 			if(pram&&pram!=null&&pram!=undefined&&pram.constructor.name=="skill"){
 				//判断传入参数不为空 且是 skill对象
 				skills.push(pram);
+				//任务校验
+				in
 			}
 			return this;						
 		};
@@ -423,6 +425,8 @@ DataModleFactory = {
 					};
 				};
 			};
+			//任务校验
+			in
 			return this;
 		};
 		
@@ -597,19 +601,7 @@ DataModleFactory = {
 				items.push(pram);
 			}
 			/*---增加对任务完成情况的处理---*/
-			if(missions.length>0){
-				for (var i=0; i < missions.length; i++) {
-					//检查进行中的任务 和 可交付任务
-					if(missions[i].getStatus()==MISSION.STATUS.ongoing||missions[i].getStatus()==MISSION.STATUS.deliverable){
-						//校验是否满足完成条件
-						if(missions[i].checkComplete()){
-							missions[i].setStatus(MISSION.STATUS.deliverable);
-						}else{
-							missions[i].setStatus(MISSION.STATUS.ongoing);
-						};
-					}
-				};
-			}
+			checkMissionsFn();
 			return this;						
 		};
 		/**
@@ -671,7 +663,7 @@ DataModleFactory = {
 				//判断传入参数不为空 且是 mission对象
 				missions.push(pram);
 			}
-			/*---增加对任务完成情况的处理(未完成)---*/
+			/*---增加对任务完成情况的处理---*/
 			checkMissionsFn();
 			return this;						
 		};
@@ -1766,6 +1758,11 @@ DataModleFactory = {
 		item.setTotalNum = function(pram) {
 			if(!isNaN(Number(pram))){
 				totalNum = Number(pram);
+				//判断父对象是role
+				if(this.supper&&this.supper.constructor==DataModle.Role){
+					/*---增加对任务完成情况的处理---*/
+					this.supper.checkMissions();
+				}
 			}
 			return this;
 		};
