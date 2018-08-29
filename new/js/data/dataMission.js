@@ -72,6 +72,7 @@ dictionaryData.mission={
 		],
 		completeInteractiveObjects:[//3.与某对象完成对话/对战
 			//interactiveObject.completeTalk=true/false//需对话
+			//interactiveObject.completeTalkContent=""//对话内容
 			//interactiveObject.completeBattleTotalNum=1//需击败次数
 		],
 		completeDomains:[//4.到达指定地点

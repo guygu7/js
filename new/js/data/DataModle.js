@@ -408,7 +408,7 @@ DataModleFactory = {
 				//判断传入参数不为空 且是 skill对象
 				skills.push(pram);
 				//任务校验
-				in
+				checkMissionsFn();
 			}
 			return this;						
 		};
@@ -426,7 +426,7 @@ DataModleFactory = {
 				};
 			};
 			//任务校验
-			in
+			checkMissionsFn();
 			return this;
 		};
 		
@@ -1564,6 +1564,18 @@ DataModleFactory = {
 		 */
 		interactiveObject.setCompleteTalk = function(pram) {
 			completeTalk = pram;
+			return this;
+		};
+		
+		/**
+		 * 完成对话时显示的对话内容
+		 */
+		var completeTalkContent="";
+		interactiveObject.getCompleteTalkContent  = function() {
+			return completeTalk;
+		};
+		interactiveObject.setCompleteTalkContent = function(pram) {
+			completeTalkContent = pram;
 			return this;
 		};
 		

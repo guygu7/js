@@ -1004,6 +1004,8 @@
 						<!--已完成任务图标
 						<div class=""></div>
 						-->
+						<div class="mission-select-option-status" ng-hide="x.getStatus()!='ongoing'">进行</div>
+						<div class="mission-select-option-status" ng-hide="x.getStatus()!='deliverable'">完成</div>
 						<div class="mission-select-option-content">{{x.getName()}}</div>
 					</div>
 				</div>
@@ -2247,8 +2249,8 @@
 				 * 确认对话框  隐藏命令
 				 */
 				confirmPanleHide = function(){
-					dataRoleObj[0].setStatus("");
-					dataRoleObj[0].setStatus2("");
+					//dataRoleObj[0].setStatus("");
+					//dataRoleObj[0].setStatus2("");
 					viewControl.confirmPanle_Style.opacity = 0;
 					$timeout(function() {
 						//重置层叠
@@ -2408,9 +2410,36 @@
 					if(currentAction.getType()=="talk"){
 						flag=true;
 						//判断为对话
+						var typingContent = currentAction.getContent();
 						//任务校验
-						in
-						panelTyping(currentAction.getContent());
+						//获取进行中任务
+						var tempMissions = dataRoleObj[0].getMissions(MISSION.STATUS.ongoing);
+						if(tempMissions.length>0){
+							//遍历进行中任务
+							for (var i=0; i < tempMissions.length; i++) {
+								var tempInteractiveObjects = tempMissions[i].getCompleteInteractiveObjects();
+								if(tempInteractiveObjects.length>0){
+									//遍历任务包含的对象
+									for (var i=0; i < tempInteractiveObjects.length; i++) {
+										//判断是否有对话,且未完成
+										if(tempInteractiveObjects[i].getCompleteTalk()==false){
+											//判断当前交互对象和任务对象是否是同一对象
+											if(compareInteractiveObject(currentInteractiveObject,tempInteractiveObjects[i])){
+												//读取任务对话，没有则不读取
+												if(tempInteractiveObjects[i].getCompleteTalkContent()!=""){
+													typingContent=tempInteractiveObjects[i].getCompleteTalkContent();
+												};
+												//重新校验该任务完成情况
+												dataRoleObj[0].checkMissions();
+												break;
+											};
+										}
+									};
+								}
+							};
+						}
+						
+						panelTyping(typingContent);
 						//对话动作完成，清空当前交互动作
 						currentAction = null;
 						//对话动作完成，清空当前交互对象
@@ -2418,8 +2447,6 @@
 					}else if(currentAction.getType()=="move"){
 						flag=true;
 						//判断为移动，场景切换
-						//任务校验
-						in
 						sceneMainViewDataClear();//视图数据清除
 						for (var i=0; i < dataDomainsObj.length; i++) {
 							if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
@@ -2430,6 +2457,31 @@
 						};
 						//移动动作完成，清空当前交互动作
 						currentAction = null;
+						//任务校验
+						//获取进行中任务
+						var tempMissions = dataRoleObj[0].getMissions(MISSION.STATUS.ongoing);
+						if(tempMissions.length>0){
+							//遍历进行中任务
+							for (var i=0; i < tempMissions.length; i++) {
+								var tempDomains = tempMissions[i].getCompleteDomains();
+								if (tempDomains.length>0) {
+									//遍历任务包含的场景
+									for (var i=0; i < tempDomains.length; i++) {
+										//判断是否有到达条件,且未完成
+										if(tempDomains[i].getArrive()==false){
+											//判断当前到达场景和任务场景是否是同一场景对象
+											if(compareDomain(currentDomain,tempDomains[i])){
+												//将该任务属性修改为已到达
+												tempDomains[i].setArrive(true);
+												//重新校验该任务完成情况
+												dataRoleObj[0].checkMissions();
+												break;
+											}
+										}
+									}
+								};
+							}
+						}
 						//移动动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="useWarehouse"){
@@ -3346,6 +3398,7 @@
 			app.controller("missionSelectMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.missionSelectMaskLayerClick = function() {
+					dataRoleObj[0].setStatus("");
 					missionSelectHide();
 				};
 			});
@@ -3629,12 +3682,12 @@
 					}, 200);
 				};
 				$scope.clickButton2 = function(pram,pram2){
-					mainHide();
 					if(dataRoleObj[0].getStatus()=="fight"){
 						//判断为战斗状态，不可操作
 						alert("当前为战斗状态不可操作!");
 						return;
 					}
+					mainHide();
 					dataRoleObj[0].setStatus("checkMission");
 					viewDataModel.missionSelect.elements=function(){
 						//这里全读取(只读取  可接取:accept|进行中:ongoing|可交付:deliverable)
@@ -4138,12 +4191,10 @@
 							tempObj.addItem(dropItems[i]);
 						};
 					};
-					//任务校验
-					in
 					//场景切换
 					sceneFightHide("战斗胜利!"+itemNames);
 					sceneMainDataLoad(currentDomain);
-					sceneMainShow("");
+					//任务校验------由于暂时不是直接放进包中(未完成)---------
 					//mainShow();
 				}else if(pram=="fail"){//战斗失败（未实现）
 					
