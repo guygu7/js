@@ -355,6 +355,7 @@
 				</div>
 
 				<!--人物交互面板(按钮组)-->
+				<!--
 				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4">
 					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements()" class="button2">
 						<div class="button2-background"></div>
@@ -364,6 +365,11 @@
 							{{x.getName()}}
 						</div>
 					</div>
+				</div>
+				-->
+				<!--人物交互面板(按钮组)-->
+				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4" style="width: 600px;height: 400px;">
+					<div style="top:50;left:50px;background-color:rgba(151,143,121,0.7)"></div>
 				</div>
 
 				<!--方向盘-->
