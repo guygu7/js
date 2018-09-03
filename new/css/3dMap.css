@@ -1,0 +1,94 @@
+.floor {
+	left:200px;
+	width: 500px;
+	height: 500px;
+	background: rgba(156,148,126,0.5);
+	transform-origin: 50% 50%;
+	transform-style: preserve-3d;
+	transition: 1s;
+	position: absolute;
+	/*transform: rotateX(45deg) rotateZ(-30deg);*/
+}
+.floor:hover {
+	animation: rotateHAHA 8s linear infinite;
+}
+@keyframes rotateHAHA{
+	0%{
+		transform:rotateX(45deg) rotateZ(0deg);
+	}
+	100%{
+		transform:rotateX(45deg) rotateZ(360deg);
+	}
+}
+
+
+.cube {
+	transform-origin: 50% 50%;
+	transform-style: preserve-3d;
+	/*全地图定位*/
+	transform: translateX(0px) translateY(0px) translateZ(50px);
+}
+
+.side1, .side2, .side3 {
+	transform-origin: 50% 50%;
+	transform-style: preserve-3d;
+	position: absolute;
+	background: rgb(114,110,97);
+	text-align: center;
+}
+/*半阴影面*/
+.side2 {
+	background: rgb(104,99,86);
+}
+/*阴影面*/
+.side3 {
+	background: rgb(92,87,76);
+}
+
+/*
+ * width = 长度（立方体横向X轴）
+ * height = 宽度（立方体纵向Y轴）
+ * translateZ = 高度（立方体Z轴）/2
+ */
+.bottom {
+	width: 100px;
+	height: 200px;
+	transform:translateX(-50%) translateY(-50%) rotateY(180deg) translateZ(50px);
+}
+.top {
+	width: 100px;
+	height: 200px;
+	transform:translateX(-50%) translateY(50%) translateZ(50px);
+}
+
+/*
+ * width = 长度（立方体横向X轴）
+ * height = 高度（立方体Z轴）
+ * translateZ = 宽度（立方体纵向Y轴）/2
+ */
+.front {
+	width: 100px;
+	height: 100px;
+	transform:translateX(-50%) translateY(-50%) rotateX(-90deg) translateZ(100px);
+}
+.back {
+	width: 100px;
+	height: 100px;
+	transform:translateX(-50%) translateY(-50%) rotateY(180deg) rotateX(90deg) translateZ(100px);
+}
+
+/*
+ * width = 宽度（立方体纵向Y轴） 
+ * height = 高度（立方体Z轴）
+ * translateZ = 长度（立方体横向X轴）/2
+ */
+.right {
+	width: 200px;
+	height: 100px;
+	transform:translateX(-50%) translateY(-50%) rotateX(-90deg) rotateY(90deg) translateZ(50px);
+}
+.left {
+	width: 200px;
+	height: 100px;
+	transform:translateX(-50%) translateY(-50%) rotateX(-90deg) rotateY(-90deg) translateZ(50px);
+}

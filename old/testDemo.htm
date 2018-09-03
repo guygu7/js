@@ -314,10 +314,10 @@
 			}
 			@keyframes rotateHAHA{
 				0%{
-					transform: rotateX(0deg) rotateY(0deg);
+					transform:rotateX(45deg) rotateZ(0deg);
 				}
 				100%{
-					transform: rotateX(360deg) rotateY(360deg);
+					transform:rotateX(45deg) rotateZ(360deg);
 				}
 			}
 			.cube {
@@ -325,20 +325,19 @@
 				width: 2em;
 				height: 2em;
 				margin: 1.5em auto;
-				background:#717171;
+				background:rgb(156,148,126);
 				transform-origin: 1em 1em;
 				transform-style: preserve-3d;
-				transform: rotateX(90deg) translateY(-0em);
+				transition:1s;
 			}
 			.cube:hover {
-				animation: rotateHAHA 4s linear infinite;
+				animation: rotateHAHA 8s linear infinite;
 			}
-			.side {
+			.side1 {
 				position: absolute;
 				width: 1em;
 				height: 1em;
-				background: rgba(255, 99, 71);
-				border: 1px solid rgba(0, 0, 0, 0.5);
+				background: rgb(114,110,97);
 				color: white;
 				text-align: center;
 				line-height: 2em;
@@ -347,31 +346,46 @@
 				position: absolute;
 				width: 1em;
 				height: 1em;
-				background: rgba(255, 99, 71);
-				border: 1px solid rgba(0, 0, 0, 0.5);
+				background: rgb(104,99,86);
 				color: white;
 				text-align: center;
 				line-height: 2em;
 			}
-			.front {
-				transform:rotateX(-90deg) translateY(-0.5em) translateZ(0.5em);//为什么要translateZ(1em)。1em代表了什么？
+			/*阴影面*/
+			.side3 {
+				position: absolute;
+				width: 1em;
+				height: 1em;
+				background: rgb(92,87,76);
+				color: white;
+				text-align: center;
+				line-height: 2em;
+			}
+			
+			/*translateZ为 立方体 Z轴 平移（正为向上移动）高(z)*/
+			.bottom {
 			}
 			.top {
-				transform: rotateX(0deg) translateZ(1em);//注意rotate和translateZ的顺序。之后会提到。
+				transform: translateZ(1em);
 			}
+			
+			/*translateY为 立方体 Z轴 平移（负为向上移动）-高(z)/2,translateZ为 立方体 Y轴 平移（正为向前移动）宽(y)/2*/
+			.front {
+				transform: rotateX(-90deg) translateY(-0.5em) translateZ(0.5em);
+			}
+			.back {
+				transform: rotateX(-90deg) translateY(-0.5em) translateZ(-0.5em);
+			}
+			
+			/*translateY为 立方体 Z轴 平移（负为向上移动）-高(z)/2,translateZ为 立方体 X轴 平移（正为向右移动）长(x)/2*/
 			.right {
-				transform:rotateX(-90deg) rotateY(90deg) translateY(-0.5em) translateZ(0.5em);
+				transform: rotateX(-90deg) rotateY(90deg) translateY(-0.5em) translateZ(0.5em);
 			}
 			.left {
 				transform: rotateX(-90deg) rotateY(-90deg) translateY(-0.5em) translateZ(0.5em);
 			}
-			.bottom {
-				transform: rotateX(0deg)
-			}
-
-			.back {
-				transform: rotateX(-90deg) translateY(-0.5em) translateZ(-0.5em);
-			}
+			
+			
 			.w2 {
 				perspective-origin: 20% 20%;
 				perspective: 1000px;
@@ -400,31 +414,44 @@
 				</svg>
 			</div>
 		</div>
-		<div class="wrapper w2" style="transform: rotate(0deg);">
-			<div class="cube">
-				
-				<div class="side  front">
-					1
+		<div class="wrapper w2" >
+			<div class="cube" style="transform:rotateX(45deg) rotateZ(-30deg);">
+				<div style="transform-origin: 1em 1em;transform-style: preserve-3d;transform:translateX(0.5em) translateY(0.5em);">
+					<div class="side2  front">
+					</div>
+					
+					<div class="side2   back">
+					</div>
+					<div class="side1  right">
+					</div>
+					<div class="side3   left">
+					</div>
+					<div class="side1  top">
+					</div>
+					<!--
+					<div class="side1 bottom">
+						2
+					</div>
+					-->
 				</div>
-				
-				<div class="side   back">
-					6
+				<div style="transform-origin: 1em 1em;transform-style: preserve-3d;transform:translateX(2em) translateY(0.5em);">
+					<div class="side2  front">
+					</div>
+					
+					<div class="side1   back">
+					</div>
+					<div class="side1  right">
+					</div>
+					<div class="side3   left">
+					</div>
+					<div class="side1  top">
+					</div>
+					<!--
+					<div class="side1 bottom">
+						2
+					</div>
+					-->
 				</div>
-				<div class="side  right">
-					4
-				</div>
-				<div class="side   left">
-					3
-				</div>
-				<div class="side2  top">
-					5
-				</div>
-				
-				<div class="side2 bottom">
-					2
-				</div>
-				
-				
 			</div>
 		</div>
 	</body>
