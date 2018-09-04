@@ -574,4 +574,85 @@ var viewControl = {
 	 * 快捷按钮设置菜单  专用遮罩层隐藏 
 	 */
 	quickMenuBagMaskLayer_Style:{},
+	map3dFloor_Style:{"transform":"rotateX(45deg) rotateZ(-30deg)"},
+	map3d_Style:null,
 };
+var map3dData = [
+	{
+		cubeLong:10,
+		cubeWidth:10,
+		cubeHeight:10,
+		coordinateX:10,
+		coordinateY:10,
+		colorGroup:1,
+	},
+	{
+		cubeLong:10,
+		cubeWidth:10,
+		cubeHeight:10,
+		coordinateX:30,
+		coordinateY:30,
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:50,
+		cubeHeight:50,
+		coordinateX:130,
+		coordinateY:30,
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:50,
+		cubeHeight:50,
+		coordinateX:30,
+		coordinateY:130,
+		colorGroup:1,
+	},
+];
+function creat3dMap(){
+	function creatCube(cubeLong,cubeWidth,cubeHeight,coordinateX,coordinateY,colorGroup){
+		var tempObj = {
+				cube:{
+					"transform-origin": "50% 50%",
+					"transform-style": "preserve-3d",
+					/*全地图定位*/
+					"transform": "translateX("+coordinateX+"px) translateY("+coordinateY+"px) translateZ("+(cubeHeight/2)+"px)",
+				},
+				front:{
+					"width": cubeLong+"px",
+					"height": cubeHeight+"px",
+					"transform":"translateX(-50%) translateY(-50%) rotateX(-90deg) translateZ("+(cubeWidth/2)+"px)",
+				},
+				back:{
+					"width": cubeLong+"px",
+					"height": cubeHeight+"px",
+					"transform":"translateX(-50%) translateY(-50%) rotateY(180deg) rotateX(90deg) translateZ("+(cubeWidth/2)+"px)",
+				},
+				right:{
+					"width": cubeWidth+"px",
+					"height": cubeHeight+"px",
+					"transform":"translateX(-50%) translateY(-50%) rotateX(-90deg) rotateY(90deg) translateZ("+(cubeLong/2)+"px)",
+				},
+				left:{
+					"width": cubeWidth+"px",
+					"height": cubeHeight+"px",
+					"transform":"translateX(-50%) translateY(-50%) rotateX(-90deg) rotateY(-90deg) translateZ("+(cubeLong/2)+"px)",
+				},
+				top:{
+					"width": cubeLong+"px",
+					"height": cubeWidth+"px",
+					"transform":"translateX(-50%) translateY(-50%) translateZ("+(cubeHeight/2)+"px)",
+				},
+				color:colorGroup,
+			};
+		return tempObj;
+	};
+	var map3d = [];
+	for (var i=0; i < map3dData.length; i++) {
+		map3d.push(creatCube(map3dData[i].cubeLong,map3dData[i].cubeWidth,map3dData[i].cubeHeight,map3dData[i].coordinateX,map3dData[i].coordinateY,map3dData[i].colorGroup));
+	};
+	viewControl.map3d_Style=map3d;
+};
+creat3dMap();
