@@ -1221,6 +1221,7 @@ var map3dData = [
 		colorGroup:1,
 	},
 	/*内部建筑*/
+	/*
 	{
 		cubeLong:800,
 		cubeWidth:5,
@@ -1253,6 +1254,7 @@ var map3dData = [
 		coordinateY:500,
 		colorGroup:1,
 	},
+	*/
 	/*一角*/
 	{
 		cubeLong:50,
@@ -1288,11 +1290,11 @@ var map3dData = [
 	},
 	/*一角*/
 	{
-		cubeLong:10,
-		cubeWidth:10,
-		cubeHeight:150,
-		coordinateX:750,//中心点：1000-100（基础）-Long/2，
-		coordinateY:800,//中心点：1000-100（基础）-Width/2，
+		cubeLong:15,
+		cubeWidth:15,
+		cubeHeight:90,
+		coordinateX:860,//中心点：1000-100（基础）-Long/2，
+		coordinateY:860,//中心点：1000-100（基础）-Width/2，
 		colorGroup:1,
 	},
 	{
@@ -1301,6 +1303,218 @@ var map3dData = [
 		cubeHeight:80,
 		coordinateX:780,//中心点：1000-100（基础）-Long/2，
 		coordinateY:830,//中心点：1000-100（基础）-Width/2，
+		colorGroup:1,
+	},
+	/*一角*/
+	{
+		cubeLong:150,
+		cubeWidth:100,
+		cubeHeight:80,
+		coordinateX:200,//中心点：100（基础）-Long/2，
+		coordinateY:830,//中心点：1000-100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:140,
+		cubeWidth:90,
+		cubeHeight:90,
+		coordinateX:200,//中心点：100（基础）-Long/2，
+		coordinateY:830,//中心点：1000-100（基础）-Width/2，
+		colorGroup:1,
+	},
+	/*一角*/
+	{
+		cubeLong:50,
+		cubeWidth:150,
+		cubeHeight:5,
+		coordinateX:870,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:150,
+		cubeHeight:5,
+		coordinateX:810,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:150,
+		cubeHeight:5,
+		coordinateX:750,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:150,
+		cubeHeight:5,
+		coordinateX:690,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	/*一边*/
+	{
+		cubeLong:100,
+		cubeWidth:150,
+		cubeHeight:30,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:150,
+		cubeWidth:100,
+		cubeHeight:30,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:90,
+		cubeWidth:140,
+		cubeHeight:40,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:140,
+		cubeWidth:90,
+		cubeHeight:40,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:80,
+		cubeWidth:130,
+		cubeHeight:50,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:130,
+		cubeWidth:80,
+		cubeHeight:50,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:70,
+		cubeWidth:120,
+		cubeHeight:60,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:120,
+		cubeWidth:70,
+		cubeHeight:60,
+		coordinateX:500,//中心点：1000-100（基础）-Long/2，
+		coordinateY:185,//中心点：100（基础）-Width/2，
+		colorGroup:1,
+	},
+	/*一边*/
+	{
+		cubeLong:50,
+		cubeWidth:80,
+		cubeHeight:50,
+		coordinateX:155,//中心点：100（基础）+Long/2，
+		coordinateY:370,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:60,
+		cubeWidth:70,
+		cubeHeight:50,
+		coordinateX:155,//中心点：100（基础）+Long/2，
+		coordinateY:370,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:30,
+		cubeWidth:20,
+		cubeHeight:55,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:340,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:30,
+		cubeWidth:30,
+		cubeHeight:75,
+		coordinateX:145,//中心点：100（基础）+Long/2，
+		coordinateY:450,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:100,
+		cubeHeight:30,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:430,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:60,
+		cubeWidth:90,
+		cubeHeight:30,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:430,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:80,
+		cubeHeight:50,
+		coordinateX:155,//中心点：100（基础）+Long/2，
+		coordinateY:570,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:60,
+		cubeWidth:70,
+		cubeHeight:50,
+		coordinateX:155,//中心点：100（基础）+Long/2，
+		coordinateY:570,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:30,
+		cubeWidth:20,
+		cubeHeight:55,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:540,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:30,
+		cubeWidth:30,
+		cubeHeight:75,
+		coordinateX:145,//中心点：100（基础）+Long/2，
+		coordinateY:650,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:50,
+		cubeWidth:100,
+		cubeHeight:30,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:630,//中心点：100（基础）+Width/2，
+		colorGroup:1,
+	},
+	{
+		cubeLong:60,
+		cubeWidth:90,
+		cubeHeight:30,
+		coordinateX:235,//中心点：100（基础）+Long/2，
+		coordinateY:630,//中心点：100（基础）+Width/2，
 		colorGroup:1,
 	},
 ];

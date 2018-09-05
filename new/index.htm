@@ -371,7 +371,9 @@
 				-->
 				<!--人物交互面板(按钮组)-->
 				<div id="map3D" ng-controller="panel4" ng-mousedown="dragRotate($event)" ng-mouseup="dragRotateStop()" ng-mouseleave="dragRotateStop()" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4" style="width: 600px;height: 440px;">
+					<!--地图场景地板-->
 					<div class=" map3d-floor " ng-style="viewControl.map3dFloor_Style">
+						<!--地图场景装饰元素构成-->
 						<div ng-repeat="x in viewControl.map3d_Style" ng-style=" x.cube ">
 							<div ng-class="{'map3d-side2':x.color==1}" ng-style=" x.front ">
 							</div>
@@ -382,6 +384,12 @@
 							<div ng-class="{'map3d-side3':x.color==1}" ng-style=" x.left ">
 							</div>
 							<div ng-class="{'map3d-side1':x.color==1}" ng-style=" x.top ">
+							</div>
+						</div>
+						<!--交互元素展示-->
+						<div class="map3d-obj" style="">
+							<div class="map3d-obj1" style="transform:none;">
+								文字
 							</div>
 						</div>
 					</div>
