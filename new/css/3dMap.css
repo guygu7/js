@@ -1,11 +1,12 @@
 .map3d-floor {
-	left:200px;
-	width: 800px;
-	height: 800px;
+	left:-200px;
+	top:-200px;
+	width: 1000px;
+	height: 1000px;
 	background: rgba(156,148,126,0.5);
 	transform-origin: 50% 50%;
 	transform-style: preserve-3d;
-	transition: 0.8s;
+	transition: 0.6s;
 	position: absolute;
 	/*transform: rotateX(45deg) rotateZ(-30deg);*/
 }

@@ -39,49 +39,6 @@
 						start
 					</div>
 				</div>
-				<div class="panel4">
-					<div ng-mousedown="dragRotate($event)" ng-mouseup="dragRotateStop($event)" ng-mouseleave="dragRotateStop($event)" class=" map3d-floor " ng-style="viewControl.map3dFloor_Style">
-						<div ng-repeat="x in viewControl.map3d_Style" ng-style=" x.cube ">
-							<div ng-class="{'map3d-side2':x.color==1}" ng-style=" x.front ">
-							</div>
-							<div ng-class="{'map3d-side2':x.color==1}" ng-style=" x.back ">
-							</div>
-							<div ng-class="{'map3d-side1':x.color==1}" ng-style=" x.right ">
-							</div>
-							<div ng-class="{'map3d-side3':x.color==1}" ng-style=" x.left ">
-							</div>
-							<div ng-class="{'map3d-side1':x.color==1}" ng-style=" x.top ">
-							</div>
-						</div>
-					</div>
-					
-					<!--
-					<div class=" map3d-floor " style="transform: rotateX(45deg) rotateZ(-30deg);">
-						<div ng-repeat="x in 3dmapTest" class=" map3d-cube ">
-							<div class=" map3d-side2 map3d-front ">
-								1
-							</div>
-							<div class=" map3d-side2 map3d-back ">
-								2
-							</div>
-							<div class=" map3d-side1 map3d-right ">
-								3
-							</div>
-							<div class=" map3d-side3 map3d-left ">
-								4
-							</div>
-							
-							<div class=" map3d-side1  map3d-top ">
-								5
-							</div>
-							<div class=" map3d-side1  map3d-bottom ">
-								6
-							</div>
-						</div>
-					</div>	
-					-->
-				</div>
-				
 			</div>
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
@@ -413,8 +370,21 @@
 				</div>
 				-->
 				<!--人物交互面板(按钮组)-->
-				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4" style="width: 600px;height: 400px;">
-					<div style="top:50;left:50px;background-color:rgba(151,143,121,0.7)"></div>
+				<div id="map3D" ng-controller="panel4" ng-mousedown="dragRotate($event)" ng-mouseup="dragRotateStop()" ng-mouseleave="dragRotateStop()" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4" style="width: 600px;height: 440px;">
+					<div class=" map3d-floor " ng-style="viewControl.map3dFloor_Style">
+						<div ng-repeat="x in viewControl.map3d_Style" ng-style=" x.cube ">
+							<div ng-class="{'map3d-side2':x.color==1}" ng-style=" x.front ">
+							</div>
+							<div ng-class="{'map3d-side2':x.color==1}" ng-style=" x.back ">
+							</div>
+							<div ng-class="{'map3d-side3':x.color==1}" ng-style=" x.right ">
+							</div>
+							<div ng-class="{'map3d-side3':x.color==1}" ng-style=" x.left ">
+							</div>
+							<div ng-class="{'map3d-side1':x.color==1}" ng-style=" x.top ">
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!--方向盘-->
@@ -1793,40 +1763,6 @@
 				$scope.buttonStart = function(){
 					sceneMainShow(data.startText);
 				};
-				
-				var dragRotateFn;
-				$scope.dragRotate = function($event){
-					//记录原始鼠标地址
-					var mouseX = $event.x;
-					var mouseY = $event.y;
-					dragRotateFn = function (ev) {
-						//获取原始rotateZ
-						var numZ = Number(viewControl.map3dFloor_Style.transform.match(/rotateZ\([-]*[0-9]*/)[0].substring(8));
-						var numY = Number(viewControl.map3dFloor_Style.transform.match(/rotateX\([-]*[0-9]*/)[0].substring(8));
-						var temp = (mouseX - ev.x)*0.5+numZ;
-						var temp2 = (mouseY - ev.y)*0.5+numY;
-						if (temp2<30) {
-							temp2=30;
-						} else if(temp2>70){
-							temp2=70;
-						};
-						//记录变动后的mouseX
-						mouseX = ev.x;
-						mouseY = ev.y;
-						viewControl.map3dFloor_Style.transform = "rotateX("+temp2+"deg) rotateZ("+temp+"deg)";
-						$scope.$apply();
-					};
-					//绑定事件，鼠标移动时变化style
-					$event.target.addEventListener("mousemove",dragRotateFn);
-				};
-				$scope.dragRotateStop = function($event){
-					console.info("解绑完成~！");
-					//解绑事件
-					$event.target.removeEventListener("mousemove",dragRotateFn);
-					$timeout(function() {
-						$event.target.removeEventListener("mousemove",dragRotateFn);
-					},300);
-				};
 			});
 			
 			app.controller("scene-main", function($scope, $rootScope, $timeout) {
@@ -2475,6 +2411,40 @@
 						return currentInteractiveObject.getActions();
 					};
 					//viewDataModel.menu.tittleText = currentInteractiveObject.getName();
+				};
+				
+				
+				var dragRotateFn;
+				$scope.dragRotate = function($event){
+					//记录原始鼠标地址
+					var mouseX = $event.x;
+					var mouseY = $event.y;
+					dragRotateFn = function (ev) {
+						//获取原始rotateZ
+						var numZ = Number(viewControl.map3dFloor_Style.transform.match(/rotateZ\([-]*[0-9]*/)[0].substring(8));
+						var numY = Number(viewControl.map3dFloor_Style.transform.match(/rotateX\([-]*[0-9]*/)[0].substring(8));
+						var temp = (mouseX - ev.x)*0.5+numZ;
+						var temp2 = (mouseY - ev.y)*0.5+numY;
+						if (temp2<30) {
+							temp2=30;
+						} else if(temp2>70){
+							temp2=70;
+						};
+						//记录变动后的mouseX
+						mouseX = ev.x;
+						mouseY = ev.y;
+						viewControl.map3dFloor_Style.transform = "rotateX("+temp2+"deg) rotateZ("+temp+"deg)";
+						$scope.$apply();
+					};
+					//判断是右键按下
+					if ($event.button==2) {
+						//绑定事件，鼠标移动时变化style
+						document.getElementById("map3D").addEventListener("mousemove",dragRotateFn);
+					};
+				};
+				$scope.dragRotateStop = function(){
+					//解绑事件
+					document.getElementById("map3D").removeEventListener("mousemove",dragRotateFn);
 				};
 			});
 			
