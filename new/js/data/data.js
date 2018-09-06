@@ -118,9 +118,9 @@ var data = {
 		],
 	},],
 	/**
-	 * 场景数据 
+	 * 公开场景数据 
 	 */
-	domains:[
+	publicMaps:[
 		/**
 		 * 开场局部区域（小场景） 
 		 */
@@ -184,6 +184,13 @@ var data = {
 					//itemInfo:[],
 				},
 				{
+					name:"移动-至大地图",
+					actions:[
+						{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
+						{name:"去大地图",type:"move",content:"移动-至大地图",target:"testMap",targetX:5,targetY:5},
+					],
+				},
+				{
 					name:"对战对象",
 					hp:150,
 					maxHp:900,
@@ -235,6 +242,9 @@ var data = {
 			],
 		},
 	],
+	/**
+	 * 大地图
+	 */
 };
 data.roles[0].items[0].totalNum=1;
 data.roles[0].items[1].totalNum=1;
@@ -247,3 +257,20 @@ data.roles[0].items[7].totalNum=9;
 data.roles[0].items[8].totalNum=9;
 data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;
 data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;
+
+/*构成大地图*/
+function newMap (mapName,mapSign,x,y){
+	var map = [];
+	for (var i=0; i < x; i++) {
+		for (var i1=0; i1 < y; i1++) {
+			var domainObj = {
+				name:mapName,
+				signId:mapSign,
+				x:i+1,
+				y:i1+1,
+			};
+		};
+	};
+}
+data["testMap"] = newMap("测试大地图","testMap",10,10);
+

@@ -387,9 +387,16 @@
 							</div>
 						</div>
 						<!--交互元素展示-->
-						<div class="map3d-obj" style="">
-							<div class="map3d-obj1" style="transform:none;">
-								文字
+						<div ng-repeat="x in viewDataModel.panel4.buttonElements()" class="map3d-button" ng-style="viewControl.map3d_button{{$index+1}}">
+							<div class="map3d-obj" >
+							</div>
+							<div ng-click="onClick($event,$index)" class="button2" ng-style="viewControl.map3dButton_Style">
+								<div class="button2-background"></div>
+								<div class="button2-background2"></div>
+								<div class="button2-background3"></div>
+								<div class="button2-content">
+									{{x.getName()}}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1575,9 +1582,14 @@
 			 */
 			var publicItemInfo = loadData(dictionaryData.itemInfo,"item");
 			/**
-			 * 暂时仅为一个domain数组 
+			 * 公开场景数据 domain数组 
 			 */
-			var dataDomainsObj = loadData(data.domains,"domain");
+			var dataDomainsObj = loadData(data.publicMaps,"domain");
+			/**
+			 * 大地图数据 domain数组 
+			 */
+			var testMap = loadData(data.testMap,"domain");
+			in
 			/**
 			 * 暂时仅为只有一个role对象的数组
 			 */
@@ -1868,7 +1880,7 @@
 				/**
 				 * 列表菜单（自动大小_带箭头）显示命令（需传入点击目标）
 				 */
-				menuShow = function(target){
+				menuShow = function(target,model){
 					//获取层叠关系数组中最大值，并+1存入
 					var maxZIndex = getMaxZIndex(100);
 					viewControl.zIndexList["panel4"] = maxZIndex+2;
@@ -1883,11 +1895,17 @@
 					var tempb = target;
 					var totalTop = 0;
 					var totalLeft = tempb.offsetWidth;
-					while (tempa!=tempb){
-						totalTop += tempb.offsetTop;
-						totalLeft += tempb.offsetLeft;
-						tempb = tempb.parentNode;
+					if (model=="3d") {
+						totalTop = target.y-65;
+						totalLeft = target.x-35;
+					}else{
+						while (tempa!=tempb){
+							totalTop += tempb.offsetTop;
+							totalLeft += tempb.offsetLeft;
+							tempb = tempb.parentNode;
+						};
 					};
+					
 					if(totalLeft>1150){totalLeft=1150;};
 					viewControl.menu_Style.top = totalTop + "px";
 					viewControl.menu_Style.left = totalLeft-20 + "px";
@@ -2405,13 +2423,14 @@
 				$scope.onClick = function($event,index) {
 					//处理传入对象，判断 class= button2
 					var tempt = $event.target.parentNode;
-					while("button2 ng-scope"!=tempt.className){
+					while("button2"!=tempt.className){
 						tempt = tempt.parentNode;
 					}
+					console.info($event);
 					//标记交互类型为交互对象
 					viewControl.currentInteractiveType = "interactiveObject";
 					//传入点击目标（用于定位），显示列表菜单
-					menuShow(tempt);
+					menuShow($event,"3d");
 					//标记当前交互对象
 					currentInteractiveObject = currentDomain.getInteractiveObject(index);
 					//加载交互对象动作数据
@@ -2442,6 +2461,7 @@
 						mouseX = ev.x;
 						mouseY = ev.y;
 						viewControl.map3dFloor_Style.transform = "rotateX("+temp2+"deg) rotateZ("+temp+"deg)";
+						viewControl.map3dButton_Style.transform = "translateX(-50%) translateY(-50%) translateZ(50px) rotateZ("+(-temp)+"deg) rotateX("+(-temp2)+"deg)";
 						$scope.$apply();
 					};
 					//判断是右键按下
@@ -2508,16 +2528,28 @@
 						//对话动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="move"){
+						in
 						flag=true;
 						//判断为移动，场景切换
 						sceneMainViewDataClear();//视图数据清除
-						for (var i=0; i < dataDomainsObj.length; i++) {
-							if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
-								sceneMainDataLoad(dataDomainsObj[i]);
-								panelTyping(currentAction.getContent());
-								break;
+						//读取到移动目标(即signId)
+						currentAction.getTarget();
+						//读取坐标
+						currentAction.getTargetX();
+						currentAction.getTargetY();
+						//判断是大地图 或是 公开场景
+						if(currentAction.getTarget()=="testMap"){
+							for (var i=0; i < Things.length; i++) {
 							};
-						};
+						}else{
+							for (var i=0; i < dataDomainsObj.length; i++) {
+								if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
+									sceneMainDataLoad(dataDomainsObj[i]);
+									panelTyping(currentAction.getContent());
+									break;
+								};
+							};
+						}
 						//移动动作完成，清空当前交互动作
 						currentAction = null;
 						//任务校验

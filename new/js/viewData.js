@@ -504,7 +504,30 @@ var viewControl = {
 		"left":60+"px",
 		"opacity" : 0,
 	},
-	
+	/**
+	 * 按钮组在3d地图的定位
+	 */
+	map3d_button1:{
+		"transform": "translateX(500px) translateY(520px) translateZ(00px)",
+	},
+	map3d_button2:{
+		"transform": "translateX(300px) translateY(320px) translateZ(00px)",
+	},
+	map3d_button3:{
+		"transform": "translateX(400px) translateY(320px) translateZ(00px)",
+	},
+	map3d_button4:{
+		"transform": "translateX(500px) translateY(320px) translateZ(00px)",
+	},
+	map3d_button5:{
+		"transform": "translateX(600px) translateY(320px) translateZ(00px)",
+	},
+	map3d_button6:{
+		"transform": "translateX(700px) translateY(320px) translateZ(00px)",
+	},
+	map3d_button7:{
+		"transform": "translateX(300px) translateY(520px) translateZ(00px)",
+	},
 	/*----------战斗场景面板组件----------*/
 	panelFightBarColour:function(){
 		sumMaxHp=dataRoleObj[0].getMaxHp();
@@ -576,6 +599,7 @@ var viewControl = {
 	quickMenuBagMaskLayer_Style:{},
 	map3dFloor_Style:{"transform":"rotateX(45deg) rotateZ(-30deg)"},
 	map3d_Style:null,
+	map3dButton_Style:{"transform":"translateX(-50%) translateY(-50%) translateZ(50px) rotateZ(30deg) rotateX(-45deg)"},
 };
 var map3dData = [
 	{

@@ -733,6 +733,25 @@ DataModleFactory = {
 			return this;
 		};
 		/**
+		 * 坐标
+		 */
+		var x;
+		domain.getX = function() {
+			return x;
+		};
+		domain.setX = function(pram) {
+			x = pram;
+			return this;
+		};
+		var y;
+		domain.getY = function() {
+			return y;
+		};
+		domain.setY = function(pram) {
+			y = pram;
+			return this;
+		};
+		/**
 		 * Type Array [class InteractiveObject]
 		 * 可交互对象
 		 */
@@ -1655,6 +1674,25 @@ DataModleFactory = {
 			return target;
 		};
 		action.setTarget = function(pram) {
+			target = pram;
+			return this;
+		};
+		/**
+		 * 移动类型跳转目标的坐标
+		 */
+		var targetX;
+		action.getTargetX = function() {
+			return targetX;
+		};
+		action.setTargetX = function(pram) {
+			targetX = pram;
+			return this;
+		};
+		var targetY;
+		action.getTargetY = function() {
+			return targetY;
+		};
+		action.setTargetY = function(pram) {
 			target = pram;
 			return this;
 		};
