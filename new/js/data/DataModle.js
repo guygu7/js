@@ -1693,7 +1693,7 @@ DataModleFactory = {
 			return targetY;
 		};
 		action.setTargetY = function(pram) {
-			target = pram;
+			targetY = pram;
 			return this;
 		};
 		return action;

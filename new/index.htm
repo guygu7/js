@@ -1585,11 +1585,15 @@
 			 * 公开场景数据 domain数组 
 			 */
 			var dataDomainsObj = loadData(data.publicMaps,"domain");
+			
+			
 			/**
-			 * 大地图数据 domain数组 
+			 * 大地图数据 domain数组 (一个元素为一整张大地图)
 			 */
-			var testMap = loadData(data.testMap,"domain");
-			in
+			var mapDomainsObj = [];
+			//封装一个大地图
+			mapDomainsObj.push(loadData(data[mapIds[0].mapId],"domain"));
+			
 			/**
 			 * 暂时仅为只有一个role对象的数组
 			 */
@@ -2528,7 +2532,6 @@
 						//对话动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="move"){
-						in
 						flag=true;
 						//判断为移动，场景切换
 						sceneMainViewDataClear();//视图数据清除
@@ -2538,12 +2541,29 @@
 						currentAction.getTargetX();
 						currentAction.getTargetY();
 						//判断是大地图 或是 公开场景
-						if(currentAction.getTarget()=="testMap"){
-							for (var i=0; i < Things.length; i++) {
+						if(currentAction.getTarget().substring(0,3)=="map"){//截取到map开头，则是大地图模式
+							//遍历判断所有大地图
+							for (var i=0; i < mapDomainsObj.length; i++) {
+								console.info(mapDomainsObj);
+								//判断是目标大地图
+								if(mapDomainsObj[i][0].getSignId()==currentAction.getTarget()){
+									//遍历该大地图中区域domain对象
+									for (var i1=0; i1 < mapDomainsObj[i].length; i1++) {
+										//判断区域domain对象坐标
+										if(mapDomainsObj[i][i1].getX()==currentAction.getTargetX()&&mapDomainsObj[i][i1].getY()==currentAction.getTargetY()){
+											//读取区域数据
+											sceneMainDataLoad(mapDomainsObj[i][i1]);
+											panelTyping(currentAction.getContent());
+											break;
+										}
+									};
+									break;
+								}
 							};
 						}else{
 							for (var i=0; i < dataDomainsObj.length; i++) {
 								if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
+									//读取区域数据
 									sceneMainDataLoad(dataDomainsObj[i]);
 									panelTyping(currentAction.getContent());
 									break;

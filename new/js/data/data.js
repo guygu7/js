@@ -187,7 +187,7 @@ var data = {
 					name:"移动-至大地图",
 					actions:[
 						{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
-						{name:"去大地图",type:"move",content:"移动-至大地图",target:"testMap",targetX:5,targetY:5},
+						{name:"去大地图",type:"move",content:"移动-至大地图",target:"map",targetX:5,targetY:5},
 					],
 				},
 				{
@@ -255,10 +255,10 @@ data.roles[0].items[5].totalNum=9;
 data.roles[0].items[6].totalNum=9;
 data.roles[0].items[7].totalNum=9;
 data.roles[0].items[8].totalNum=9;
-data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;
-data.domains[1].interactiveObjects[2].items[0].dropChance=0.8;
+data.publicMaps[1].interactiveObjects[3].items[0].dropChance=0.8;
+data.publicMaps[1].interactiveObjects[3].items[0].dropChance=0.8;
 
-/*构成大地图*/
+/*构成大地图（随机规则未完成）*/
 function newMap (mapName,mapSign,x,y){
 	var map = [];
 	for (var i=0; i < x; i++) {
@@ -269,8 +269,46 @@ function newMap (mapName,mapSign,x,y){
 				x:i+1,
 				y:i1+1,
 			};
+			map.push(domainObj);
 		};
 	};
-}
-data["testMap"] = newMap("测试大地图","testMap",10,10);
+	return map;
+};
+//记录所有大地图map的命名集合
+var mapIds = [
+	{
+		mapName:"测试大地图",
+		mapId:"map",
+	},
+];
+
+//执行生成map的数据
+data[mapIds[0].mapId] = newMap(mapIds[0].mapName,mapIds[0].mapId,10,10);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
