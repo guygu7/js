@@ -357,7 +357,7 @@
 				</div>
 
 				<!--人物交互面板(按钮组)-->
-				<!--
+				<!--旧
 				<div ng-controller="panel4" ng-hide="viewControl.display.panel4Hide" ng-style="viewControl.panel4_Style" class="panel4">
 					<div ng-click="onClick($event,$index)" ng-repeat="x in viewDataModel.panel4.buttonElements()" class="button2">
 						<div class="button2-background"></div>
@@ -386,6 +386,19 @@
 							<div ng-class="{'map3d-side1':x.color==1}" ng-style=" x.top ">
 							</div>
 						</div>
+						<div class="map3d-decorate1"></div>
+						<div class="map3d-decorate2"></div>
+						<div class="map3d-decorate3"></div>
+						<div class="map3d-decorate4"></div>
+						<div class="map3d-decorate5"></div>
+						<div class="map3d-decorate6"></div>
+						<div class="map3d-decorate7"></div>
+						<div class="map3d-decorate8"></div>
+						<div class="map3d-decorate9"></div>
+						<div class="map3d-decorate10"></div>
+						<!--
+						<div class="map3d-decorate5"></div>
+						-->
 						<!--交互元素展示-->
 						<div ng-repeat="x in viewDataModel.panel4.buttonElements()" class="map3d-button" ng-style="viewControl.map3d_button{{$index+1}}">
 							<div class="map3d-obj" >
@@ -401,7 +414,7 @@
 						</div>
 					</div>
 				</div>
-
+				
 				<!--方向盘-->
 				<div ng-controller="steeringWheel" ng-hide="viewControl.display.steeringWheelHide" ng-style="viewControl.steeringWheel_Style" class="steeringWheel">
 					<div ng-repeat="x in arrows" ng-class="{'steeringWheel-upperArrow':{{x}}=='1','steeringWheel-rightArrow':{{x}}=='2','steeringWheel-lowerArrow':{{x}}=='3','steeringWheel-leftArrow':{{x}}=='4'}">
@@ -1047,7 +1060,14 @@
 				</div>
 				<!--任务信息面板-->
 				<div ng-hide="viewControl.display.missionInfoHide" ng-style="viewControl.missionInfo_Style" ng-rightclick="missionSelectMaskLayerClick()" class="mission-info">
-					{{viewDataModel.missionSelect.content()}}
+					<div class="mission-info-content">{{viewDataModel.missionSelect.content()}}</div>
+					<div class="mission-info-complete">
+						<div ng-repeat="x in viewDataModel.missionSelect.complete()" class="mission-info-complete1"></div>
+						<div class="mission-info-complete1"></div>
+					</div>
+					<div class="mission-info-reward">
+						
+					</div>
 				</div>
 				
 			</div>

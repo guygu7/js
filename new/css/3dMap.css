@@ -95,6 +95,141 @@
 	transform: translateX(-50%) translateY(-50%) rotateX(-90deg) rotateY(-90deg) translateZ(50px);
 }
 
+/*其余固定地面装饰*/
+.map3d-decorate1,.map3d-decorate2,.map3d-decorate3,.map3d-decorate4,.map3d-decorate5
+,.map3d-decorate6,.map3d-decorate7,.map3d-decorate8,.map3d-decorate9,.map3d-decorate10{
+	transform-origin: 50% 50%;
+	transform-style: preserve-3d;
+	position: absolute;
+}
+.map3d-decorate1{
+	width: 200px;
+	height: 10px;
+	background: rgb(92,87,76);
+	transform: translateX(100px) translateY(495px) translateZ(0px);
+}
+.map3d-decorate2{
+	width: 200px;
+	height: 10px;
+	background: rgb(92,87,76);
+	transform: translateX(700px) translateY(495px) translateZ(0px);
+}
+.map3d-decorate3{
+	width: 10px;
+	height: 200px;
+	background: rgb(92,87,76);
+	transform: translateX(495px) translateY(100px) translateZ(0px);
+}
+.map3d-decorate4{
+	width: 10px;
+	height: 200px;
+	background: rgb(92,87,76);
+	transform: translateX(495px) translateY(700px) translateZ(0px);
+}
+.map3d-decorate5{
+	width: 390px;
+	height: 390px;
+	border: rgba(92,87,76) solid 10px;
+	border-radius: 300px;
+	transform: translateX(295px) translateY(295px) translateZ(0px);
+}
+/*荧光效果*/
+.map3d-decorate6{
+	width: 200px;
+	height: 2px;
+	background:#6cc3fe;
+	animation: twinkle 6s linear infinite;
+	transform: translateX(100px) translateY(499px) translateZ(0px);
+}
+.map3d-decorate7{
+	width: 200px;
+	height: 2px;
+	background:#6cc3fe;
+	animation: twinkle 6s linear infinite;
+	transform: translateX(700px) translateY(499px) translateZ(0px);
+}
+.map3d-decorate8{
+	width: 2px;
+	height: 200px;
+	background:#6cc3fe;
+	animation: twinkle 6s linear infinite;
+	transform: translateX(499px) translateY(100px) translateZ(0px);
+}
+.map3d-decorate9{
+	width: 2px;
+	height: 200px;
+	background:#6cc3fe;
+	animation: twinkle 6s linear infinite;
+	transform: translateX(499px) translateY(700px) translateZ(0px);
+}
+.map3d-decorate10{
+	width: 398px;
+	height: 398px;
+	border: #6cc3fe solid 2px;
+	border-radius: 300px;
+	animation: twinkle2 6s linear infinite;
+	transform: translateX(299px) translateY(299px) translateZ(0px);
+}
+
+@keyframes twinkle{
+	0% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1);
+	}
+	20% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1);
+	}
+	47% {
+		opacity:1;
+		box-shadow:0 1px 20px rgba(59,255,255,1);
+	}
+	53% {
+		opacity:1;
+		box-shadow:0 1px 20px rgba(59,255,255,1);
+	}
+	80% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1);
+	}
+	100% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1);
+	}
+}
+@keyframes twinkle2{
+	0% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1),
+		0 1px 2px rgba(255,255,255,0.1) inside;
+	}
+	20% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1),
+		0 1px 2px rgba(255,255,255,0.1) inside;
+	}
+	47% {
+		opacity:1;
+		box-shadow:0 1px 20px rgba(59,255,255,1),
+		0 1px 20px rgba(59,255,255,1) inside;
+	}
+	53% {
+		opacity:1;
+		box-shadow:0 1px 20px rgba(59,255,255,1),
+		0 1px 20px rgba(59,255,255,1) inside;
+	}
+	80% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1),
+		0 1px 2px rgba(255,255,255,0.1) inside;
+	}
+	100% {
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1),
+		0 1px 2px rgba(255,255,255,0.1) inside;
+	}
+}
+
 /*交互对象标识*/
 .map3d-obj {
 	width: 10px;
@@ -110,4 +245,5 @@
 .map3d-button{
 	transform-origin: 50% 50%;
 	transform-style: preserve-3d;
+	position: absolute;
 }
