@@ -145,7 +145,7 @@ var viewDataModel = {
 		/**
 		 * 任务
 		 */
-		:function(){return currentMission.getCompleteItems();},
+		completeItems:function(){return currentMission.getCompleteItems();},
 	},
 	/*------------------战斗场景组件视图数据------------------*/
 	/**

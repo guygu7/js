@@ -631,7 +631,7 @@ DataModleFactory = {
 		role.getMission = function(num){
 			return missions[num];
 		};
-		role.getMissions = function(pram){
+		role.getMissions = function(pram1,pram2,pram3,pram4,pram5){
 			var tempMissions = missions.slice(0);
 			//pram==MISSION.STATUS.accept||pram==MISSION.STATUS.unAccept||pram==MISSION.STATUS.ongoing||pram==MISSION.STATUS.completed||pram==MISSION.STATUS.failed
 			if(typeof pram1 == "string"&&pram1!=""){
@@ -1798,6 +1798,7 @@ DataModleFactory = {
 			content = pram;
 			return this;
 		};
+		
 		/**
 		 * 堆叠数量 
 		 */
@@ -1818,7 +1819,21 @@ DataModleFactory = {
 		};
 		
 		/**
-		 * 掉落概率 
+		 * 当前拥有数量，任务对象专用
+		 */
+		var haveNum=0;
+		item.getHaveNum = function() {
+			return haveNum;
+		};
+		item.setHaveNum = function(pram) {
+			if(!isNaN(Number(pram))){
+				haveNum = Number(pram);
+			}
+			return this;
+		};
+		
+		/**
+		 * 掉落概率
 		 */
 		var dropChance=0;
 		item.getDropChance = function() {
@@ -2721,7 +2736,7 @@ DataModleFactory = {
 		mission.checkTrigger = function(){
 			//完成所需物品条件校验
 			var checkItems = true;
-			roleItems = dataRoleObj[0].getItems();
+			var roleItems = dataRoleObj[0].getItems();
 			//首先判断有需要物品的条件
 			if(triggerItems.length>0){
 				//其次判断角色拥有物品
@@ -2734,8 +2749,9 @@ DataModleFactory = {
 						for (var i1=0; i1 < roleItems.length; i1++) {
 							//对比出同种物品
 							if(compareItem(triggerItems[i],roleItems[i1])){
+								triggerItems[i].setHaveNum(roleItems[i1].getTotalNum());
 								//判断数量是否达标
-								if(Number(items[i2].getTotalNum())>=Number(tempItems[i1].getTotalNum())){
+								if(Number(roleItems[i1].getTotalNum())>=Number(triggerItems[i].getTotalNum())){
 									//数量达标,返回true(checkItems不做变更)
 									flag = true;
 								}else{
@@ -2760,7 +2776,7 @@ DataModleFactory = {
 			
 			//完成所需拥有技能校验
 			var checkSkills = true;
-			roleSkills = dataRoleObj[0].getItems();
+			roleSkills = dataRoleObj[0].getSkills();
 			//首先判断有需要拥有技能的条件
 			if(triggerSkills.length>0){
 				//其次判断角色有技能
@@ -2854,7 +2870,7 @@ DataModleFactory = {
 		mission.checkComplete = function(){
 			//完成所需物品条件校验
 			var checkItems = true;
-			roleItems = dataRoleObj[0].getItems();
+			var roleItems = dataRoleObj[0].getItems();
 			//首先判断有需要物品的条件
 			if(completeItems.length>0){
 				//其次判断角色拥有物品
@@ -2867,8 +2883,9 @@ DataModleFactory = {
 						for (var i1=0; i1 < roleItems.length; i1++) {
 							//对比出同种物品
 							if(compareItem(completeItems[i],roleItems[i1])){
+								completeItems[i].setHaveNum(roleItems[i1].getTotalNum());
 								//判断数量是否达标
-								if(Number(items[i2].getTotalNum())>=Number(tempItems[i1].getTotalNum())){
+								if(Number(roleItems[i1].getTotalNum())>=Number(triggerItems[i].getTotalNum())){
 									//数量达标,返回true(checkItems不做变更)
 									flag = true;
 								}else{
@@ -2893,7 +2910,7 @@ DataModleFactory = {
 			
 			//完成所需拥有技能校验
 			var checkSkills = true;
-			roleSkills = dataRoleObj[0].getItems();
+			roleSkills = dataRoleObj[0].getSkills();
 			//首先判断有需要拥有技能的条件
 			if(completeSkills.length>0){
 				//其次判断角色有技能

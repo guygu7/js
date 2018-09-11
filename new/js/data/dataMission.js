@@ -92,7 +92,7 @@ dictionaryData.mission={
 	 */
 	none:{
 		name:"无任务",
-		content:"当前没有接受任务",
+		content:"",
 		status:MISSION.STATUS.unAccept,//状态:不可接取
 		display:true,//是否可见
 	}

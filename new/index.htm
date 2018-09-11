@@ -1062,7 +1062,9 @@
 				<div ng-hide="viewControl.display.missionInfoHide" ng-style="viewControl.missionInfo_Style" ng-rightclick="missionSelectMaskLayerClick()" class="mission-info">
 					<div class="mission-info-content">{{viewDataModel.missionSelect.content()}}</div>
 					<div class="mission-info-complete">
-						<div ng-repeat="x in viewDataModel.missionSelect.complete()" class="mission-info-complete1"></div>
+						<div ng-repeat="x in viewDataModel.missionSelect.completeItems()" class="mission-info-complete1">
+							{{x.getName()}} : {{x.getHaveNum()}}/{{x.getTotalNum()}}
+						</div>
 						<div class="mission-info-complete1"></div>
 					</div>
 					<div class="mission-info-reward">
@@ -1407,6 +1409,7 @@
 						<!--buff展示-->
 						<div class="panelFight-lattice" style="left: 20px;top: -30px;">
 							<div ng-repeat="x in viewDataModel.battle.roleBuffs()" class="panelFight-lattice-buffimg">
+								<div>↑</div>
 								<div class="panelFight-lattice-buffimg-roundNum">{{x.getRound()}}</div>
 								<div class="panelFight-lattice-buffimg-info">{{x.getName()}}</div>
 							</div>
@@ -2731,11 +2734,15 @@
 						flag=true;
 						viewDataModel.missionSelect.elements=function(){
 							//只读取  可接取:accept|进行中:ongoing|可交付:deliverable
-							var missionArray = currentInteractiveObject.getMissions(
-								MISSION.STATUS.accept
-								,MISSION.STATUS.ongoing
-								,MISSION.STATUS.deliverable);
-							return missionArray;
+							if (currentInteractiveObject!=null){
+								var missionArray = currentInteractiveObject.getMissions(
+									MISSION.STATUS.accept
+									,MISSION.STATUS.ongoing
+									,MISSION.STATUS.deliverable);
+								return missionArray;
+							}else{
+								return null;
+							}
 						};
 						mainHide();
 						missionSelectShow();
@@ -3826,7 +3833,10 @@
 					dataRoleObj[0].setStatus("checkMission");
 					viewDataModel.missionSelect.elements=function(){
 						//这里全读取(只读取  可接取:accept|进行中:ongoing|可交付:deliverable)
-						var missionArray = dataRoleObj[0].getMissions();
+						var missionArray = dataRoleObj[0].getMissions(
+									MISSION.STATUS.accept
+									,MISSION.STATUS.ongoing
+									,MISSION.STATUS.deliverable);
 						return missionArray;
 					};
 					$timeout(function() {
@@ -3903,6 +3913,7 @@
 						//判断为可交付deliverable，修改为已完成
 						currentMission.setStatus(MISSION.STATUS.completed);
 						panelTyping("已完成:  "+currentMission.getName());
+						currentMission = noneMissionObj;
 					}
 					confirmPanleHide();
 				};

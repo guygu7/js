@@ -101,6 +101,8 @@ var data = {
 			dictionaryData.skill.testBuff,
 			dictionaryData.skill.testBuff2,
 			dictionaryData.skill.testDeBuff,
+			//任务测试
+			dictionaryData.skill.example,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
@@ -113,6 +115,9 @@ var data = {
 			dictionaryData.item.testBuff,
 			dictionaryData.item.test2Att,
 			dictionaryData.item.test2DeBuff,
+			//任务测试
+			dictionaryData.item.example,
+			dictionaryData.item.example2,
 		],
 		missions:[
 		],
@@ -148,7 +153,7 @@ var data = {
 						["对话组合2一","对话组合2二","对话组合2三","对话组合2四",],
 					],*/
 					missions:[
-						dictionaryData.mission.example
+						dictionaryData.mission.example,
 					],
 					actions:[
 						{name:"对话",type:"talk",content:"对话内容"},
