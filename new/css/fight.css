@@ -102,7 +102,8 @@
 	width: 20px;
 	height: 20px;
 	margin:0px 0px 0px 5px;
-	border: 1px solid rgb(154,150,132);
+	border: 1px solid rgb(100,100,100);
+	background:rgba(225,225,225,0.8);
 	display: inline-block;
 	position:relative;
 }
@@ -131,6 +132,55 @@
 	overflow:hidden;
 	position:absolute;
 }
+/*增益上箭头图标*/
+.panelFight-lattice-buffimg-upimg{
+	top:2px;
+	position:absolute;
+}
+.panelFight-lattice-buffimg-upimg:before{
+	content: "";
+	top:5px;
+	left:3px;
+	width:4px;
+	height:8px;
+	background: rgb(48,124,218);
+	position:absolute;
+}
+.panelFight-lattice-buffimg-upimg:after{
+	content: "";
+	top:-5px;
+	left:0px;
+	width:0px;
+	height:0px;
+	border: 5px solid transparent;
+	border-bottom-color: rgb(48,124,218);
+	position:absolute;
+}
+/*减益下箭头图标*/
+.panelFight-lattice-buffimg-downimg{
+	top:2px;
+	position:absolute;
+}
+.panelFight-lattice-buffimg-downimg:before{
+	content: "";
+	top:0px;
+	left:3px;
+	width:4px;
+	height:8px;
+	background:rgb(225,1,28);
+	position:absolute;
+}
+.panelFight-lattice-buffimg-downimg:after{
+	content: "";
+	top:8px;
+	left:0px;
+	width:0px;
+	height:0px;
+	border: 5px solid transparent;
+	border-top-color: rgb(225,1,28);
+	position:absolute;
+}
+
 /*-----战斗数据显示区域------*/
 .panelFight-battleInfo{
 	width:550px;
@@ -224,3 +274,4 @@
 	background:rgb(155,150,125);
 	color: rgb(252,245,216);
 }
+

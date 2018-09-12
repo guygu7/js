@@ -69,7 +69,35 @@ DataModleFactory = {
 			status2 = pram;
 			return this;
 		};
-		
+		/**
+		 * 最大包裹空间
+		 */
+		var bagSpace=10;
+		role.getBagSpace = function() {
+			return bagSpace;
+		};
+		role.setBagSpace = function(pram) {
+			if(!isNaN(Number(pram))){
+				bagSpace = Number(pram);
+			}
+			return this;
+		};
+		/**
+		 * 获取当前已使用空间
+		 */
+		role.getOccupySpace = function() {
+			var num = 0;
+			for (var i=0; i < items.length; i++) {
+				if(Number(items[i].getTotalNum())!=NaN){
+					if(Number(items[i].getBagSpace())!=NaN){
+						num += (Number(items[i].getTotalNum())*Number(items[i].getBagSpace()));
+					}else{
+						num += Number(items[i].getTotalNum());
+					}
+				}
+			};
+			return num;
+		};
 		
 		/**
 		 * 计算属性数值
@@ -1733,6 +1761,21 @@ DataModleFactory = {
 			type2 = pram;
 			return this;
 		};
+		
+		/**
+		 * 占用包裹空间，默认1
+		 */
+		var bagSpace=1;
+		item.getBagSpace = function() {
+			return bagSpace;
+		};
+		item.setBagSpace = function(pram) {
+			if(!isNaN(Number(pram))){
+				bagSpace = Number(pram);
+			}
+			return this;
+		};
+		
 		/**
 		 * 属性
 		 */
@@ -2162,6 +2205,17 @@ DataModleFactory = {
 		};
 		buff.setName = function(pram) {
 			name = pram;
+			return this;
+		};
+		/**
+		 * buff图标
+		 */
+		var img;
+		buff.getImg = function() {
+			return img;
+		};
+		buff.setImg = function(pram) {
+			img = pram;
 			return this;
 		};
 		/**
@@ -3008,6 +3062,7 @@ function copyBuff(buff){
 	tempbuff = DataModleFactory.createBuff();
 	tempbuff.setBuffId(buff.getBuffId())
 			.setName(buff.getName())
+			.setImg(buff.getImg())
 			.setContent(buff.getContent())
 			.setType(buff.getType())
 			.setTarget(buff.getTarget())

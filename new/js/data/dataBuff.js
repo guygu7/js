@@ -56,6 +56,13 @@ var BUFF={
 		hit:"hit",//命中率hit的直接  增加量 或 减少量
 		hitPercent:"hitPercent",//命中率hit百分比的  增加量 或 减少量（不适用skill）
 	},
+	/**
+	 * 图标（暂时只区分增益减益）
+	 */
+	IMG:{
+		up:"up",
+		down:"down",
+	},
 };
 /**
  * 增益减益字典
@@ -64,6 +71,7 @@ dictionaryData.buff={
 	example:{
 		buffId:9999,
 		name:"增益减益示例",
+		img:BUFF.IMG.up,//使用增益减益图标  BUFF.IMG.down
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,//给对方附加:BUFF.TARGET.opponent,
 		attr:{
@@ -100,6 +108,7 @@ dictionaryData.buff={
 	testDeBuffAtt:{
 		buffId:10006,
 		name:"攻击力减少50",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.opponent,
 		attr:{att:-50,//攻击力att的直接 增加量 或 减少量
@@ -111,6 +120,7 @@ dictionaryData.buff={
 	testDeBuffMaxHpPercent:{
 		buffId:10005,
 		name:"MaxHp减少10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.opponent,
 		attr:{maxHpPercent:-0.1,//最大maxHp百分比的 增加量 或 减少量
@@ -123,6 +133,7 @@ dictionaryData.buff={
 	testHpRecovery:{
 		buffId:10001,
 		name:"HP恢复10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecovery:10,//hp的直接 恢复量 或 减少量
@@ -134,6 +145,7 @@ dictionaryData.buff={
 	testHpRecoveryPercent:{
 		buffId:10002,
 		name:"恢复当前HP10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryPercent:0.1,//当前hp百分比的 直接恢复量 或 减少量
@@ -145,6 +157,7 @@ dictionaryData.buff={
 	testHpRecoveryMaxHpPercent:{
 		buffId:10003,
 		name:"恢复MaxHp10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryMaxHpPercent:0.1,//最大maxHp百分比的恢复量
@@ -156,6 +169,7 @@ dictionaryData.buff={
 	testMaxHp:{
 		buffId:10004,
 		name:"MaxHp增加10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHp:10,//最大maxHp的直接 增加量 或 减少量
@@ -167,6 +181,7 @@ dictionaryData.buff={
 	testMaxHpPercent:{
 		buffId:10005,
 		name:"MaxHp增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHpPercent:0.1,//最大maxHp百分比的 增加量 或 减少量
@@ -178,6 +193,7 @@ dictionaryData.buff={
 	testAtt:{
 		buffId:10006,
 		name:"攻击力增加10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{att:10,//攻击力att的直接 增加量 或 减少量
@@ -189,6 +205,7 @@ dictionaryData.buff={
 	testAttPercent:{
 		buffId:10007,
 		name:"攻击力增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{attPercent:0.1,//攻击力att百分比的 增加量 或 减少量
@@ -200,6 +217,7 @@ dictionaryData.buff={
 	testDef:{
 		buffId:10008,
 		name:"防御力增加10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{def:10,//防御力def的直接 增加量 或 减少量
@@ -211,6 +229,7 @@ dictionaryData.buff={
 	testDefPercent:{
 		buffId:10009,
 		name:"防御力增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{defPercent:0.1,//防御力def百分比的 增加量 或 减少量
@@ -222,6 +241,7 @@ dictionaryData.buff={
 	testEpRecovery:{
 		buffId:10010,
 		name:"EP恢复10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecovery:10,//ep的直接 恢复量 或 减少量
@@ -233,6 +253,7 @@ dictionaryData.buff={
 	testEpRecoveryPercent:{
 		buffId:10011,
 		name:"恢复当前EP10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryPercent:0.1,//当前ep百分比的 直接恢复量 或 减少量
@@ -244,6 +265,7 @@ dictionaryData.buff={
 	testEpRecoveryMaxEpPercent:{
 		buffId:10012,
 		name:"恢复MaxEp10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryMaxEpPercent:0.1,//最大maxEp百分比的恢复量
@@ -255,6 +277,7 @@ dictionaryData.buff={
 	testMaxEp:{
 		buffId:10013,
 		name:"MaxEp增加10",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEp:10,//最大maxEp的直接 增加量 或 减少量
@@ -266,6 +289,7 @@ dictionaryData.buff={
 	testMaxEpPercent:{
 		buffId:10014,
 		name:"MaxEp增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEpPercent:0.1,//最大maxEp百分比的 增加量 或 减少量
@@ -277,6 +301,7 @@ dictionaryData.buff={
 	testCri:{
 		buffId:10015,
 		name:"暴击率增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{cri:0.1,//暴击率cri的直接 增加量 或 减少量
@@ -288,6 +313,7 @@ dictionaryData.buff={
 	testCriPercent:{
 		buffId:10016,
 		name:"增加当前暴击率的10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criPercent:0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）
@@ -299,6 +325,7 @@ dictionaryData.buff={
 	testCriStrike:{
 		buffId:10017,
 		name:"暴击伤害增加10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrike:0.1,
@@ -310,6 +337,7 @@ dictionaryData.buff={
 	testCriStrikePercent:{
 		buffId:10018,
 		name:"增加当前暴击伤害的10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrikePercent:0.1,//暴击伤害criStrike百分比的  增加量 或 减少量（不适用skill）
@@ -321,6 +349,7 @@ dictionaryData.buff={
 	testAvd:{
 		buffId:10019,
 		name:"增加闪避率10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avd:0.1,//闪避率avd的直接  增加量 或 减少量
@@ -332,6 +361,7 @@ dictionaryData.buff={
 	testAvdPercent:{
 		buffId:10020,
 		name:"增加当前闪避率的10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avdPercent:0.1,//闪避率avd百分比的  增加量 或 减少量（不适用skill）
@@ -343,6 +373,7 @@ dictionaryData.buff={
 	testHit:{
 		buffId:10021,
 		name:"增加命中率10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hit:0.1,//命中率hit的直接  增加量 或 减少量
@@ -354,6 +385,7 @@ dictionaryData.buff={
 	testHitPercent:{
 		buffId:10022,
 		name:"增加当前命中率的10%",
+		img:BUFF.IMG.up,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hitPercent:0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）
@@ -366,6 +398,7 @@ dictionaryData.buff={
 	test2HpRecovery:{//适用中毒、流血等效果
 		buffId:20001,
 		name:"HP减少10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecovery:-10,//hp的直接 恢复量 或 减少量
@@ -377,6 +410,7 @@ dictionaryData.buff={
 	test2HpRecoveryPercent:{//适用中毒、流血等效果
 		buffId:20002,
 		name:"减少当前HP10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryPercent:-0.1,//当前hp百分比的 直接恢复量 或 减少量
@@ -388,6 +422,7 @@ dictionaryData.buff={
 	test2HpRecoveryMaxHpPercent:{//适用中毒、流血等效果
 		buffId:20003,
 		name:"减少MaxHp10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hpRecoveryMaxHpPercent:-0.1,//最大maxHp百分比的恢复量
@@ -399,6 +434,7 @@ dictionaryData.buff={
 	test2MaxHp:{
 		buffId:20004,
 		name:"MaxHp降低10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHp:-10,//最大maxHp的直接 增加量 或 减少量
@@ -410,6 +446,7 @@ dictionaryData.buff={
 	test2MaxHpPercent:{
 		buffId:20005,
 		name:"MaxHp降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxHpPercent:-0.1,//最大maxHp百分比的 增加量 或 减少量
@@ -421,6 +458,7 @@ dictionaryData.buff={
 	test2Att:{
 		buffId:20006,
 		name:"攻击力降低10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{att:-10,//攻击力att的直接 增加量 或 减少量
@@ -432,6 +470,7 @@ dictionaryData.buff={
 	test2AttPercent:{
 		buffId:20007,
 		name:"攻击力降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{attPercent:-0.1,//攻击力att百分比的 增加量 或 减少量
@@ -443,6 +482,7 @@ dictionaryData.buff={
 	test2Def:{
 		buffId:20008,
 		name:"防御力降低10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{def:-10,//防御力def的直接 增加量 或 减少量
@@ -454,6 +494,7 @@ dictionaryData.buff={
 	test2DefPercent:{
 		buffId:20009,
 		name:"防御力降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{defPercent:-0.1,//防御力def百分比的 增加量 或 减少量
@@ -465,6 +506,7 @@ dictionaryData.buff={
 	test2EpRecovery:{
 		buffId:20010,
 		name:"EP减少10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecovery:-10,//ep的直接 恢复量 或 减少量
@@ -476,6 +518,7 @@ dictionaryData.buff={
 	test2EpRecoveryPercent:{
 		buffId:20011,
 		name:"减少当前EP10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryPercent:-0.1,//当前ep百分比的 直接恢复量 或 减少量
@@ -487,6 +530,7 @@ dictionaryData.buff={
 	test2EpRecoveryMaxEpPercent:{
 		buffId:20012,
 		name:"减少MaxEp10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{epRecoveryMaxEpPercent:-0.1,//最大maxEp百分比的恢复量
@@ -498,6 +542,7 @@ dictionaryData.buff={
 	test2MaxEp:{
 		buffId:20013,
 		name:"MaxEp降低10",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEp:-10,//最大maxEp的直接 增加量 或 减少量
@@ -509,6 +554,7 @@ dictionaryData.buff={
 	test2MaxEpPercent:{
 		buffId:20014,
 		name:"MaxEp降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{maxEpPercent:-0.1,//最大maxEp百分比的 增加量 或 减少量
@@ -520,6 +566,7 @@ dictionaryData.buff={
 	test2Cri:{
 		buffId:20015,
 		name:"暴击率降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{cri:-0.1,//暴击率cri的直接 增加量 或 减少量
@@ -531,6 +578,7 @@ dictionaryData.buff={
 	test2CriPercent:{
 		buffId:20016,
 		name:"降低当前暴击率的10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criPercent:-0.1,//暴击率cri百分比的 增加量 或 减少量（不适用skill）
@@ -542,6 +590,7 @@ dictionaryData.buff={
 	test2CriStrike:{
 		buffId:20017,
 		name:"暴击伤害降低10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrike:-0.1,
@@ -553,6 +602,7 @@ dictionaryData.buff={
 	test2CriStrikePercent:{
 		buffId:20018,
 		name:"降低当前暴击伤害的10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{criStrikePercent:-0.1,//暴击伤害criStrike百分比的  增加量 或 减少量（不适用skill）
@@ -564,6 +614,7 @@ dictionaryData.buff={
 	test2Avd:{
 		buffId:20019,
 		name:"降低闪避率10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avd:-0.1,//闪避率avd的直接  增加量 或 减少量
@@ -575,6 +626,7 @@ dictionaryData.buff={
 	test2AvdPercent:{
 		buffId:20020,
 		name:"降低当前闪避率的10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{avdPercent:-0.1,//闪避率avd百分比的  增加量 或 减少量（不适用skill）
@@ -586,6 +638,7 @@ dictionaryData.buff={
 	test2Hit:{
 		buffId:20021,
 		name:"降低命中率10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hit:-0.1,//命中率hit的直接  增加量 或 减少量
@@ -597,6 +650,7 @@ dictionaryData.buff={
 	test2HitPercent:{
 		buffId:20022,
 		name:"降低当前命中率的10%",
+		img:BUFF.IMG.down,
 		type:BUFF.TYPE.battleBuff,
 		target:BUFF.TARGET.self,
 		attr:{hitPercent:-0.1,//命中率hit百分比的  增加量 或 减少量（不适用skill）

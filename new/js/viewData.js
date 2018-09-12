@@ -45,6 +45,8 @@ var viewDataModel = {
 		roleMaxHp:0,
 		roleAtt:0,
 		roleDef:0,
+		roleBagSpace:function(){return dataRoleObj[0].getBagSpace();},
+		roleOccupyBagSpace:function(){return dataRoleObj[0].getOccupySpace();},
 	},
 	/**
 	 * 物品信息面板
@@ -161,9 +163,9 @@ var viewDataModel = {
 		quickButton1:function(){if(quickButton1){return quickButton1.getName();}else{return "技能栏";}},
 		quickButton2:function(){if(quickButton2){return quickButton2.getName();}else{return "技能栏";}},
 		quickButton3:function(){if(quickButton3){return quickButton3.getName();}else{return "技能栏";}},
-		quickButton4:function(){if(quickButton1){return quickButton4.getName();}else{return "物品栏";}},
-		quickButton5:function(){if(quickButton2){return quickButton5.getName();}else{return "物品栏";}},
-		quickButton6:function(){if(quickButton3){return quickButton6.getName();}else{return "物品栏";}},
+		quickButton4:function(){if(quickButton4){return quickButton4.getName();}else{return "物品栏";}},
+		quickButton5:function(){if(quickButton5){return quickButton5.getName();}else{return "物品栏";}},
+		quickButton6:function(){if(quickButton6){return quickButton6.getName();}else{return "物品栏";}},
 		
 		objBuffs:function(){if(currentInteractiveObject&&currentInteractiveObject.getBuffs){return currentInteractiveObject.getBuffs();}},
 		roleBuffs:function(){return dataRoleObj[0].getBuffs();},

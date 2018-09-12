@@ -206,6 +206,14 @@
 					</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
+								背包:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}
+							</div>
+						</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
 								HP:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
@@ -220,7 +228,6 @@
 								{{viewDataModel.panel3.roleEp()}}/{{viewDataModel.panel3.roleMaxEp()}}
 							</div>
 						</div>
-						
 						<div style="height:10px;width: 250px;margin: 10px;">
 							<div style="width: 256px;height: 20px;background-image:linear-gradient(90deg, rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(rgb(235,230,205) 20%, transparent 20%, transparent),linear-gradient(90deg, transparent 80%, rgb(235,230,205) 80%),linear-gradient( transparent 80%, rgb(235,230,205) 80%),linear-gradient(90deg, rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(rgb(179,174,152) 30%, transparent 30%, transparent),linear-gradient(90deg, transparent 70%, rgb(179,174,152) 70%),linear-gradient( transparent 70%, rgb(179,174,152) 70%);background-size: 20px 20px;background-color:rgb(224,219,195);">
 							</div>
@@ -282,6 +289,14 @@
 					<div class="panel3-tittle">
 						{{viewDataModel.panel3.tittleText()}}
 					</div>
+						<div style="height:10px;width: 250px;margin: 10px;">
+							<div style="height: 10px;left: 10px;position: absolute;">
+								背包:
+							</div>
+							<div style="height: 10px;right: 10px;position: absolute;">
+								{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}
+							</div>
+						</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
 								HP:
@@ -466,6 +481,7 @@
 				
 				<!--列表菜单:包裹-->
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" ng-rightclick="panel5MaskLayerClick($event)" class="menu-background">
+					<div class="menu-tittle">空间:{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}</div>
 					<div class="menu-top"></div>
 					<div class="menu" >
 						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
@@ -1327,6 +1343,7 @@
 						<!--buff展示-->
 						<div class="panelFight-lattice" style="left: 100px;width: 300px;">
 							<div ng-repeat="x in viewDataModel.battle.objBuffs()" class="panelFight-lattice-buffimg">
+								<div ng-class="{'panelFight-lattice-buffimg-upimg':'{{x.getImg()}}'=='up','panelFight-lattice-buffimg-downimg':'{{x.getImg()}}'=='down'}"></div>
 								<div class="panelFight-lattice-buffimg-roundNum">{{x.getRound()}}</div>
 								<div class="panelFight-lattice-buffimg-info">{{x.getName()}}</div>
 							</div>
@@ -1409,7 +1426,7 @@
 						<!--buff展示-->
 						<div class="panelFight-lattice" style="left: 20px;top: -30px;">
 							<div ng-repeat="x in viewDataModel.battle.roleBuffs()" class="panelFight-lattice-buffimg">
-								<div>↑</div>
+								<div ng-class="{'panelFight-lattice-buffimg-upimg':'{{x.getImg()}}'=='up','panelFight-lattice-buffimg-downimg':'{{x.getImg()}}'=='down'}"></div>
 								<div class="panelFight-lattice-buffimg-roundNum">{{x.getRound()}}</div>
 								<div class="panelFight-lattice-buffimg-info">{{x.getName()}}</div>
 							</div>
@@ -3226,6 +3243,7 @@
 						};
 					};
 					//遍历购入物品，计算价值
+					in 计算包裹空间
 					var buyCostTotal = 0;
 					for (var i=0; i < transactionItems.buyItems.length; i++) {
 						var buyItem = transactionItems.buyItems[i];
@@ -3331,6 +3349,7 @@
 					}
 					//从当前交互动作，判断是移动至角色包裹
 					if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.toRoleBag==currentAction.getTarget()){
+						in 计算包裹空间
 						//修改数据
 						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
 						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象

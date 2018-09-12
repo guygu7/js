@@ -79,6 +79,7 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
+		bagSpace:100,
 		hp:50,
 		baseMaxHp:500,
 		ep:50,
