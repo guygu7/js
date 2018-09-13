@@ -106,6 +106,8 @@ var viewDataModel = {
 		 * 按钮元素集合（文本）
 		 */
 		buttonElements:function(){return {};},
+		bagSpace:function(){return {};},
+		in//返回交互对象包裹空间 ':0/0'
 	},
 	/**
 	 * 数字选择器 

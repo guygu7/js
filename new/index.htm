@@ -950,7 +950,7 @@
 				<!--仓库-->
 				<div ng-controller="panel5" ng-hide="viewControl.display.panel5Hide" ng-style="viewControl.panel5_Style" ng-rightclick="panel5MaskLayerClick($event)" class="panel5">
 					<div class="panel5-tittle">
-						{{viewDataModel.panel5.tittleText()}}
+						{{viewDataModel.panel5.tittleText()}}{{viewDataModel.panel5.bagSpace()}}
 					</div>
 					<div class="menu" style="width: 485px;height: 340px;left:10px;">
 						<div ng-click="onClick($event,$index)" ng-mouseenter="menulistHover($index)" ng-mouseleave="menulistUnHover()" ng-repeat="x in viewDataModel.panel5.buttonElements()" class="button2">
@@ -958,7 +958,7 @@
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
 							<div class="button2-content-position">
-								<div ng-class="{'button2-content2':{{x.getName().length}}<6,'button2-content-scroll':{{x.getName().length}}>5}">
+								<div ng-class="{'button2-content2':{{x.getNameLength()}}<12,'button2-content-scroll':{{x.getNameLength()}}>11}">
 									{{x.getName()}}
 								</div>
 							</div>
@@ -1000,7 +1000,7 @@
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
 							<div class="button2-content-position">
-								<div ng-class="{'button2-content2':{{x.getName().length}}<6,'button2-content-scroll':{{x.getName().length}}>5}">
+								<div ng-class="{'button2-content2':{{x.getNameLength()}}<12,'button2-content-scroll':{{x.getNameLength()}}>11}">
 									{{x.getName()}}
 								</div>
 							</div>
@@ -1020,7 +1020,7 @@
 							<div class="button2-background2"></div>
 							<div class="button2-background3"></div>
 							<div class="button2-content-position">
-								<div ng-class="{'button2-content2':{{x.getName().length}}<6,'button2-content-scroll':{{x.getName().length}}>5}">
+								<div ng-class="{'button2-content2':{{x.getNameLength()}}<12,'button2-content-scroll':{{x.getNameLength()}}>11}">
 									{{x.getName()}}
 								</div>
 							</div>
@@ -3234,6 +3234,7 @@
 					//校验是否可执行
 					//遍历出售物品，计算价值
 					var sellCostTotal = 0;
+					var tempNum2 = 0;
 					for (var i=0; i < transactionItems.sellItems.length; i++) {
 						var sellItem = transactionItems.sellItems[i];
 						for (var j=0; j < currentItemInfo.length; j++) {
@@ -3241,10 +3242,29 @@
 								sellCostTotal+=(sellItem.getTotalNum()*currentItemInfo[j].getSellCost());
 							}
 						};
+						//计算包裹占用空间
+						if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断是否有限制
+							if(Number(sellItem.getBagSpace())!=NaN){
+								tempNum2 += sellItem.getTotalNum()*sellItem.getBagSpace();
+							}else{
+								tempNum2 += sellItem.getTotalNum();
+							}
+						}//没有限制则不校验
 					};
+					if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断是否有限制
+						//校验包裹空间
+						if((currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getBagSpace()
+							&&(currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getOccupySpace()){
+							//判断超过背包空间，打印并返回，维持原样
+							panelTyping("对方空间不足...");
+							return;
+						}
+					}//没有限制则不校验
+					
+					
 					//遍历购入物品，计算价值
-					in 计算包裹空间
 					var buyCostTotal = 0;
+					var tempNum = 0;
 					for (var i=0; i < transactionItems.buyItems.length; i++) {
 						var buyItem = transactionItems.buyItems[i];
 						for (var j=0; j < currentItemInfo.length; j++) {
@@ -3252,10 +3272,23 @@
 								buyCostTotal+=(buyItem.getTotalNum()*currentItemInfo[j].getBuyCost());
 							}
 						};
+						//计算包裹占用空间
+						if(Number(buyItem.getBagSpace())!=NaN){
+							tempNum += buyItem.getTotalNum()*buyItem.getBagSpace();
+						}else{
+							tempNum += buyItem.getTotalNum();
+						}
 					};
 					//对比价值
 					if(sellCostTotal<buyCostTotal){
 						panelTyping("价格不足");
+						return;
+					}
+					//校验包裹空间
+					if((dataRoleObj[0].getOccupySpace()+tempNum)>dataRoleObj[0].getBagSpace()
+						&&(dataRoleObj[0].getOccupySpace()+tempNum)>dataRoleObj[0].getOccupySpace()){
+						//判断超过背包空间，打印并返回，维持原样
+						panelTyping("背包空间不足...");
 						return;
 					}
 					//待售出存入交互对象
@@ -3349,12 +3382,6 @@
 					}
 					//从当前交互动作，判断是移动至角色包裹
 					if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.toRoleBag==currentAction.getTarget()){
-						in 计算包裹空间
-						//修改数据
-						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
-						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
-							currentInteractiveObject.delItem(currentItem);
-						}
 						var roleItems;
 						//判断是角色否交易状态
 						if(dataRoleObj[0].getStatus()=="transaction"){
@@ -3362,6 +3389,16 @@
 							roleItems = transactionItems.buyItems;
 						}else{//非交易状态，读取角色包物品数组
 							roleItems = dataRoleObj[0].getItems();
+							//校验包裹空间
+							var tempNum = currentItem.getTotalNum();
+							if(Number(currentItem.getBagSpace())!=NaN){
+								tempNum = currentItem.getTotalNum()*currentItem.getBagSpace();
+							}
+							if((dataRoleObj[0].getOccupySpace()+tempNum)>dataRoleObj[0].getBagSpace()){
+								//判断超过背包空间，打印并返回，维持原样
+								panelTyping("背包空间不足...");
+								return;
+							}
 						}
 						var flag = false;
 						if(roleItems){
@@ -3400,15 +3437,15 @@
 								dataRoleObj[0].addItem(item_Obj);
 							}
 						}
+						//修改数据
+						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
+						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
+							currentInteractiveObject.delItem(currentItem);
+						}
 						//隐藏
 						numberPickerHide();
 					} else if(ACTION.TYPE.split==currentAction.getType() && ACTION.TARGET.toInteractiveObject==currentAction.getTarget()){
 						//判断是从角色包裹移动至当前交互对象
-						//修改数据
-						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
-						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
-							dataRoleObj[0].delItem(currentItem);
-						}
 						var roleItems;
 						//判断是角色否交易状态
 						if(dataRoleObj[0].getStatus()=="transaction"){
@@ -3416,6 +3453,18 @@
 							roleItems = transactionItems.sellItems;
 						}else{//非交易状态，读取当前交互对象的物品数组
 							roleItems = currentInteractiveObject.getItems();
+							//校验仓库空间
+							if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断有限制
+								var tempNum = currentItem.getTotalNum();
+								if(Number(currentItem.getBagSpace())!=NaN){
+									tempNum = currentItem.getTotalNum()*currentItem.getBagSpace();
+								}
+								if((currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getBagSpace()){
+									//判断超过仓库空间，打印并返回，维持原样
+									panelTyping("仓库空间不足...");
+									return;
+								}
+							}//无限制则不校验
 						}
 						var flag = false;
 						if(roleItems){
@@ -3453,6 +3502,11 @@
 							}else{//非交易状态，物品数据存至交互对象
 								currentInteractiveObject.addItem(item_Obj);
 							}
+						}
+						//修改数据
+						currentItem.setTotalNum(currentItem.getTotalNum()-Number(viewDataModel.numberPicker.number));
+						if (currentItem.getTotalNum()==0){//如果为0则从中删除物品对象
+							dataRoleObj[0].delItem(currentItem);
 						}
 						//隐藏
 						numberPickerHide();

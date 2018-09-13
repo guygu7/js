@@ -907,6 +907,39 @@ DataModleFactory = {
 			name = pram;
 			return this;
 		};
+		interactiveObject.getNameLength = function() {
+			return name.length+name.match(/[\u4e00-\u9fa5]/g).length;
+		};
+		
+		/**
+		 * 最大包裹空间
+		 */
+		var bagSpace;
+		interactiveObject.getBagSpace = function() {
+			return bagSpace;
+		};
+		interactiveObject.setBagSpace = function(pram) {
+			if(!isNaN(Number(pram))){
+				bagSpace = Number(pram);
+			}
+			return this;
+		};
+		/**
+		 * 获取当前已使用空间
+		 */
+		interactiveObject.getOccupySpace = function() {
+			var num = 0;
+			for (var i=0; i < items.length; i++) {
+				if(Number(items[i].getTotalNum())!=NaN){
+					if(Number(items[i].getBagSpace())!=NaN){
+						num += (Number(items[i].getTotalNum())*Number(items[i].getBagSpace()));
+					}else{
+						num += Number(items[i].getTotalNum());
+					}
+				}
+			};
+			return num;
+		};
 		
 		/**
 		 * 计算属性数值
@@ -1739,6 +1772,9 @@ DataModleFactory = {
 			name = pram;
 			return this;
 		};
+		item.getNameLength = function() {
+			return name.length+name.match(/[\u4e00-\u9fa5]/g).length;
+		};
 		/**
 		 * 类型 
 		 */
@@ -2051,6 +2087,9 @@ DataModleFactory = {
 		skill.setName = function(pram) {
 			name = pram;
 			return this;
+		};
+		skill.getNameLength = function() {
+			return name.length+name.match(/[\u4e00-\u9fa5]/g).length;
 		};
 		/**
 		 * 说明 

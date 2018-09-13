@@ -238,6 +238,7 @@ var data = {
 				},
 				{
 					name:"私有建筑",
+					bagSpace:10,
 					actions:[
 						{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
 						{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
