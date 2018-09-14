@@ -275,7 +275,11 @@ function newMap (mapName,mapSign,x,y){
 				signId:mapSign,
 				x:i+1,
 				y:i1+1,
+				interactiveObjects:[],
 			};
+			//随机内部对象
+			var tempObj = random([dictionaryData.interactiveObject.example1,dictionaryData.interactiveObject.example2],[0.8,0.2]);
+			domainObj.interactiveObjects.push(tempObj);
 			map.push(domainObj);
 		};
 	};
@@ -290,7 +294,8 @@ var mapIds = [
 ];
 
 //执行生成map的数据
-data[mapIds[0].mapId] = newMap(mapIds[0].mapName,mapIds[0].mapId,10,10);
+var dataMapTemp = mapIds[0].mapId;
+data[dataMapTemp] = newMap(mapIds[0].mapName,mapIds[0].mapId,10,10);
 
 
 

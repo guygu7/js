@@ -88,8 +88,8 @@ DataModleFactory = {
 		role.getOccupySpace = function() {
 			var num = 0;
 			for (var i=0; i < items.length; i++) {
-				if(Number(items[i].getTotalNum())!=NaN){
-					if(Number(items[i].getBagSpace())!=NaN){
+				if(!isNaN(Number(items[i].getTotalNum()))){
+					if(!isNaN(Number(items[i].getBagSpace()))){
 						num += (Number(items[i].getTotalNum())*Number(items[i].getBagSpace()));
 					}else{
 						num += Number(items[i].getTotalNum());
@@ -118,7 +118,7 @@ DataModleFactory = {
 							//&&tempAttr[attrType]!=undefined
 							//&&tempAttr[attrType]!=null
 							&& typeof Number(tempAttr[attrType])=="number" 
-							&& typeof Number(tempAttr[attrType])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[attrType]))){
 							tempAttrType+=Number(tempAttr[attrType]);
 						}
 						//判断获取到的defPercent属性为数字
@@ -126,7 +126,7 @@ DataModleFactory = {
 							//&&tempAttr[(attrType+"Percent")]!=undefined
 							//&&tempAttr[(attrType+"Percent")]!=null
 							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
-							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[(attrType+"Percent")]))){
 							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 						}
 					}
@@ -143,7 +143,7 @@ DataModleFactory = {
 						if(attrType in tempAttr&&tempAttr[attrType]!=undefined
 							//&&tempAttr[attrType]!=null
 							//&& typeof Number(tempAttr[attrType])=="number"
-							&& typeof Number(tempAttr[attrType])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[attrType]))){
 							tempAttrType+=Number(tempAttr[attrType]);
 						}
 						//判断获取到的defPercent属性为数字
@@ -151,7 +151,7 @@ DataModleFactory = {
 							//&&tempAttr[(attrType+"Percent")]!=undefined
 							//&&tempAttr[(attrType+"Percent")]!=null
 							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
-							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[(attrType+"Percent")]))){
 							tempAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 						}
 					}
@@ -167,7 +167,7 @@ DataModleFactory = {
 						//&&tempAttr[attrType]!=undefined
 						//&&tempAttr[attrType]!=null
 						&& typeof Number(tempAttr[attrType])=="number"
-						&& typeof Number(tempAttr[attrType])!=NaN){
+						&& typeof !isNaN(Number(tempAttr[attrType]))){
 						tempBuffAttrType+=Number(tempAttr[attrType]);
 					}
 					//判断获取到的defPercent属性为数字
@@ -175,7 +175,7 @@ DataModleFactory = {
 						//&&tempAttr[(attrType+"Percent")]!=undefined
 						//&&tempAttr[(attrType+"Percent")]!=null
 						&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
-						&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
+						&& typeof !isNaN(Number(tempAttr[(attrType+"Percent")]))){
 						tempBuffAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 					}
 				};
@@ -930,8 +930,8 @@ DataModleFactory = {
 		interactiveObject.getOccupySpace = function() {
 			var num = 0;
 			for (var i=0; i < items.length; i++) {
-				if(Number(items[i].getTotalNum())!=NaN){
-					if(Number(items[i].getBagSpace())!=NaN){
+				if(!isNaN(Number(items[i].getTotalNum()))){
+					if(!isNaN(Number(items[i].getBagSpace()))){
 						num += (Number(items[i].getTotalNum())*Number(items[i].getBagSpace()));
 					}else{
 						num += Number(items[i].getTotalNum());
@@ -957,7 +957,7 @@ DataModleFactory = {
 							//&&tempAttr[attrType]!=undefined
 							//&&tempAttr[attrType]!=null
 							&& typeof Number(tempAttr[attrType])=="number"
-							&& typeof Number(tempAttr[attrType])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[attrType]))){
 							tempBuffAttrType+=Number(tempAttr[attrType]);
 						}
 						//判断获取到的defPercent属性为数字
@@ -965,7 +965,7 @@ DataModleFactory = {
 							//&&tempAttr[(attrType+"Percent")]!=undefined
 							//&&tempAttr[(attrType+"Percent")]!=null
 							&& typeof Number(tempAttr[(attrType+"Percent")])=="number"
-							&& typeof Number(tempAttr[(attrType+"Percent")])!=NaN){
+							&& typeof !isNaN(Number(tempAttr[(attrType+"Percent")]))){
 							tempBuffAttrTypePercent+=Number(tempAttr[(attrType+"Percent")]);
 						}
 					};
@@ -2916,7 +2916,7 @@ DataModleFactory = {
 					}
 					//检查所需战斗对象条件是否存在
 					if (typeof triggerInteractiveObjects[i].getTriggerBattleTotalNum()=="number"
-						&&typeof triggerInteractiveObjects[i].getTriggerBattleTotalNum()!=NaN) {
+						&&typeof !isNaN(triggerInteractiveObjects[i].getTriggerBattleTotalNum())) {
 						//检查所需战斗对象是否已达标,当前完成数量>=总共需要的数量
 						if(triggerInteractiveObjects[i].getTriggerBattleNum()>=triggerInteractiveObjects[i].getTriggerBattleTotalNum()){
 						}else{//如果有一个不达标，则为false,直接break;
@@ -3050,7 +3050,7 @@ DataModleFactory = {
 					}
 					//检查所需战斗对象条件是否存在
 					if (typeof completeInteractiveObjects[i].getCompleteBattleTotalNum()=="number"
-						&&typeof completeInteractiveObjects[i].getCompleteBattleTotalNum()!=NaN) {
+						&&typeof !isNaN(completeInteractiveObjects[i].getCompleteBattleTotalNum())) {
 						//检查所需战斗对象是否已达标,当前完成数量>=总共需要的数量
 						if(completeInteractiveObjects[i].getCompleteBattleNum()>=completeInteractiveObjects[i].getCompleteBattleTotalNum()){
 						}else{//如果有一个不达标，则为false,直接break;

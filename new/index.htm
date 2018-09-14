@@ -101,7 +101,7 @@
 						</div>
 						<div ng-click="clickButton1('useRoleBag')" class="top-button" style="right:520px;">
 							<div class="top-button-background"></div>
-							<div class="top-button-content">背包</div>
+							<div class="top-button-content">包裹</div>
 							<div class="top-button-arrow">
 								<div class="top-button-arrow1"></div>
 								<div class="top-button-arrow2"></div>
@@ -206,10 +206,10 @@
 					</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
-								背包:
+								包裹:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}
+								{{viewDataModel.panel3.roleBagSpace()}}
 							</div>
 						</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
@@ -291,10 +291,10 @@
 					</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
 							<div style="height: 10px;left: 10px;position: absolute;">
-								背包:
+								包裹:
 							</div>
 							<div style="height: 10px;right: 10px;position: absolute;">
-								{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}
+								{{viewDataModel.panel3.roleBagSpace()}}
 							</div>
 						</div>
 						<div style="height:10px;width: 250px;margin: 10px;">
@@ -481,7 +481,7 @@
 				
 				<!--列表菜单:包裹-->
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" ng-rightclick="panel5MaskLayerClick($event)" class="menu-background">
-					<div class="menu-tittle">空间:{{viewDataModel.panel3.roleOccupyBagSpace()}}/{{viewDataModel.panel3.roleBagSpace()}}</div>
+					<div class="menu-tittle">{{viewDataModel.panel3.tittle()}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{viewDataModel.panel3.roleBagSpace()}}</div>
 					<div class="menu-top"></div>
 					<div class="menu" >
 						<div ng-click="menulistClick($event,$index)" ng-mouseenter="menulistHover($index,y.constructor.name)" ng-mouseleave="menulistUnHover()" ng-repeat="y in viewDataModel.menuBag.buttonElements()" class="menu-list">
@@ -1493,6 +1493,7 @@
 		<script src="js/data/dataSkill.js"></script>
 		<script src="js/data/dataItem.js"></script>
 		<script src="js/data/dataMission.js"></script>
+		<script src="js/data/dataInteractiveObject.js"></script>
 		<script src="js/data/data.js"></script>
 		<script src="js/initFunction.js"></script>
 		
@@ -1653,6 +1654,10 @@
 			var noneMissionObj = loadData(exampleData.missions[0],"mission");
 			/*--------------------------------*/
 			/**
+			 * 当前大地图
+			 */
+			var currentMapDomains = [];
+			/**
 			 * 当前场景地图
 			 */
 			var currentDomain = DataModleFactory.createDomain();
@@ -1774,10 +1779,6 @@
 					viewDataModel.panel4.buttonElements = function (){
 						return currentDomain.getInteractiveObjects();
 					};
-					//场景名称数据加载
-					viewDataModel.panel2Text = function (){
-						return currentDomain.getName();
-					};
 					//动态效果
 					viewControl.display.sceneMainHide = false;
 					$timeout(function() {
@@ -1801,10 +1802,6 @@
 					//人物交互面板(按钮组)初始数据加载
 					viewDataModel.panel4.buttonElements = function (){
 						return currentDomain.getInteractiveObjects();
-					};
-					//场景名称数据加载
-					viewDataModel.panel2Text = function (){
-						return currentDomain.getName();
 					};
 				};
 				/**
@@ -2470,7 +2467,6 @@
 					while("button2"!=tempt.className){
 						tempt = tempt.parentNode;
 					}
-					console.info($event);
 					//标记交互类型为交互对象
 					viewControl.currentInteractiveType = "interactiveObject";
 					//传入点击目标（用于定位），显示列表菜单
@@ -2584,9 +2580,10 @@
 						if(currentAction.getTarget().substring(0,3)=="map"){//截取到map开头，则是大地图模式
 							//遍历判断所有大地图
 							for (var i=0; i < mapDomainsObj.length; i++) {
-								console.info(mapDomainsObj);
 								//判断是目标大地图
 								if(mapDomainsObj[i][0].getSignId()==currentAction.getTarget()){
+									//记录当前大地图
+									currentMapDomains = mapDomainsObj[i];
 									//遍历该大地图中区域domain对象
 									for (var i1=0; i1 < mapDomainsObj[i].length; i1++) {
 										//判断区域domain对象坐标
@@ -2600,6 +2597,8 @@
 									break;
 								}
 							};
+							//展示方向盘
+							steeringWheelShow();
 						}else{
 							for (var i=0; i < dataDomainsObj.length; i++) {
 								if (currentAction.getTarget()==dataDomainsObj[i].getSignId()) {
@@ -2609,6 +2608,8 @@
 									break;
 								};
 							};
+							//隐藏方向盘
+							steeringWheelHide();
 						}
 						//移动动作完成，清空当前交互动作
 						currentAction = null;
@@ -2851,7 +2852,7 @@
 						//如果消耗ep,计算ep是否足够
 						if("epRecovery" in tempAttr
 							&& typeof Number(tempAttr.epRecovery)=="number" 
-							&& typeof Number(tempAttr.epRecovery)!=NaN
+							&& typeof !isNaN(Number(tempAttr.epRecovery))
 							&& Number(tempAttr.epRecovery)!=0
 							&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery))<0){
 								//判断为ep不足
@@ -2945,7 +2946,7 @@
 											if(roleItems[i].getAttr()){
 												if(pram in currentItem.getAttr()
 													&& typeof Number(currentItem.getAttr()[pram])=="number" 
-													&& typeof Number(currentItem.getAttr()[pram])!=NaN
+													&& typeof !isNaN(Number(currentItem.getAttr()[pram]))
 													&& Number(currentItem.getAttr()[pram])!=0){
 													if(pram=="maxHpPercent"){
 														if(currentItem.getType()==ITEM.TYPE.equip){
@@ -2963,7 +2964,7 @@
 											&&roleItems[i].getAttr()
 											&&pram in roleItems[i].getAttr()
 											&& typeof Number(roleItems[i].getAttr()[pram])=="number" 
-											&& typeof Number(roleItems[i].getAttr()[pram])!=NaN
+											&& typeof !isNaN(Number(roleItems[i].getAttr()[pram]))
 											&& Number(roleItems[i].getAttr()[pram])!=0){
 											if(pram=="epRecovery"){
 												viewControl.display.panel3RoleItemInfoEpRecoveryHide = false;
@@ -3243,15 +3244,15 @@
 							}
 						};
 						//计算包裹占用空间
-						if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断是否有限制
-							if(Number(sellItem.getBagSpace())!=NaN){
+						if(!isNaN(Number(currentInteractiveObject.getBagSpace()))){//判断是否有限制
+							if(!isNaN(Number(sellItem.getBagSpace()))){
 								tempNum2 += sellItem.getTotalNum()*sellItem.getBagSpace();
 							}else{
 								tempNum2 += sellItem.getTotalNum();
 							}
 						}//没有限制则不校验
 					};
-					if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断是否有限制
+					if(!isNaN(Number(currentInteractiveObject.getBagSpace()))){//判断是否有限制
 						//校验包裹空间
 						if((currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getBagSpace()
 							&&(currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getOccupySpace()){
@@ -3273,7 +3274,7 @@
 							}
 						};
 						//计算包裹占用空间
-						if(Number(buyItem.getBagSpace())!=NaN){
+						if(!isNaN(Number(buyItem.getBagSpace()))){
 							tempNum += buyItem.getTotalNum()*buyItem.getBagSpace();
 						}else{
 							tempNum += buyItem.getTotalNum();
@@ -3391,7 +3392,7 @@
 							roleItems = dataRoleObj[0].getItems();
 							//校验包裹空间
 							var tempNum = currentItem.getTotalNum();
-							if(Number(currentItem.getBagSpace())!=NaN){
+							if(!isNaN(Number(currentItem.getBagSpace()))){
 								tempNum = currentItem.getTotalNum()*currentItem.getBagSpace();
 							}
 							if((dataRoleObj[0].getOccupySpace()+tempNum)>dataRoleObj[0].getBagSpace()){
@@ -3454,9 +3455,9 @@
 						}else{//非交易状态，读取当前交互对象的物品数组
 							roleItems = currentInteractiveObject.getItems();
 							//校验仓库空间
-							if(Number(currentInteractiveObject.getBagSpace())!=NaN){//判断有限制
+							if(!isNaN(Number(currentInteractiveObject.getBagSpace()))){//判断有限制
 								var tempNum = currentItem.getTotalNum();
-								if(Number(currentItem.getBagSpace())!=NaN){
+								if(!isNaN(Number(currentItem.getBagSpace()))){
 									tempNum = currentItem.getTotalNum()*currentItem.getBagSpace();
 								}
 								if((currentInteractiveObject.getOccupySpace()+tempNum)>currentInteractiveObject.getBagSpace()){
@@ -3669,7 +3670,7 @@
 						if(currentItem.getAttr()){
 							if(pram in currentItem.getAttr()
 								&& typeof Number(currentItem.getAttr()[pram])=="number" 
-								&& typeof Number(currentItem.getAttr()[pram])!=NaN
+								&& typeof !isNaN(Number(currentItem.getAttr()[pram]))
 								&& Number(currentItem.getAttr()[pram])!=0){
 								if(pram=="maxHpPercent"){
 									if(currentItem.getType()==ITEM.TYPE.equip){
@@ -3694,7 +3695,7 @@
 						&&currentItem.getAttr()
 						&&pram in currentItem.getAttr()
 						&& typeof Number(currentItem.getAttr()[pram])=="number" 
-						&& typeof Number(currentItem.getAttr()[pram])!=NaN
+						&& typeof !isNaN(Number(currentItem.getAttr()[pram]))
 						&& Number(currentItem.getAttr()[pram])!=0){
 						if(pram=="epRecovery"){
 							viewControl.display.panel3ItemInfoEpRecoveryHide = false;
@@ -3991,10 +3992,58 @@
 					confirmPanleHide();
 				};
 			});
+			
+			app.controller("steeringWheel",function($scope, $rootScope) {
+				//方向盘箭头生成以及点击动画控制
+				//生成上下左右4个箭头
+				$scope.arrows=["1","2","3","4"];
+				//点击效果控制
+				var sign = "-1";
+				$scope.arrowOnClick = function(i) {
+					if (sign=="-1"){
+						sign="-2";
+					}else{
+						sign="-1";
+					}
+					$scope.animation = (i+1) + sign;
+					mapMove(i+1);
+				};
+				//地图移动
+				function mapMove (sign){
+					currentDomain.getX()
+					currentDomain.getY()
+					currentMapDomains
+					console.info(sign);
+					var x = currentDomain.getX();
+					var y = currentDomain.getY();
+					if(sign=="1"){
+						//向上移动
+						y-=1;
+					}else if(sign=="2"){
+						//向右移动
+						x+=1;
+					}else if(sign=="3"){
+						//向下移动
+						y+=1;
+					}else if(sign=="4"){
+						//向左移动
+						x-=1;
+					}
+					in
+					currentMapDomains
+					for (var i=0; i < currentMapDomains.length; i++) {
+						if(currentMapDomains[i].getX()==currentDomain.getX()
+						&&currentMapDomains[i].getY()==currentDomain.getY()){
+							currentDomain = currentMapDomains[i];
+						}
+					};
+				};
+			}); 
 			/*--------------------------------------------------------*/
 			/**
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
 			 */
+			/*该方法移至main.js中
 			function random(objArr, arr2) {
 				//过滤校验,去掉概率不正确的元素(非Number、NaN、小于等于0)
 				for (var i=0; i < arr2.length; i++) {
@@ -4017,7 +4066,7 @@
 				//总概率不足1时，均未随机到则为null
 				return null;
 			};
-			
+			*/
 			/**
 			 * activeObj:主动对象
 			 * passiveObj:被动对象
@@ -4554,7 +4603,7 @@
 								//如果消耗ep,计算ep是否足够
 								if("epRecovery" in tempAttr
 									&& typeof Number(tempAttr.epRecovery)=="number" 
-									&& typeof Number(tempAttr.epRecovery)!=NaN
+									&& typeof !isNaN(Number(tempAttr.epRecovery))
 									&& Number(tempAttr.epRecovery)!=0
 									&& (Number(dataRoleObj[0].getEp())+Number(tempAttr.epRecovery))<0){
 										//判断为ep不足

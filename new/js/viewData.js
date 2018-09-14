@@ -32,7 +32,13 @@ var viewDataModel = {
 	/**
 	 * XX面板文本 
 	 */
-	panel2Text:function(){return "中文";},
+	panel2Text:function(){
+		var str = currentDomain.getName();
+		if(!isNaN(Number(currentDomain.getX()))){
+			str += " ( "+Number(currentDomain.getX())+" , "+Number(currentDomain.getY())+" )";
+		}
+		return str;
+	},
 	/**
 	 * XX面板 
 	 */
@@ -40,13 +46,24 @@ var viewDataModel = {
 		/**
 		 * 标题文本 
 		 */
-		tittleText:function(){return "标题";},
+		tittle:function(){
+			if(dataRoleObj[0].getStatus()=="skill"){
+				return "技能";
+			}else{
+				return "包裹";
+			}
+		},
 		roleHp:0,
 		roleMaxHp:0,
 		roleAtt:0,
 		roleDef:0,
-		roleBagSpace:function(){return dataRoleObj[0].getBagSpace();},
-		roleOccupyBagSpace:function(){return dataRoleObj[0].getOccupySpace();},
+		roleBagSpace:function(){
+			if(dataRoleObj[0].getStatus()=="skill"){
+				return "";
+			}else{
+				return dataRoleObj[0].getOccupySpace()+"/"+dataRoleObj[0].getBagSpace();
+			}
+		},
 	},
 	/**
 	 * 物品信息面板
@@ -106,8 +123,14 @@ var viewDataModel = {
 		 * 按钮元素集合（文本）
 		 */
 		buttonElements:function(){return {};},
-		bagSpace:function(){return {};},
-		in//返回交互对象包裹空间 ':0/0'
+		bagSpace:function(){
+				if (isNaN(Number(currentInteractiveObject.getBagSpace()))) {
+					return "";
+				} else{
+					return currentInteractiveObject.getOccupySpace()+"/"+currentInteractiveObject.getBagSpace();
+				};
+			},
+		//返回交互对象包裹空间 ':0/0'
 	},
 	/**
 	 * 数字选择器 
