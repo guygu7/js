@@ -418,7 +418,7 @@
 						<div ng-repeat="x in viewDataModel.panel4.buttonElements()" class="map3d-button" ng-style="viewControl.map3d_button{{$index+1}}">
 							<div class="map3d-obj" >
 							</div>
-							<div ng-click="onClick($event,$index)" class="button2" ng-style="viewControl.map3dButton_Style">
+							<div ng-click="onClick($event,$index)" class="button2" ng-style="viewControl.map3dButton{{$index+1}}_Style">
 								<div class="button2-background"></div>
 								<div class="button2-background2"></div>
 								<div class="button2-background3"></div>
@@ -2417,6 +2417,39 @@
 				
 				
 				/**
+				 * 地图交互对象按钮组 显示效果
+				 */
+				map3dButtonsShow = function(){
+					for (var i=1; i < 17; i++) {
+						var scale = viewControl["map3dButton"+i+"_Style"].transform.match(/scale\([-]*[0-9]*[.]*[0-9]*\)/)[0];
+						viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(scale,"scale(0)");
+						viewControl["map3dButton"+i+"_Style"]["transition-timing-function"] = "cubic-bezier(.14,1.52,.65,1.37)";
+					};
+					in
+					$timeout(function() {
+						for (var i=1; i < 17; i++) {
+							var scale = viewControl["map3dButton"+i+"_Style"].transform.match(/scale\([-]*[0-9]*[.]*[0-9]*\)/)[0];
+							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(scale,"scale(1)");
+						};
+					}, 100);
+					$timeout(function() {
+						for (var i=1; i < 17; i++) {
+							viewControl["map3dButton"+i+"_Style"].transition = ".6s";
+							viewControl["map3dButton"+i+"_Style"]["transition-timing-function"] = "ease";
+						};
+					}, 1000);
+				};
+				/**
+				 * 地图交互对象按钮组  隐藏命令
+				 */
+				/*
+				map3dButtonsHide = function(){
+					viewControl.map3dButton_Style. = "";
+				};
+				*/
+				
+				
+				/**
 				 * 展示战斗界面
 				 */
 				sceneFightShow = function(){
@@ -2501,7 +2534,12 @@
 						mouseX = ev.x;
 						mouseY = ev.y;
 						viewControl.map3dFloor_Style.transform = "rotateX("+temp2+"deg) rotateZ("+temp+"deg)";
-						viewControl.map3dButton_Style.transform = "translateX(-50%) translateY(-50%) translateZ(50px) rotateZ("+(-temp)+"deg) rotateX("+(-temp2)+"deg)";
+						for (var i=1; i < 17; i++) {
+							var rotateZ = viewControl["map3dButton"+i+"_Style"].transform.match(/rotateZ\([-]*[0-9]*[.]*[0-9]*/)[0];
+							var rotateX = viewControl["map3dButton"+i+"_Style"].transform.match(/rotateX\([-]*[0-9]*[.]*[0-9]*/)[0];
+							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(rotateZ,"rotateZ("+(-temp));
+							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(rotateX,"rotateX("+(-temp2));
+						};
 						$scope.$apply();
 					};
 					//判断是右键按下
@@ -3993,7 +4031,7 @@
 				};
 			});
 			
-			app.controller("steeringWheel",function($scope, $rootScope) {
+			app.controller("steeringWheel",function($scope, $rootScope, $timeout) {
 				//方向盘箭头生成以及点击动画控制
 				//生成上下左右4个箭头
 				$scope.arrows=["1","2","3","4"];
@@ -4010,10 +4048,6 @@
 				};
 				//地图移动
 				function mapMove (sign){
-					currentDomain.getX()
-					currentDomain.getY()
-					currentMapDomains
-					console.info(sign);
 					var x = currentDomain.getX();
 					var y = currentDomain.getY();
 					if(sign=="1"){
@@ -4029,12 +4063,12 @@
 						//向左移动
 						x-=1;
 					}
-					in
-					currentMapDomains
 					for (var i=0; i < currentMapDomains.length; i++) {
-						if(currentMapDomains[i].getX()==currentDomain.getX()
-						&&currentMapDomains[i].getY()==currentDomain.getY()){
+						if(currentMapDomains[i].getX()==x
+						&&currentMapDomains[i].getY()==y){
 							currentDomain = currentMapDomains[i];
+							map3dButtonsShow();
+							break;
 						}
 					};
 				};

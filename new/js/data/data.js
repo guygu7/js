@@ -278,8 +278,14 @@ function newMap (mapName,mapSign,x,y){
 				interactiveObjects:[],
 			};
 			//随机内部对象
-			var tempObj = random([dictionaryData.interactiveObject.example1,dictionaryData.interactiveObject.example2],[0.8,0.2]);
-			domainObj.interactiveObjects.push(tempObj);
+			for (var i2=0; i2 < 16; i2++) {
+				var tempObj = random([dictionaryData.interactiveObject.example1,dictionaryData.interactiveObject.example2],[0.8,0.2]);
+				console.info("tempObj");
+				console.info(tempObj);
+				domainObj.interactiveObjects.push(JSON.parse(JSON.stringify(tempObj)));
+				console.info(domainObj.interactiveObjects);
+			};
+			console.info(domainObj.interactiveObjects);
 			map.push(domainObj);
 		};
 	};
