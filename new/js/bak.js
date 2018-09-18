@@ -1,631 +1,4 @@
-//定义数据层
-/*----数据----*/
-/**
- * 基础字典数据 
- */
-var dictionaryData = {};
-/**
- * 交互动作常量数据 
- */
-var ACTION={
-	/**
-	 * 交互动作.类型
-	 */
-	TYPE:{
-		/**
-		 * 分割、堆叠（用于唤出数字选择器） 
-		 */
-		split:"split",
-		/**
-		 * 使用消耗品 
-		 */
-		useConsumable:"useConsumable",
-		/**
-		 * 使用非消耗品 
-		 */
-		//useUnConsumable:"useUnConsumable",
-		/**
-		 * 穿上（装备）
-		 */
-		putOn:"putOn",
-		/**
-		 * 卸下（装备）
-		 */
-		takeOff:"takeOff",
-		/**
-		 * 显示已装备按钮选项（点击无效果，或不可点击）
-		 */
-		alreadyEquipped:"alreadyEquipped",
-		/**
-		 * 进入战斗界面
-		 */
-		fight:"fight",
-	},
-	/**
-	 * 交互动作.目标
-	 */
-	TARGET:{
-		/**
-		 * 标识为：移动至角色包裹
-		 */
-		toRoleBag:"toRoleBag",
-		/**
-		 * 标识为：移动至交互对象（所属）
-		 */
-		toInteractiveObject:"toInteractiveObject",
-		/**
-		 * 标识为：售出返回
-		 */
-		sellback:"sellback",
-		/**
-		 * 标识为：购入返回
-		 */
-		buyback:"buyback",
-	},
-	/**
-	 * 交互动作.所属归属
-	 */
-	BELONG:{
-		/**
-		 * 角色
-		 */
-		role:"role",
-		/**
-		 * 非角色
-		 */
-		notRole:"notRole",
-		/**
-		 * 交互对象
-		 */
-		interactiveObject:"interactiveObject",
-	},
-};
-/**
- * 基础交互动作
- */
-dictionaryData.action={
-	/*---------对物品动作---------*/
-	/**
-	 * 物品（从交互对象）移动至角色包中
-	 */
-	itemToRoleBag:{
-				name:"移动至包",
-				type:ACTION.TYPE.split,
-				target:ACTION.TARGET.toRoleBag,
-				belong:ACTION.BELONG.notRole,
-			},
-	/**
-	 * 物品（从角色包中）移动至交互对象
-	 */
-	role_itemToInteractiveObject:{
-					name:"移动至对象",
-					type:ACTION.TYPE.split,
-					target:ACTION.TARGET.toInteractiveObject,
-					belong:ACTION.BELONG.role,
-				},
-	/**
-	 * （物品）使用消耗品
-	 */
-	role_useConsumable:{
-					name:"使用消耗",
-					type:ACTION.TYPE.useConsumable,
-					target:"",
-					belong:ACTION.BELONG.role,
-				},
-	/**
-	 * （物品）使用非消耗品
-	 */
-	/*
-	role_useUnConsumable:{
-					name:"使用非消耗",
-					type:ACTION.TYPE.useUnConsumable,
-					target:"",
-					belong:ACTION.BELONG.role,
-				},
-			*/
-	/**
-	 * （物品）穿上装备
-	 */
-	role_putOn:{
-					name:"实装",
-					type:ACTION.TYPE.putOn,
-					target:"",
-					belong:ACTION.BELONG.role,
-				},
-	/**
-	 * （物品）卸下装备
-	 */
-	role_takeOff:{
-					name:"卸下实装",
-					type:ACTION.TYPE.takeOff,
-					target:"",
-					belong:ACTION.BELONG.role,
-				},
-	/**
-	 * （物品） 显示已装备按钮选项（点击无效果，或不可点击）
-	 */
-	role_alreadyEquipped:{
-					name:"已实装",
-					type:ACTION.TYPE.alreadyEquipped,
-					target:"",
-					belong:ACTION.BELONG.role,
-				},
-	/**
-	 * （物品）售出返回：从交易暂存面板中撤回至角色包
-	 */
-	sellback:{
-				name:"撤回至包",
-				type:ACTION.TYPE.split,
-				target:ACTION.TARGET.sellback,
-			},
-	/**
-	 * （物品）购入返回：从交易暂存面板中撤回至交互对象
-	 */
-	buyback:{
-				name:"撤回至对象",
-				type:ACTION.TYPE.split,
-				target:ACTION.TARGET.buyback,
-			},
-	/*--------对交互对象动作------*/
-	/**
-	 * 攻击动作，进入战斗界面
-	 */
-	fight:{
-				name:"跳转界面",
-				type:ACTION.TYPE.fight,
-				target:ACTION.TARGET.interactiveObject
-	}
-};
 
-/**
- * 增益减益常量数据
- */
-var BUFF={
-	/**
-	 * 类型
-	 */
-	TYPE:{
-		/**
-		 * 战斗增益（战斗后消失）
-		 */
-		battleBuff:"battleBuff",
-		/**
-		 * 长期增益
-		 */
-		buff:"buff",
-		
-	},
-	/**
-	 * 增益减益对象目标
-	 */
-	TARGET:{
-		/**
-		 * 给自己
-		 */
-		self:"self",
-		/**
-		 * 给对方
-		 */
-		opponent:"opponent",
-	},
-};
-/**
- * 增益减益字典
- */
-dictionaryData.buff={
-	/**
-	 * maxhp直接增加50
-	 */
-	hpUp1:{
-		id:1,
-		name:"增益+maxHp50",
-		type:BUFF.TYPE.battleBuff,
-		target:BUFF.TARGET.self,
-		attr:{
-			maxHp:50,
-		},
-		round:3,
-		superposition:1,
-	},
-	/**
-	 * maxhp增加10%
-	 */
-	hpUp2:{
-		id:2,
-		name:"增益+maxhp10%",
-		type:BUFF.TYPE.battleBuff,
-		target:BUFF.TARGET.self,
-		attr:{
-			maxHpPercent:0.1,
-		},
-		round:3,
-		superposition:1,
-	},
-	/**
-	 * maxhp减少10%
-	 */
-	hpDown1:{
-		id:3,
-		name:"减益+maxhp-10%",
-		type:BUFF.TYPE.battleBuff,
-		target:BUFF.TARGET.opponent,
-		attr:{
-			maxHpPercent:-0.1,
-		},
-		round:3,
-		superposition:1,
-	},
-};
-
-
-
-/**
- * 技能常量数据
- */
-var SKILL={
-	/**
-	 * 类型
-	 */
-	TYPE:{
-		/**
-		 * 主动技能（可使用）
-		 */
-		active:"active",
-		/**
-		 * 非主动技能（可使用）
-		 */
-		unActive:"unActive",
-	},
-	TYPE2:{
-		/**
-		 * 被动技能（不可使用）
-		 */
-		passive:"passive",
-		/**
-		 * 属性技能
-		 */
-		attribute:"attribute",
-		
-	},
-};
-/**
- * 技能字典
- */
-dictionaryData.skill={
-	skill1:{
-		name:"属性hpPercent:10",
-		type:SKILL.TYPE.unActive,
-		type2:SKILL.TYPE2.attribute,
-		attr:{
-			maxHpPercent:0.1,
-		},
-	},
-	/**
-	 * 攻击技能
-	 */
-	att:{
-		name:"主动伤害",
-		type:SKILL.TYPE.active,
-		attr:{
-			att:20,
-			ep:-10,//代表EP消耗量
-		},
-	},
-	/**
-	 * 攻击技能
-	 */
-	att2:{
-		name:"重击",
-		type:SKILL.TYPE.active,
-		attr:{
-			att:20,
-		},
-		useChance:0.4,
-	},
-	/**
-	 * 恢复技能
-	 */
-	hpRecovery:{
-		name:"生命恢复",
-		type:SKILL.TYPE.active,
-		attr:{
-			hp:50,
-		},
-		useChance:0.3,
-	},
-	/**
-	 * deff弱化技能
-	 */
-	deBuff:{
-		name:"deBuff",
-		type:SKILL.TYPE.active,
-		attr:{
-			ep:-2,//代表EP消耗量
-		},
-		buffs:[
-			dictionaryData.buff.hpDown1,
-		],
-	},
-	/**
-	 * buff:maxhp+50
-	 */
-	buffHpUp:{
-		name:"buff:maxhp+50",
-		type:SKILL.TYPE.active,
-		attr:{
-		},
-		buffs:[
-			dictionaryData.buff.hpUp1,
-		],
-	},
-	/**
-	 * buff:maxhp+10%
-	 */
-	buffHpUp2:{
-		name:"buff:maxhp+10%",
-		type:SKILL.TYPE.active,
-		attr:{
-		},
-		buffs:[
-			dictionaryData.buff.hpUp2,
-		],
-	},
-};
-
-
-/**
- * 物品常量数据 
- */
-var ITEM={
-	/**
-	 * 类型（大类）
-	 */
-	TYPE:{
-		/**
-		 * 消耗品
-		 */
-		consumable:"consumable",
-		/**
-		 * 装备
-		 */
-		equip:"equip",
-		
-	},
-	/**
-	 * 类型（小类、第二分类） 
-	 */
-	TYPE2:{
-		equipHead:"head",
-		equip2:"2",
-		/**
-		 * 消耗品
-		 */
-		consumable:"consumable",
-		/**
-		 * 战斗消耗品
-		 */
-		battleConsumable:"battleConsumable",
-		/**
-		 * 可反复使用消耗品
-		 */
-		reusingConsumable:"reusingConsumable",
-	},
-};
-/**
- * 物品字典
- */
-dictionaryData.item={
-	/**
-	 * 恢复hp50
-	 */
-	recoveryHp:{
-		name:"耗+hp50",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		attr:{
-			hp:50,
-		},
-		content:"耗+hp50",
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_useConsumable,
-		],
-	},
-	/**
-	 * 恢复当前hp10%
-	 */
-	recoveryHp2:{
-		name:"耗+当前hp10%",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		attr:{
-			hpPercent:0.1,
-		},
-		content:"耗+当前hp10%",
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_useConsumable,
-		],
-	},
-	/**
-	 * 恢复Maxhp10%
-	 */
-	recoveryHp3:{
-		name:"耗+Maxhp10%",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		attr:{
-			maxHpPercent:0.1,
-		},
-		content:"耗+当前hp10%",
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_useConsumable,
-		],
-	},
-	/**
-	 * 增加buff:MaxHp10%
-	 */
-	buffHp1:{
-		name:"耗+buff:MaxHp10%",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		content:"耗+buff:MaxHp10%",
-		buffs:[
-			dictionaryData.buff.hpUp2,
-		],
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-		],
-	},
-	//------------------------------
-	item1:{
-		name:"消耗品hp+50",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		attr:{
-			hp:50,
-		},
-		content:"消耗品1说明",
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_useConsumable,
-		],
-	},
-	item2:{
-		name:"废",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.consumable,
-		content:"消耗品2说明",
-		buffs:[
-			//dictionaryData.buff.BUFF1,
-		],
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			//dictionaryData.action.role_useUnConsumable,
-		],
-	},
-	item3:{
-		name:"可反复使用消耗品",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE.reusingConsumable,
-		content:"消耗品3说明",
-		totalNum:1,
-		sellCost:5,
-		buyCost:10,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-		],
-	},
-	item4:{
-		name:"装备物品1-1类",
-		type:ITEM.TYPE.equip,
-		type2:ITEM.TYPE2.equipHead,
-		attr:{
-			maxHp:100,
-			def:1,
-		},
-		//skill:
-		content:"物体1说明",
-		totalNum:1,
-		sellCost:5,
-		buyCost:10,
-		isPutOn:false,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_putOn,
-			dictionaryData.action.role_takeOff,
-			dictionaryData.action.role_alreadyEquipped,
-		],
-	},
-	item5:{
-		name:"装备物品2-1类",
-		type:ITEM.TYPE.equip,
-		type2:ITEM.TYPE2.equipHead,
-		content:"物体2说明",
-		totalNum:1,
-		sellCost:5,
-		buyCost:10,
-		isPutOn:false,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_putOn,
-			dictionaryData.action.role_takeOff,
-			dictionaryData.action.role_alreadyEquipped,
-		],
-	},
-	item7:{
-		name:"装备物品3-2类",
-		type:ITEM.TYPE.equip,
-		type2:ITEM.TYPE2.equip2,
-		attr:{
-				maxHp:20,
-				att:10,
-				def:3,
-		},
-		content:"物体3说明",
-		totalNum:1,
-		sellCost:5,
-		buyCost:10,
-		isPutOn:false,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-			dictionaryData.action.role_putOn,
-			dictionaryData.action.role_takeOff,
-			dictionaryData.action.role_alreadyEquipped,
-		],
-	},
-	item8:{
-		name:"战斗消耗品",
-		type:ITEM.TYPE.consumable,
-		type2:ITEM.TYPE2.battleConsumable,
-		attr:{
-			att:50,
-		},
-		content:"消耗品1说明",
-		totalNum:1,
-		sellCost:1,
-		buyCost:2,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-		],
-	},
-	item6:{name:"物体3超长物品名字",type:"",content:"物体3说明",totalNum:1,sellCost:5,buyCost:10,
-		actions:[
-			dictionaryData.action.itemToRoleBag,
-			dictionaryData.action.role_itemToInteractiveObject,
-		],
-	},
-};
 //对原始物品字典数据备份（暂不使用）
 dictionaryData.itemBak = JSON.parse(JSON.stringify(dictionaryData.item));
 //深度复制
@@ -663,6 +36,37 @@ dictionaryData.itemInfo = [];
 	};
 })();
 /**
+ * 全局示例数据
+ */
+var exampleData = {
+	interactiveObjects:[
+		/**
+		 * 全局临时存放点对象（用于复制的模版）|或许会有其他用处？
+		 */
+		{
+			name:"临时存放点",
+			actions:[
+				{name:"对话",type:"talk",content:"临时存放点"},
+				{name:"查看",type:"useWarehouse",content:"临时存放点"},
+			],
+			items:[
+			],
+		},
+	],
+	/**
+	 * 全局任务交互动作
+	 */
+	actions:[
+		dictionaryData.action.mission,
+	],
+	/**
+	 * 用于显示没有任务
+	 */
+	missions:[
+		dictionaryData.mission.none,
+	],
+};
+/**
  * 初始数据 
  */
 var data = {
@@ -675,42 +79,54 @@ var data = {
 	 */
 	roles:[{
 		name:"角色",
+		bagSpace:100,
 		hp:50,
 		baseMaxHp:500,
 		ep:50,
 		baseMaxEp:50,
-		baseAtt:10,
+		baseAtt:11,
 		baseDef:1,
 		baseCri:0.5,//暴击率cri的直接 增加量 或 减少量
-		baseCriStrike:1.5,//暴击伤害criStrike的直接  增加量 或 减少量
+		baseCriStrike:1.2,//暴击伤害criStrike的直接  增加量 或 减少量
 		baseAvd:0.1,//闪避率avd的直接  增加量 或 减少量
-		baseHit:0.8,//命中率hit的直接  增加量 或 减少量
+		baseHit:0.9,//命中率hit的直接  增加量 或 减少量
 		skills:[
-			dictionaryData.skill.skill1,
-			dictionaryData.skill.att,
-			dictionaryData.skill.buffHpUp1,
-			dictionaryData.skill.buffHpUp2,
-			dictionaryData.skill.deBuff,
+			dictionaryData.skill.testDeBuff2,
+			//
+			dictionaryData.skill.testAttack,
+			dictionaryData.skill.test3MaxHp,
+			dictionaryData.skill.testHpRecoveryMaxHpPercent,
+			dictionaryData.skill.testAttPercent,
+			dictionaryData.skill.testOver,
+			//
+			dictionaryData.skill.testBuff,
+			dictionaryData.skill.testBuff2,
+			dictionaryData.skill.testDeBuff,
+			//任务测试
+			dictionaryData.skill.example,
 		],
 		itemInfos:dictionaryData.roleItemInfo,
 		items:[
-			dictionaryData.item.item1,
-			dictionaryData.item.item2,
-			dictionaryData.item.item3,
-			dictionaryData.item.item4,
-			dictionaryData.item.item5,
-			dictionaryData.item.item7,
-			dictionaryData.item.item8,
-			dictionaryData.item.recoveryHp,
-			dictionaryData.item.recoveryHp2,
-			dictionaryData.item.recoveryHp3,
-			dictionaryData.item.buffHp1,
+			dictionaryData.item.testEquip11,
+			dictionaryData.item.testEquip12,
+			dictionaryData.item.testEquip21,
+			dictionaryData.item.testEquip22,
+			dictionaryData.item.testHpRecovery,
+			dictionaryData.item.testEpRecovery,
+			dictionaryData.item.testBuff,
+			dictionaryData.item.test2Att,
+			dictionaryData.item.test2DeBuff,
+			//任务测试
+			dictionaryData.item.example,
+			dictionaryData.item.example2,
+		],
+		missions:[
 		],
 	},],
 	/**
-	 * 场景数据 
+	 * 公开场景数据 
 	 */
-	domains:[
+	publicMaps:[
 		/**
 		 * 开场局部区域（小场景） 
 		 */
@@ -732,9 +148,18 @@ var data = {
 				},
 				{	
 					name:"引导对象",
+					contents:"对话",
+					/*[
+						["对话组合1一","对话组合1二","对话组合1三","对话组合1四",],
+						["对话组合2一","对话组合2二","对话组合2三","对话组合2四",],
+					],*/
+					missions:[
+						dictionaryData.mission.example,
+					],
 					actions:[
 						{name:"对话",type:"talk",content:"对话内容"},
 						{name:"移动",type:"move",content:"移动到公共场景",target:"publicDomain"},
+						//dictionaryData.action.mission,
 					],
 				},
 			],
@@ -757,9 +182,6 @@ var data = {
 				{
 					name:"交流对象",
 					items:[
-						dictionaryData.item.item1,
-						//dictionaryData.item.item3,
-						//dictionaryData.item.item4,
 					],
 					actions:[
 						{name:"对话",type:"talk",content:"公共场景-交流对象-对话内容"},
@@ -768,13 +190,26 @@ var data = {
 					//itemInfo:[],
 				},
 				{
+					name:"移动-至大地图",
+					actions:[
+						{name:"对话",type:"talk",content:"公共场景-移动对象-对话内容"},
+						{name:"去大地图",type:"move",content:"移动-至大地图",target:"map",targetX:5,targetY:5},
+					],
+				},
+				{
 					name:"对战对象",
-					hp:50,
+					disappear:true,
+					hp:150,
 					maxHp:900,
-					att:2,
+					att:10,
 					def:10,
+					cri:0.5,//暴击率cri的直接 增加量 或 减少量
+					criStrike:1.2,//暴击伤害criStrike的直接  增加量 或 减少量
+					avd:0.1,//闪避率avd的直接  增加量 或 减少量
+					hit:0.9,//命中率hit的直接  增加量 或 减少量
 					items:[
-						dictionaryData.item.item1,
+						dictionaryData.item.testEquip22,
+						dictionaryData.item.testHpRecovery,
 					],
 					actions:[
 						dictionaryData.action.fight,
@@ -804,28 +239,95 @@ var data = {
 				},
 				{
 					name:"私有建筑",
+					bagSpace:10,
 					actions:[
 						{name:"对话",type:"talk",content:"私有据点-私有建筑-对话内容"},
 						{name:"使用",type:"useWarehouse",content:"私有据点-私有建筑-使用"},
 					],
 					items:[
-						//dictionaryData.item.item5,
-						//dictionaryData.item.item6,
 					],
 				},
 			],
 		},
 	],
+	/**
+	 * 大地图
+	 */
 };
-data.roles[0].items[0].totalNum=9;
+data.roles[0].items[0].totalNum=1;
 data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
 data.roles[0].items[3].totalNum=1;
-data.roles[0].items[4].totalNum=1;
+data.roles[0].items[4].totalNum=9;
 data.roles[0].items[5].totalNum=9;
 data.roles[0].items[6].totalNum=9;
 data.roles[0].items[7].totalNum=9;
 data.roles[0].items[8].totalNum=9;
-data.roles[0].items[9].totalNum=9;
-data.roles[0].items[10].totalNum=9;
-data.domains[1].interactiveObjects[2].items[0].dropChance=1;
+data.publicMaps[1].interactiveObjects[3].items[0].dropChance=0.8;
+data.publicMaps[1].interactiveObjects[3].items[0].dropChance=0.8;
+
+/*构成大地图（随机规则未完成）*/
+function newMap (mapName,mapSign,x,y){
+	var map = [];
+	for (var i=0; i < x; i++) {
+		for (var i1=0; i1 < y; i1++) {
+			var domainObj = {
+				name:mapName,
+				signId:mapSign,
+				x:i+1,
+				y:i1+1,
+				interactiveObjects:[],
+			};
+			//随机内部对象
+			for (var i2=0; i2 < 16; i2++) {
+				var tempObj = random([dictionaryData.interactiveObject.example1,dictionaryData.interactiveObject.example2],[0.8,0.2]);
+				console.info("tempObj");
+				console.info(tempObj);
+				domainObj.interactiveObjects.push(JSON.parse(JSON.stringify(tempObj)));
+				console.info(domainObj.interactiveObjects);
+			};
+			console.info(domainObj.interactiveObjects);
+			map.push(domainObj);
+		};
+	};
+	return map;
+};
+//记录所有大地图map的命名集合
+var mapIds = [
+	{
+		mapName:"测试大地图",
+		mapId:"map",
+	},
+];
+
+//执行生成map的数据
+var dataMapTemp = mapIds[0].mapId;
+data[dataMapTemp] = newMap(mapIds[0].mapName,mapIds[0].mapId,10,10);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

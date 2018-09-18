@@ -198,6 +198,7 @@ var data = {
 				},
 				{
 					name:"对战对象",
+					disappear:true,
 					hp:150,
 					maxHp:900,
 					att:10,

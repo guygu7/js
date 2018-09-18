@@ -676,7 +676,7 @@ DataModleFactory = {
 				};
 			}
 			if(tempMissions.length==0){
-				tempMissions.push(noneMissionObj);
+				//tempMissions.push(noneMissionObj);
 			}
 			return tempMissions;
 		};
@@ -939,6 +939,18 @@ DataModleFactory = {
 				}
 			};
 			return num;
+		};
+		
+		/**
+		 * 战斗后是否消失
+		 */
+		var disappear = true;
+		interactiveObject.getDisappear = function() {
+			return disappear;
+		};
+		interactiveObject.setDisappear = function(pram) {
+			disappear = pram;
+			return this;
 		};
 		
 		/**

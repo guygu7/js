@@ -418,12 +418,14 @@
 						<div ng-repeat="x in viewDataModel.panel4.buttonElements()" class="map3d-button" ng-style="viewControl.map3d_button{{$index+1}}">
 							<div class="map3d-obj" >
 							</div>
-							<div ng-click="onClick($event,$index)" class="button2" ng-style="viewControl.map3dButton{{$index+1}}_Style">
-								<div class="button2-background"></div>
-								<div class="button2-background2"></div>
-								<div class="button2-background3"></div>
-								<div class="button2-content">
-									{{x.getName()}}
+							<div ng-style="viewControl.map3dButton_Style">
+								<div ng-click="onClick($event,$index)" class="button2" ng-style="viewControl.map3dButton{{$index+1}}_Style">
+									<div class="button2-background"></div>
+									<div class="button2-background2"></div>
+									<div class="button2-background3"></div>
+									<div class="button2-content">
+										{{x.getName()}}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -2424,29 +2426,16 @@
 						var scale = viewControl["map3dButton"+i+"_Style"].transform.match(/scale\([-]*[0-9]*[.]*[0-9]*\)/)[0];
 						viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(scale,"scale(0)");
 						viewControl["map3dButton"+i+"_Style"]["transition-timing-function"] = "cubic-bezier(.14,1.52,.65,1.37)";
+						viewControl["map3dButton"+i+"_Style"].opacity = 0;
 					};
-					in
 					$timeout(function() {
 						for (var i=1; i < 17; i++) {
 							var scale = viewControl["map3dButton"+i+"_Style"].transform.match(/scale\([-]*[0-9]*[.]*[0-9]*\)/)[0];
 							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(scale,"scale(1)");
+							viewControl["map3dButton"+i+"_Style"].opacity = 1;
 						};
 					}, 100);
-					$timeout(function() {
-						for (var i=1; i < 17; i++) {
-							viewControl["map3dButton"+i+"_Style"].transition = ".6s";
-							viewControl["map3dButton"+i+"_Style"]["transition-timing-function"] = "ease";
-						};
-					}, 1000);
 				};
-				/**
-				 * 地图交互对象按钮组  隐藏命令
-				 */
-				/*
-				map3dButtonsHide = function(){
-					viewControl.map3dButton_Style. = "";
-				};
-				*/
 				
 				
 				/**
@@ -2535,10 +2524,10 @@
 						mouseY = ev.y;
 						viewControl.map3dFloor_Style.transform = "rotateX("+temp2+"deg) rotateZ("+temp+"deg)";
 						for (var i=1; i < 17; i++) {
-							var rotateZ = viewControl["map3dButton"+i+"_Style"].transform.match(/rotateZ\([-]*[0-9]*[.]*[0-9]*/)[0];
-							var rotateX = viewControl["map3dButton"+i+"_Style"].transform.match(/rotateX\([-]*[0-9]*[.]*[0-9]*/)[0];
-							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(rotateZ,"rotateZ("+(-temp));
-							viewControl["map3dButton"+i+"_Style"].transform = viewControl["map3dButton"+i+"_Style"].transform.replace(rotateX,"rotateX("+(-temp2));
+							var rotateZ = viewControl.map3dButton_Style.transform.match(/rotateZ\([-]*[0-9]*[.]*[0-9]*/)[0];
+							var rotateX = viewControl.map3dButton_Style.transform.match(/rotateX\([-]*[0-9]*[.]*[0-9]*/)[0];
+							viewControl.map3dButton_Style.transform = viewControl.map3dButton_Style.transform.replace(rotateZ,"rotateZ("+(-temp));
+							viewControl.map3dButton_Style.transform = viewControl.map3dButton_Style.transform.replace(rotateX,"rotateX("+(-temp2));
 						};
 						$scope.$apply();
 					};
@@ -4493,6 +4482,10 @@
 							tempObj.addItem(dropItems[i]);
 						};
 					};
+					//判断是否战斗后消失
+					if(currentInteractiveObject.getDisappear()==true){
+						currentInteractiveObject.supper.delInteractiveObject(currentInteractiveObject);
+					}
 					//场景切换
 					sceneFightHide("战斗胜利!"+itemNames);
 					sceneMainDataLoad(currentDomain);
