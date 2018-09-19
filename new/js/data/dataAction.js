@@ -59,6 +59,10 @@ var ACTION={
 		 * 任务
 		 */
 		mission:"mission",
+		/**
+		 * 存档
+		 */
+		save:"save",
 	},
 	/**
 	 * 交互动作.目标

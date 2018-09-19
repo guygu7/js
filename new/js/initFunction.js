@@ -61,32 +61,51 @@ function loadData(data,dataName){
  * 保存数据，将内存对象数据化
  */
 function saveData(obj){
-	var returnData = {};
-	//遍历对象的属性
-	for (var objAttr in obj) {
-		//仅获取对象的方法
-		if (obj.hasOwnProperty(objAttr) && typeof obj[objAttr] == "function") {
-			//判断为get方法
-			if ("get"==objAttr.substring(0,3)){
-				//执行对象的get方法(不带参数)
-				var tempData = obj[objAttr]();
-				//判断获得的返回值，没有则不操作
-				if(tempData == undefined){
-				}else if(Object.prototype.toString.call(tempData) === "[object Array]"){//如果是数组
-					//判断数组内是数据
-					if(tempData){
+	//判断传入的obj是对象
+	if(Object.prototype.toString.call(obj) === "[object Object]"){
+		var returnData = {};
+		//遍历对象的属性
+		for (var objAttr in obj) {
+			//仅获取对象的方法
+			if (obj.hasOwnProperty(objAttr) && typeof obj[objAttr] == "function") {
+				//判断为get方法
+				if ("get"==objAttr.substring(0,3)){
+					//执行对象的get方法(不带参数)
+					var tempData = obj[objAttr]();
+					//判断获得的返回值，没有则不操作
+					if(tempData == undefined){
+					}else if(Object.prototype.toString.call(tempData) == "[object Array]"){//如果是数组
+						//建立数组
+						returnData[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)] = [];
+						//遍历数组
+						for (var i=0; i < tempData.length; i++) {
+							//判断数组内不是对象，则为数据
+							if(Object.prototype.toString.call(tempData[i]) != "[object Object]"){
+								//直接存入该数组
+								returnData[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)].push(tempData[i]);
+							}else if(Object.prototype.toString.call(tempData[i]) == "[object Object]"){
+								//判断数组内是对象，回调
+								returnData[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)].push(saveData(tempData[i]));
+							}else{//出现其他异常情况，打印到控制台
+								console.info("saveData出现异常!");
+							}
+						};
 						
-					}else if(){
-					//判断数组内是对象
-						
-					}else{//出现其他异常情况，打印出来
-						console.info("saveData出现异常!");
+					}else{//不是数组
+						returnData[objAttr.substring(3,4).toLowerCase()+objAttr.substring(4)]=tempData;
 					}
-					
-				}else{//不是数组
-					returnData[objAttr]=tempData;
 				}
 			}
 		}
+		return returnData;
+	}//判断传入的obj是数组
+	else if (Object.prototype.toString.call(obj) === "[object Array]") {
+		var objArr = [];
+		if(obj){
+			for (var i=0; i < obj.length; i++) {
+				objArr.push(saveData(obj[i]));
+			};
+		}
+		return objArr;
 	}
 };

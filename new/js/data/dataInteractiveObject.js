@@ -41,6 +41,7 @@ dictionaryData.interactiveObject={
 		hit:0.95,//命中率hit的直接  增加量 或 减少量
 		actions:[
 			dictionaryData.action.fight,
+			{name:"存档",type:"save"},
 		],
 		skills:[
 		],
@@ -57,6 +58,7 @@ dictionaryData.interactiveObject={
 		hit:0.95,//命中率hit的直接  增加量 或 减少量
 		actions:[
 			dictionaryData.action.fight,
+			{name:"存档",type:"save"},
 		],
 		skills:[
 			dictionaryData.skill.att2,

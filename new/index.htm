@@ -132,7 +132,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div ng-hide="viewControl.display.top-button4" class="top-button">
+						<div ng-click="clickButton3()" class="top-button">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">系统</div>
 							<div class="top-button-arrow">
@@ -1089,6 +1089,14 @@
 						
 					</div>
 				</div>
+				
+				<!--遮罩层-->
+				<div ng-controller="loadSaveDataMaskLayer" ng-hide="viewControl.display.loadSaveDataMaskLayerHide" ng-style="viewControl.loadSaveDataMaskLayer_Style" ng-rightclick="loadSaveDataMaskLayerClick()" class="maskLayer" ></div>
+				<!--存档界面-->
+				<div ng-controller="loadSaveData" ng-hide="viewControl.display.loadSaveDataHide" ng-style="viewControl.loadSaveData_Style" ng-click="loadSaveDataClick()" ng-rightclick="loadSaveDataMaskLayerClick()" class="mission-info">
+					
+				</div>
+				
 				
 			</div>
 		
@@ -2418,6 +2426,49 @@
 				};
 				
 				
+				
+				/**
+				 * 读取存档界面  显示命令
+				 */
+				loadSaveDataShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["loadSaveData"] = maxZIndex+2;
+					viewControl.zIndexList["loadSaveDataMaskLayer"] = maxZIndex+1;
+					
+					viewControl.loadSaveData_Style["z-index"] = viewControl.zIndexList["loadSaveData"];
+					viewControl.loadSaveDataMaskLayer_Style["z-index"] = viewControl.zIndexList["loadSaveDataMaskLayer"];
+					//弹出遮罩层
+					viewControl.display.loadSaveDataMaskLayerHide = false;
+					
+					viewControl.display.loadSaveDataHide = false;
+					viewControl.loadSaveData_Style.left = 50 + "px";
+					viewControl.loadSaveData_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.loadSaveData_Style.left = 60 + "px";
+						viewControl.loadSaveData_Style.opacity = 1;
+					}, 400);
+				};
+				/**
+				 * 读取存档界面  隐藏命令
+				 */
+				loadSaveDataHide = function(){
+					viewControl.loadSaveData_Style.opacity = 0;
+					var left = viewControl.loadSaveData_Style.left;
+					viewControl.loadSaveData_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["loadSaveData"] = 0;
+						viewControl.loadSaveData_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.loadSaveDataMaskLayerHide = true;
+						viewControl.display.loadSaveDataHide = true;
+						mainShow();
+					}, 200);
+				};
+				
+				
+				
 				/**
 				 * 地图交互对象按钮组 显示效果
 				 */
@@ -2791,6 +2842,44 @@
 						};
 						mainHide();
 						missionSelectShow();
+					}else if(currentAction.getType()==ACTION.TYPE.save){
+						//判断为存档
+						//需要保存的数据
+						in
+					
+				    localStorage.setItem("publicItemInfo", JSON.stringify(saveData(publicItemInfo)));
+					localStorage.setItem("dataDomainsObj", JSON.stringify(saveData(dataDomainsObj)));
+					localStorage.setItem("mapDomainsObj", JSON.stringify(saveData(mapDomainsObj)));
+					localStorage.setItem("dataRoleObj", JSON.stringify(saveData(dataRoleObj)));
+					
+					/*-------------特殊对象-------------*/
+					/**
+					 * 全局任务交互动作
+					 */
+					//var missionActionObj = loadData(exampleData.actions[0],"action");
+					/**
+					 * 全局临时存放点对象（用于复制的模版）
+					 */
+					//var tempStoragePointObj = loadData(exampleData.interactiveObjects[0],"interactiveObject");
+					/**
+					 * 用于在任务栏显示没有任务
+					 */
+					//var noneMissionObj = loadData(exampleData.missions[0],"mission");
+					/*--------------------------------*/
+					/**
+					 * 当前大地图
+					 */
+					//var currentMapDomains = [];
+					if(currentMapDomains.length>0){
+						localStorage.setItem("currentMapDomains", currentMapDomains[0].getSignId());
+					}else{
+						localStorage.setItem("currentMapDomains", "");
+					}
+					/**
+					 * 当前场景地图
+					 */
+					//var currentDomain = DataModleFactory.createDomain();
+					localStorage.setItem("currentDomain", JSON.stringify(saveData(currentDomain)));
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
@@ -3645,6 +3734,15 @@
 					missionSelectHide();
 				};
 			});
+			//存档读取界面 专用遮罩层
+			app.controller("loadSaveDataMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$rootScope.loadSaveDataMaskLayerClick = function() {
+					dataRoleObj[0].setStatus("");
+					loadSaveDataHide();
+				};
+			});
+			
 			
 			//角色信息面板
 			app.controller("panel3", function($scope, $rootScope, $timeout) {
@@ -3944,6 +4042,17 @@
 						missionSelectShow();
 					}, 200);
 				};
+				$scope.clickButton3 = function(pram,pram2){
+					if(dataRoleObj[0].getStatus()=="fight"){
+						//判断为战斗状态，不可操作
+						alert("当前为战斗状态不可操作!");
+						return;
+					}
+					mainHide();
+					$timeout(function() {
+						loadSaveDataShow();
+					}, 200);
+				};
 			});
 			
 			app.controller("missionSelect", function($scope, $rootScope){
@@ -4062,6 +4171,47 @@
 					};
 				};
 			}); 
+			
+			app.controller("loadSaveData", function($scope, $rootScope){
+				$scope.loadSaveDataClick=function(){
+					//读取存档
+					in
+					publicItemInfo = loadData(JSON.parse(localStorage.getItem("publicItemInfo")),"item");
+					dataDomainsObj = loadData(JSON.parse(localStorage.getItem("dataDomainsObj")),"domain");
+					mapDomainsObj = loadData(JSON.parse(localStorage.getItem("mapDomainsObj")),"domain");
+					dataRoleObj = loadData(JSON.parse(localStorage.getItem("dataRoleObj")),"role");
+					//获取当前大地图数据
+					var mapId = localStorage.getItem("currentMapDomains");
+					if(mapId==""){
+						currentMapDomains = [];
+					}else{
+						var flag = false;
+						for (var i=0; i < mapDomainsObj.length; i++) {
+							if(mapId == mapDomainsObj[i][0].getSignId()){
+								currentMapDomains=mapDomainsObj[i];
+								flag = true;
+								break;
+							}
+						};
+						if(!flag){
+							console.info("存档读取出错!");
+						}
+					}in
+					//获取当前所在场景数据
+					var tempDomain = JSON.parse(localStorage.getItem("currentDomain"));
+					if(!isNaN(Number(tempDomain.x))&&!isNaN(Number(tempDomain.y))){
+						for (var i=0; i < currentMapDomains.length; i++) {
+							if(currentMapDomains[i].getX()==Number(tempDomain.x)&&currentMapDomains[i].getY()==Number(tempDomain.y)){
+								currentDomain = currentMapDomains[i];
+							}
+						};
+					}
+					tempDomain.
+					//currentDomain = ;
+					
+					
+				};
+			});
 			/*--------------------------------------------------------*/
 			/**
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值

@@ -366,6 +366,14 @@ var viewControl = {
 		 * 任务信息面板
 		 */
 		missionInfoHide:true,
+		/**
+		 * 读取存档 专用遮罩层隐藏 
+		 */
+		loadSaveDataMaskLayerHide:true,
+		/**
+		 * 读取存档界面
+		 */
+		loadSaveDataHide:true,
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景
@@ -535,6 +543,20 @@ var viewControl = {
 		"left":60+"px",
 		"opacity" : 0,
 	},
+	
+	/**
+	 * 读取存档 专用遮罩层（初始值）
+	 */
+	loadSaveDataMaskLayer_Style:{},
+	/**
+	 * 读取存档界面（初始值）
+	 */
+	loadSaveData_Style:{
+		"top":80+"px",
+		"left":60+"px",
+		"opacity" : 0,
+	},
+	
 	/**
 	 * 按钮组在3d地图的定位
 	 */
