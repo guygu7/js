@@ -1094,7 +1094,7 @@
 				<div ng-controller="loadSaveDataMaskLayer" ng-hide="viewControl.display.loadSaveDataMaskLayerHide" ng-style="viewControl.loadSaveDataMaskLayer_Style" ng-rightclick="loadSaveDataMaskLayerClick()" class="maskLayer" ></div>
 				<!--存档界面-->
 				<div ng-controller="loadSaveData" ng-hide="viewControl.display.loadSaveDataHide" ng-style="viewControl.loadSaveData_Style" ng-click="loadSaveDataClick()" ng-rightclick="loadSaveDataMaskLayerClick()" class="mission-info">
-					
+					{{viewDataModel.loadData.saveDate()}}
 				</div>
 				
 				
@@ -2843,43 +2843,47 @@
 						mainHide();
 						missionSelectShow();
 					}else if(currentAction.getType()==ACTION.TYPE.save){
+						flag=true;
 						//判断为存档
 						//需要保存的数据
-						in
+						//in
 					
-				    localStorage.setItem("publicItemInfo", JSON.stringify(saveData(publicItemInfo)));
-					localStorage.setItem("dataDomainsObj", JSON.stringify(saveData(dataDomainsObj)));
-					localStorage.setItem("mapDomainsObj", JSON.stringify(saveData(mapDomainsObj)));
-					localStorage.setItem("dataRoleObj", JSON.stringify(saveData(dataRoleObj)));
-					
-					/*-------------特殊对象-------------*/
-					/**
-					 * 全局任务交互动作
-					 */
-					//var missionActionObj = loadData(exampleData.actions[0],"action");
-					/**
-					 * 全局临时存放点对象（用于复制的模版）
-					 */
-					//var tempStoragePointObj = loadData(exampleData.interactiveObjects[0],"interactiveObject");
-					/**
-					 * 用于在任务栏显示没有任务
-					 */
-					//var noneMissionObj = loadData(exampleData.missions[0],"mission");
-					/*--------------------------------*/
-					/**
-					 * 当前大地图
-					 */
-					//var currentMapDomains = [];
-					if(currentMapDomains.length>0){
-						localStorage.setItem("currentMapDomains", currentMapDomains[0].getSignId());
-					}else{
-						localStorage.setItem("currentMapDomains", "");
-					}
-					/**
-					 * 当前场景地图
-					 */
-					//var currentDomain = DataModleFactory.createDomain();
-					localStorage.setItem("currentDomain", JSON.stringify(saveData(currentDomain)));
+					    localStorage.setItem("publicItemInfo", JSON.stringify(saveData(publicItemInfo)));
+						localStorage.setItem("dataDomainsObj", JSON.stringify(saveData(dataDomainsObj)));
+						localStorage.setItem("mapDomainsObj", JSON.stringify(saveData(mapDomainsObj)));
+						localStorage.setItem("dataRoleObj", JSON.stringify(saveData(dataRoleObj)));
+						
+						/*-------------特殊对象-------------*/
+						/**
+						 * 全局任务交互动作
+						 */
+						//var missionActionObj = loadData(exampleData.actions[0],"action");
+						/**
+						 * 全局临时存放点对象（用于复制的模版）
+						 */
+						//var tempStoragePointObj = loadData(exampleData.interactiveObjects[0],"interactiveObject");
+						/**
+						 * 用于在任务栏显示没有任务
+						 */
+						//var noneMissionObj = loadData(exampleData.missions[0],"mission");
+						/*--------------------------------*/
+						/**
+						 * 当前大地图
+						 */
+						if(currentMapDomains.length>0){
+							localStorage.setItem("currentMapDomains", currentMapDomains[0].getSignId());
+						}else{
+							localStorage.setItem("currentMapDomains", "");
+						}
+						/**
+						 * 当前场景地图
+						 */
+						localStorage.setItem("currentDomain", JSON.stringify(saveData(currentDomain)));
+						//保存时间
+						var myDate = new Date();
+						var datestr = myDate.toLocaleString();
+						localStorage.setItem("saveDate",datestr);
+						panelTyping("保存成功...");
 					}
 					/*---------物品操作动作--------*/
 					else if(currentAction.getType()==ACTION.TYPE.split){
@@ -3747,13 +3751,13 @@
 			//角色信息面板
 			app.controller("panel3", function($scope, $rootScope, $timeout) {
 				//角色暂时只有一个，直接与角色数据绑定
-				viewDataModel.panel3.tittleText=dataRoleObj[0].getName;
-				viewDataModel.panel3.roleHp=dataRoleObj[0].getHp;
-				viewDataModel.panel3.roleEp=dataRoleObj[0].getEp ;
-				viewDataModel.panel3.roleMaxHp=dataRoleObj[0].getMaxHp;
-				viewDataModel.panel3.roleMaxEp=dataRoleObj[0].getMaxEp;
-				viewDataModel.panel3.roleAtt=dataRoleObj[0].getAtt;
-				viewDataModel.panel3.roleDef=dataRoleObj[0].getDef;
+				viewDataModel.panel3.tittleText=function(){return dataRoleObj[0].getName();};
+				viewDataModel.panel3.roleHp=function(){return dataRoleObj[0].getHp();};
+				viewDataModel.panel3.roleEp=function(){return dataRoleObj[0].getEp();};
+				viewDataModel.panel3.roleMaxHp=function(){return dataRoleObj[0].getMaxHp();};
+				viewDataModel.panel3.roleMaxEp=function(){return dataRoleObj[0].getMaxEp();};
+				viewDataModel.panel3.roleAtt=function(){return dataRoleObj[0].getAtt();};
+				viewDataModel.panel3.roleDef=function(){return dataRoleObj[0].getDef();};
 				viewDataModel.panel3.roleCri=function (){
 					return parseInt(dataRoleObj[0].getCri()*100)+"%";
 				};
@@ -4175,14 +4179,14 @@
 			app.controller("loadSaveData", function($scope, $rootScope){
 				$scope.loadSaveDataClick=function(){
 					//读取存档
-					in
+					//in
 					publicItemInfo = loadData(JSON.parse(localStorage.getItem("publicItemInfo")),"item");
 					dataDomainsObj = loadData(JSON.parse(localStorage.getItem("dataDomainsObj")),"domain");
 					mapDomainsObj = loadData(JSON.parse(localStorage.getItem("mapDomainsObj")),"domain");
 					dataRoleObj = loadData(JSON.parse(localStorage.getItem("dataRoleObj")),"role");
 					//获取当前大地图数据
 					var mapId = localStorage.getItem("currentMapDomains");
-					if(mapId==""){
+					if(mapId==""){//当前没有大地图
 						currentMapDomains = [];
 					}else{
 						var flag = false;
@@ -4193,23 +4197,40 @@
 								break;
 							}
 						};
-						if(!flag){
-							console.info("存档读取出错!");
+						if(!flag){//遍历完成后未找到对应大地图
+							alert("error-0001:存档读取出错!");
+							//处理（未完成）
 						}
-					}in
+					}
 					//获取当前所在场景数据
 					var tempDomain = JSON.parse(localStorage.getItem("currentDomain"));
-					if(!isNaN(Number(tempDomain.x))&&!isNaN(Number(tempDomain.y))){
+					if(!isNaN(Number(tempDomain.x))&&!isNaN(Number(tempDomain.y))){//判断有x/y值，则从大地图找
+						var flag = false;
 						for (var i=0; i < currentMapDomains.length; i++) {
 							if(currentMapDomains[i].getX()==Number(tempDomain.x)&&currentMapDomains[i].getY()==Number(tempDomain.y)){
 								currentDomain = currentMapDomains[i];
+								flag = true;
+								break;
 							}
 						};
+						if(!flag){//遍历完成后未找到对应大地图
+							alert("error-0002:存档读取出错!");
+							//处理（未完成）
+						}
+					}else{//否则在公共地图中找
+						var flag = false;
+						for (var i=0; i < publicItemInfo.length; i++) {
+							if(dataDomainsObj[i].getSignId()==tempDomain.signId){
+								currentDomain = dataDomainsObj[i];
+								flag = true;
+								break;
+							}
+						}
+						if(!flag){//遍历完成后未找到对应公共地图
+							alert("error-0003:存档读取出错!");
+							//处理（未完成）
+						}
 					}
-					tempDomain.
-					//currentDomain = ;
-					
-					
 				};
 			});
 			/*--------------------------------------------------------*/
@@ -4644,6 +4665,8 @@
 				}else if(pram=="fail"){//战斗失败（未实现）
 					
 				}
+				//清空战斗数据
+				viewDataModel.battle.battleInfo.length = 0;
 			}
 			//战斗场景
 			app.controller("scene-battle", function($scope, $rootScope, $timeout) {

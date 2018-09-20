@@ -174,6 +174,13 @@ var viewDataModel = {
 		 */
 		completeItems:function(){return currentMission.getCompleteItems();},
 	},
+	
+	loadData:{
+		saveDate:function(){
+			return localStorage.getItem("saveDate");
+		},
+	},
+	
 	/*------------------战斗场景组件视图数据------------------*/
 	/**
 	 * 战斗面板
