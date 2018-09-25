@@ -174,10 +174,26 @@ var viewDataModel = {
 		 */
 		completeItems:function(){return currentMission.getCompleteItems();},
 	},
-	
+	/**
+	 * 展示存档数据
+	 */
 	loadData:{
+		/**
+		 * 存档时间
+		 */
 		saveDate:function(){
 			return localStorage.getItem("saveDate");
+		},
+		/**
+		 * 存档地图位置
+		 */
+		currentDomain:function(){
+			var tempCurrentDomain = JSON.parse(localStorage.getItem("currentDomain"));
+			if(!isNaN(Number(tempCurrentDomain.x))&&!isNaN(Number(tempCurrentDomain.x))){
+				return tempCurrentDomain.name+"  ("+tempCurrentDomain.x+","+tempCurrentDomain.y+")";
+			} else {
+				return tempCurrentDomain.name;
+			}
 		},
 	},
 	

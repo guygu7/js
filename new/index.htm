@@ -1094,7 +1094,8 @@
 				<div ng-controller="loadSaveDataMaskLayer" ng-hide="viewControl.display.loadSaveDataMaskLayerHide" ng-style="viewControl.loadSaveDataMaskLayer_Style" ng-rightclick="loadSaveDataMaskLayerClick()" class="maskLayer" ></div>
 				<!--存档界面-->
 				<div ng-controller="loadSaveData" ng-hide="viewControl.display.loadSaveDataHide" ng-style="viewControl.loadSaveData_Style" ng-click="loadSaveDataClick()" ng-rightclick="loadSaveDataMaskLayerClick()" class="mission-info">
-					{{viewDataModel.loadData.saveDate()}}
+					{{viewDataModel.loadData.saveDate()}}</br>
+					所在位置  : {{viewDataModel.loadData.currentDomain()}}
 				</div>
 				
 				
@@ -2846,7 +2847,7 @@
 						flag=true;
 						//判断为存档
 						//需要保存的数据
-						//in
+						in
 					
 					    localStorage.setItem("publicItemInfo", JSON.stringify(saveData(publicItemInfo)));
 						localStorage.setItem("dataDomainsObj", JSON.stringify(saveData(dataDomainsObj)));
@@ -4180,7 +4181,7 @@
 			app.controller("loadSaveData", function($scope, $rootScope){
 				$scope.loadSaveDataClick=function(){
 					//读取存档
-					//in
+					in
 					publicItemInfo = loadData(JSON.parse(localStorage.getItem("publicItemInfo")),"item");
 					dataDomainsObj = loadData(JSON.parse(localStorage.getItem("dataDomainsObj")),"domain");
 					mapDomainsObj = loadData(JSON.parse(localStorage.getItem("mapDomainsObj")),"domain");
