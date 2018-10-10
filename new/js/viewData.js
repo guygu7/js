@@ -124,7 +124,7 @@ var viewDataModel = {
 		 */
 		buttonElements:function(){return {};},
 		bagSpace:function(){
-				if (isNaN(Number(currentInteractiveObject.getBagSpace()))) {
+				if (currentInteractiveObject==null||isNaN(Number(currentInteractiveObject.getBagSpace()))) {
 					return "";
 				} else{
 					return currentInteractiveObject.getOccupySpace()+"/"+currentInteractiveObject.getBagSpace();
@@ -182,13 +182,13 @@ var viewDataModel = {
 		 * 存档时间
 		 */
 		saveDate:function(){
-			return localStorage.getItem("saveDate");
+			return loadSaveGameData.saveDate;
 		},
 		/**
 		 * 存档地图位置
 		 */
 		currentDomain:function(){
-			var tempCurrentDomain = JSON.parse(localStorage.getItem("currentDomain"));
+			var tempCurrentDomain = JSON.parse(loadSaveGameData.currentDomain);
 			if(!isNaN(Number(tempCurrentDomain.x))&&!isNaN(Number(tempCurrentDomain.x))){
 				return tempCurrentDomain.name+"  ("+tempCurrentDomain.x+","+tempCurrentDomain.y+")";
 			} else {

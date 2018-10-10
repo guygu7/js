@@ -123,7 +123,7 @@
 						</div>
 						<div ng-click="clickButton1('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:180px;">
 							<div class="top-button-background"></div>
-							<div class="top-button-content">实装</div>
+							<div class="top-button-content">装备</div>
 							<div class="top-button-arrow">
 								<div class="top-button-arrow1"></div>
 								<div class="top-button-arrow2"></div>
@@ -1628,6 +1628,12 @@
 						&&buff1.getRound()==buff2.getRound()
 						&&buff1.getSuperposition()==buff2.getSuperposition());
 			}
+			
+			/**
+			 * 读取保存数据
+			 */
+			var loadSaveGameData = JSON.parse(localStorage.getItem("saveGameData"));
+			
 			/**
 			 * （全局级）物品信息集合（字典）[item数组]
 			 * //需在其他对象之前构建
@@ -2847,13 +2853,18 @@
 						flag=true;
 						//判断为存档
 						//需要保存的数据
-						in
-					
+						//in
+						var saveGameData = {};
+						saveGameData.publicItemInfo = JSON.stringify(saveData(publicItemInfo));
+						saveGameData.dataDomainsObj = JSON.stringify(saveData(dataDomainsObj));
+						saveGameData.mapDomainsObj = JSON.stringify(saveData(mapDomainsObj));
+						saveGameData.dataRoleObj = JSON.stringify(saveData(dataRoleObj));
+						/*
 					    localStorage.setItem("publicItemInfo", JSON.stringify(saveData(publicItemInfo)));
 						localStorage.setItem("dataDomainsObj", JSON.stringify(saveData(dataDomainsObj)));
 						localStorage.setItem("mapDomainsObj", JSON.stringify(saveData(mapDomainsObj)));
 						localStorage.setItem("dataRoleObj", JSON.stringify(saveData(dataRoleObj)));
-						
+						*/
 						/*-------------特殊对象-------------*/
 						/**
 						 * 全局任务交互动作
@@ -2872,19 +2883,28 @@
 						 * 当前大地图
 						 */
 						if(currentMapDomains.length>0){
-							localStorage.setItem("currentMapDomains", currentMapDomains[0].getSignId());
+							saveGameData.currentMapDomains = JSON.stringify(scurrentMapDomains[0].getSignId());
+							//localStorage.setItem("currentMapDomains", currentMapDomains[0].getSignId());
 						}else{
-							localStorage.setItem("currentMapDomains", "");
+							saveGameData.currentMapDomains = "";
+							//localStorage.setItem("currentMapDomains", "");
 						}
 						/**
 						 * 当前场景地图
 						 */
-						localStorage.setItem("currentDomain", JSON.stringify(saveData(currentDomain)));
+						saveGameData.currentDomain = JSON.stringify(saveData(currentDomain));
+						//localStorage.setItem("currentDomain", JSON.stringify(saveData(currentDomain)));
 						//保存时间
 						var myDate = new Date();
 						var datestr = myDate.toLocaleString();
-						localStorage.setItem("saveDate",datestr);
-						in
+						saveGameData.saveDate = datestr;
+						//localStorage.setItem("saveDate",datestr);
+						console.info(saveGameData);
+						console.info(JSON.stringify(saveGameData));
+						
+						localStorage.setItem("saveGameData",JSON.stringify(saveGameData));
+						loadSaveGameData = saveGameData;
+						//in
 						panelTyping("保存成功...");
 					}
 					/*---------物品操作动作--------*/
@@ -4181,13 +4201,14 @@
 			app.controller("loadSaveData", function($scope, $rootScope){
 				$scope.loadSaveDataClick=function(){
 					//读取存档
-					in
-					publicItemInfo = loadData(JSON.parse(localStorage.getItem("publicItemInfo")),"item");
-					dataDomainsObj = loadData(JSON.parse(localStorage.getItem("dataDomainsObj")),"domain");
-					mapDomainsObj = loadData(JSON.parse(localStorage.getItem("mapDomainsObj")),"domain");
-					dataRoleObj = loadData(JSON.parse(localStorage.getItem("dataRoleObj")),"role");
+					//in
+					var saveGameData = JSON.parse(localStorage.getItem("saveGameData"));
+					publicItemInfo = loadData(JSON.parse(saveGameData.publicItemInfo),"item");
+					dataDomainsObj = loadData(JSON.parse(saveGameData.dataDomainsObj),"domain");
+					mapDomainsObj = loadData(JSON.parse(saveGameData.mapDomainsObj),"domain");
+					dataRoleObj = loadData(JSON.parse(saveGameData.dataRoleObj),"role");
 					//获取当前大地图数据
-					var mapId = localStorage.getItem("currentMapDomains");
+					var mapId = saveGameData.currentMapDomains;
 					if(mapId==""){//当前没有大地图
 						currentMapDomains = [];
 					}else{
@@ -4201,11 +4222,12 @@
 						};
 						if(!flag){//遍历完成后未找到对应大地图
 							alert("error-0001:存档读取出错!");
+							return;
 							//处理（未完成）
 						}
 					}
 					//获取当前所在场景数据
-					var tempDomain = JSON.parse(localStorage.getItem("currentDomain"));
+					var tempDomain = JSON.parse(saveGameData.currentDomain);
 					if(!isNaN(Number(tempDomain.x))&&!isNaN(Number(tempDomain.y))){//判断有x/y值，则从大地图找
 						var flag = false;
 						for (var i=0; i < currentMapDomains.length; i++) {
@@ -4217,6 +4239,7 @@
 						};
 						if(!flag){//遍历完成后未找到对应大地图
 							alert("error-0002:存档读取出错!");
+							return;
 							//处理（未完成）
 						}
 					}else{//否则在公共地图中找
@@ -4230,9 +4253,12 @@
 						}
 						if(!flag){//遍历完成后未找到对应公共地图
 							alert("error-0003:存档读取出错!");
+							return;
 							//处理（未完成）
 						}
 					}
+					panelTyping("读取存档...");
+					loadSaveDataHide();
 				};
 			});
 			/*--------------------------------------------------------*/
