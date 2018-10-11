@@ -23,6 +23,7 @@
 		<link href="css/confirmDialog.css" rel="stylesheet">
 		<link href="css/mission.css" rel="stylesheet">
 		<link href="css/3dMap.css" rel="stylesheet">
+		<link href="css/equip.css" rel="stylesheet">
 		
 	</head>
 
@@ -1098,8 +1099,16 @@
 					所在位置  : {{viewDataModel.loadData.currentDomain()}}
 				</div>
 				
-				
 			</div>
+			<!--遮罩层-->
+			<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
+			<!--装备界面-->
+			<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="" >
+				<div ng-class="">
+					
+				</div>
+			</div>
+			
 		
 			<!--战斗场景-->
 			<div ng-controller="scene-battle" ng-hide="viewControl.display.sceneBattleHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-battle','show-animation-scene':viewControl.currentScene=='scene-battle'}" class="scene">
@@ -1632,7 +1641,14 @@
 			/**
 			 * 读取保存数据
 			 */
-			var loadSaveGameData = JSON.parse(localStorage.getItem("saveGameData"));
+			var loadSaveGameData;
+			var loadSaveGameData_currentDomain;
+			(function(){
+				if(localStorage.getItem(data.saveGameData)!=null){
+					loadSaveGameData = JSON.parse(localStorage.getItem(data.saveGameData));
+					loadSaveGameData_currentDomain = JSON.parse(loadSaveGameData.currentDomain);
+				};
+			})();
 			
 			/**
 			 * （全局级）物品信息集合（字典）[item数组]
@@ -2474,7 +2490,18 @@
 					}, 200);
 				};
 				
-				
+				/**
+				 * 装备界面  显示命令
+				 */
+				equipShow = function(){
+					
+				};
+				/**
+				 * 装备界面  隐藏命令
+				 */
+				equipHide = function(){
+					
+				};
 				
 				/**
 				 * 地图交互对象按钮组 显示效果
@@ -2723,6 +2750,8 @@
 								};
 							}
 						}
+						//动画效果
+						map3dButtonsShow();
 						//移动动作完成，清空当前交互对象
 						//currentInteractiveObject = null;清空会报错
 					}else if(currentAction.getType()=="useWarehouse"){
@@ -2902,8 +2931,9 @@
 						console.info(saveGameData);
 						console.info(JSON.stringify(saveGameData));
 						
-						localStorage.setItem("saveGameData",JSON.stringify(saveGameData));
-						loadSaveGameData = saveGameData;
+						localStorage.setItem(data.saveGameData,JSON.stringify(saveGameData));
+						loadSaveGameData = JSON.parse(localStorage.getItem(data.saveGameData));
+						loadSaveGameData_currentDomain = JSON.parse(loadSaveGameData.currentDomain);
 						//in
 						panelTyping("保存成功...");
 					}
@@ -3768,7 +3798,13 @@
 					loadSaveDataHide();
 				};
 			});
-			
+			//装备界面 专用遮罩层
+			app.controller("equipMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$rootScope.equipMaskLayerClick = function() {
+					equipHide();
+				};
+			});
 			
 			//角色信息面板
 			app.controller("panel3", function($scope, $rootScope, $timeout) {

@@ -188,7 +188,7 @@ var viewDataModel = {
 		 * 存档地图位置
 		 */
 		currentDomain:function(){
-			var tempCurrentDomain = JSON.parse(loadSaveGameData.currentDomain);
+			var tempCurrentDomain = loadSaveGameData_currentDomain;
 			if(!isNaN(Number(tempCurrentDomain.x))&&!isNaN(Number(tempCurrentDomain.x))){
 				return tempCurrentDomain.name+"  ("+tempCurrentDomain.x+","+tempCurrentDomain.y+")";
 			} else {
@@ -397,6 +397,14 @@ var viewControl = {
 		 * 读取存档界面
 		 */
 		loadSaveDataHide:true,
+		/**
+		 * 装备界面 专用遮罩层隐藏 
+		 */
+		equipMaskLayerHide:false,
+		/**
+		 * 装备界面
+		 */
+		equipHide:false,
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景
@@ -579,6 +587,15 @@ var viewControl = {
 		"left":60+"px",
 		"opacity" : 0,
 	},
+	
+	/**
+	 * 装备界面 专用遮罩层（初始值）
+	 */
+	loadSaveDataMaskLayer_Style:{},
+	/**
+	 * 装备界面（初始值）
+	 */
+	equipMaskLayer_Style:{},
 	
 	/**
 	 * 按钮组在3d地图的定位

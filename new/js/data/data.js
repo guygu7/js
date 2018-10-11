@@ -70,6 +70,7 @@ var exampleData = {
  * 初始数据 
  */
 var data = {
+	saveGameData:"saveGameData",
 	/**
 	 * 开始引导文本
 	 */
