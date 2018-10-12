@@ -591,12 +591,11 @@ var viewControl = {
 	/**
 	 * 装备界面 专用遮罩层（初始值）
 	 */
-	loadSaveDataMaskLayer_Style:{},
+	equipMaskLayer_Style:{},
 	/**
 	 * 装备界面（初始值）
 	 */
-	equipMaskLayer_Style:{},
-	
+	equip_Style:{},
 	/**
 	 * 按钮组在3d地图的定位
 	 */

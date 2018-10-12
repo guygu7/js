@@ -40,6 +40,56 @@
 						start
 					</div>
 				</div>
+				<!--遮罩层-->
+				<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
+				<!--装备界面-->
+				<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
+					class="equipPanle" >
+					<div class="equipElement" style="top:20px;">
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement2">
+							装备位
+						</div>
+						<div class="equipElement3">
+							中文
+						</div>
+					</div>
+					<div class="equipElement" style="top:130px;">
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement2">
+							装备位
+						</div>
+						<div class="equipElement3">
+							中文
+						</div>
+					</div>
+					<div class="equipElement" style="top:240px;">
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement2">
+							装备位
+						</div>
+						<div class="equipElement3">
+							中文
+						</div>
+					</div>
+					<div class="equipElement" style="top:350px;">
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement2">
+							装备位
+						</div>
+						<div class="equipElement3">
+							中文
+						</div>
+					</div>
+				</div>
 			</div>
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
@@ -1100,15 +1150,6 @@
 				</div>
 				
 			</div>
-			<!--遮罩层-->
-			<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
-			<!--装备界面-->
-			<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="" >
-				<div ng-class="">
-					
-				</div>
-			</div>
-			
 		
 			<!--战斗场景-->
 			<div ng-controller="scene-battle" ng-hide="viewControl.display.sceneBattleHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-battle','show-animation-scene':viewControl.currentScene=='scene-battle'}" class="scene">
