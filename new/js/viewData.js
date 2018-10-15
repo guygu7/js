@@ -196,7 +196,12 @@ var viewDataModel = {
 			}
 		},
 	},
-	
+	/**
+	 * 装备中的装备数据
+	 */
+	equip:function(num){
+		return dataRoleObj[0].getItem(num,"useRoleBag-Equip");
+	},
 	/*------------------战斗场景组件视图数据------------------*/
 	/**
 	 * 战斗面板
@@ -400,11 +405,11 @@ var viewControl = {
 		/**
 		 * 装备界面 专用遮罩层隐藏 
 		 */
-		equipMaskLayerHide:false,
+		equipMaskLayerHide:true,
 		/**
 		 * 装备界面
 		 */
-		equipHide:false,
+		equipHide:true,
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景

@@ -40,56 +40,6 @@
 						start
 					</div>
 				</div>
-				<!--遮罩层-->
-				<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
-				<!--装备界面-->
-				<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
-					class="equipPanle" >
-					<div class="equipElement" style="top:20px;">
-						<div class="equipElement1">
-							
-						</div>
-						<div class="equipElement2">
-							装备位
-						</div>
-						<div class="equipElement3">
-							中文
-						</div>
-					</div>
-					<div class="equipElement" style="top:130px;">
-						<div class="equipElement1">
-							
-						</div>
-						<div class="equipElement2">
-							装备位
-						</div>
-						<div class="equipElement3">
-							中文
-						</div>
-					</div>
-					<div class="equipElement" style="top:240px;">
-						<div class="equipElement1">
-							
-						</div>
-						<div class="equipElement2">
-							装备位
-						</div>
-						<div class="equipElement3">
-							中文
-						</div>
-					</div>
-					<div class="equipElement" style="top:350px;">
-						<div class="equipElement1">
-							
-						</div>
-						<div class="equipElement2">
-							装备位
-						</div>
-						<div class="equipElement3">
-							中文
-						</div>
-					</div>
-				</div>
 			</div>
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
@@ -172,7 +122,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div ng-click="clickButton1('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:180px;">
+						<div ng-click="clickButton4('useRoleBag','useRoleBag-Equip')" class="top-button" style="right:180px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">装备</div>
 							<div class="top-button-arrow">
@@ -1147,6 +1097,57 @@
 				<div ng-controller="loadSaveData" ng-hide="viewControl.display.loadSaveDataHide" ng-style="viewControl.loadSaveData_Style" ng-click="loadSaveDataClick()" ng-rightclick="loadSaveDataMaskLayerClick()" class="mission-info">
 					{{viewDataModel.loadData.saveDate()}}</br>
 					所在位置  : {{viewDataModel.loadData.currentDomain()}}
+				</div>
+				
+				<!--遮罩层-->
+				<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
+				<!--装备界面-->
+				<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
+					class="equipPanle" >
+					<div ng-click="equipElementClick()" class="equipElement" style="top:30px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(1).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick()" class="equipElement" style="top:155px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(2).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick()" class="equipElement" style="top:280px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(3).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick()" class="equipElement" style="top:405px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(4).getName()}}
+						</div>
+					</div>
 				</div>
 				
 			</div>
@@ -2530,12 +2531,27 @@
 						mainShow();
 					}, 200);
 				};
-				
+				in
 				/**
 				 * 装备界面  显示命令
 				 */
 				equipShow = function(){
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["equip"] = maxZIndex+2;
+					viewControl.zIndexList["equipMaskLayer"] = maxZIndex+1;
 					
+					viewControl.equip_Style["z-index"] = viewControl.zIndexList["equip"];
+					viewControl.equipMaskLayer_Style["z-index"] = viewControl.zIndexList["equipMaskLayer"];
+					//弹出遮罩层
+					viewControl.display.equipMaskLayerHide = false;
+					
+					viewControl.display.equipHide = false;
+					
+					viewControl.equip_Style.opacity = 0;
+					$timeout(function() {
+						viewControl.equip_Style.opacity = 1;
+					}, 200);
 				};
 				/**
 				 * 装备界面  隐藏命令
@@ -4125,6 +4141,16 @@
 						viewControl.panel3_Style2.opacity = 1;
 					}, 200);
 				};
+				$scope.clickButton4 = function(pram,pram2){
+					mainHide();
+					if(dataRoleObj[0].getStatus()=="fight"){
+						//判断为战斗状态，不可操作
+						alert("当前为战斗状态不可操作!");
+						return;
+					}
+					equipShow();
+				};
+				in
 				$scope.clickButton2 = function(pram,pram2){
 					if(dataRoleObj[0].getStatus()=="fight"){
 						//判断为战斗状态，不可操作

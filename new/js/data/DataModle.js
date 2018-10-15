@@ -572,7 +572,15 @@ DataModleFactory = {
 		 * 所有物品
 		 */
 		var items=[];
-		role.getItem = function(num){
+		role.getItem = function(num,type){
+			if(type=="useRoleBag-Equip"){
+				for (var i=0; i < items.length; i++) {
+					if (items[i].getType()==ITEM.TYPE.equip && items[i].getType2()==num && items[i].getIsPutOn()==true) {
+						return items[i];
+					};
+				};
+				return null;
+			}
 			return items[num];
 		};
 		/**
@@ -612,19 +620,19 @@ DataModleFactory = {
 				//判断传入参数不为空  且是 item 对象
 				//修改Item中某些值为默认值
 				//遍历对比传入的item和itemInfos中的Item，遍历出对应的Item信息
-					var tempItemInfos = this.getItemInfos();
-					for (var i=0; i < tempItemInfos.length; i++) {
-						if (compareItem(pram,tempItemInfos[i])) {
-							//清除原有Actions
-							pram.clearActions();
-							//将角色Item信息中的Actions存入传参物品
-							var tempActions = tempItemInfos[i].getActions();
-							for (var k=0; k < tempActions.length; k++) {
-								pram.addAction(tempActions[k]);
-							};
-							break;
+				var tempItemInfos = this.getItemInfos();
+				for (var i=0; i < tempItemInfos.length; i++) {
+					if (compareItem(pram,tempItemInfos[i])) {
+						//清除原有Actions
+						pram.clearActions();
+						//将角色Item信息中的Actions存入传参物品
+						var tempActions = tempItemInfos[i].getActions();
+						for (var k=0; k < tempActions.length; k++) {
+							pram.addAction(tempActions[k]);
 						};
+						break;
 					};
+				};
 				pram.supper = this;
 				items.push(pram);
 			}
