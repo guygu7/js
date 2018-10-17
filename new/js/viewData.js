@@ -273,6 +273,8 @@ var viewControl = {
 		 * 列表菜单（自动大小_带箭头）隐藏 
 		 */
 		menuHide:true,
+		
+		menuBagMaskLayerHide:true,
 		/**
 		 * 列表菜单（包裹）组件隐藏 
 		 */
@@ -492,6 +494,7 @@ var viewControl = {
 		"opacity" : 0,
 		"z-index":0,
 	},
+	menuBagMaskLayer_Style:{},
 	/**
 	 * 列表菜单（包裹）组件（初始值）
 	 */

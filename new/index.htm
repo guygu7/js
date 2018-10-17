@@ -24,7 +24,7 @@
 		<link href="css/mission.css" rel="stylesheet">
 		<link href="css/3dMap.css" rel="stylesheet">
 		<link href="css/equip.css" rel="stylesheet">
-		
+		<link href="css/skill.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -40,6 +40,14 @@
 						start
 					</div>
 				</div>
+				
+				<!--技能安装界面-->
+				<div class="skillPanle">
+					<div class="skillChassis">
+						
+					</div>
+				</div>
+				
 			</div>
 			<!--xx场景-->
 			<div ng-controller="scene-main" ng-hide="viewControl.display.sceneMainHide" ng-class="{'hide-animation-scene':viewControl.currentScene!='scene-main','show-animation-scene':viewControl.currentScene=='scene-main'}" class="scene">
@@ -482,6 +490,8 @@
 					</div>
 				</div>
 				
+				<!--列表菜单:包裹-遮罩层-->
+				<div ng-controller="menuBagMaskLayer" ng-hide="viewControl.display.menuBagMaskLayerHide"  ng-style="viewControl.menuBagMaskLayer_Style" ng-rightclick="menuBagMaskLayerClick($event)" class="maskLayer" ></div>
 				<!--列表菜单:包裹-->
 				<div ng-controller="menuBag" ng-hide="viewControl.display.menuBagHide" ng-style="viewControl.menu_bag_Style" ng-class="{'hide-animation':menuBagHide,'show-animation':!menuBagHide}" ng-rightclick="panel5MaskLayerClick($event)" class="menu-background">
 					<div class="menu-tittle">{{viewDataModel.panel3.tittle()}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{viewDataModel.panel3.roleBagSpace()}}</div>
@@ -1102,9 +1112,9 @@
 				<!--遮罩层-->
 				<div ng-controller="equipMaskLayer" ng-hide="viewControl.display.equipMaskLayerHide" ng-style="viewControl.equipMaskLayer_Style" ng-rightclick="equipMaskLayerClick()" class="maskLayer" ></div>
 				<!--装备界面-->
-				<div ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
+				<div ng-controller="equipPanle" ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
 					class="equipPanle" >
-					<div ng-click="equipElementClick()" class="equipElement" style="top:30px;">
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:30px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1115,7 +1125,7 @@
 							{{viewDataModel.equip(1).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick()" class="equipElement" style="top:155px;">
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:155px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1126,7 +1136,7 @@
 							{{viewDataModel.equip(2).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick()" class="equipElement" style="top:280px;">
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:280px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1137,7 +1147,7 @@
 							{{viewDataModel.equip(3).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick()" class="equipElement" style="top:405px;">
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:405px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1148,7 +1158,54 @@
 							{{viewDataModel.equip(4).getName()}}
 						</div>
 					</div>
+					
+					<div ng-click="equipElementClick(850)" class="equipElement" style="top:30px;left:400px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(5).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:155px;left:400px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(6).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:280px;left:400px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(7).getName()}}
+						</div>
+					</div>
+					<div ng-click="equipElementClick(450)" class="equipElement" style="top:405px;left:400px;">
+						<div class="equipElementTittle">
+							装备位
+						</div>
+						<div class="equipElement1">
+							
+						</div>
+						<div class="equipElement3">
+							{{viewDataModel.equip(8).getName()}}
+						</div>
+					</div>
 				</div>
+				
+				
 				
 			</div>
 		
@@ -2531,7 +2588,7 @@
 						mainShow();
 					}, 200);
 				};
-				in
+				//in
 				/**
 				 * 装备界面  显示命令
 				 */
@@ -2557,8 +2614,71 @@
 				 * 装备界面  隐藏命令
 				 */
 				equipHide = function(){
-					
+					//实现隐藏菜单（包裹）的动画效果
+					var left = viewControl.menu_bag_Style.left;
+					//viewControl.equip_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
+					viewControl.equip_Style.opacity = 0;
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["equip"] = 0;
+						viewControl.zIndexList["equipMaskLayer"] = 0;
+						viewControl.equip_Style["z-index"] = 0;
+						viewControl.equipMaskLayer_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.equipMaskLayerHide = true;
+						viewControl.display.equipHide = true;
+					}, 200);
 				};
+				
+				
+				/**
+				 * 包裹菜单 显示命令
+				 */
+				menuBagShow = function(left){
+					if(isNaN(Number(left))){
+						left = 0;
+					}
+					var menuBagLeft=left;
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.zIndexList["menuBagMaskLayer"] = maxZIndex+1;
+					
+					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					viewControl.menuBagMaskLayer_Style["z-index"] = viewControl.zIndexList["menuBagMaskLayer"];
+					//弹出遮罩层
+					viewControl.display.menuBagMaskLayerHide = false;
+					
+					//同时打开包
+					viewControl.display.menuBagHide = false;
+					viewControl.menu_bag_Style.left = menuBagLeft+ "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					$timeout(function() {
+						//包
+						viewControl.menu_bag_Style.left = 10 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.opacity = 1;
+					}, 200);
+				};
+				/**
+				 * 包裹菜单  隐藏命令
+				 */
+				menuBagHide = function(){
+					//实现隐藏菜单（包裹）的动画效果
+					var left = viewControl.menu_bag_Style.left;
+					viewControl.menu_bag_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					$timeout(function() {
+						//重置层叠
+						viewControl.zIndexList["menuBag"] = 0;
+						viewControl.zIndexList["menuBagMaskLayer"] = 0;
+						viewControl.menu_bag_Style["z-index"] = 0;
+						viewControl.menuBagMaskLayer_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.menuBagMaskLayerHide = true;
+						viewControl.display.menuBagHide = true;
+					}, 200);
+				};
+				
 				
 				/**
 				 * 地图交互对象按钮组 显示效果
@@ -3821,8 +3941,14 @@
 			app.controller("panel5MaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.panel5MaskLayerClick = function($event) {
-					panelTyping("");
-					panel5Hide();
+					//判断当前状态为使用背包（装备）
+					if(dataRoleObj[0].getStatus()=="useRoleBag"
+						&&dataRoleObj[0].getStatus2()=="useRoleBag-Equip"){
+						menuBagHide();
+					}else{
+						panelTyping("");
+						panel5Hide();
+					}
 				};
 			});
 			//数字选择器专用遮罩层
@@ -3860,6 +3986,14 @@
 				//点击后隐藏
 				$rootScope.equipMaskLayerClick = function() {
 					equipHide();
+					mainShow();
+				};
+			});
+			//包裹菜单界面 专用遮罩层
+			app.controller("menuBagMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+				$rootScope.menuBagMaskLayerClick = function() {
+					menuBagHide();
 				};
 			});
 			
@@ -4148,9 +4282,13 @@
 						alert("当前为战斗状态不可操作!");
 						return;
 					}
+					//设置当前状态为使用背包
+					dataRoleObj[0].setStatus(pram);
+					//设置第二状态（过滤条件）
+					dataRoleObj[0].setStatus2(pram2);
 					equipShow();
 				};
-				in
+				//in
 				$scope.clickButton2 = function(pram,pram2){
 					if(dataRoleObj[0].getStatus()=="fight"){
 						//判断为战斗状态，不可操作
@@ -4364,6 +4502,13 @@
 					loadSaveDataHide();
 				};
 			});
+			
+			app.controller("equipPanle", function($scope, $rootScope){
+				$scope.equipElementClick=function(num){
+					menuBagShow(num);
+				};;
+			});
+			
 			/*--------------------------------------------------------*/
 			/**
 			 * 随机概率计算,objArr:参与随机对象;arr2:概率数值
