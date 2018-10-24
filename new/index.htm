@@ -43,7 +43,30 @@
 				
 				<!--技能安装界面-->
 				<div class="skillPanle">
-					<div class="skillChassis">
+					<div class="skillChassis" style="transform: rotate(0deg);">
+						<!--
+						<div class="skillLink1" style="top:117px;left:140px;"></div>
+						<div class="skillUnit1" style="top:100px;left:100px;"></div>
+						
+						<div class="skillUnit1" style="top:280px;left:280px;"></div>
+						<div class="skillUnit1" style="top:180px;left:280px;"></div>
+						<div class="skillUnit1" style="top:80px;left:280px;"></div>
+						<div class="skillUnit1" style="top:380px;left:280px;"></div>
+						<div class="skillUnit1" style="top:480px;left:280px;"></div>
+						
+						<div class="skillUnit1" style="top:280px;left:180px;"></div>
+						<div class="skillUnit1" style="top:280px;left:80px;"></div>
+						<div class="skillUnit1" style="top:280px;left:380px;"></div>
+						<div class="skillUnit1" style="top:280px;left:480px;"></div>
+						-->
+						
+						<!--坐标线-->
+						<div style="top:300px;width:600px;height:1px;background-color:#000000;position: absolute;"></div>
+						<div style="left:300px;width:1px;height:600px;background-color:#000000;position: absolute;"></div>
+						
+						<div ng-repeat="x in viewControl.skillUnitPosition_Style" ng-style="x.style" class="skillUnitPosition">
+							<div class="skillUnit1" style="top:-4px;left:-40px;"></div>
+						</div>
 						
 					</div>
 				</div>

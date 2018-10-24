@@ -818,6 +818,169 @@ var viewControl = {
 		"transition":".4s .4s",
 		"transition-timing-function":"cubic-bezier(.14,1.52,.65,1.37)",
 	},
+	skillUnitPosition_Style:[
+		{
+			index:"A2",
+			style:{	"top":"39px",
+					"left":"250px",},
+		},
+		{
+			index:"A3",
+			style:{	"top":"39px",
+					"left":"350px",},
+		},
+		//---------------
+		{
+			index:"B1",
+			style:{	"top":"126px",
+					"left":"100px",},
+		},
+		{
+			index:"B2",
+			style:{	"top":"126px",
+					"left":"200px",},
+		},
+		{
+			index:"B3",
+			style:{	"top":"126px",
+					"left":"300px",},
+		},
+		{
+			index:"B4",
+			style:{	"top":"126px",
+					"left":"400px",},
+		},
+		{
+			index:"B5",
+			style:{	"top":"126px",
+					"left":"500px",},
+		},
+		//---------------
+		{
+			index:"C1",
+			style:{	"top":"213px",
+					"left":"50px",},
+		},
+		{
+			index:"C2",
+			style:{	"top":"213px",
+					"left":"150px",},
+		},
+		{
+			index:"C3",
+			style:{	"top":"213px",
+					"left":"250px",},
+		},
+		{
+			index:"C4",
+			style:{	"top":"213px",
+					"left":"350px",},
+		},
+		{
+			index:"C5",
+			style:{	"top":"213px",
+					"left":"450px",},
+		},
+		{
+			index:"C6",
+			style:{	"top":"213px",
+					"left":"550px",},
+		},
+		//---------------
+		{
+			index:"D2",
+			style:{	"top":"300px",
+					"left":"100px",},
+		},
+		{
+			index:"D3",
+			style:{	"top":"300px",
+					"left":"200px",},
+		},
+		{
+			index:"D4",
+			style:{	"top":"300px",
+					"left":"300px",},
+		},
+		{
+			index:"D5",
+			style:{	"top":"300px",
+					"left":"400px",},
+		},
+		{
+			index:"D6",
+			style:{	"top":"300px",
+					"left":"500px",},
+		},
+		//---------------
+		{
+			index:"E1",
+			style:{	"top":"386px",
+					"left":"50px",},
+		},
+		{
+			index:"E2",
+			style:{	"top":"386px",
+					"left":"150px",},
+		},
+		{
+			index:"E1",
+			style:{	"top":"386px",
+					"left":"250px",},
+		},
+		{
+			index:"E1",
+			style:{	"top":"386px",
+					"left":"350px",},
+		},
+		{
+			index:"E1",
+			style:{	"top":"386px",
+					"left":"450px",},
+		},
+		{
+			index:"E1",
+			style:{	"top":"386px",
+					"left":"550px",},
+		},
+		//---------------
+		{
+			index:"F1",
+			style:{	"top":"473px",
+					"left":"100px",},
+		},
+		{
+			index:"F1",
+			style:{	"top":"473px",
+					"left":"200px",},
+		},
+		{
+			index:"F1",
+			style:{	"top":"473px",
+					"left":"300px",},
+		},
+		{
+			index:"F1",
+			style:{	"top":"473px",
+					"left":"400px",},
+		},
+		{
+			index:"F1",
+			style:{	"top":"473px",
+					"left":"500px",},
+		},
+		//---------------
+		{
+			index:"G1",
+			style:{	"top":"561px",
+					"left":"250px",},
+		},
+		{
+			index:"G1",
+			style:{	"top":"561px",
+					"left":"350px",},
+		},
+	],
 };
 var map3dData = [
 	{

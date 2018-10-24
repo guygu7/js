@@ -4,26 +4,87 @@
 	width: 500px;
 	height: 500px;
 	transition:0.6s;
-	border: #000000 solid 1px;
+	//border: #000000 solid 1px;
 	position: absolute;
 }
 .skillChassis{
-	width: 500px;
-	height: 500px;
+	width: 600px;
+	height: 600px;
 	transition:0.6s;
-	border: #000000 solid 1px;
+	background-color:rgb(152,148,129);
+	//background-color:rgb(213,207,182);
 	border-radius:500px;
 	position: absolute;
 }
 .skillChassis:before{
 	content: "";
-	width: 300px;
-	height: 500px;
+	top:-3px;
+	left:-3px;
+	width: 600px;
+	height: 600px;
 	transition:0.6s;
-	border: #000000 solid 1px;
+	border: rgb(106,102,90) solid 3px;
 	border-radius:500px;
 	position: absolute;
 }
 .skillChassis:after{
 	content: "";
+	top:-5px;
+	left:-5px;
+	width: 600px;
+	height: 600px;
+	transition:0.6s;
+	border-top: rgb(59,56,49) solid 5px;
+	border-bottom: rgb(59,56,49,0) solid 5px;
+	border-left: rgba(0,0,0,0) solid 5px;
+	border-right: rgba(0,0,0,0) solid 5px;
+	border-radius:500px;
+	animation: skillChassis 15s linear infinite;
+	position: absolute;
+}
+@keyframes skillChassis{
+	0%{transform: rotate(0deg);}
+	100%{transform: rotate(360deg);}
+}
+
+.skillUnit1{
+	width: 40px;
+	height: 40px;
+	border-radius:500px;
+	background-color:rgb(105,104,95);
+	box-shadow:0px 0px 0px 1px rgb(59,56,49);
+	position: absolute;
+}
+
+.skillLink1{
+	width: 70px;
+	height: 6px;
+	background-color:rgb(105,104,95);
+	box-shadow:0px 0px 0px 1px rgb(59,56,49);
+	position: absolute;
+}
+
+
+.skillUnit2{
+	width: 40px;
+	height: 40px;
+	border-radius:500px;
+	background-color:rgb(134,122,99);
+	box-shadow:0px 0px 0px 1px rgb(59,56,49);
+	position: absolute;
+}
+
+.skillLink2{
+	width: 70px;
+	height: 6px;
+	background-color:rgb(134,122,99);
+	box-shadow:0px 0px 0px 1px rgb(59,56,49),
+	0px 0px 2px 1px rgb(235,230,205);
+	position: absolute;
+}
+
+
+.skillUnitPosition{
+	width:0px;height:0px;position: absolute;
+	box-shadow:0px 0px 0px 1px rgb(59,56,49);
 }
