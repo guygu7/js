@@ -412,6 +412,14 @@ var viewControl = {
 		 * 装备界面
 		 */
 		equipHide:true,
+		skillUnitHide:function(obj){
+			for (var i=0; i < data.skillModule.length; i++) {
+				if(data.skillModule[i].index==obj.index){
+					return false;
+				}
+			};
+			return true;
+		},
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景
@@ -820,38 +828,38 @@ var viewControl = {
 	},
 	skillUnitPosition_Style:[
 		{
-			index:"A2",
+			index:"A3",
 			style:{	"top":"39px",
 					"left":"250px",},
 		},
 		{
-			index:"A3",
+			index:"A4",
 			style:{	"top":"39px",
 					"left":"350px",},
 		},
 		//---------------
 		{
-			index:"B1",
+			index:"B2",
 			style:{	"top":"126px",
 					"left":"100px",},
 		},
 		{
-			index:"B2",
+			index:"B3",
 			style:{	"top":"126px",
 					"left":"200px",},
 		},
 		{
-			index:"B3",
+			index:"B4",
 			style:{	"top":"126px",
 					"left":"300px",},
 		},
 		{
-			index:"B4",
+			index:"B5",
 			style:{	"top":"126px",
 					"left":"400px",},
 		},
 		{
-			index:"B5",
+			index:"B6",
 			style:{	"top":"126px",
 					"left":"500px",},
 		},
@@ -924,59 +932,59 @@ var viewControl = {
 					"left":"150px",},
 		},
 		{
-			index:"E1",
+			index:"E3",
 			style:{	"top":"386px",
 					"left":"250px",},
 		},
 		{
-			index:"E1",
+			index:"E4",
 			style:{	"top":"386px",
 					"left":"350px",},
 		},
 		{
-			index:"E1",
+			index:"E5",
 			style:{	"top":"386px",
 					"left":"450px",},
 		},
 		{
-			index:"E1",
+			index:"E6",
 			style:{	"top":"386px",
 					"left":"550px",},
 		},
 		//---------------
 		{
-			index:"F1",
+			index:"F2",
 			style:{	"top":"473px",
 					"left":"100px",},
 		},
 		{
-			index:"F1",
+			index:"F3",
 			style:{	"top":"473px",
 					"left":"200px",},
 		},
 		{
-			index:"F1",
+			index:"F4",
 			style:{	"top":"473px",
 					"left":"300px",},
 		},
 		{
-			index:"F1",
+			index:"F5",
 			style:{	"top":"473px",
 					"left":"400px",},
 		},
 		{
-			index:"F1",
+			index:"F6",
 			style:{	"top":"473px",
 					"left":"500px",},
 		},
 		//---------------
 		{
-			index:"G1",
+			index:"G3",
 			style:{	"top":"561px",
 					"left":"250px",},
 		},
 		{
-			index:"G1",
+			index:"G4",
 			style:{	"top":"561px",
 					"left":"350px",},
 		},

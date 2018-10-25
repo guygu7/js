@@ -65,7 +65,17 @@
 						<div style="left:300px;width:1px;height:600px;background-color:#000000;position: absolute;"></div>
 						
 						<div ng-repeat="x in viewControl.skillUnitPosition_Style" ng-style="x.style" class="skillUnitPosition">
-							<div class="skillUnit1" style="top:-4px;left:-40px;"></div>
+
+							<div class="skillLink2" style="transform: rotate(0deg);"></div>
+							<div class="skillLink1" style="transform: rotate(60deg);"></div>
+							<div class="skillLink1" style="transform: rotate(120deg);"></div>
+							<div class="skillLink2" style="transform: rotate(180deg);"></div>
+							<div class="skillLink1" style="transform: rotate(240deg);"></div>
+							<div class="skillLink1" style="transform: rotate(300deg);"></div>
+							
+						</div>
+						<div ng-repeat="x in viewControl.skillUnitPosition_Style" ng-hide="viewControl.display.skillUnitHide(x)" ng-style="x.style" class="skillUnitPosition">
+							<div class="skillUnit2" style="top:-20px;left:-20px;">{{x.index}}</div>
 						</div>
 						
 					</div>

@@ -253,6 +253,22 @@ var data = {
 		},
 	],
 	/**
+	 * 技能模块
+	 */
+	skillModule:[
+		{
+			index:"D4",
+		},
+		{
+			index:"D5",
+			link:["D4"],
+		},
+		{
+			index:"D3",
+			link:["D4"],
+		},
+	],
+	/**
 	 * 大地图
 	 */
 };

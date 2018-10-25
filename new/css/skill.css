@@ -48,6 +48,8 @@
 }
 
 .skillUnit1{
+	top:-20px;
+	left:-20px;
 	width: 40px;
 	height: 40px;
 	border-radius:500px;
@@ -57,15 +59,19 @@
 }
 
 .skillLink1{
-	width: 70px;
+	top:-3px;
+	width: 100px;
 	height: 6px;
 	background-color:rgb(105,104,95);
 	box-shadow:0px 0px 0px 1px rgb(59,56,49);
+	transform-origin:0% 50%;
 	position: absolute;
 }
 
 
 .skillUnit2{
+	top:-20px;
+	left:-20px;
 	width: 40px;
 	height: 40px;
 	border-radius:500px;
@@ -75,16 +81,18 @@
 }
 
 .skillLink2{
-	width: 70px;
+	top:-3px;
+	width: 100px;
 	height: 6px;
 	background-color:rgb(134,122,99);
 	box-shadow:0px 0px 0px 1px rgb(59,56,49),
 	0px 0px 2px 1px rgb(235,230,205);
+	transform-origin:0% 50%;
 	position: absolute;
 }
 
 
 .skillUnitPosition{
 	width:0px;height:0px;position: absolute;
-	box-shadow:0px 0px 0px 1px rgb(59,56,49);
+	box-shadow:0px 0px 0px 2px rgb(255,0,0);
 }
