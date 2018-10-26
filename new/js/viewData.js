@@ -412,14 +412,14 @@ var viewControl = {
 		 * 装备界面
 		 */
 		equipHide:true,
-		skillUnitHide:function(obj){
-			for (var i=0; i < data.skillModule.length; i++) {
-				if(data.skillModule[i].index==obj.index){
-					return false;
-				}
-			};
-			return true;
-		},
+		/**
+		 * 技能面板界面 专用遮罩层隐藏 
+		 */
+		skillPanleMaskLayerHide:true,
+		/**
+		 * 技能面板界面
+		 */
+		skillPanleHide:true,
 		/*-------战斗场景-------*/
 		/**
 		 * 战斗场景
@@ -612,6 +612,20 @@ var viewControl = {
 	 * 装备界面（初始值）
 	 */
 	equip_Style:{},
+	
+	/**
+	 * 技能面板界面 专用遮罩层隐藏 （初始值）
+	 */
+	skillPanleMaskLayer_Style:{},
+	/**
+	 * 技能面板界面（初始值）
+	 */
+	skillPanle_Style:{
+		"top":"25px",
+		"left":"100px",
+		"opacity" : 0,
+	},
+	
 	/**
 	 * 按钮组在3d地图的定位
 	 */
@@ -826,169 +840,180 @@ var viewControl = {
 		"transition":".4s .4s",
 		"transition-timing-function":"cubic-bezier(.14,1.52,.65,1.37)",
 	},
-	skillUnitPosition_Style:[
-		{
+	skillUnitPosition_Style:{
+		A3:{
 			index:"A3",
 			style:{	"top":"39px",
 					"left":"250px",},
 		},
-		{
+		A4:{
 			index:"A4",
 			style:{	"top":"39px",
 					"left":"350px",},
 		},
 		//---------------
-		{
+		B2:{
 			index:"B2",
 			style:{	"top":"126px",
 					"left":"100px",},
 		},
-		{
+		B3:{
 			index:"B3",
 			style:{	"top":"126px",
 					"left":"200px",},
 		},
-		{
+		B4:{
 			index:"B4",
 			style:{	"top":"126px",
 					"left":"300px",},
 		},
-		{
+		B5:{
 			index:"B5",
 			style:{	"top":"126px",
 					"left":"400px",},
 		},
-		{
+		B6:{
 			index:"B6",
 			style:{	"top":"126px",
 					"left":"500px",},
 		},
 		//---------------
-		{
+		C1:{
 			index:"C1",
 			style:{	"top":"213px",
 					"left":"50px",},
 		},
-		{
+		C2:{
 			index:"C2",
 			style:{	"top":"213px",
 					"left":"150px",},
 		},
-		{
+		C3:{
 			index:"C3",
 			style:{	"top":"213px",
 					"left":"250px",},
 		},
-		{
+		C4:{
 			index:"C4",
 			style:{	"top":"213px",
 					"left":"350px",},
 		},
-		{
+		C5:{
 			index:"C5",
 			style:{	"top":"213px",
 					"left":"450px",},
 		},
-		{
+		C6:{
 			index:"C6",
 			style:{	"top":"213px",
 					"left":"550px",},
 		},
 		//---------------
-		{
+		D2:{
 			index:"D2",
 			style:{	"top":"300px",
 					"left":"100px",},
 		},
-		{
+		D3:{
 			index:"D3",
 			style:{	"top":"300px",
 					"left":"200px",},
 		},
-		{
+		D4:{
 			index:"D4",
 			style:{	"top":"300px",
 					"left":"300px",},
 		},
-		{
+		D5:{
 			index:"D5",
 			style:{	"top":"300px",
 					"left":"400px",},
 		},
-		{
+		D6:{
 			index:"D6",
 			style:{	"top":"300px",
 					"left":"500px",},
 		},
 		//---------------
-		{
+		E1:{
 			index:"E1",
 			style:{	"top":"386px",
 					"left":"50px",},
 		},
-		{
+		E2:{
 			index:"E2",
 			style:{	"top":"386px",
 					"left":"150px",},
 		},
-		{
+		E3:{
 			index:"E3",
 			style:{	"top":"386px",
 					"left":"250px",},
 		},
-		{
+		E4:{
 			index:"E4",
 			style:{	"top":"386px",
 					"left":"350px",},
 		},
-		{
+		E5:{
 			index:"E5",
 			style:{	"top":"386px",
 					"left":"450px",},
 		},
-		{
+		E6:{
 			index:"E6",
 			style:{	"top":"386px",
 					"left":"550px",},
 		},
 		//---------------
-		{
+		F2:{
 			index:"F2",
 			style:{	"top":"473px",
 					"left":"100px",},
 		},
-		{
+		F3:{
 			index:"F3",
 			style:{	"top":"473px",
 					"left":"200px",},
 		},
-		{
+		F4:{
 			index:"F4",
 			style:{	"top":"473px",
 					"left":"300px",},
 		},
-		{
+		F5:{
 			index:"F5",
 			style:{	"top":"473px",
 					"left":"400px",},
 		},
-		{
+		F6:{
 			index:"F6",
 			style:{	"top":"473px",
 					"left":"500px",},
 		},
 		//---------------
-		{
+		G3:{
 			index:"G3",
 			style:{	"top":"561px",
 					"left":"250px",},
 		},
-		{
+		G4:{
 			index:"G4",
 			style:{	"top":"561px",
 					"left":"350px",},
 		},
-	],
+	},
+	/**
+	 * 
+	 */
+	skillLink:{
+		link1:0,
+		link2:60,
+		link3:120,
+		link4:180,
+		link5:240,
+		link6:300,
+	}
 };
 var map3dData = [
 	{

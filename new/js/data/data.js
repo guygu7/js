@@ -261,11 +261,15 @@ var data = {
 		},
 		{
 			index:"D5",
-			link:["D4"],
+			link:[
+				viewControl.skillLink.link4,
+			],
 		},
 		{
 			index:"D3",
-			link:["D4"],
+			link:[
+				viewControl.skillLink.link1,
+			],
 		},
 	],
 	/**

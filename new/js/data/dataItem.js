@@ -15,7 +15,10 @@ var ITEM={
 		 * 装备
 		 */
 		equip:"equip",
-		
+		/**
+		 * 技能单元
+		 */
+		skillUnit:"skillUnit",
 	},
 	/**
 	 * 类型（小类、第二分类） 
@@ -95,6 +98,11 @@ var ITEM={
 			dictionaryData.action.role_itemToInteractiveObject,
 			dictionaryData.action.role_putOn,
 			dictionaryData.action.role_takeOff,
+			dictionaryData.action.role_alreadyEquipped,
+		],
+		skillUnit:[
+			dictionaryData.action.itemToRoleBag,
+			dictionaryData.action.role_itemToInteractiveObject,
 			dictionaryData.action.role_alreadyEquipped,
 		],
 	}
@@ -198,6 +206,17 @@ dictionaryData.item={
 		buyCost:2,//购入价值
 		isPutOn:false,
 		actions:ITEM.ACTIONS.equip,
+	},
+	example4:{//技能单元类
+		name:"技能单元物品示例",
+		content:"技能单元物品示例",
+		type:ITEM.TYPE.skillUnit,
+		index:"",
+		attr:{
+			//设定、技能元素
+			skill1:1,
+		},
+		actions:ITEM.ACTIONS.skillUnit,
 	},
 	/*--------测试（消耗品）--------*/
 	testHpRecovery:{

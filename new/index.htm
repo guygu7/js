@@ -13,7 +13,7 @@
 		<link href="css/main.css" rel="stylesheet">
 		<link href="css/menu.css" rel="stylesheet">
 		<link href="css/panel.css" rel="stylesheet">
-		<link href="css/steeringWheel.css" rel="stylesheet">
+		<!--<link href="css/steeringWheel.css" rel="stylesheet">-->
 		<link href="css/button.css" rel="stylesheet">
 		<link href="css/numberPicker.css" rel="stylesheet">
 		<link href="css/top.css" rel="stylesheet">
@@ -41,45 +41,6 @@
 					</div>
 				</div>
 				
-				<!--技能安装界面-->
-				<div class="skillPanle">
-					<div class="skillChassis" style="transform: rotate(0deg);">
-						<!--
-						<div class="skillLink1" style="top:117px;left:140px;"></div>
-						<div class="skillUnit1" style="top:100px;left:100px;"></div>
-						
-						<div class="skillUnit1" style="top:280px;left:280px;"></div>
-						<div class="skillUnit1" style="top:180px;left:280px;"></div>
-						<div class="skillUnit1" style="top:80px;left:280px;"></div>
-						<div class="skillUnit1" style="top:380px;left:280px;"></div>
-						<div class="skillUnit1" style="top:480px;left:280px;"></div>
-						
-						<div class="skillUnit1" style="top:280px;left:180px;"></div>
-						<div class="skillUnit1" style="top:280px;left:80px;"></div>
-						<div class="skillUnit1" style="top:280px;left:380px;"></div>
-						<div class="skillUnit1" style="top:280px;left:480px;"></div>
-						-->
-						
-						<!--坐标线-->
-						<div style="top:300px;width:600px;height:1px;background-color:#000000;position: absolute;"></div>
-						<div style="left:300px;width:1px;height:600px;background-color:#000000;position: absolute;"></div>
-						
-						<div ng-repeat="x in viewControl.skillUnitPosition_Style" ng-style="x.style" class="skillUnitPosition">
-
-							<div class="skillLink2" style="transform: rotate(0deg);"></div>
-							<div class="skillLink1" style="transform: rotate(60deg);"></div>
-							<div class="skillLink1" style="transform: rotate(120deg);"></div>
-							<div class="skillLink2" style="transform: rotate(180deg);"></div>
-							<div class="skillLink1" style="transform: rotate(240deg);"></div>
-							<div class="skillLink1" style="transform: rotate(300deg);"></div>
-							
-						</div>
-						<div ng-repeat="x in viewControl.skillUnitPosition_Style" ng-hide="viewControl.display.skillUnitHide(x)" ng-style="x.style" class="skillUnitPosition">
-							<div class="skillUnit2" style="top:-20px;left:-20px;">{{x.index}}</div>
-						</div>
-						
-					</div>
-				</div>
 				
 			</div>
 			<!--xx场景-->
@@ -1238,7 +1199,24 @@
 					</div>
 				</div>
 				
-				
+				<!--遮罩层-->
+				<div ng-controller="skillPanleMaskLayer" ng-hide="viewControl.display.skillPanleMaskLayerHide" ng-style="viewControl.skillPanleMaskLayer_Style" ng-rightclick="skillPanleMaskLayerClick()" class="maskLayer" ></div>
+				<!--技能安装界面-->
+				<div ng-controller="skillPanle" ng-hide="viewControl.display.skillPanleHide" ng-style="viewControl.skillPanle_Style" ng-rightclick="skillPanleMaskLayerClick()" class="skillPanle">
+					<div class="skillChassis" style="transform: rotate(0deg);">
+						<!--坐标线-->
+						<div style="top:300px;width:600px;height:1px;background-color:#000000;position: absolute;"></div>
+						<div style="left:300px;width:1px;height:600px;background-color:#000000;position: absolute;"></div>
+						<!--连接线-->
+						<div ng-repeat="x in data.skillModule" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
+							<div ng-repeat="y in x.link" style="transform: rotate({{y}}deg);" class="skillLink1"></div>
+						</div>
+						<!--单元组件-->
+						<div ng-repeat="x in data.skillModule" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
+							<div class="skillUnit1" style="top:-20px;left:-20px;"></div>
+						</div>
+					</div>
+				</div>
 				
 			</div>
 		
@@ -1891,6 +1869,7 @@
 			app.controller("myApp", function($scope,$rootScope,$timeout,$interval) {
 				$scope.viewDataModel = viewDataModel;
 				$scope.viewControl = viewControl;
+				$scope.data = data;
 				var stop;
 				$rootScope.test = function(){
 					stop = $interval(function() {
@@ -2663,6 +2642,18 @@
 					}, 200);
 				};
 				
+				/**
+				 * 技能面板 显示命令
+				 */
+				skillPanleShow = function(){
+				};
+				in
+				skillPanleMaskLayer   skillPanle
+				/**
+				 * 技能面板 隐藏命令
+				 */
+				skillPanleHide = function(){
+				};
 				
 				/**
 				 * 包裹菜单 显示命令
@@ -4022,6 +4013,11 @@
 					mainShow();
 				};
 			});
+			//技能面板界面 专用遮罩层
+			app.controller("skillPanleMaskLayer", function($scope, $rootScope, $timeout) {
+				//点击后隐藏
+			});
+			in
 			//包裹菜单界面 专用遮罩层
 			app.controller("menuBagMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
