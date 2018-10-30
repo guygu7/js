@@ -1108,7 +1108,7 @@
 				<!--装备界面-->
 				<div ng-controller="equipPanle" ng-hide="viewControl.display.equipHide" ng-style="viewControl.equip_Style" ng-rightclick="equipMaskLayerClick()" 
 					class="equipPanle" >
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:30px;">
+					<div ng-click="equipElementClick(1)" class="equipElement" style="top:30px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1119,7 +1119,7 @@
 							{{viewDataModel.equip(1).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:155px;">
+					<div ng-click="equipElementClick(2)" class="equipElement" style="top:155px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1130,7 +1130,7 @@
 							{{viewDataModel.equip(2).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:280px;">
+					<div ng-click="equipElementClick(3)" class="equipElement" style="top:280px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1141,7 +1141,7 @@
 							{{viewDataModel.equip(3).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:405px;">
+					<div ng-click="equipElementClick(4)" class="equipElement" style="top:405px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1153,7 +1153,7 @@
 						</div>
 					</div>
 					
-					<div ng-click="equipElementClick(850)" class="equipElement" style="top:30px;left:400px;">
+					<div ng-click="equipElementClick(5)" class="equipElement" style="top:30px;left:400px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1164,7 +1164,7 @@
 							{{viewDataModel.equip(5).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:155px;left:400px;">
+					<div ng-click="equipElementClick(6)" class="equipElement" style="top:155px;left:400px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1175,7 +1175,7 @@
 							{{viewDataModel.equip(6).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:280px;left:400px;">
+					<div ng-click="equipElementClick(7)" class="equipElement" style="top:280px;left:400px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1186,7 +1186,7 @@
 							{{viewDataModel.equip(7).getName()}}
 						</div>
 					</div>
-					<div ng-click="equipElementClick(450)" class="equipElement" style="top:405px;left:400px;">
+					<div ng-click="equipElementClick(8)" class="equipElement" style="top:405px;left:400px;">
 						<div class="equipElementTittle">
 							装备位
 						</div>
@@ -1212,7 +1212,7 @@
 							<div ng-repeat="y in x.link" style="transform: rotate({{y}}deg);" class="skillLink1"></div>
 						</div>
 						<!--单元组件-->
-						<div ng-repeat="x in data.skillModule" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
+						<div ng-repeat="x in data.skillModule" ng-click="skillUnitClick(x.index)" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
 							<div class="skillUnit1" style="top:-20px;left:-20px;"></div>
 						</div>
 					</div>
@@ -2089,7 +2089,7 @@
 						totalLeft = target.x-35;
 					}else{
 						while (tempa!=tempb){
-							totalTop += tempb.offsetTop;
+							totalTop += tempb.offsetTop-tempb.scrollTop;
 							totalLeft += tempb.offsetLeft;
 							tempb = tempb.parentNode;
 						};
@@ -2604,7 +2604,8 @@
 						mainShow();
 					}, 200);
 				};
-				//in
+				
+
 				/**
 				 * 装备界面  显示命令
 				 */
@@ -2646,6 +2647,7 @@
 					}, 200);
 				};
 				
+				
 				/**
 				 * 技能面板 显示命令
 				 */
@@ -2686,6 +2688,7 @@
 						mainShow();
 					}, 200);
 				};
+				
 				
 				/**
 				 * 包裹菜单 显示命令
@@ -4580,12 +4583,22 @@
 			
 			app.controller("equipPanle", function($scope, $rootScope){
 				$scope.equipElementClick=function(num){
-					menuBagShow(num);
+					//加载包裹数据,重新定位视图数据指针
+					viewDataModel.menuBag.buttonElements = function () {
+						return dataRoleObj[0].getItems(dataRoleObj[0].getStatus2(),num);
+					};
+					menuBagShow(900);
 				};;
 			});
 			
 			app.controller("skillPanle", function($scope, $rootScope){
-				$scope.skillPanleClick=function(num){
+				$scope.skillUnitClick=function(index){
+					//加载包裹数据,重新定位视图数据指针
+					viewDataModel.menuBag.buttonElements = function () {
+						in
+						return dataRoleObj[0].getItems(dataRoleObj[0].getStatus2(),num);
+					};
+					menuBagShow(750);
 				};;
 			});
 			

@@ -25,6 +25,7 @@
 	border-radius:500px;
 	position: absolute;
 }
+/*
 .skillChassis:after{
 	content: "";
 	top:-5px;
@@ -40,6 +41,7 @@
 	animation: skillChassis 15s linear infinite;
 	position: absolute;
 }
+*/
 @keyframes skillChassis{
 	0%{transform: rotate(0deg);}
 	100%{transform: rotate(360deg);}

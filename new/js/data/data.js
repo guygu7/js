@@ -120,6 +120,9 @@ var data = {
 			//任务测试
 			dictionaryData.item.example,
 			dictionaryData.item.example2,
+			//技能单元测试
+			dictionaryData.item.example4,
+			dictionaryData.item.example4,
 		],
 		missions:[
 		],

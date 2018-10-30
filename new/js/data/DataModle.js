@@ -585,8 +585,9 @@ DataModleFactory = {
 		};
 		/**
 		 * 传参："useRoleBag-Consumable":过滤出消耗品 ; "useRoleBag-Equip":过滤出装备
+		 * type2num:装备位置
 		 */
-		role.getItems = function(pram){
+		role.getItems = function(pram,type2num){
 			if(pram&&items&&items.length>0){
 				var tempItems = items.slice(0);
 				if(pram=="useRoleBag-Consumable"){
@@ -605,7 +606,12 @@ DataModleFactory = {
 							//遍历到非消耗品类型，去掉
 							tempItems.splice(i,1);
 							i--;
+						}else if(type2num!=undefined&&type2num!=null&&tempItems[i].getType2()!=type2num){
+							//判断有传入装备类型，且不是该装备类型，去掉
+							tempItems.splice(i,1);
+							i--;
 						}
+						
 					};
 				}
 				return tempItems;
@@ -1984,6 +1990,22 @@ DataModleFactory = {
 			}
 			return this;
 		};
+		
+		/**
+		 * 技能单元索引
+		 */
+		var index;
+		item.getIndex = function() {
+			return index;
+		};
+		item.setIndex = function(pram) {
+			if(pram!=null&&pram!=undefined){
+				index = pram;
+			}
+			return this;
+		};
+		
+		
 		/**
 		 * 交互动作
 		 */

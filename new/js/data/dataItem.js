@@ -216,6 +216,7 @@ dictionaryData.item={
 			//设定、技能元素
 			skill1:1,
 		},
+		totalNum:1,//拥有数量
 		actions:ITEM.ACTIONS.skillUnit,
 	},
 	/*--------测试（消耗品）--------*/
