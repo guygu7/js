@@ -36,6 +36,14 @@ var ACTION={
 		 */
 		takeOff:"takeOff",
 		/**
+		 * 安装（技能）
+		 */
+		install:"install",
+		/**
+		 * 卸载（技能）
+		 */
+		uninstall:"uninstall",
+		/**
 		 * 不可操作按钮（已装备）
 		 */
 		unOperation:"unOperation",
@@ -161,6 +169,24 @@ dictionaryData.action={
 	role_takeOff:{
 					name:"卸下装备",
 					type:ACTION.TYPE.takeOff,
+					target:"",
+					belong:ACTION.BELONG.role,
+				},
+	/**
+	 * （物品）安装技能
+	 */
+	role_install:{
+					name:"安装",
+					type:ACTION.TYPE.install,
+					target:"",
+					belong:ACTION.BELONG.role,
+				},
+	/**
+	 * （物品）卸载技能
+	 */
+	role_uninstall:{
+					name:"卸下",
+					type:ACTION.TYPE.uninstall,
 					target:"",
 					belong:ACTION.BELONG.role,
 				},

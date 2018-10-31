@@ -584,7 +584,7 @@ DataModleFactory = {
 			return items[num];
 		};
 		/**
-		 * 传参："useRoleBag-Consumable":过滤出消耗品 ; "useRoleBag-Equip":过滤出装备
+		 * 传参："useRoleBag-Consumable":过滤出消耗品 ; "useRoleBag-Equip":过滤出装备; "useRoleBag-SkillUnit"过滤出技能单元
 		 * type2num:装备位置
 		 */
 		role.getItems = function(pram,type2num){
@@ -603,7 +603,7 @@ DataModleFactory = {
 					//判断是只显示装备
 					for (var i=0; i < tempItems.length; i++) {
 						if(tempItems[i].getType()!=ITEM.TYPE.equip){
-							//遍历到非消耗品类型，去掉
+							//遍历到非装备类型，去掉
 							tempItems.splice(i,1);
 							i--;
 						}else if(type2num!=undefined&&type2num!=null&&tempItems[i].getType2()!=type2num){
@@ -611,7 +611,15 @@ DataModleFactory = {
 							tempItems.splice(i,1);
 							i--;
 						}
-						
+					};
+				}else if(pram=="useRoleBag-SkillUnit"){
+					//判断是只显示技能模块
+					for (var i=0; i < tempItems.length; i++) {
+						if(tempItems[i].getType()!=ITEM.TYPE.skillUnit){
+							//遍历到非技能单元类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}
 					};
 				}
 				return tempItems;
@@ -2079,6 +2087,15 @@ DataModleFactory = {
 						};
 					}
 					return tempActions;
+				}else if("useSkillPanle"==pram){//判断是使用技能面板
+					//根据index 判断是否已使用
+					if(index==null||index==undefined||index==""){
+						//未使用，显示安装动作
+						in
+					}else{
+						//已使用，显示卸下动作
+						
+					}
 				};
 			}
 			return actions;

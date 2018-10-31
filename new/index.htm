@@ -91,7 +91,7 @@
 								<div class="top-button-arrow5"></div>
 							</div>
 						</div>
-						<div ng-click="clickButton5('skill')" class="top-button" style="right:690px;">
+						<div ng-click="clickButton5('useSkillPanle')" class="top-button" style="right:690px;">
 							<div class="top-button-background"></div>
 							<div class="top-button-content">技能</div>
 							<div class="top-button-arrow">
@@ -3248,6 +3248,8 @@
 						currentItem.setIsPutOn(false);
 						//按百分比重新计算当前hp
 						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
+					}else if(){//安装技能，卸载技能
+						in
 					}
 					/*-------------使用技能-------------*/
 					else if(currentAction.getType()==ACTION.TYPE.useSkill){
@@ -3535,9 +3537,9 @@
 						}else if("useWarehouse"==dataRoleObj[0].getStatus()){
 							//判断是状态为使用仓库，仅堆叠选项显示
 							return currentItem.getActions("useWarehouse");
-						}else if("skill"==dataRoleObj[0].getStatus()){
-							//判断是状态为查看技能
-							return currentItem.getActions();
+						}else if("useSkillPanle"==dataRoleObj[0].getStatus()){
+							//判断是状态为查看技能面板
+							return currentItem.getActions("useSkillPanle");
 						}
 						return currentItem.getActions();
 					};
@@ -4000,9 +4002,11 @@
 			app.controller("panel5MaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.panel5MaskLayerClick = function($event) {
-					//判断当前状态为使用背包（装备）
-					if(dataRoleObj[0].getStatus()=="useRoleBag"
-						&&dataRoleObj[0].getStatus2()=="useRoleBag-Equip"){
+					//判断当前状态为使用背包（装备）,或者技能面板
+					if((dataRoleObj[0].getStatus()=="useRoleBag"
+						&&dataRoleObj[0].getStatus2()=="useRoleBag-Equip")
+						||(dataRoleObj[0].getStatus()=="useSkillPanle"
+						&&dataRoleObj[0].getStatus2()=="useRoleBag-SkillUnit")){
 						menuBagHide();
 					}else{
 						panelTyping("");
@@ -4029,6 +4033,7 @@
 				//点击后隐藏
 				$rootScope.missionSelectMaskLayerClick = function() {
 					dataRoleObj[0].setStatus("");
+					dataRoleObj[0].setStatus2("");
 					missionSelectHide();
 				};
 			});
@@ -4037,6 +4042,7 @@
 				//点击后隐藏
 				$rootScope.loadSaveDataMaskLayerClick = function() {
 					dataRoleObj[0].setStatus("");
+					dataRoleObj[0].setStatus2("");
 					loadSaveDataHide();
 				};
 			});
@@ -4044,6 +4050,8 @@
 			app.controller("equipMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.equipMaskLayerClick = function() {
+					dataRoleObj[0].setStatus("");
+					dataRoleObj[0].setStatus2("");
 					equipHide();
 					mainShow();
 				};
@@ -4052,6 +4060,8 @@
 			app.controller("skillPanleMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.skillPanleMaskLayerClick = function() {
+					dataRoleObj[0].setStatus("");
+					dataRoleObj[0].setStatus2("");
 					skillPanleHide();
 					mainShow();
 				};
@@ -4354,17 +4364,17 @@
 					dataRoleObj[0].setStatus2(pram2);
 					equipShow();
 				};
-				$scope.clickButton5 = function(pram,pram2){
+				$scope.clickButton5 = function(pram){
 					mainHide("all");
 					if(dataRoleObj[0].getStatus()=="fight"){
 						//判断为战斗状态，不可操作
 						alert("当前为战斗状态不可操作!");
 						return;
 					}
-					//设置当前状态为使用背包
+					//设置当前状态为查看技能面板
 					dataRoleObj[0].setStatus(pram);
 					//设置第二状态（过滤条件）
-					dataRoleObj[0].setStatus2(pram2);
+					dataRoleObj[0].setStatus2("useRoleBag-SkillUnit");
 					skillPanleShow();
 				};
 				$scope.clickButton2 = function(pram,pram2){
@@ -4595,8 +4605,7 @@
 				$scope.skillUnitClick=function(index){
 					//加载包裹数据,重新定位视图数据指针
 					viewDataModel.menuBag.buttonElements = function () {
-						in
-						return dataRoleObj[0].getItems(dataRoleObj[0].getStatus2(),num);
+						return dataRoleObj[0].getItems("useRoleBag-SkillUnit",index);
 					};
 					menuBagShow(750);
 				};;
