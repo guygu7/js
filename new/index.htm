@@ -1202,18 +1202,18 @@
 				<!--遮罩层-->
 				<div ng-controller="skillPanleMaskLayer" ng-hide="viewControl.display.skillPanleMaskLayerHide" ng-style="viewControl.skillPanleMaskLayer_Style" ng-rightclick="skillPanleMaskLayerClick()" class="maskLayer" ></div>
 				<!--技能安装界面-->
-				<div ng-controller="skillPanle" ng-hide="viewControl.display.skillPanleHide" ng-style="viewControl.skillPanle_Style" ng-rightclick="skillPanleMaskLayerClick()" class="skillPanle">
+				<div id="skillPanle" ng-controller="skillPanle" ng-hide="viewControl.display.skillPanleHide" ng-style="viewControl.skillPanle_Style" ng-rightclick="skillPanleMaskLayerClick()" class="skillPanle">
 					<div class="skillChassis" style="transform: rotate(0deg);">
 						<!--坐标线-->
 						<div style="top:300px;width:600px;height:1px;background-color:#000000;position: absolute;"></div>
 						<div style="left:300px;width:1px;height:600px;background-color:#000000;position: absolute;"></div>
 						<!--连接线-->
 						<div ng-repeat="x in data.skillModule" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
-							<div ng-repeat="y in x.link" style="transform: rotate({{y}}deg);" class="skillLink1"></div>
+							<div ng-repeat="y in x.link" style="transform: rotate({{y}}deg);" class="{{viewControl.skillUnitLinkClass(x.index,y)}}"></div>
 						</div>
 						<!--单元组件-->
-						<div ng-repeat="x in data.skillModule" ng-click="skillUnitClick(x.index)" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
-							<div class="skillUnit1" style="top:-20px;left:-20px;"></div>
+						<div ng-repeat="x in data.skillModule" ng-click="skillUnitClick(x.index,$event)" ng-style="viewControl.skillUnitPosition_Style.{{x.index}}.style" class="skillUnitPosition">
+							<div class="{{viewControl.skillUnitClass(x.index)}}" style="top:-20px;left:-20px;">{{x.index}}</div>
 						</div>
 					</div>
 				</div>
@@ -1825,6 +1825,11 @@
 			 */
 			var currentItemInfo = [];
 			/**
+			 * 当前选择的技能格位置（索引序号）
+			 */
+			var currentSkillPanleIndex = "";
+			
+			/**
 			 * 交易暂存物品集合
 			 */
 			var transactionItems = {
@@ -2080,8 +2085,13 @@
 					//显示菜单
 					viewControl.display.menuHide = false;
 					//获取相对整个场景对象的top,left
-					var tempa = document.getElementById("menuAuto").parentNode;
+					var tempa;
 					var tempb = target;
+					if(model="skillPanle"){
+						tempa = document.getElementById("skillPanle").parentNode;
+					}else{
+						tempa = document.getElementById("menuAuto").parentNode;
+					}
 					var totalTop = 0;
 					var totalLeft = tempb.offsetWidth;
 					if (model=="3d") {
@@ -2092,6 +2102,10 @@
 							totalTop += tempb.offsetTop-tempb.scrollTop;
 							totalLeft += tempb.offsetLeft;
 							tempb = tempb.parentNode;
+						};
+						if(model="skillPanle"){
+							totalTop -= 25;
+							totalLeft += 25;
 						};
 					};
 					
@@ -3248,8 +3262,12 @@
 						currentItem.setIsPutOn(false);
 						//按百分比重新计算当前hp
 						dataRoleObj[0].setHp(dataRoleObj[0].getMaxHp()*hpPercent);
-					}else if(){//安装技能，卸载技能
-						in
+					}else if(currentAction.getType()==ACTION.TYPE.install){//安装技能单元
+						flag=true;
+						currentItem.setIndex(currentSkillPanleIndex);
+					}else if(currentAction.getType()==ACTION.TYPE.uninstall){//卸下技能单元
+						flag=true;
+						currentItem.setIndex(null);
 					}
 					/*-------------使用技能-------------*/
 					else if(currentAction.getType()==ACTION.TYPE.useSkill){
@@ -4070,6 +4088,7 @@
 			app.controller("menuBagMaskLayer", function($scope, $rootScope, $timeout) {
 				//点击后隐藏
 				$rootScope.menuBagMaskLayerClick = function() {
+					currentSkillPanleIndex=null;
 					menuBagHide();
 				};
 			});
@@ -4602,12 +4621,38 @@
 			});
 			
 			app.controller("skillPanle", function($scope, $rootScope){
-				$scope.skillUnitClick=function(index){
+				$scope.skillUnitClick=function(index,$event){
 					//加载包裹数据,重新定位视图数据指针
+					/*
 					viewDataModel.menuBag.buttonElements = function () {
 						return dataRoleObj[0].getItems("useRoleBag-SkillUnit",index);
 					};
 					menuBagShow(750);
+					*/
+					//读取该位置装备情况数据
+					var tempItem = dataRoleObj[0].getItem(index,"useRoleBag-SkillUnit");
+					if(tempItem==null){//该位置为空，显示安装菜单
+						viewDataModel.menuBag.buttonElements = function () {
+							return dataRoleObj[0].getItems("useRoleBag-SkillUnit");
+						};
+						currentSkillPanleIndex = index;
+						menuBagShow(750);
+					}else{//该位置不为空，则显示卸下按钮
+						//加载交互对象(技能单元)动作数据（卸下按钮）
+						viewDataModel.menu.buttonElements = function () {
+							return tempItem.getActions("useSkillPanle");
+						};
+						currentItem = tempItem;
+						//处理传入对象
+						var tempt = $event.target.parentNode;
+						while("skillUnitPosition ng-scope"!=tempt.className){
+							tempt = tempt.parentNode;
+						}
+						//标记交互类型为物品
+						viewControl.currentInteractiveType = "item";
+						//显示列表菜单
+						menuShow(tempt,"skillPanle");
+					}
 				};;
 			});
 			

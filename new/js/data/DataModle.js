@@ -580,6 +580,13 @@ DataModleFactory = {
 					};
 				};
 				return null;
+			}else if(type=="useRoleBag-SkillUnit"){
+				for (var i=0; i < items.length; i++) {
+					if (items[i].getType()==ITEM.TYPE.skillUnit && items[i].getIndex()==num) {
+						return items[i];
+					};
+				};
+				return null;
 			}
 			return items[num];
 		};
@@ -617,6 +624,10 @@ DataModleFactory = {
 					for (var i=0; i < tempItems.length; i++) {
 						if(tempItems[i].getType()!=ITEM.TYPE.skillUnit){
 							//遍历到非技能单元类型，去掉
+							tempItems.splice(i,1);
+							i--;
+						}else if(tempItems[i].getIndex()!=null&&tempItems[i].getIndex()!=undefined&&tempItems[i].getIndex()!=""){
+							//遍历到已经安装的技能单元，去掉
 							tempItems.splice(i,1);
 							i--;
 						}
@@ -2007,9 +2018,7 @@ DataModleFactory = {
 			return index;
 		};
 		item.setIndex = function(pram) {
-			if(pram!=null&&pram!=undefined){
-				index = pram;
-			}
+			index = pram;
 			return this;
 		};
 		
@@ -2090,12 +2099,26 @@ DataModleFactory = {
 				}else if("useSkillPanle"==pram){//判断是使用技能面板
 					//根据index 判断是否已使用
 					if(index==null||index==undefined||index==""){
-						//未使用，显示安装动作
-						in
+						//未使用，只取出显示安装动作
+						//in
+						tempActions = actions.slice(0);
+						var action = loadData(dictionaryData.action.role_install,"action");
+						for (var i=0; i < tempActions.length; i++) {
+							if(compareAction(tempActions[i],action)){
+								tempActions = [tempActions[i]];
+							};
+						};
 					}else{
-						//已使用，显示卸下动作
-						
+						//已使用，只取出显示卸下动作
+						tempActions = actions.slice(0);
+						var action = loadData(dictionaryData.action.role_uninstall,"action");
+						for (var i=0; i < tempActions.length; i++) {
+							if(compareAction(tempActions[i],action)){
+								tempActions = [tempActions[i]];
+							};
+						};
 					}
+					return tempActions;
 				};
 			}
 			return actions;

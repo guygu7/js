@@ -274,6 +274,64 @@ var data = {
 				viewControl.skillLink.link1,
 			],
 		},
+		//==============
+		{
+			index:"D2",
+		},
+		{
+			index:"D6",
+		},
+		{
+			index:"C1",
+		},
+		{
+			index:"C2",
+		},
+		{
+			index:"C3",
+		},
+		{
+			index:"C4",
+		},
+		{
+			index:"C5",
+		},
+		{
+			index:"C6",
+		},
+		{
+			index:"B2",
+		},
+		{
+			index:"B3",
+		},
+		{
+			index:"B4",
+		},
+		{
+			index:"B5",
+		},
+		{
+			index:"B6",
+		},
+		{
+			index:"E1",
+		},
+		{
+			index:"E2",
+		},
+		{
+			index:"E3",
+		},
+		{
+			index:"E4",
+		},
+		{
+			index:"E5",
+		},
+		{
+			index:"E6",
+		},
 	],
 	/**
 	 * 大地图

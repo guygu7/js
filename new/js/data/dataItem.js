@@ -104,6 +104,8 @@ var ITEM={
 			dictionaryData.action.itemToRoleBag,
 			dictionaryData.action.role_itemToInteractiveObject,
 			dictionaryData.action.role_alreadyEquipped,
+			dictionaryData.action.role_install,
+			dictionaryData.action.role_uninstall,
 		],
 	}
 };

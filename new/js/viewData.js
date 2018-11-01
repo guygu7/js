@@ -1013,7 +1013,52 @@ var viewControl = {
 		link4:180,
 		link5:240,
 		link6:300,
-	}
+	},
+	skillUnitClass:function(index){
+		var tempItem = dataRoleObj[0].getItem(index,"useRoleBag-SkillUnit");
+		if(tempItem==null){//该位置为空
+			return "skillUnit1";
+		}else{
+			return "skillUnit2";
+		}
+	},
+	skillUnitLinkClass:function(index,link){
+		console.info("==============");
+		console.info(index);
+		console.info(link);
+		//获取四周坐标索引
+		//判断奇偶,ture=偶，false=奇
+		var sign;
+		if(index.slice(0,1).charCodeAt()%2==0){
+			sign=0;
+		}else{
+			sign=1;
+		}
+		//1号位 0°
+		var index1 = index.slice(0,1)+(Number(index.slice(1,2))+1);
+		//2号位60
+		var index2 = String.fromCharCode(index.slice(0,1).charCodeAt()+1)+(Number(index.slice(1,2))+sign);
+		//3号位120
+		var index3 = String.fromCharCode(index.slice(0,1).charCodeAt()+1)+(Number(index.slice(1,2))+sign-1);
+		//4号位180
+		var index4 = index.slice(0,1)+(Number(index.slice(1,2))-1);
+		//5号位240
+		var index5 = String.fromCharCode(index.slice(0,1).charCodeAt()-1)+(Number(index.slice(1,2))+sign-1);
+		//6号位300
+		var index6 = String.fromCharCode(index.slice(0,1).charCodeAt()-1)+(Number(index.slice(1,2))+sign);
+		
+		//获取四周的安装情况
+		var unit1 = dataRoleObj[0].getItem(index1,"useRoleBag-SkillUnit");
+		var unit2 = dataRoleObj[0].getItem(index2,"useRoleBag-SkillUnit");
+		var unit3 = dataRoleObj[0].getItem(index3,"useRoleBag-SkillUnit");
+		var unit4 = dataRoleObj[0].getItem(index4,"useRoleBag-SkillUnit");
+		var unit5 = dataRoleObj[0].getItem(index5,"useRoleBag-SkillUnit");
+		var unit6 = dataRoleObj[0].getItem(index6,"useRoleBag-SkillUnit");
+		
+		//判断返回linkclass
+		in
+		
+	},
 };
 var map3dData = [
 	{
