@@ -402,6 +402,21 @@ DataModleFactory = {
 			return skills[num];
 		};
 		role.getSkills = function(pram){
+			//获取技能模型中的技能
+			function fn(){
+				//从中心点D4开始
+				for (var i=0; i < data.skillModule.length; i++) {
+					if(data.skillModule[i].index=="D4"){
+						data.skillModule[i];
+						//计算出每条链路路径索引链
+						in
+						
+					}
+				};
+				
+				
+				return
+			}
 			if(pram&&pram!=null&&pram!=undefined){
 				var tempSkills = skills.slice(0);
 				if (pram==SKILL.TYPE.active) {//判断传参是"active",只获取主动技能

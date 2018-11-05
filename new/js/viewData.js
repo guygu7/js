@@ -1023,7 +1023,6 @@ var viewControl = {
 		}
 	},
 	skillUnitLinkClass:function(index,link){
-		in
 		/**
 		 * 未激活链接样式
 		 */

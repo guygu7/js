@@ -217,6 +217,7 @@ dictionaryData.item={
 		attr:{
 			//设定、技能元素
 			skill1:1,
+			skill2:1,
 		},
 		totalNum:1,//拥有数量
 		actions:ITEM.ACTIONS.skillUnit,

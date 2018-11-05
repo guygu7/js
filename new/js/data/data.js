@@ -14,7 +14,7 @@ dictionaryData.itemInfo = [];
 		for (var i=0; i < tempActions.length; i++) {
 			if("notRole"==tempActions[i].belong){
 				//判断不属于role,去掉该动作
-				tempActions.splice(i,i+1);
+				tempActions.splice(i,1);
 				i--;
 			}
 		};
@@ -28,7 +28,7 @@ dictionaryData.itemInfo = [];
 		for (var i=0; i < tempActions.length; i++) {
 			if("role"==tempActions[i].belong){
 				//判断属于role,去掉该动作
-				tempActions.splice(i,i+1);
+				tempActions.splice(i,1);
 				i--;
 			}
 		};
@@ -259,6 +259,7 @@ var data = {
 	 * 技能模块
 	 */
 	skillModule:[
+	/*
 		{
 			index:"D4",
 		},
@@ -274,69 +275,118 @@ var data = {
 				viewControl.skillLink.link1,
 			],
 		},
-		//==============
-		{
-			index:"D2",
-		},
-		{
-			index:"D6",
-		},
-		{
-			index:"C1",
-		},
-		{
-			index:"C2",
-		},
-		{
-			index:"C3",
-		},
-		{
-			index:"C4",
-		},
-		{
-			index:"C5",
-		},
-		{
-			index:"C6",
-		},
-		{
-			index:"B2",
-		},
-		{
-			index:"B3",
-		},
-		{
-			index:"B4",
-		},
-		{
-			index:"B5",
-		},
-		{
-			index:"B6",
-		},
-		{
-			index:"E1",
-		},
-		{
-			index:"E2",
-		},
-		{
-			index:"E3",
-		},
-		{
-			index:"E4",
-		},
-		{
-			index:"E5",
-		},
-		{
-			index:"E6",
-		},
+		*/
 	],
 	/**
 	 * 大地图
 	 */
 };
+
+/**
+ * 构成随机技能模块：参数：num 分支数
+ */
+function newSkillModule(num){
+	data.skillModule=[];
+	//圆心核心链路
+	data.skillModule.push({index:"D4",link:[]});
+	//校验四周
+	//传入当前索引，返回该索引四周6个索引和link
+	function fn(index){
+		var sign;
+		if(index.slice(0,1).charCodeAt()%2==0){
+			sign=0;
+		}else{
+			sign=1;
+		}
+		//得到四周6个位置的索引
+		var link1 = index.slice(0,1)+(Number(index.slice(1,2))+1);
+		var link2 = String.fromCharCode(index.slice(0,1).charCodeAt()+1)+(Number(index.slice(1,2))+sign);
+		var link3 = String.fromCharCode(index.slice(0,1).charCodeAt()+1)+(Number(index.slice(1,2))+sign-1);
+		var link4 = index.slice(0,1)+(Number(index.slice(1,2))-1);
+		var link5 = String.fromCharCode(index.slice(0,1).charCodeAt()-1)+(Number(index.slice(1,2))+sign-1);
+		var link6 = String.fromCharCode(index.slice(0,1).charCodeAt()-1)+(Number(index.slice(1,2))+sign);
+		//构建参与即将随机的数组
+		var objArr = [{index:link1,link:viewControl.skillLink.link1},
+						{index:link2,link:viewControl.skillLink.link2},
+						{index:link3,link:viewControl.skillLink.link3},
+						{index:link4,link:viewControl.skillLink.link4},
+						{index:link5,link:viewControl.skillLink.link5},
+						{index:link6,link:viewControl.skillLink.link6}];
+		for (var i=0; i < objArr.length; i++) {
+			var flag = false;
+			for (var i2=0; i2 < data.skillModule.length; i2++) {
+				if(objArr[i].index == data.skillModule[i2].index){
+					flag = true;
+					break;
+				}
+			};
+			//判断索引是否是超出边缘的
+			if(objArr[i].index=="A2"||objArr[i].index=="A5"||objArr[i].index=="D1"||objArr[i].index=="D7"||objArr[i].index=="G2"||objArr[i].index=="G5"){
+				flag = true;
+			}		
+			if(flag){
+				//如果已存在，则从随机数组去掉
+				objArr.splice(i,1);
+				i--;
+			}
+		};
+		return objArr;
+	}
+	/**
+	 * 随机方法
+	 * 参数：index:中心的索引;objArr2：随机对象；num：分支数量
+	 * return 被随机到的index数组(随机完成后直接存入data.skillModule中)
+	 */
+	function fn2(index,objArr2,num){
+		var returnIndexArr = [];
+		if(objArr2.length-1<num){
+			num = objArr2.length-1;
+		}
+		for (var i=0; i < num; i++) {
+			var arr2 = [];
+			for (var i2=0; i2 < objArr2.length; i2++) {
+				arr2.push(1/objArr2.length);
+			};
+			var obj = null;
+			while(obj==null){//为避免概率不足1的情况，未随机到，则重新随机
+				obj = random(objArr2,arr2);
+			}
+			for (var i3=0; i3 < objArr2.length; i3++) {//去掉已经随机到的索引，以便于下次循环
+				if(objArr2[i3] == obj){
+					objArr2.splice(i3,1);
+					break;
+				}
+			};
+			for (var i4=0; i4 < data.skillModule.length; i4++) {//遍历data.skillModule取出传入的中心索引index,并存入link
+				if(data.skillModule[i4].index == index){
+					data.skillModule[i4].link.push(obj.link);
+					break;
+				}
+			};
+			data.skillModule.push({index:obj.index,link:[]});
+			returnIndexArr.push(obj.index);
+		};
+		return returnIndexArr;
+	}
+	//第一次(第一圈)
+	var objArr1 = fn("D4");
+	var indexArr = fn2("D4",objArr1,num);
+	//暂存路径索引链
+	in
+	//第二次(第二圈)
+	for (var i=0; i < indexArr.length; i++) {
+		var objArr2 = fn(indexArr[i]);
+		var indexArr2 = fn2(indexArr[i],objArr2,num);
+		//第三次(第三圈)
+		for (var i2=0; i2 < indexArr2.length; i2++) {
+			var objArr3 = fn(indexArr2[i2]);
+			var indexArr3 = fn2(indexArr2[i2],objArr3,num);
+		};
+	};
+	//随机链路
+}
+newSkillModule(2);
+
 data.roles[0].items[0].totalNum=1;
 data.roles[0].items[1].totalNum=1;
 data.roles[0].items[2].totalNum=1;
