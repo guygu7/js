@@ -372,20 +372,25 @@ function newSkillModule(num){
 	var objArr1 = fn("D4");
 	var indexArr = fn2("D4",objArr1,num);
 	//暂存路径索引链
-	in
+	var skillChain = [{index:"D4",link:[]}];
 	//第二次(第二圈)
 	for (var i=0; i < indexArr.length; i++) {
 		var objArr2 = fn(indexArr[i]);
 		var indexArr2 = fn2(indexArr[i],objArr2,num);
+		skillChain[0].link.push({index:indexArr[i],link:[]});
 		//第三次(第三圈)
 		for (var i2=0; i2 < indexArr2.length; i2++) {
 			var objArr3 = fn(indexArr2[i2]);
 			var indexArr3 = fn2(indexArr2[i2],objArr3,num);
+			skillChain[0].link[i].link.push({index:indexArr2[i2],link:[]});
+			for (var i3=0; i3 < indexArr3.length; i3++) {
+				skillChain[0].link[i].link[i2].link.push({index:indexArr3[i3]});
+			};
 		};
 	};
+	return skillChain;
 	//随机链路
 }
-newSkillModule(2);
 
 data.roles[0].items[0].totalNum=1;
 data.roles[0].items[1].totalNum=1;

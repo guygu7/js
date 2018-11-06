@@ -404,16 +404,31 @@ DataModleFactory = {
 		role.getSkills = function(pram){
 			//获取技能模型中的技能
 			function fn(){
-				//从中心点D4开始
-				for (var i=0; i < data.skillModule.length; i++) {
-					if(data.skillModule[i].index=="D4"){
-						data.skillModule[i];
-						//计算出每条链路路径索引链
-						in
-						
+				currentSkillChain
+				for (var i=0; i < items.length; i++) {
+					if(items[i].getIndex()==currentSkillChainp[0].index){
+						items[i]//D4
+						for (var i2=0; i2 < currentSkillChainp[0].link.length; i2++) {
+							currentSkillChainp[0].link[i2].index
+							for (var j=0; j < items.length; j++) {
+								if(items[j].getIndex()==currentSkillChainp[0].link[i2].index){
+									items[j]//第一圈
+								}
+								break;
+							};
+							for (var i3=0; i3 < currentSkillChainp[0].link[i2].link.length; i3++) {
+								currentSkillChainp[0].link[i2].link[i3]
+								for (var j2=0; j2 < items.length; j2++) {
+									currentSkillChainp[0].link[i2].link[i3]
+									if(items[j].getIndex()==currentSkillChainp[0].link[i2].index){
+										items[j2]//第2圈
+									}
+								};
+							};
+						};
+						break;
 					}
 				};
-				
 				
 				return
 			}
