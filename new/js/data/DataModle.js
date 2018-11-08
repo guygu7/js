@@ -402,26 +402,29 @@ DataModleFactory = {
 			return skills[num];
 		};
 		role.getSkills = function(pram){
-			//获取技能模型中的技能
+			//获取技能模型中的技能安装情况
 			function fn(){
 				currentSkillChain
 				for (var i=0; i < items.length; i++) {
-					if(items[i].getIndex()==currentSkillChainp[0].index){
+					if(items[i].getIndex()==currentSkillChain[0].index){
 						items[i]//D4
-						for (var i2=0; i2 < currentSkillChainp[0].link.length; i2++) {
-							currentSkillChainp[0].link[i2].index
+						currentSkillChain[0].item = items[i];
+						for (var i2=0; i2 < currentSkillChain[0].link.length; i2++) {
+							currentSkillChain[0].link[i2].index
 							for (var j=0; j < items.length; j++) {
-								if(items[j].getIndex()==currentSkillChainp[0].link[i2].index){
+								if(items[j].getIndex()==currentSkillChain[0].link[i2].index){
 									items[j]//第一圈
+									currentSkillChain[0].link[i2].item = items[j];
 								}
 								break;
 							};
-							for (var i3=0; i3 < currentSkillChainp[0].link[i2].link.length; i3++) {
-								currentSkillChainp[0].link[i2].link[i3]
+							for (var i3=0; i3 < currentSkillChain[0].link[i2].link.length; i3++) {
+								currentSkillChain[0].link[i2].link[i3]
 								for (var j2=0; j2 < items.length; j2++) {
-									currentSkillChainp[0].link[i2].link[i3]
-									if(items[j].getIndex()==currentSkillChainp[0].link[i2].index){
+									currentSkillChain[0].link[i2].link[i3]
+									if(items[j].getIndex()==currentSkillChain[0].link[i2].index){
 										items[j2]//第2圈
+										currentSkillChain[0].link[i2].link[i3].item = items[j2];
 									}
 								};
 							};
@@ -430,8 +433,9 @@ DataModleFactory = {
 					}
 				};
 				
-				return
+				//return;
 			}
+			fn();
 			if(pram&&pram!=null&&pram!=undefined){
 				var tempSkills = skills.slice(0);
 				if (pram==SKILL.TYPE.active) {//判断传参是"active",只获取主动技能
