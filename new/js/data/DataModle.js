@@ -404,38 +404,107 @@ DataModleFactory = {
 		role.getSkills = function(pram){
 			//获取技能模型中的技能安装情况
 			function fn(){
-				currentSkillChain
+				tempCurrentSkillChain = currentSkillChain.slice(0);
 				for (var i=0; i < items.length; i++) {
-					if(items[i].getIndex()==currentSkillChain[0].index){
-						items[i]//D4
-						currentSkillChain[0].item = items[i];
-						for (var i2=0; i2 < currentSkillChain[0].link.length; i2++) {
-							currentSkillChain[0].link[i2].index
+					if(items[i].getIndex()==tempCurrentSkillChain[0].index){
+						//items[i]//D4
+						tempCurrentSkillChain[0].item = items[i];
+						for (var i2=0; i2 < tempCurrentSkillChain[0].link.length; i2++) {
 							for (var j=0; j < items.length; j++) {
-								if(items[j].getIndex()==currentSkillChain[0].link[i2].index){
-									items[j]//第一圈
-									currentSkillChain[0].link[i2].item = items[j];
+								if(items[j].getIndex()==tempCurrentSkillChain[0].link[i2].index){
+									//items[j]//第一圈
+									tempCurrentSkillChain[0].link[i2].item = items[j];
+									break;
 								}
-								break;
 							};
-							for (var i3=0; i3 < currentSkillChain[0].link[i2].link.length; i3++) {
-								currentSkillChain[0].link[i2].link[i3]
+							for (var i3=0; i3 < tempCurrentSkillChain[0].link[i2].link.length; i3++) {
 								for (var j2=0; j2 < items.length; j2++) {
-									currentSkillChain[0].link[i2].link[i3]
-									if(items[j].getIndex()==currentSkillChain[0].link[i2].index){
-										items[j2]//第2圈
-										currentSkillChain[0].link[i2].link[i3].item = items[j2];
+									if(items[j2].getIndex()==tempCurrentSkillChain[0].link[i2].index){
+										//items[j2]//第2圈
+										tempCurrentSkillChain[0].link[i2].link[i3].item = items[j2];
+										break;
 									}
+								};
+								for (var i4=0; i4 < tempCurrentSkillChain[0].link[i2].link[i3].link.length; i4++) {
+									for (var j3=0; j3 < items.length; j3++) {
+										if(items[j3].getIndex()==tempCurrentSkillChain[0].link[i2].link[i3].index){
+											//items[j3]//第3圈
+											tempCurrentSkillChain[0].link[i2].link[i3].link[i4].item = items[j3];
+											break;
+										}
+									};
 								};
 							};
 						};
 						break;
 					}
 				};
-				
-				//return;
+				return tempCurrentSkillChain;
 			}
-			fn();
+			var tempCurrentSkillChain = fn();
+			//获取当前技能链技能
+			var skillArr = [];
+			var item0 = null;
+			if(tempCurrentSkillChain[0].item!=null){
+				var item0 = tempCurrentSkillChain[0].item;
+				//读取中心位置
+				skillArr.push([item0]);
+			}
+			for (var i=0; i < tempCurrentSkillChain[0].link.length; i++) {
+				//读取第一圈
+				var item1 = tempCurrentSkillChain[0].link[i].item;
+				var tempArr = null;
+				if(item1!=null&&item1!=undefined){
+					if (item0!=null&&item0!=undefined) {
+						tempArr = [item0,item1];
+					}else{
+						tempArr = [item1];
+					}
+					skillArr.push(tempArr);
+				}
+				for (var i2=0; i2 < tempCurrentSkillChain[0].link[i].link.length; i2++) {
+					//读取第二圈
+					var item2 = tempCurrentSkillChain[0].link[i].link[i2].item;
+					var tempArr2 = null;
+					if(item2!=null&&item2!=undefined){
+						if(tempArr!=null){
+							tempArr2 = tempArr.push(item2);
+						}
+					}
+					skillArr.push(tempArr2);
+					for (var i3=0; i3 < tempCurrentSkillChain[0].link[i].link[i2].link.length; i3++) {
+						//读取第三圈
+						var item3 = tempCurrentSkillChain[0].link[i].link[i2].link[i3].item;
+						var tempArr3 = null;
+						if(item3!=null&&item3!=undefined){
+						if(tempArr2!=null){
+							tempArr3 = tempArr2.push(item3);
+						}
+					}
+				};
+			};
+			//=====skillArr[]技能链获取完毕======
+			//解析技能链获取技能
+			skillAttrArr = [];
+			for (var i=0; i < skillArr.length; i++) {
+				//遍历每一条技能链
+				var attr={skill1:0,skill2:0};
+				for (var j=0; j < skillArr[i].length; j++) {
+					//遍历技能链中每一个元素
+					var tempAttr = skillArr[i][j].getAttr();
+					if(!isNaN(Number(tempAttr.skill1))){
+						attr.skill1 += Number(tempAttr.skill1);
+					}
+					if(!isNaN(Number(tempAttr.skill1))){
+						attr.skill2 += Number(tempAttr.skill2);
+					}
+				};
+				skillAttrArr.push(attr);
+			};
+			//skillAttrArr去重
+			//获取技能
+			in
+			//============================
 			if(pram&&pram!=null&&pram!=undefined){
 				var tempSkills = skills.slice(0);
 				if (pram==SKILL.TYPE.active) {//判断传参是"active",只获取主动技能
