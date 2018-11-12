@@ -502,8 +502,23 @@ DataModleFactory = {
 				skillAttrArr.push(attr);
 			};
 			//skillAttrArr去重
+			for (var i=0; i < skillAttrArr.length; i++) {
+				for (var j=i+1; j < skillAttrArr.length; j++) {
+					if(skillAttrArr[i].skill1 == skillAttrArr[j].skill1
+						&&skillAttrArr[i].skill2 == skillAttrArr[j].skill2){
+						skillAttrArr.splice(j,1);
+						break;
+					}
+				};
+			};
 			//获取技能
-			in
+			for (var i=0; i < skillAttrArr.length; i++) {
+				//根据属性值赋予技能
+				in
+				if(skillAttrArr[i].skill1>3&&skillAttrArr[i].skill2>1){
+					
+				}
+			};
 			//============================
 			if(pram&&pram!=null&&pram!=undefined){
 				var tempSkills = skills.slice(0);
