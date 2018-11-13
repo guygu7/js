@@ -471,18 +471,21 @@ DataModleFactory = {
 							tempArr2 = tempArr.push(item2);
 						}
 					}
-					skillArr.push(tempArr2);
+					if(tempArr2!=null)skillArr.push(tempArr2);
 					for (var i3=0; i3 < tempCurrentSkillChain[0].link[i].link[i2].link.length; i3++) {
 						//读取第三圈
 						var item3 = tempCurrentSkillChain[0].link[i].link[i2].link[i3].item;
 						var tempArr3 = null;
 						if(item3!=null&&item3!=undefined){
-						if(tempArr2!=null){
-							tempArr3 = tempArr2.push(item3);
+							if(tempArr2!=null){
+								tempArr3 = tempArr2.push(item3);
+							}
 						}
-					}
-				};
+						if(tempArr3!=null)skillArr.push(tempArr3);
+					};
+				}
 			};
+			
 			//=====skillArr[]技能链获取完毕======
 			//解析技能链获取技能
 			skillAttrArr = [];
@@ -511,14 +514,28 @@ DataModleFactory = {
 					}
 				};
 			};
+			
 			//获取技能
+			
+			
+			//|||||※※※※※※※※※※※※       此处定义技能链获取规则       ※※※※※※※※※※※※||||||
+			var skillForChain = [];
 			for (var i=0; i < skillAttrArr.length; i++) {
 				//根据属性值赋予技能
-				in
-				if(skillAttrArr[i].skill1>3&&skillAttrArr[i].skill2>1){
-					
+				if(skillAttrArr[i].skill1>1&&skillAttrArr[i].skill2>1){
+					var flag = true;//如果有相同技能则不在放入
+					for (var j=0; j < skillForChain.length; j++) {
+						if(skillForChain[j] == tempSkillForChainObj.skillChain){
+							flag=false;
+							break;
+						}
+					};
+					if(flag){
+						skillForChain.push(tempSkillForChainObj.skillChain);
+					}
 				}
 			};
+			
 			//============================
 			if(pram&&pram!=null&&pram!=undefined){
 				var tempSkills = skills.slice(0);
@@ -539,7 +556,7 @@ DataModleFactory = {
 						}
 					};
 				}
-				return tempSkills;
+				return tempSkills.concat(skillForChain);
 			}
 			return skills;
 		};

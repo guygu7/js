@@ -1778,6 +1778,14 @@
 			//封装一个大地图
 			mapDomainsObj.push(loadData(data[mapIds[0].mapId],"domain"));
 			
+			
+			/**
+			 * 当前选择的技能格位置（索引序号）
+			 */
+			var currentSkillPanleIndex = "";
+			//需定义在角色初始化之前
+			var currentSkillChain = newSkillModule(2);
+			
 			/**
 			 * 暂时仅为只有一个role对象的数组
 			 */
@@ -1798,8 +1806,15 @@
 			/**
 			 * 技能对象集合（用于技能链加载）
 			 */
-			var tempSkillObj = loadData(exampleData.,"skill");
-			in
+			var tempSkillForChainObj = (function(){
+				var skills = {};
+				var keys = Object.keys(dictionaryData.skill);
+				for (var i=0; i < keys.length; i++) {
+					skills[keys[i]] = (loadData(dictionaryData.skill[keys[i]],"skill"));
+				};
+				return skills;
+			})();
+			
 			/*--------------------------------*/
 			/**
 			 * 当前大地图
@@ -1829,12 +1844,7 @@
 			 * 当前交易物品信息数据（价格）[item数组]
 			 */
 			var currentItemInfo = [];
-			/**
-			 * 当前选择的技能格位置（索引序号）
-			 */
-			var currentSkillPanleIndex = "";
 			
-			var currentSkillChain = newSkillModule(2);
 			/**
 			 * 交易暂存物品集合
 			 */
@@ -2686,9 +2696,26 @@
 					
 					viewControl.skillPanle_Style.left = 50 + "px";
 					viewControl.skillPanle_Style.opacity = 0;
+					
+					//展示技能窗口
+					in
+					var menuBagLeft=left;
+					//获取层叠关系数组中最大值，并+1存入
+					var maxZIndex = getMaxZIndex(100);
+					viewControl.zIndexList["menuBag"] = maxZIndex+2;
+					viewControl.menu_bag_Style["z-index"] = viewControl.zIndexList["menuBag"];
+					
+					//同时打开包
+					viewControl.display.menuBagHide = false;
+					viewControl.menu_bag_Style.left = menuBagLeft+ "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					
 					$timeout(function() {
 						viewControl.skillPanle_Style.left = 100 + "px";
 						viewControl.skillPanle_Style.opacity = 1;
+						
+						viewControl.menu_bag_Style.left = 10 +menuBagLeft+ "px";
+						viewControl.menu_bag_Style.opacity = 1;
 					}, 200);
 				};
 				/**
@@ -2698,6 +2725,11 @@
 					viewControl.skillPanle_Style.opacity = 0;
 					var left = viewControl.skillPanle_Style.left;
 					viewControl.skillPanle_Style.left = (Number(left.substring(0, left.length - 2)) - 50) + "px";
+					//包裹组件
+					var left = viewControl.menu_bag_Style.left;
+					viewControl.menu_bag_Style.left = (Number(left.substring(0, left.length - 2)) - 10) + "px";
+					viewControl.menu_bag_Style.opacity = 0;
+					
 					$timeout(function() {
 						//重置层叠
 						viewControl.zIndexList["skillPanle"] = 0;
@@ -2705,6 +2737,14 @@
 						//隐藏组件
 						viewControl.display.skillPanleMaskLayerHide = true;
 						viewControl.display.skillPanleHide = true;
+						
+						//包裹组件
+						//重置层叠
+						viewControl.zIndexList["menuBag"] = 0;
+						viewControl.menu_bag_Style["z-index"] = 0;
+						//隐藏组件
+						viewControl.display.menuBagHide = true;
+						
 						mainShow();
 					}, 200);
 				};
@@ -4400,6 +4440,9 @@
 					dataRoleObj[0].setStatus(pram);
 					//设置第二状态（过滤条件）
 					dataRoleObj[0].setStatus2("useRoleBag-SkillUnit");
+					//加载当前技能数据
+					in
+					
 					skillPanleShow();
 				};
 				$scope.clickButton2 = function(pram,pram2){

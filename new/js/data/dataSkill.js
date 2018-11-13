@@ -61,6 +61,19 @@ var SKILL={
  * 技能字典
  */
 dictionaryData.skill={
+	//技能链技能测试
+	skillChain:{
+		name:"技能链示例",
+		content:"技能链技能说明文本",
+		type:SKILL.TYPE.active,
+		attr:{
+			hpRecovery:1,//hp的直接 恢复量 或 减少量,
+		},
+		actions:[
+			dictionaryData.action.skillUse,//恢复类型可以操作
+		],
+	},
+	//====================
 	example:{
 		name:"主动技能示例",
 		content:"主动技能说明文本",
