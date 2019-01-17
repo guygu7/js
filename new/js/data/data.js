@@ -288,7 +288,7 @@ var data = {
 function newSkillModule(num){
 	data.skillModule=[];
 	//圆心核心链路
-	data.skillModule.push({index:"D4",link:[]});
+	data.skillModule.push({index:"D4",unlock:true,link:[]});
 	//校验四周
 	//传入当前索引，返回该索引四周6个索引和link
 	function fn(index){
@@ -363,7 +363,7 @@ function newSkillModule(num){
 					break;
 				}
 			};
-			data.skillModule.push({index:obj.index,link:[]});
+			data.skillModule.push({index:obj.index,unlock:false,link:[]});
 			returnIndexArr.push(obj.index);
 		};
 		return returnIndexArr;

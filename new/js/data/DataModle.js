@@ -404,32 +404,37 @@ DataModleFactory = {
 		role.getSkills = function(pram){
 			//获取技能模型中的技能安装情况
 			function fn(){
-				tempCurrentSkillChain = currentSkillChain.slice(0);
+				var tempCurrentSkillChain1 = currentSkillChain.slice(0);
 				for (var i=0; i < items.length; i++) {
-					if(items[i].getIndex()==tempCurrentSkillChain[0].index){
+					//清空残留属性
+					tempCurrentSkillChain1[0].item = null;
+					if(items[i].getIndex()==tempCurrentSkillChain1[0].index){
 						//items[i]//D4
-						tempCurrentSkillChain[0].item = items[i];
-						for (var i2=0; i2 < tempCurrentSkillChain[0].link.length; i2++) {
+						tempCurrentSkillChain1[0].item = items[i];
+						for (var i2=0; i2 < tempCurrentSkillChain1[0].link.length; i2++) {
+							tempCurrentSkillChain1[0].link[i2].item = null;//清空残留属性
 							for (var j=0; j < items.length; j++) {
-								if(items[j].getIndex()==tempCurrentSkillChain[0].link[i2].index){
+								if(items[j].getIndex()==tempCurrentSkillChain1[0].link[i2].index){
 									//items[j]//第一圈
-									tempCurrentSkillChain[0].link[i2].item = items[j];
+									tempCurrentSkillChain1[0].link[i2].item = items[j];
 									break;
 								}
 							};
-							for (var i3=0; i3 < tempCurrentSkillChain[0].link[i2].link.length; i3++) {
+							for (var i3=0; i3 < tempCurrentSkillChain1[0].link[i2].link.length; i3++) {
+								tempCurrentSkillChain1[0].link[i2].link[i3].item = null;//清空残留属性
 								for (var j2=0; j2 < items.length; j2++) {
-									if(items[j2].getIndex()==tempCurrentSkillChain[0].link[i2].index){
+									if(items[j2].getIndex()==tempCurrentSkillChain1[0].link[i2].index){
 										//items[j2]//第2圈
-										tempCurrentSkillChain[0].link[i2].link[i3].item = items[j2];
+										tempCurrentSkillChain1[0].link[i2].link[i3].item = items[j2];
 										break;
 									}
 								};
-								for (var i4=0; i4 < tempCurrentSkillChain[0].link[i2].link[i3].link.length; i4++) {
+								for (var i4=0; i4 < tempCurrentSkillChain1[0].link[i2].link[i3].link.length; i4++) {
+									tempCurrentSkillChain1[0].link[i2].link[i3].link[i4].item = null;//清空残留属性
 									for (var j3=0; j3 < items.length; j3++) {
-										if(items[j3].getIndex()==tempCurrentSkillChain[0].link[i2].link[i3].index){
+										if(items[j3].getIndex()==tempCurrentSkillChain1[0].link[i2].link[i3].index){
 											//items[j3]//第3圈
-											tempCurrentSkillChain[0].link[i2].link[i3].link[i4].item = items[j3];
+											tempCurrentSkillChain1[0].link[i2].link[i3].link[i4].item = items[j3];
 											break;
 										}
 									};
@@ -439,7 +444,7 @@ DataModleFactory = {
 						break;
 					}
 				};
-				return tempCurrentSkillChain;
+				return tempCurrentSkillChain1;
 			}
 			var tempCurrentSkillChain = fn();
 			//获取当前技能链技能
@@ -558,7 +563,11 @@ DataModleFactory = {
 				}
 				return tempSkills.concat(skillForChain);
 			}
-			return skills;
+			if(skillForChain.length>0){
+				return skills.concat(skillForChain);
+			}else{
+				return skills;
+			}
 		};
 		/**
 		 * 传参：Skill对象

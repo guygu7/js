@@ -49,7 +49,7 @@ var viewDataModel = {
 		tittle:function(){
 			if(dataRoleObj[0].getStatus()=="skill"){
 				return "技能";
-			}else{
+			}else {
 				return "包裹";
 			}
 		},
@@ -114,6 +114,15 @@ var viewDataModel = {
 		 * 按钮元素集合（文本）
 		 */
 		buttonElements:function(){return {};},
+	},
+	/**
+	 * 列表菜单（技能组件）
+	 */
+	menuSkill:{
+		/**
+		 * 按钮元素集合（文本）
+		 */
+		buttonElements:function(){return dataRoleObj[0].getSkills();},
 	},
 	/**
 	 * 仓库面板 
@@ -279,6 +288,10 @@ var viewControl = {
 		 * 列表菜单（包裹）组件隐藏 
 		 */
 		menuBagHide:true,
+		/**
+		 * 列表菜单（技能）组件隐藏 
+		 */
+		menuSkillHide:true,
 		/**
 		 * 物品信息面板  组件隐藏
 		 */
@@ -1015,6 +1028,15 @@ var viewControl = {
 		link6:300,
 	},
 	skillUnitClass:function(index){
+		for (var i=0; i < data.skillModule.length; i++) {
+			if(data.skillModule[i].index == index){
+				if(data.skillModule[i].unlock == false){
+					//未解锁，显示未解锁图标
+					return "img-lock";
+				}
+				break;
+			}
+		};
 		var tempItem = dataRoleObj[0].getItem(index,"useRoleBag-SkillUnit");
 		if(tempItem==null){//该位置为空
 			return "skillUnit1";
